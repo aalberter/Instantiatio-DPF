@@ -1,0 +1,1073 @@
+# Instantiatio DPF — Engineering Work Kit
+
+> Work Kit version: `3.0.0` — Released lightweight public baseline
+
+Версии, publication status, authoritative loci и SHA-256 компонентов определены в [PACKAGE_MANIFEST.md](PACKAGE_MANIFEST.md).
+
+## 1. Что это
+
+Этот репозиторий содержит операционный Work Kit для проектирования и выполнения agent-enabled engineering work. Разработка программных и сложных систем остаётся поддерживаемой областью применения, но Kit не ограничен software development.
+
+Пакет связывает нормативную основу, операционную инстанциацию и фактическую проектную работу:
+
+```text
+DPF
+→ normative engineering framework
+
+Instantiatio DPF
+→ operational Engineering Work Kit
+→ включает защищённую AI SDLC DPF edition как domain-specific DPF payload
+
+Engineering Work Bootstrap
+→ вход человека и агента в новую инженерную работу
+
+Working Process and Loops
+→ создание и развитие project-specific процесса
+
+Project-specific artifacts
+→ фактическая работа, решения, код, проверки и evidence
+```
+
+Пакет можно использовать:
+
+- для разработки программных и сложных инженерных систем;
+- для отдельной разработки требований;
+- для архитектурной работы;
+- для исследования систем, методов и предметных областей;
+- для подготовки технической документации;
+- для impact analysis;
+- для bounded pilot;
+- для новой инициативы внутри уже действующего проекта.
+
+Это не готовый универсальный workflow. Пакет помогает построить подходящий рабочий контур под конкретную инициативу.
+
+### 1.1. Public identity, license и provenance
+
+- Short name: **Instantiatio DPF**.
+- Full name: **Instantiatio DPF — Engineering Work Kit**.
+- Canonical repository: [github.com/aalberter/Instantiatio-DPF](https://github.com/aalberter/Instantiatio-DPF).
+- Copyright: `Copyright (c) 2026 Instantiatio DPF contributors`.
+- License: [MIT License](LICENSE).
+- Conceptual foundation: [First Principles Framework — FPF](https://github.com/ailev/FPF).
+
+Instantiatio DPF is an independent engineering Work Kit and evolution layer. It is not an official FPF distribution; no affiliation with or endorsement by the FPF authors or repository owners is claimed. No files from the external FPF repository are included or relicensed by this distribution.
+
+The release-level identity `Instantiatio DPF` does not rename or generalize the controlled `AI_SDLC_DPF/**` payload, which retains its historical and domain identity.
+
+---
+
+## 2. Основная идея
+
+Пользователь не обязан заранее знать структуру процесса, имена Loops или терминологию DPF.
+
+Он может начать с естественного сообщения:
+
+```text
+Привет.
+У меня есть идея.
+Нужно разработать требования.
+Есть набор документов.
+Хотим пересмотреть архитектуру.
+Начнём новую инициативу.
+```
+
+Агент должен определить состояние репозитория и провести работу по следующему маршруту:
+
+```text
+Engineering Initiative
+→ Bootstrap
+→ Candidate Work Context
+→ Review
+→ Admission Decision
+→ Admitted Work Context
+→ Entry Decision
+→ Working Process
+→ Loop
+→ Task
+→ Run
+→ Candidate Result
+→ Verification
+→ Admission
+→ Relied-on Result
+```
+
+Ключевой принцип:
+
+> Агент организует вход и выполнение работы, но не присваивает себе authority.
+
+### 2.1. Настройки взаимодействия
+
+Work Kit поддерживает две независимые настройки формы общения:
+
+- **Interaction Mode** определяет стиль взаимодействия: `guided` (с сопровождением), `standard` (стандартный) или `compact` (компактный);
+- **Explanation Mode** определяет охват пояснений: `detailed` (группы всех внешне значимых действий) или `milestone` (только переходы, решения и ключевые события).
+
+Допустимы все шесть комбинаций. Это не authority levels, не Working Process, не Loops и не Human Gates. Default:
+
+| Interaction Mode | Explanation Mode | Ожидаемая форма |
+|---|---|---|
+| `guided` | `detailed` | Сопровождение и пояснение всех групп значимых действий. |
+| `guided` | `milestone` | Сопровождение на переходах, решениях и gates. |
+| `standard` | `detailed` | Нейтральный стиль с подробным внешним журналом действий. |
+| `standard` | `milestone` | Обычная работа с пояснением ключевых событий. |
+| `compact` | `detailed` | Короткие комментарии ко всем группам значимых действий. |
+| `compact` | `milestone` | Минимальное сопровождение на обязательных точках. |
+
+```yaml
+interaction_mode: standard
+explanation_mode: milestone
+```
+
+При первом входе default применяется без блокирующего опроса, кратко сообщается пользователю, и Bootstrap продолжается. Project-wide выбор можно сохранить в необязательном `project/INTERACTION_PREFERENCES.yaml`; файл не создаётся только ради фиксации default. Новые инициативы наследуют project preference, а initiative override хранится в том же overlay по Work Context ID и не изменяет admitted Work Context.
+
+Настройки можно менять независимо естественной фразой:
+
+```text
+Дальше работай компактно.
+Объясняй все значимые действия.
+Для этой инициативы используй сопровождение и ключевые события.
+Для всего проекта работай стандартно с подробными пояснениями.
+```
+
+Без явного scope команда действует до конца текущей сессии. Приоритет: host/system constraints → обязательные safety/authority messages → explicit command → session → initiative → project → default.
+
+Даже `compact` не скрывает Candidate status, Human Gates, Admission Requests, критические риски, изменения scope/authority, consequential actions, honest stop и ограничения. `detailed` не раскрывает chain of thought или внутренний анализ и группирует повторяющиеся операции.
+
+### 2.2. Выбор конфигурации моделей
+
+При старте новой инициативы агент может один раз необязательно предложить помощь в выборе максимальной, оптимальной или бюджетной конфигурации моделей. Offer не заменяет первый содержательный Bootstrap-вопрос и не блокирует discovery при отказе, молчании или host limitation.
+
+Конкретная композиция выбирается только после достаточного понимания scope, риска, privacy, бюджета и доступных host capabilities. Candidate Model Assignment фиксируется в применимом Working Process/Loop: primary, implementation, review и escalation roles, effort/Thinking mode, availability, privacy boundary, independence, fallback и verification.
+
+Практические датированные рекомендации находятся в [`MODEL_SELECTION_RECOMMENDATIONS.md`](MODEL_SELECTION_RECOMMENDATIONS.md). Model Assignment не является presentation preference, не создаёт authority и не отменяет Verification, Human Gates, Admission или honest stop.
+
+### 2.3. Полное покрытие до оптимизации процесса
+
+Для нового Working Process агент сначала применяет `FC-13` и выбирает применимые DPF patterns. Затем он разворачивает полную для данного проекта карту результатов, зависимостей, проверок и точек допуска. Optional Product Engineering Composition может использоваться как reference screen, но не становится обязательным lifecycle.
+
+Только после этого агент отдельно показывает рекомендуемые объединения, сокращения и неприменимые результаты, объясняет принимаемые риски и предлагает оптимизированный процесс. Пользователь получает два согласованных представления одной configuration: инженерную карту с trace и краткое управленческое представление с явно подписанным блоком `Требуемое решение / Required Decision`.
+
+Этот порядок не означает одинаково тяжёлый процесс для всех задач. Direct Work, небольшой script или driver сохраняют лёгкий маршрут, если applicability и material non-use показаны явно, а проверка и возврат остаются достаточными для последствий ошибки.
+
+---
+
+## 3. Происхождение и справочные материалы
+
+AI SDLC DPF сформирован на основе **First Principles Framework — FPF** как отдельный Domain Principles Framework для проектирования, адаптации и совершенствования агентных процессов разработки программных систем. FPF является governing conceptual basis; модель или инструмент, использованные при подготовке, не создают authority.
+
+История формирования, границы distributed kit и внешнего provenance corpus описаны в [DPF Formation Reference](docs/DPF_FORMATION_REFERENCE.md). Общая технология создания нового DPF из FPF находится в [DPF Formation Method](docs/DPF_FORMATION_METHOD.md).
+
+---
+
+## 4. Authority и уровни
+
+Используется следующая иерархия:
+
+```text
+FPF
+→ AI SDLC DPF
+→ Reference Architecture
+→ Reference Process
+→ Application Guide
+→ Organization LPF
+→ Project-specific Process
+→ Performed Work
+```
+
+Primary Application Profile является bounded specialization profile, а не отдельным уровнем authority.
+
+Дополнительные исполнительские Guides:
+
+```text
+ENGINEERING_WORK_BOOTSTRAP_GUIDE.md
+WORKING_PROCESS_AND_LOOPS_GUIDE.md
+```
+
+не изменяют DPF. Они определяют, как использовать его в фактической работе.
+
+### 4.1. Роли основных компонентов
+
+| Компонент              | Назначение                                                               | Чего он не делает                                                            |
+| ---------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| FPF                    | Общие первые принципы и методы различения                                | Не определяет конкретный AI SDLC                                             |
+| AI SDLC DPF            | Доменные принципы и паттерны                                             | Не задаёт один обязательный workflow                                         |
+| Reference Architecture | Reference-модель сущностей, состояний и связей                           | Не является архитектурой конкретного проекта                                 |
+| Reference Process      | Компонуемые process fragments и optional Product Engineering Composition | Не является обязательным lifecycle, artifact catalogue или project authority |
+| PAP                    | Усиления для bounded-класса сложных систем                               | Не заявляет автоматическую применимость                                      |
+| Application Guide      | Примеры и практические пояснения                                         | Не создаёт authority                                                         |
+| Bootstrap Guide        | Вход в новую инженерную инициативу                                       | Не заменяет Working Process                                                  |
+| Working Process Guide  | Исполнительская механика Loops, Tasks и Runs                             | Не является процессом конкретного проекта                                    |
+| Work Context           | Согласованный контекст инициативы                                        | Не является ТЗ или архитектурой                                              |
+| Working Process        | Карта работы конкретного проекта                                         | Не доказывает, что работа выполнена                                          |
+| Run                    | Фактическое выполнение Task                                              | Не создаёт admission автоматически                                           |
+
+### 4.2. System terminology
+
+- **Engineered System of Interest** — продукт, программная система или подсистема, над которой ведётся работа;
+- **Agentic Process EoC** — Working Process, Loop или другая bounded process entity, к которой применяются DPF-patterns;
+- **Project-specific Process** — термин authority hierarchy;
+- **Working Process** — его операционная project-specific реализация и carrier.
+
+---
+
+## 5. Границы применимости
+
+### 5.1. Для чего предназначен DPF
+
+DPF предназначен для проектирования процессов, в которых:
+
+- люди и ИИ-агенты совместно выполняют software или systems engineering work;
+- агентная работа должна быть bounded;
+- требуется различать candidate и admitted results;
+- важны provenance, currentness и traceability;
+- изменения источников и baselines должны иметь управляемый impact;
+- human authority должна быть отделена от agent capability;
+- verification проектируется вместе с результатом;
+- процесс должен допускать возвраты, honest stop и improvement loops.
+
+### 5.2. Основной Entity of Concern
+
+Основной объект DPF:
+
+> агентный процесс разработки программной системы в определённом проектном контексте.
+
+DPF помогает проектировать:
+
+- роли;
+- состояния;
+- переходы;
+- границы полномочий;
+- source-to-claim routes;
+- agent loops;
+- admission;
+- verification;
+- traceability;
+- change propagation;
+- proportional tailoring.
+
+### 5.3. Что DPF не доказывает
+
+Использование пакета само по себе не доказывает:
+
+- эффективность паттерна в каждом проекте;
+- соответствие законодательству или стандарту;
+- применимость к конкретной юрисдикции;
+- безопасность продукта;
+- product assurance;
+- качество фактически выполненной работы;
+- правильность каждого решения агента;
+- пригодность внешнего lifecycle extension для конкретного проекта.
+
+Qualified human review и field validation остаются отдельными обязательствами.
+
+### 5.4. Что не входит в нормативный DPF
+
+DPF не должен содержать:
+
+- названия конкретных LLM;
+- выбор agent framework;
+- repository paths конкретной организации;
+- локальные роли и фамилии;
+- организационные approval thresholds;
+- обязательный набор project artifacts;
+- конкретную архитектуру продукта;
+- фактические Tasks и Runs;
+- выполненные изменения кода;
+- один универсальный V-цикл;
+- Core-11 как обязательный набор для любого проекта.
+
+Это относится к:
+
+- Reference Architecture;
+- Reference Process;
+- PAP;
+- Organization LPF;
+- project-specific process;
+- performed work.
+
+### 5.5. Ограничения текущего рабочего релиза
+
+Текущий DPF является **working release**, а не завершённым универсальным стандартом.
+
+Его следует переоткрывать при:
+
+- существенном изменении FPF;
+- source-currentness trigger;
+- повторяющемся field counterexample;
+- невозможности сохранить один Primary Entity of Concern;
+- утечке authority между уровнями;
+- новых evidence, меняющих disposition паттерна;
+- нарушении traceability или release integrity.
+
+При этом обновлять DPF вслед за каждым изменением FPF не обязательно.
+
+Практичная стратегия:
+
+```text
+использовать текущий DPF как baseline
+→ развивать Guides, Working Processes и Loops
+→ накапливать опыт применения
+→ при существенной необходимости
+   повторить полный цикл формирования DPF
+   из актуального FPF
+```
+
+---
+
+## 6. Структура пакета
+
+### 6.1. Операционный пакет
+
+Ниже объединены фактический distributed scaffold и project-specific carriers, которые создаются только после соответствующих decisions. В исходном пакете `project/` содержит только `.gitkeep`; отсутствие показанных ниже Work Context и process files является ожидаемым состоянием неинициированного проекта.
+
+```text
+/
+├── .gitattributes
+├── README.md
+├── PACKAGE_MANIFEST.md
+├── AGENTS.md
+├── ENGINEERING_WORK_BOOTSTRAP_GUIDE.md
+├── WORKING_PROCESS_AND_LOOPS_GUIDE.md
+├── docs/
+│   ├── DPF_FORMATION_METHOD.md
+│   ├── DPF_FORMATION_REFERENCE.md
+│   └── KIT_EVOLUTION_ROADMAP.md
+├── scripts/
+│   └── check_integrity.ps1
+├── tests/
+│   └── behavioral/
+│       └── BOOTSTRAP_SCENARIOS.md
+├── AI_SDLC_DPF/
+│   ├── README.md
+│   ├── QUICKSTART.md
+│   ├── AI_SDLC_DPF_COMPLETE.md
+│   ├── framework/
+│   │   ├── AI_SDLC_DPF.md
+│   │   ├── AI_SDLC_REFERENCE_ARCHITECTURE.md
+│   │   ├── AI_SDLC_REFERENCE_PROCESS.md
+│   │   ├── AI_SDLC_PRIMARY_APPLICATION_PROFILE.md
+│   │   └── AI_SDLC_APPLICATION_GUIDE.md
+│   ├── reference/
+│   │   ├── AI_SDLC_GLOSSARY.md
+│   │   ├── AI_SDLC_SOURCES.md
+│   │   ├── AI_SDLC_TRACEABILITY.md
+│   │   ├── AI_SDLC_GOVERNANCE.md
+│   │   └── AI_SDLC_OPEN_QUESTIONS.md
+│   ├── examples/
+│   │   └── AI_SDLC_WORKED_EXAMPLES.md
+└── project/
+    ├── source/
+    ├── artifacts/
+    │   ├── WORK_CONTEXT.md
+    │   ├── ENTRY_DECISION.md
+    │   ├── WORK_CONTEXT_REGISTER.md
+    │   └── work_contexts/
+    ├── process/
+    │   ├── WORKING_PROCESS.md
+    │   ├── LOOP_REGISTER.md
+    │   ├── loops/
+    │   ├── tasks/
+    │   ├── runs/
+    │   └── admissions/
+    ├── src/
+    └── tests/
+```
+
+Не требуется создавать все папки и файлы заранее.
+
+`PACKAGE_MANIFEST.md` определяет exact distributed inventory. Unlisted live `project/**` carriers являются рабочим состоянием пользователя, а не автоматически частью package distribution; они сохраняются и проверяются как project content, но не добавляются в manifest ради прохождения integrity check.
+
+### 6.2. Контролируемый DPF-релиз
+
+Каталог `AI_SDLC_DPF/` является controlled read-only release внутри Work Kit. Distributed kit содержит нормативный DPF и bounded reference/profile/informative carriers, перечисленные в фактическом дереве выше.
+
+Provenance-heavy development corpus и governing FPF не заявляются как физически включённые в текущий distributed kit. Их границы и назначение описаны в [DPF Formation Reference](docs/DPF_FORMATION_REFERENCE.md).
+
+---
+
+## 7. Основные документы
+
+### [`README.md`](README.md)
+
+Общая карта пакета и варианты начала работы.
+
+### [`AGENTS.md`](AGENTS.md)
+
+Главный диспетчер поведения агента.
+
+Он определяет:
+
+- когда запускать Bootstrap;
+- когда продолжать действующий контекст;
+- когда искать Working Process;
+- когда создавать Task и Run;
+- какие authority boundaries сохранять.
+
+### [`ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`](ENGINEERING_WORK_BOOTSTRAP_GUIDE.md)
+
+Пусковой контур инженерной инициативы.
+
+Результат:
+
+```text
+Admitted Work Context
++ Entry Decision
+```
+
+### [`WORKING_PROCESS_AND_LOOPS_GUIDE.md`](WORKING_PROCESS_AND_LOOPS_GUIDE.md)
+
+Процессный движок проекта.
+
+Основная иерархия:
+
+```text
+Project / System of Interest
+└── Working Process
+    └── Loop
+        └── Task
+            └── Run
+                ├── Candidate Result
+                ├── Verification
+                └── Admission Decision
+                    └── Relied-on Result
+```
+
+### [`AI_SDLC_DPF.md`](AI_SDLC_DPF/framework/AI_SDLC_DPF.md)
+
+Нормативная доменная pattern language.
+
+### [Reference Architecture](AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_ARCHITECTURE.md) и [Reference Process](AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_PROCESS.md)
+
+Reference-модели для проектирования project-specific architecture и process. Reference Process включает optional **Product Engineering Composition (PEC)**: navigation backbone, Concern/Result Disposition Contract и proportional Commitment Guards для tailoring Working Process.
+
+### [Primary Application Profile](AI_SDLC_DPF/framework/AI_SDLC_PRIMARY_APPLICATION_PROFILE.md)
+
+Профиль усилений для сложных, регулируемых или программно-технических систем.
+
+### [Application Guide](AI_SDLC_DPF/framework/AI_SDLC_APPLICATION_GUIDE.md) и [Worked Examples](AI_SDLC_DPF/examples/AI_SDLC_WORKED_EXAMPLES.md)
+
+Информативные материалы для практического применения.
+
+---
+
+## 8. Как начать работу
+
+Operational entry текущего Work Kit определяется Bootstrap Guide. Historical `AI_SDLC_DPF/QUICKSTART.md` не используется для новых инициатив или downstream process design; после Admitted Work Context и Entry Decision применяется `WORKING_PROCESS_AND_LOOPS_GUIDE.md` и непосредственно выбранные DPF/reference/application loci.
+
+Для product/system work действует `FC-13-first operational entry`: `admitted context -> FC-13 -> project-relevant result expansion -> optional PEC screen -> explicit reductions -> Human decision`. PEC из Reference Process подключается только как optional completeness screen после context-driven profile и первичного развёртывания результатов. Он помогает проверить requirements, operational concept/scenarios, User Stories, domain/data/state, architecture/interfaces, UX, security, V&V, construction, transition и learning concerns, но не задаёт первый шаг, обязательный порядок или отдельный файл на каждый concern. Direct Work, script, driver и research spike сохраняют lightweight route или explicit non-use.
+
+### Вариант 1. Просто открыть проект и написать сообщение
+
+Подходит для первого знакомства.
+
+```text
+пользователь: Привет
+```
+
+Агент проверяет:
+
+- существует ли admitted Work Context;
+- покрывает ли он текущую инициативу;
+- существует ли Entry Decision;
+- существует ли Working Process;
+- существует ли подходящий Loop.
+
+Если проект не инициирован, агент:
+
+1. кратко представляется;
+2. сообщает применимую presentation-настройку или default;
+3. объясняет назначение Bootstrap;
+4. при необходимости делает optional model-guidance offer;
+5. начинает адаптивное интервью;
+6. задаёт один содержательный вопрос.
+
+Это основной рекомендуемый маршрут.
+
+---
+
+### Вариант 2. Начать с идеи или боли
+
+Подходит, когда документов почти нет.
+
+Примеры:
+
+```text
+У меня есть идея сервиса.
+Нас не устраивает текущий процесс.
+Хотим автоматизировать подготовку ПМИ.
+Не понимаем, с чего начать архитектуру.
+```
+
+Маршрут:
+
+```text
+Interview-first
+→ problem or concept framing
+→ first summary
+→ Candidate Work Context
+→ Admission
+→ Entry Decision
+```
+
+---
+
+### Вариант 3. Начать с источников
+
+Подходит, когда уже есть:
+
+- ТЗ;
+- ИТТ;
+- требования;
+- схемы;
+- код;
+- документация;
+- нормативные документы;
+- отчёты;
+- существующий репозиторий.
+
+Размести материалы в:
+
+```text
+project/source/
+```
+
+Затем напиши, например:
+
+```text
+В папке project/source лежат исходные материалы.
+Нужно войти в проект и предложить маршрут работы.
+```
+
+Маршрут:
+
+```text
+Source intake
+→ source classification
+→ context extraction
+→ interview по пробелам
+→ Candidate Work Context
+→ Review
+→ Admission Decision
+→ Admitted Work Context
+→ Entry Decision
+```
+
+Оригинальные источники не должны переписываться агентом.
+
+Scaffold marker `.gitkeep` не считается source material и не включается в source inventory.
+
+---
+
+### Вариант 4. Начать разработку требований
+
+Пример:
+
+```text
+Нужно разработать требования к подсистеме регистрации.
+```
+
+Разработка требований не требует запуска полного project lifecycle.
+
+Возможный маршрут:
+
+```text
+Requirements-first Bootstrap
+→ Candidate Work Context
+→ Review
+→ Admission Decision
+→ Admitted Work Context
+→ Entry Decision
+→ Requirements Working Process
+→ Requirements Loops
+```
+
+Первым результатом может быть:
+
+- source register;
+- stakeholder map;
+- requirement scope;
+- requirements extraction plan;
+- Candidate Requirements;
+- requirements review route.
+
+---
+
+### Вариант 5. Начать архитектурную работу
+
+Пример:
+
+```text
+Нужно определить архитектуру интеграции.
+```
+
+Возможный маршрут:
+
+```text
+Architecture-first Bootstrap
+→ system of interest
+→ boundaries and drivers
+→ source and constraint intake
+→ Candidate Work Context
+→ Review
+→ Admission Decision
+→ Admitted Work Context
+→ Entry Decision
+→ Architecture Working Process
+```
+
+Bootstrap должен помочь определить:
+
+- систему интереса;
+- уровень рассмотрения;
+- надсистему и подсистемы;
+- внешние системы;
+- architectural drivers;
+- critical interfaces;
+- intended use архитектурного результата.
+
+---
+
+### Вариант 6. Войти в существующий проект
+
+Пример:
+
+```text
+Есть действующий код и документы.
+Нужно понять состояние проекта и продолжить работу.
+```
+
+Маршрут:
+
+```text
+Existing-system assessment
+→ repository and source intake
+→ current-state reconstruction
+→ gap identification
+→ Candidate Work Context
+→ Review
+→ Admission Decision
+→ Admitted Work Context
+→ Entry Decision
+```
+
+Агент не должен считать существующие файлы согласованной моделью проекта без проверки.
+
+---
+
+### Вариант 7. Запустить bounded pilot
+
+Подходит, когда контекст в целом понятен, но полный процесс проектировать рано.
+
+```text
+minimal Work Context
+→ Entry Decision: start_bounded_pilot_loop
+→ Candidate minimal Working Process and bounded Loop
+→ explicit process approval
+→ Task
+→ Run
+→ evidence
+→ Admission
+→ Process Review
+```
+
+Подходящие первые Loops:
+
+- извлечение требований;
+- проверка требований;
+- architecture research;
+- impact analysis;
+- подготовка User Stories;
+- генерация тестов;
+- code review;
+- проверка документации.
+
+---
+
+### Вариант 8. Начать новую инициативу внутри действующего проекта
+
+Пример:
+
+```text
+Начнём новую инициативу: нужно отдельно проработать безопасность.
+```
+
+Агент должен:
+
+1. определить, покрывается ли запрос текущим Work Context;
+2. если нет — предложить отдельный Bootstrap;
+3. объяснить его назначение;
+4. создать отдельный Work Context;
+5. зафиксировать связи с существующими инициативами;
+6. предложить отдельный Entry Route.
+
+Для нескольких инициатив используется:
+
+```text
+project/artifacts/WORK_CONTEXT_REGISTER.md
+project/artifacts/work_contexts/
+```
+
+---
+
+## 9. Режимы Bootstrap
+
+| Режим | Когда применять | Типовой результат |
+|---|---|---|
+| Lite | Локальная понятная задача | Один `WORK_CONTEXT.md` |
+| Standard | Новый проект или значимая инициатива | Work Context + Entry Decision |
+| Extended | Сложная, регулируемая или высокорисковая система | Дополнительные source, authority, system и consequence records |
+
+Режим предварительно выбирает агент и объясняет выбор пользователю.
+
+---
+
+## 10. Work Context и Entry Decision
+
+### Work Context
+
+Work Context отвечает на вопросы:
+
+- что это за инициатива;
+- зачем она нужна;
+- что является системой интереса;
+- где границы;
+- кто будет использовать результат;
+- какие источники существуют;
+- какие ограничения действуют;
+- кто имеет authority;
+- что остаётся неизвестным.
+
+Work Context не является автоматически:
+
+- ТЗ;
+- архитектурой;
+- backlog;
+- планом проекта;
+- Working Process.
+
+### Entry Decision
+
+Entry Decision выбирает дальнейший маршрут:
+
+```text
+use_existing_working_process
+adapt_existing_working_process
+create_specialized_working_process
+start_bounded_pilot_loop
+continue_discovery
+defer
+honest_stop
+```
+
+Для создания полного project-specific процесса используется маршрут:
+
+```text
+create_specialized_working_process
+```
+
+Core v2 не входит в текущий пакет и недоступен как Entry Route. Он может рассматриваться только как возможное внешнее расширение после отдельного определения версии, applicability, entry contract и authority.
+
+После Entry Decision применяется `WORKING_PROCESS_AND_LOOPS_GUIDE.md`.
+
+---
+
+## 11. Рабочая иерархия
+
+```text
+Engineering Initiative
+→ Work Context
+→ Entry Decision
+→ Working Process
+→ Loop
+→ Task
+→ Run
+→ Candidate Result
+→ Verification
+→ Admission Decision
+→ Relied-on Result
+```
+
+### Working Process
+
+Карта инженерной работы конкретной инициативы.
+
+Минимальная карта является navigation view, а не coverage proof. Сначала строится DPF-first project-relevant coverage map; ConOps, Requirements, User Stories, domain/data/state, architecture/interfaces, UX/UI, construction, verification, operation и learning получают самостоятельное disposition там, где применимы.
+
+До consequential Loop каждый material result получает disposition `explicit`, `combined`, `cross_cutting`, `deferred`, `omitted` или `not_applicable` с dependencies, first relying use, verification и reopen route. Если результаты объединены в одном carrier, их identity и возможность возврата к smallest responsible result сохраняются. Затем пользователь явно утверждает предлагаемую оптимизацию и первый bounded Loop.
+
+### Loop
+
+Повторяемый bounded process получения одного типа результата.
+
+### Task
+
+Конкретное поручение внутри Loop.
+
+### Run
+
+Фактическое выполнение Task конкретным исполнителем, контекстом и инструментами.
+
+### Candidate Result
+
+Результат, ещё не допущенный к дальнейшему использованию.
+
+### Verification
+
+Проверка результата относительно требований и intended use.
+
+### Admission
+
+Уполномоченное решение:
+
+```text
+admitted
+rejected
+returned_for_refinement
+deferred
+```
+
+`honest_stop` является исходом Bootstrap Session или Run, а не Admission Decision.
+
+---
+
+## 12. Human Gates и authority
+
+Способность агента выполнить действие не создаёт права принять решение.
+
+Human Gate показывается прежде всего как ясное сообщение о конкретной ситуации, а не как методологический ярлык. Восемь interactions `DI-01 Review`, `DI-02 Choice`, `DI-03 Change`, `DI-04 Conflict`, `DI-05 Risk`, `DI-06 Missing input`, `DI-07 Failed verification` и `DI-08 Consequential action` сохраняют свои decision-specific поля; clarification является response state. В чате видны Candidate/configuration, recommendation, evidence/risks/limitations, последствия и `Требуемое решение / Required Decision`. Optional adjacent `.md` описывает ту же configuration; цвет и rich formatting только помогают чтению, а текст сохраняет весь смысл.
+
+Пример компактной формы:
+
+```text
+Нужно утвердить Candidate-контракт перед первым Run
+
+Candidate: L-EXAMPLE-001, SHA-256 <exact-hash>
+Рекомендация: утвердить для одного bounded Run.
+Разрешает: создать TASK/RUN и изменить перечисленные targets.
+Не разрешает: release, Git или расширение scope.
+
+Требуемое решение / Required Decision
+Ответьте exact approval phrase либо верните Candidate на refinement.
+```
+
+Для risk acceptance остаются видимыми residual risk, accountable risk owner и reopen trigger; для consequential action указываются exact action, target/configuration, effects, recovery/reversibility и verification. После решения confirmation повторяет exact outcome/configuration, newly allowed и still-prohibited effects, actor/date when available, decision-record link when created и next/reopen route. Двусмысленный ответ не считается Admission. Полная механика определена в [`WORKING_PROCESS_AND_LOOPS_GUIDE.md`](WORKING_PROCESS_AND_LOOPS_GUIDE.md), а Bootstrap-проекция — в [`ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`](ENGINEERING_WORK_BOOTSTRAP_GUIDE.md).
+
+Следует различать:
+
+- доступ к инструменту;
+- разрешение выполнить действие;
+- accountability;
+- verification;
+- evidence;
+- assurance;
+- admission authority.
+
+Агент может:
+
+- анализировать;
+- предлагать;
+- создавать Candidate Results;
+- выполнять bounded Runs;
+- инициировать Bootstrap;
+- обнаруживать необходимость Working Process или Loop.
+
+Агент не должен без отдельной authority:
+
+- утверждать Work Context;
+- вводить Working Process в действие;
+- добавлять consequential Loop;
+- принимать результат для relied-on use;
+- выполнять необратимое действие;
+- изменять DPF.
+
+---
+
+## 13. Что изменять в ходе проекта
+
+В обычной проектной работе развиваются:
+
+- Work Context;
+- Entry Decision;
+- Working Process;
+- Loops;
+- project architecture;
+- requirements;
+- instructions;
+- source registers;
+- evidence;
+- code;
+- tests.
+
+Каталог DPF считается read-only.
+
+```text
+AI_SDLC_DPF/
+```
+
+не следует менять из-за:
+
+- нового инструмента;
+- новой LLM;
+- изменения prompt;
+- локальной ошибки агента;
+- появления нового project artifact;
+- изменения одного Working Process;
+- изменения архитектуры одного проекта.
+
+---
+
+## 14. Рекомендуемый первый пилот
+
+Для проверки пакета не требуется сразу запускать полный lifecycle.
+
+Рекомендуется выбрать инициативу, которая:
+
+- практически полезна;
+- имеет доступные источники;
+- ограничена по scope;
+- допускает проверку;
+- обратима;
+- имеет понятный receiving use;
+- может пройти один законченный цикл.
+
+Пример:
+
+```text
+идея или пакет источников
+→ Bootstrap
+→ admitted Work Context
+→ Requirements Extraction Loop
+→ Candidate Requirements
+→ Verification
+→ Admission
+→ Process Review
+```
+
+Если declared scope включает несколько scenarios, shared persistence, external interfaces или system-wide properties, первый pilot дополнительно проверяет соответствующие Commitment Guards до локального hard-to-reverse решения. Первый vertical slice должен переиспользовать admitted upstream results и не объявлять slice-local data/architecture моделью всего продукта.
+
+Первый pilot должен проверить не количество созданных файлов, а следующее:
+
+- агент сам распознал необходимость Bootstrap;
+- пользователь понял, что происходит;
+- Work Context оказался полезен;
+- Entry Decision привёл к подходящему процессу;
+- Loop был bounded;
+- material concern/result dispositions и first relying uses были видимы;
+- shared architecture/data/integration assumptions были проверены до consequential commitment;
+- последующая работа могла reuse или явно supersede admitted results;
+- Candidate Result не был принят молча;
+- verification и admission реально сработали.
+
+---
+
+## 15. Быстрый старт
+
+### Шаг 1
+
+Размести в корне:
+
+```text
+AGENTS.md
+ENGINEERING_WORK_BOOTSTRAP_GUIDE.md
+WORKING_PROCESS_AND_LOOPS_GUIDE.md
+AI_SDLC_DPF/
+```
+
+### Шаг 2
+
+Открой репозиторий в агентной среде, которая читает `AGENTS.md`.
+
+### Шаг 3
+
+Напиши:
+
+```text
+Привет
+```
+
+или сразу сформулируй потребность:
+
+```text
+Нужно разработать требования к новой подсистеме.
+```
+
+### Шаг 4
+
+Ответь на короткое адаптивное интервью.
+
+### Шаг 5
+
+Проверь Candidate Work Context.
+
+### Шаг 6
+
+Явно утверди или верни его на уточнение.
+
+### Шаг 7
+
+Выбери предложенный Entry Route.
+
+### Шаг 8
+
+Утверди минимальный Working Process и первый bounded Loop.
+
+---
+
+## 16. Статус пакета
+
+Текущий пакет следует рассматривать как:
+
+> Released Instantiatio DPF Work Kit `3.0.0`; admitted local Work Kit `2.5.2`, independently verified Released Work Kit `2.4.0` и их exact ZIP baselines сохранены как predecessor/history. Released metadata in a staged package does not self-admit an archive; reliance and external publication require exact ZIP Admission.
+
+DPF имеет контролируемый working release.
+
+Bootstrap Guide и Working Process Guide являются исполнительскими companion documents, которые должны проверяться в реальных инициативах.
+
+Optional PEC и его guards прошли design/behavioral replay, но их field effectiveness ещё не доказана. Требуются representative pilots для direct/script/driver, multi-slice product, integrated-system и PAP-strengthened contexts. Normative DPF остаётся `1.0.1` без изменений.
+
+Model-guidance integration также является operational capability, а не новым authority level. Её behavioral contract проверяет optional/non-blocking offer, host limitations и сохранение process/Human authority; фактическая эффективность конфигураций должна подтверждаться KIT-specific evals и pilot evidence.
+
+Coverage-first repair устраняет наблюдавшийся operational projection gap: ранее сжатая process map могла неявно поглотить ConOps или User Stories. Новые правила и behavioral scenarios прошли cross-carrier verification и fresh independent challenge с сохранённым `R1-IC-O01`: marker/order automation остаётся bounded regression evidence, а не semantic proof. Field effectiveness всё ещё требует representative multi-project pilots.
+
+Candidate Decision UI `2.5.1` восстановил восемь admitted interactions, полный confirmation boundary, risk ownership и concrete scan target, но re-verification обнаружила остаточные DI-02/03/04/06 и S-49 coverage gaps. Local baseline `2.5.2` завершил эти specializations и responsible-section guards, сохранив chat-first форму и plain-text resilience. Released Work Kit `3.0.0` изменяет release-level identity и lightweight public layer, не изменяя этот behavioral contract. Repository checks не доказывают usability нативного Codex UI; field effectiveness и повторный cross-carrier challenge остаются отдельной downstream работой.
+
+Наиболее ценные следующие улучшения должны появляться из:
+
+- фактических Bootstrap sessions;
+- pilot Loops;
+- failed Runs;
+- admission returns;
+- project feedback;
+- field counterexamples.
+
+Не следует заменять практическую проверку дальнейшей бесконечной теоретической детализацией.
+
+---
+
+## 17. Главная формула пакета
+
+```text
+DPF отвечает:
+какие устойчивые проблемы и принципы существуют в домене?
+
+Bootstrap отвечает:
+во что именно мы входим и зачем?
+
+Working Process отвечает:
+как организована работа этой инициативы?
+
+Loop отвечает:
+как повторяемо получать конкретный тип результата?
+
+Task отвечает:
+что нужно сделать сейчас?
+
+Run отвечает:
+что фактически было выполнено?
+
+Verification отвечает:
+насколько Candidate Result пригоден?
+
+Admission отвечает:
+можно ли на результат опираться дальше?
+```
