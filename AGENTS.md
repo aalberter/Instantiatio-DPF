@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> Version: `2.5.0`
+> Version: `2.6.0`
 
 ## 1. Назначение
 
@@ -88,7 +88,7 @@ PAP не является девятым уровнем. Work Context и Entry D
 - `interaction_mode`: `guided`, `standard` или `compact`;
 - `explanation_mode`: `detailed` или `milestone`.
 
-Default — `standard + milestone`. Если project preference отсутствует, кратко сообщи default и продолжи Bootstrap, не превращая выбор в отдельное интервью. Настройки определяются и хранятся по правилам `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`; Working Process применяет их по `WORKING_PROCESS_AND_LOOPS_GUIDE.md`.
+Default — `standard + milestone`. При первом project entry кратко назови active combination, все шесть сочетаний осей и отдельно «Форсаж» как bounded execution profile; выбор optional и не блокирует Bootstrap. Настройки определяются/хранятся по Bootstrap Guide, execution profile — по Working Process Guide.
 
 Приоритет:
 
@@ -102,7 +102,7 @@ host/system constraints
 → standard + milestone
 ```
 
-Естественная команда без явного scope действует до конца текущей сессии. Project-wide persistence требует явной формулировки пользователя. Изменение настройки кратко подтверждается, но не запускает Bootstrap, не меняет Work Context, Entry Decision, Working Process или Loop и не требует Admission.
+Естественная команда без явного scope действует до конца текущей сессии. Project-wide persistence требует явной формулировки; silence не создаёт preference carrier. Изменение настройки кратко подтверждается, но не запускает Bootstrap, не меняет Work Context, Entry Decision, Working Process/Loop и не требует Admission. «Форсаж» не является preference и не даёт authority.
 
 Ни один режим не скрывает Candidate status, Human Gates, Admission Requests, authority/scope changes, consequential actions, critical risks, honest stop или limitations. `detailed` не раскрывает chain of thought; однотипные действия группируются.
 
@@ -116,7 +116,7 @@ host/system constraints
 
 При старте новой инициативы можно один раз кратко предложить помощь в выборе максимальной, оптимальной или бюджетной конфигурации моделей. Offer является необязательным, не заменяет первый содержательный adaptive question и не блокирует Bootstrap при отказе, молчании или недоступности выбора в host.
 
-Не выбирай фактическую композицию до достаточного понимания scope, риска, privacy, бюджета и доступных host capabilities. Если пользователь согласился, представь Candidate Model Assignment по `MODEL_SELECTION_RECOMMENDATIONS.md` вместе с применимым Working Process/Loop contract; зафиксируй primary, implementation, review и escalation roles, effort/Thinking mode, availability, privacy boundary, independence, fallback и verification. Model Assignment не является presentation preference, не создаёт authority и не отменяет Working Process, Verification, Human Gates, Admission или honest stop. Host/system constraints имеют приоритет; не обещай переключение на недоступную модель.
+Не выбирай композицию до понимания scope, риска, privacy, бюджета и host capabilities. Сначала назови категорию, краткий rationale, trade-off и escalation trigger; exact models/details — по запросу или material assignment need. Candidate Model Assignment фиксирует roles, effort, availability, privacy, independence, fallback и verification; он не создаёт authority и не отменяет gates/Admission. Host constraints приоритетны.
 
 ## 5. Новая инициатива
 
@@ -172,7 +172,7 @@ Confidence, explanation, доступ к контексту, успешное з
 
 ## 11. Handoff
 
-Для аналитической работы сообщай применимый Work Context, Engineered System of Interest, Agentic Process EoC, facts/assumptions/open questions, verification, limitations и следующий decision.
+Для milestone сообщай `Завершено / Сейчас / Осталось / Открытые вопросы / Ближайший Human Gate`; не используй недоказуемый процент. `Mission Complete!` — только для admitted initiative outcome со всем required scope completed/disposed; затем Lessons Review лишь optional с consent. Аналитический handoff также называет Work Context, systems/EoC, facts/assumptions, verification и limitations.
 
 При изменении репозитория сообщай изменённые loci, применённый Working Process/Loop, решения, assumptions, выполненные проверки и unresolved issues.
 

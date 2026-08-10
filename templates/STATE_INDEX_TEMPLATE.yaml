@@ -1,0 +1,39 @@
+# Optional operational state projection template.
+# This file is not an authority carrier, grants no authority, admits no result,
+# and must not replace exact Work Context, Process, Task, Run or Admission records.
+# Copy/adopt it only through an explicit project decision; do not infer historical state.
+
+schema_version: 1
+project_id: ""
+active_initiative: ""
+
+product_baseline:
+  version: ""
+  status: ""
+  carrier_ref: ""       # Exact repository-relative authoritative carrier path.
+  sha256: ""            # Exact uppercase SHA-256 when this state is relied upon.
+
+current_phase: ""
+current_loop: ""
+current_task: ""
+current_run: ""
+
+admitted_results: []     # Each item: id, carrier_ref, sha256, admission_ref, admission_sha256.
+candidate_results: []    # Each item: id, carrier_ref, sha256, status; never treated as admitted.
+
+allowed_actions: []      # Projection of an exact authority decision; never a grant by this file.
+prohibited_actions: []
+open_questions: []
+
+next_human_gate:
+  decision_class: ""
+  required_decision: ""
+  carrier_ref: ""
+
+reopen_routes: []
+carrier_refs: []         # Exact refs/hashes used to resolve this projection.
+last_verified: ""       # RFC 3339 timestamp plus verifier/run reference in project use.
+
+# Freshness and contradiction rule:
+# if missing, stale, invalid or contradictory, report and ignore this projection for authority;
+# reconstruct current state from exact carriers and their Admission decisions, then verify again.

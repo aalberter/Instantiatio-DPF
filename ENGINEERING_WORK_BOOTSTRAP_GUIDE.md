@@ -1,6 +1,6 @@
 # Engineering Work Bootstrap Guide
 
-> Version: `1.5.1`
+> Version: `1.6.0`
 
 ## 1. Назначение
 
@@ -396,7 +396,7 @@ Bootstrap определяет и разрешает две независимы
 | `detailed` | подробное пояснение действий | Кратко поясняет каждую группу внешне значимых действий: источник, artifact, применимый locus, цель и результат проверки. |
 | `milestone` | пояснение ключевых событий | Поясняет переходы, решения, gates, consequential Runs, Verification, Candidate Result, Admission, honest stop и Process Review. |
 
-Все шесть комбинаций допустимы. Оси нельзя сводить к одному списку взаимоисключающих режимов.
+Все шесть комбинаций допустимы: `guided + detailed`, `guided + milestone`, `standard + detailed`, `standard + milestone`, `compact + detailed`, `compact + milestone`. Оси нельзя сводить к одному списку взаимоисключающих режимов.
 
 #### Default и первый вход
 
@@ -406,6 +406,8 @@ Bootstrap определяет и разрешает две независимы
 interaction_mode: standard
 explanation_mode: milestone
 ```
+
+На первом применимом project entry кратко назови активную комбинацию, перечисли все шесть комбинаций, скажи, что выбор optional и Bootstrap продолжится без ожидания. Отдельно упомяни доступность «Форсажа» как bounded execution profile по Working Process Guide: он не является седьмой presentation-настройкой и сам по себе не разрешает выполнение.
 
 Кратко сообщи:
 
@@ -439,7 +441,7 @@ Project-level persistence использует необязательный от
 project/INTERACTION_PREFERENCES.yaml
 ```
 
-Создавай его только после явной project-scoped команды пользователя; default сам по себе не требует файла. Рекомендуемая схема:
+Создавай его только после явной project-scoped команды пользователя; explicit onboarding selection может сохраняться project-wide только при таком scope. Молчание сохраняет `standard + milestone` и не создаёт carrier. Рекомендуемая схема:
 
 ```yaml
 schema_version: 1
@@ -473,7 +475,7 @@ Material Bootstrap decision представляется chat-first по `WPC-06
 
 Это optional offer, а не второй содержательный adaptive question и не обязательное preference-интервью. Отказ, молчание или недоступность выбора в host не задерживают переход `not_started → in_discovery`. Не повторяй offer, если пользователь отказался, уже задал конфигурацию или для инициативы существует admitted Model Assignment.
 
-Если пользователь согласился, сначала продолжи discovery. После достаточного понимания scope, риска, privacy, бюджета и реально доступных моделей подготовь Candidate Model Assignment по `MODEL_SELECTION_RECOMMENDATIONS.md` для Working Process/Loop. Не обещай переключение, которого host не предоставляет; сообщи limitation и допустимый fallback.
+Если пользователь согласился, сначала продолжи discovery. После достаточного понимания scope, риска, privacy, бюджета и реально доступных моделей сначала рекомендуй категорию `максимальная`, `оптимальная` или `бюджетная`, одно предложение rationale, главный trade-off и escalation trigger. Exact models, роли, effort и pricing показывай только по запросу или когда они нужны для material Working Process/Loop decision; тогда подготовь Candidate Model Assignment по `MODEL_SELECTION_RECOMMENDATIONS.md`. Не обещай переключение, которого host не предоставляет; сообщи limitation и допустимый fallback.
 
 Model Assignment не входит в presentation preferences и не хранится в `project/INTERACTION_PREFERENCES.yaml`. Он не изменяет authority, Verification, Human Gates, Admission или honest stop.
 
@@ -483,13 +485,15 @@ Behavioral invariant: optional offer; one substantive adaptive question; no Boot
 
 ## 8. Первое сообщение агента
 
-Первое сообщение должно быть коротким и понятным человеку, не знакомому с методологией. После краткого уведомления о применимой или default presentation-настройке оно по-прежнему содержит только один содержательный адаптивный вопрос.
+Первое сообщение должно быть коротким и понятным человеку, не знакомому с методологией. После краткого уведомления об активной комбинации, всех шести optional комбинациях и отдельно доступном «Форсаже» оно по-прежнему содержит только один содержательный адаптивный вопрос и не ждёт выбора.
 
 Рекомендуемая форма:
 
 ```text
 Использую стандартный режим с пояснением ключевых переходов.
-Настройки можно изменить в любой момент.
+Доступны guided/standard/compact × detailed/milestone — все шесть комбинаций;
+выбор необязателен, настройки можно изменить в любой момент.
+«Форсаж» доступен отдельно как bounded execution profile после необходимых approvals.
 
 Здравствуйте. Я помогаю войти в новую инженерную работу:
 понять исходную потребность, собрать доступные материалы,
@@ -1753,6 +1757,10 @@ Bootstrap подготавливает достаточные входы для 
 - `milestone` поясняет state transitions, decisions, gates и ключевые результаты.
 
 Во всех комбинациях Candidate, authority, gate, risk и limitation остаются явными.
+
+### 34.7. Progress и completion
+
+На значимом milestone показывай `Завершено`, `Сейчас`, `Осталось`, `Открытые вопросы`, `Ближайший Human Gate / следующий допустимый шаг`; не подменяй observable state процентом готовности. Различай завершение Task, Run, Loop, Admission baseline и всей initiative. `Mission Complete!` допустимо только когда admitted intended outcome существует и весь required scope завершён либо явно disposed; Candidate, passing check, закончившийся Run или exhausted budget этого статуса не создают. После initiative completion можно отдельно предложить optional Post-Initiative Lessons Review, но не выполнять его без explicit consent.
 
 ---
 

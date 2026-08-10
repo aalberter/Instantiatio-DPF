@@ -34,7 +34,7 @@ Project-specific Work
 
 На текущем этапе комплект считается достаточным для end-to-end пилотного применения.
 
-Released Work Kit `2.2.0` устранил process-composition gap: Reference Process получил optional Product Engineering Composition (PEC), а operational Guides — non-lossy concern/result readiness contract. Released Work Kit `2.3.0` добавил датированную model-selection guidance, optional non-blocking onboarding offer и Model Assignment contract для Working Process/Loop. Released Work Kit `2.4.0` исправил operational projection gap через DPF-first composition, expand-before-reduce и ясные Human Gates; его cross-carrier verification и fresh independent challenge завершены как `pass_with_limitations`. Candidate `2.5.0` ввёл chat-first Decision UI, а Candidate `2.5.1` восстановил exact DI-01—DI-08 trace, confirmation boundary, accountable risk owner/reopen trigger, concrete scan target и per-locus guards. L-DUX-004-R1 подтвердил closure Layer C/risk/budget, но вернул остаточные DI-02/03/04/06 и S-49 verification gaps. Work Kit `2.5.2` завершил эти specializations и responsible-section/per-field guards и был принят как local production baseline. Released Work Kit `3.0.0` добавляет release-level identity `Instantiatio DPF` и lightweight public layer без изменения нормативной или процессной семантики. Normative DPF `1.0.1`, Reference Architecture, Reference Process, Application Guide и PAP не изменяются.
+Released Work Kit `2.2.0` устранил process-composition gap; `2.3.0` добавил model-selection guidance; `2.4.0` исправил operational projection gap; `2.5.2` завершил Decision UI specializations и стал local predecessor. Admitted `3.0.0` добавил release-level identity `Instantiatio DPF` и lightweight public layer. Released Work Kit `3.1.0` добавляет progress/completion grammar, явное представление шести modes, category-first model guidance, bounded «Форсаж», post-initiative Lessons Review и optional verified state projection. Normative DPF `1.0.1`, Reference Architecture, Reference Process, Application Guide и PAP не изменяются.
 
 Следующее развитие должно основываться прежде всего на:
 
@@ -106,6 +106,8 @@ Work Kit `2.4.0` требует сначала показать полную pro
 
 Candidate Work Kit `2.5.0` развил эту основу в Decision UI: основной decision layer находится в чате, подробный adjacent `.md` остаётся optional, а оба слоя связываются с одной exact Candidate configuration. Independent challenge привёл к Candidate `2.5.1` с exact DI-01—DI-08, полным Layer C, risk owner/reopen trigger и bounded one-scan guidance. Re-verification нашла оставшиеся partial-supersession, conflict-resolution, Choice/Missing-input route и S-49 guard gaps; Candidate `2.5.2` завершает их в primary WPC-06, S-46/S-49 и section-scoped integrity. Native Codex controls, CSS, fonts и persistence не входят в Candidate scope; usability effectiveness и repair sufficiency требуют downstream L-DUX-004-R2 challenge и field evidence.
 
+Released Work Kit `3.1.0` делает состояние инициативы видимым без псевдоточного процента, ограничивает `Mission Complete!` admitted initiative outcome, отделяет «Форсаж» от presentation preferences и переводит Lessons Review в optional post-initiative route. YAML остаётся только проверяемой projection exact carriers, а не второй authority.
+
 Основная задача следующей стадии:
 
 > проверить, насколько существующие компоненты действительно работают вместе в реальных инициативах.
@@ -133,7 +135,7 @@ Candidate Work Kit `2.5.0` развил эту основу в Decision UI: ос
 
 ### 4.2. Behavioral Tests
 
-Regression contract содержит 30 scenarios. Помимо Bootstrap/authority/preferences, он проверяет:
+Released Work Kit `3.1.0` regression contract содержит фактические `60 scenarios`. Это inventory count, а не оценка семантической полноты. Помимо Bootstrap/authority/preferences, он проверяет:
 
 1. первое сообщение `Привет` в пустом проекте;
 2. старт с файлами в `project/source/`;
@@ -153,7 +155,12 @@ Regression contract содержит 30 scenarios. Помимо Bootstrap/author
 16. reuse/supersession для medium product slices;
 17. integration responsibility и system properties;
 18. PAP strengthening без upward leakage;
-19. legacy change, research spike, source revision и Candidate Lesson return.
+19. legacy change, research spike, source revision и Candidate Lesson return;
+20. progress/completion и initiative-only `Mission Complete!`;
+21. six-mode onboarding и отдельный «Форсаж»;
+22. category-first model recommendation;
+23. post-initiative consent/lesson template и immediate critical evidence;
+24. recovery по exact carriers и rejection stale/contradictory YAML.
 
 ### 4.3. Первый реальный Pilot
 
@@ -391,12 +398,12 @@ Work Context version
 
 | Component | Version | Status |
 |---|---:|---|
-| Engineering Work Kit | `3.0.0` | released |
+| Engineering Work Kit | `3.1.0` | released |
 | AI SDLC DPF | `1.0.1` | controlled working |
-| Bootstrap Guide | `1.5.1` | pilot |
-| Working Process Guide | `1.5.2` | pilot |
-| AGENTS dispatcher | `2.5.0` | pilot |
-| Model Selection Recommendations | `1.0.0` | admitted informative guidance |
+| Bootstrap Guide | `1.6.0` | pilot |
+| Working Process Guide | `1.6.1` | pilot |
+| AGENTS dispatcher | `2.6.0` | pilot |
+| Model Selection Recommendations | `1.1.0` | admitted informative guidance |
 
 ### 9.2. Migration Rules
 
@@ -622,7 +629,7 @@ Major-версия не должна выпускаться только из-з
 → сохранить admitted 2.3.0 model-guidance integration
 → сохранить independently verified Released 2.4.0 coverage-first baseline и clean package
 → сохранить admitted local 2.5.2 Decision Interaction completion baseline
-→ сохранить verified Released 3.0.0 lightweight public identity без semantic regression
+→ сохранить admitted 3.0.0 lightweight public identity без semantic regression
 → выполнить source-heavy multi-slice pilot
 → выполнить lightweight script/driver counterpilot
 → выполнить integrated или PAP-strengthened review

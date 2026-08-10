@@ -1,6 +1,6 @@
 # Working Process and Loops Guide
 
-> Version: `1.5.2`
+> Version: `1.6.1`
 
 ## 1. Назначение
 
@@ -199,6 +199,8 @@ Iteration сохраняется: failed dependency возвращается к 
 
 Обе views должны иметь одну configuration identity и возвращаться к одному source contract. Несогласованность содержания, статуса или authority является verification failure. View не становится самостоятельным источником process truth.
 
+Optional `STATE_INDEX.yaml` является только текущей operational projection той же resolved configuration. Он указывает exact carrier refs/hashes, `last_verified`, allowed/prohibited actions, ближайший Gate и reopen routes, но не допускает result и не предоставляет authority. При missing, stale, invalid или contradictory index сообщи проблему, игнорируй его для authority и восстанови state по exact Work Context/Process/Task/Run/Admission carriers. Human-readable chat/Markdown view строится из того же resolved state; расхождение views является verification failure. Создание live index требует отдельного project decision; шаблон находится в `templates/STATE_INDEX_TEMPLATE.yaml`.
+
 #### 3.1.7. `WPC-08` — module specialization
 
 Размещай правило в smallest responsible locus: DPF хранит normative invariant; RA — implementation-neutral entity/view contract; Reference Process — reusable fragments; Application Guide — informative use; PAP — bounded assurance strengthening; operational Guides — selection/execution mechanics; project-specific Working Process — actual admitted choice; Run evidence — observation.
@@ -389,6 +391,14 @@ Working Process применяет presentation preferences, определён�
 
 Ни одна комбинация не разрешает скрывать Candidate status, Human Gate, Admission Request, authority/scope change, consequential action, critical risk, honest stop или limitation. Не публикуй chain of thought, внутренний анализ или технические микрооперации; объяснение не заменяет evidence или Verification.
 
+#### Stage-progress snapshot и completion taxonomy
+
+На значимых milestones показывай компактный snapshot с пятью полями: `Завершено`, `Сейчас`, `Осталось`, `Открытые вопросы`, `Ближайший Human Gate / следующий допустимый шаг`. Частота зависит от presentation preferences, но state опирается на наблюдаемые Task/Run/Loop transitions, не на activity или confidence. Не используй проценты готовности без отдельной измеримой модели и не повторяй неизменившийся status ради видимости движения.
+
+Machine-stable regression projection: `progress_fields: completed | current | remaining | open_questions | next_gate`.
+
+Различай: Task completion criteria met; Run ended с Candidate/partial/blocked outcome; Loop result reached declared Admission state; exact baseline admitted для bounded relied-on use; initiative complete, когда admitted intended outcome существует, а весь required scope завершён или явно disposed. Фраза `Mission Complete!` разрешена только для последнего состояния и сопровождается кратким итогом, exact admitted baseline/configuration, accepted limitations, optional next actions и указанием, что оставшаяся optional work не нужна для завершённого scope. Passing check, Candidate Result, закончившийся Run, implementation до Admission или исчерпание budget не являются initiative completion.
+
 #### `WPC-06` — ясная основа решения
 
 Material Candidate Work Context, Working Process, Loop и Admission Request представляются как продуманный decision carrier, а не поток заметок. Используй применимые подписанные блоки:
@@ -503,6 +513,26 @@ authority
 Любой Model Assignment сначала является Candidate частью process/Loop contract и требует применимого process authority decision. Модель, effort, confidence, benchmark или стоимость не изменяют Task authority, side-effect boundary, Verification, Human Gates, Admission или honest stop. Не передавай confidential source/data внешнему provider без применимой privacy authority.
 
 Authority invariant: model capability does not change Task authority.
+
+### 4.3. Execution profile «Форсаж»
+
+«Форсаж» — отдельный bounded rapid-prototyping execution profile, а не presentation mode, maturity level или bypass. Он доступен только внутри admitted context и отдельно утверждённого Loop/Task envelope. До старта зафиксируй:
+
+```yaml
+profile: forsage
+first_working_result:
+budget:
+stop_condition:
+reversible_agent_choices:
+human_gate_triggers:
+assumptions:
+temporary_decisions:
+prototype_limitations:
+verification:
+completion_route: discard | promote_to_engineering
+```
+
+Агент может самостоятельно выбирать только reversible local technical details внутри exact Task. Вернись к человеку до scope change, persistent или externally valued data, security/privacy/authority change, shared architecture/interface commitment, external effect, non-reversible action или выхода за prototype use. Prototype completion не означает production/release readiness. `promote_to_engineering` запускает обычный admitted requirements/architecture/implementation/verification route; `discard` сохраняет только предусмотренное contract evidence и не разрешает несанкционированное удаление.
 
 ---
 
@@ -1080,6 +1110,10 @@ Working Process является развиваемым project-specific объ�
 - authority решения.
 
 Наблюдение из Run, pilot или failure сначала является Candidate Lesson. Process Review устанавливает applicability, mechanism, affected Loops/results, proposed change, migration impact и verification. Изменение Working Process требует process authority; lesson не переписывает Guide, Reference Process или DPF автоматически.
+
+Полный Post-Initiative Lessons Review по умолчанию не выполняется непрерывно. После допустимого `Mission Complete!` предложи его как optional next action; только explicit user consent открывает bounded review по `templates/POST_INITIATIVE_LESSONS_REVIEW_TEMPLATE.md`. Review возвращает Candidate Patterns/Antipatterns, которые требуют отдельного Process Review Admission и отдельной authority на внедрение. При этом material failure, critical risk, authority deviation или unexpected consequential effect всегда фиксируется немедленно как Run evidence/observation с минимумом: `impact` — affected result/use/authority/scope и material consequence или exposure; `route` — следующий bounded `continue | stop | return | escalate` route с responsible owner/Gate, если applicable. Такая фиксация остаётся observation/evidence item: не становится автоматически Lesson, не запускает continuous Lessons Review, не даёт process/product authority и не откладывается до финального review.
+
+Каждая lesson card сохраняет: `id | type | context | evidence | mechanism | consequence | guard | detection | observed outcome | countercase | applicability | confidence/evidence bound | owner/authority | recommended use/disposition | verification | reopen trigger | status`. `type` равен `pattern` или `antipattern`, начальный `status` всегда `candidate`.
 
 ---
 

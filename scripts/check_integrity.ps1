@@ -490,8 +490,8 @@ if (($governanceStandalone -join "`n") -cne ($governanceCombined -join "`n")) {
 $scenarioPath = Join-Path $repoRoot 'tests/behavioral/BOOTSTRAP_SCENARIOS.md'
 $scenarioText = Get-Content -Raw -Encoding utf8 -LiteralPath $scenarioPath
 $scenarioHeadings = @([regex]::Matches($scenarioText, '(?m)^## S-[0-9]{2} '))
-if ($scenarioHeadings.Count -ne 50) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 50" }
-foreach ($number in 1..50) {
+if ($scenarioHeadings.Count -ne 60) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 60" }
+foreach ($number in 1..60) {
     $id = 'S-{0:D2}' -f $number
     if ($scenarioText -notmatch "(?m)^## $id ") { Add-Failure "Behavioral scenario missing: $id" }
 }
@@ -541,6 +541,16 @@ foreach ($requiredScenarioPhrase in @(
     'plain text'
     'accountable risk owner'
     'one-scan target'
+    'percentage complete'
+    'Mission Complete!'
+    'six combinations'
+    'project/INTERACTION_PREFERENCES.yaml'
+    'Category-first model guidance'
+    'first_working_result'
+    'promote_to_engineering'
+    'Post-Initiative Lessons Review'
+    'immediate critical evidence'
+    'contradictory YAML'
 )) {
     if (-not $scenarioText.Contains($requiredScenarioPhrase)) {
         Add-Failure "Behavioral contract gap: $requiredScenarioPhrase"
@@ -561,13 +571,53 @@ foreach ($scenarioContract in @(
     @{ Id = 'S-47'; Marker = 'one Candidate configuration' },
     @{ Id = 'S-48'; Marker = 'accountable risk owner' },
     @{ Id = 'S-49'; Marker = 'exact action verb' },
-    @{ Id = 'S-50'; Marker = 'one-scan target' }
+    @{ Id = 'S-50'; Marker = 'one-scan target' },
+    @{ Id = 'S-51'; Marker = 'observable state' },
+    @{ Id = 'S-52'; Marker = 'admitted intended outcome' },
+    @{ Id = 'S-53'; Marker = 'six combinations' },
+    @{ Id = 'S-54'; Marker = 'silence' },
+    @{ Id = 'S-55'; Marker = 'on request or material assignment need' },
+    @{ Id = 'S-56'; Marker = 'human_gate_triggers' },
+    @{ Id = 'S-57'; Marker = 'promote_to_engineering' },
+    @{ Id = 'S-58'; Marker = 'explicit consent' },
+    @{ Id = 'S-59'; Marker = 'Run evidence/observation' },
+    @{ Id = 'S-60'; Marker = 'ignored for authority' }
 )) {
     $pattern = '(?ms)^## ' + [regex]::Escape($scenarioContract.Id) + ' .*?(?=^## S-|^## Acceptance summary)'
     $section = [regex]::Match($scenarioText, $pattern).Value
     if (-not $section.Contains($scenarioContract.Marker)) {
         Add-Failure "Behavioral scenario mapping gap: $($scenarioContract.Id) -> $($scenarioContract.Marker)"
     }
+}
+
+# Immediate critical evidence guards are section-scoped regression evidence.
+# Semantic replay remains responsible for bounded-route and authority meaning.
+$workingProcessChangeSection = [regex]::Match(
+    $workingGuideText,
+    '(?ms)^## 14\. .*?(?=^## 15\.)'
+).Value
+if (-not $workingProcessChangeSection.Contains('Run evidence/observation')) {
+    Add-Failure 'Working Process immediate evidence observation guard missing'
+}
+if (-not $workingProcessChangeSection.Contains('`impact`')) {
+    Add-Failure 'Working Process immediate evidence impact guard missing'
+}
+if (-not $workingProcessChangeSection.Contains('`route`')) {
+    Add-Failure 'Working Process immediate evidence route guard missing'
+}
+
+$s59Section = [regex]::Match(
+    $scenarioText,
+    '(?ms)^## S-59 .*?(?=^## S-|^## Acceptance summary)'
+).Value
+if (-not $s59Section.Contains('Run evidence/observation')) {
+    Add-Failure 'S-59 immediate evidence observation guard missing'
+}
+if (-not $s59Section.Contains('impact')) {
+    Add-Failure 'S-59 immediate evidence impact guard missing'
+}
+if (-not $s59Section.Contains('route')) {
+    Add-Failure 'S-59 immediate evidence route guard missing'
 }
 # These exact markers guard repaired projections; semantic replay remains required.
 foreach ($repairedScenarioContract in @(
@@ -741,9 +791,49 @@ else {
     }
 }
 
+# Execution UX contracts and reusable templates
+$lessonsTemplatePath = Join-Path $repoRoot 'templates/POST_INITIATIVE_LESSONS_REVIEW_TEMPLATE.md'
+$stateTemplatePath = Join-Path $repoRoot 'templates/STATE_INDEX_TEMPLATE.yaml'
+if (-not (Test-Path -LiteralPath $lessonsTemplatePath -PathType Leaf)) { Add-Failure 'Post-Initiative Lessons template is missing' }
+if (-not (Test-Path -LiteralPath $stateTemplatePath -PathType Leaf)) { Add-Failure 'State index template is missing' }
+$lessonsTemplateText = if (Test-Path -LiteralPath $lessonsTemplatePath) { Get-Content -Raw -Encoding utf8 -LiteralPath $lessonsTemplatePath } else { '' }
+$stateTemplateText = if (Test-Path -LiteralPath $stateTemplatePath) { Get-Content -Raw -Encoding utf8 -LiteralPath $stateTemplatePath } else { '' }
+$uxContractText = @($agentsText, $bootstrapText, $workingGuideText, $readmeText, $roadmapText, $scenarioText, $modelGuidanceText) -join "`n"
+if (-not $uxContractText.Contains('progress_fields: completed | current | remaining | open_questions | next_gate')) { Add-Failure 'Progress field contract gap' }
+foreach ($uxPhrase in @(
+    'Mission Complete!'
+    'guided + detailed'
+    'compact + milestone'
+    'profile: forsage'
+    'completion_route: discard | promote_to_engineering'
+    'Post-Initiative Lessons Review'
+    'missing, stale, invalid or contradictory'
+    'grants no authority'
+    'category, concise rationale, main trade-off and escalation trigger'
+)) {
+    if (-not $uxContractText.Contains($uxPhrase) -and -not $stateTemplateText.Contains($uxPhrase)) { Add-Failure "Execution UX contract gap: $uxPhrase" }
+}
+foreach ($lessonSection in @('## Initiative, Baseline and Scope','## Planned versus Actual Outcome','## Path and Human Gates','## Evidence Inventory','## Successes','## Failures and Friction','## Candidate Pattern Cards','## Candidate Antipattern Cards','## Overhead and Effectiveness','## Recommendations and Affected Loci','## Verification','## Decision and Reopen Route')) {
+    if (-not $lessonsTemplateText.Contains($lessonSection)) { Add-Failure "Lessons template section gap: $lessonSection" }
+}
+foreach ($lessonField in @('id','type','context','evidence','mechanism','consequence','guard','detection','observed outcome','countercase','applicability','confidence/evidence bound','owner/authority','recommended use/disposition','verification','reopen trigger','status')) {
+    if (-not $lessonsTemplateText.Contains("| $lessonField |")) { Add-Failure "Lessons template field gap: $lessonField" }
+}
+if (-not $lessonsTemplateText.Contains('| type | `pattern` |')) { Add-Failure 'Lessons pattern card type is missing' }
+if (-not $lessonsTemplateText.Contains('| type | `antipattern` |')) { Add-Failure 'Lessons antipattern card type is missing' }
+if ([regex]::Matches($lessonsTemplateText, [regex]::Escape('| status | `candidate` |')).Count -lt 2) { Add-Failure 'Lessons cards must start as candidate' }
+foreach ($stateKey in @('schema_version:','project_id:','active_initiative:','product_baseline:','current_phase:','current_loop:','current_task:','current_run:','admitted_results:','candidate_results:','allowed_actions:','prohibited_actions:','open_questions:','next_human_gate:','reopen_routes:','carrier_refs:','last_verified:')) {
+    if (-not $stateTemplateText.Contains($stateKey)) { Add-Failure "State template key gap: $stateKey" }
+}
+foreach ($stateBoundary in @('not an authority carrier','grants no authority','admits no result','missing, stale, invalid or contradictory','ignore this projection for authority')) {
+    if (-not $stateTemplateText.Contains($stateBoundary)) { Add-Failure "State template boundary gap: $stateBoundary" }
+}
+if (Test-Path -LiteralPath (Join-Path $repoRoot 'project/STATE_INDEX.yaml')) { Add-Failure 'Unauthorized live project/STATE_INDEX.yaml exists' }
+
 # Manifest hashes. PACKAGE_MANIFEST.md itself is intentionally not self-hashed.
 $manifestPath = Join-Path $repoRoot 'PACKAGE_MANIFEST.md'
 $manifestInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+$manifestHashRowCount = 0
 if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
     foreach ($line in (Get-Content -Encoding utf8 -LiteralPath $manifestPath)) {
         if ($line -notmatch '^\|') { continue }
@@ -752,6 +842,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
         if ($columns.Count -lt 2) { continue }
         $hash = $columns[$columns.Count - 1]
         if ($hash -notmatch '^[A-Fa-f0-9]{64}$') { continue }
+        $manifestHashRowCount++
         $relativePath = $columns[0].Trim('`')
         [void]$manifestInventory.Add($relativePath.Replace('\', '/'))
         $componentPath = Join-Path $repoRoot $relativePath
@@ -764,6 +855,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
+    if ($manifestHashRowCount -ne 32) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 32" }
 
     $actualInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($file in (Get-ChildItem -LiteralPath $repoRoot -Recurse -Force -File)) {

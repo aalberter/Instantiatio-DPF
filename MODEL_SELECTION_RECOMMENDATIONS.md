@@ -1,6 +1,6 @@
 # Рекомендации по выбору LLM для Engineering Work Kit
 
-> Recommendation version: `1.0.0`
+> Recommendation version: `1.1.0`
 > Status: `admitted_informative_guidance`
 > Evidence snapshot: `2026-08-02`
 > Scope: agent-enabled engineering work с применением Instantiatio DPF — Engineering Work Kit
@@ -18,6 +18,14 @@
 | **Бюджетная** | `DeepSeek V4 Pro` в Thinking mode как lead; `DeepSeek V4 Flash` для реализации, тестовых заготовок и документации; `GLM-5.2` или разовый frontier-review на критических gates | Скрипты, внутренние сервисы, прототипы, ограниченные приложения и проекты с большим объёмом типовой реализации | Коррелированные ошибки Pro/Flash одного семейства, слабее независимость review, больше человеческой проверки и повторных Runs |
 
 Базовая рекомендация для нового проекта — **оптимальная конфигурация**. Максимальная нужна не на каждом этапе, а в точках необратимости. Бюджетная допустима, если scope хорошо ограничен, тесты исполнимы, а архитектура, data model, migration, security и Final V&V имеют отдельную проверку.
+
+### Category-first presentation rule
+
+Пользователю сначала показывается стабильная категория — `максимальная`, `оптимальная` или `бюджетная` — плюс одно предложение rationale, главный trade-off и escalation trigger. Exact model composition, роли, effort/Thinking mode и pricing раскрываются только по запросу либо когда это необходимо для material Working Process/Loop decision. Датированный catalogue ниже поддерживает такое назначение, но не должен перегружать первый ответ и не обещает availability в конкретном host.
+
+Stable presentation contract: `category, concise rationale, main trade-off and escalation trigger`; exact details appear only on request or material assignment need.
+
+Пример краткой рекомендации: «Рекомендую оптимальную конфигурацию: она оставляет frontier escalation для необратимых решений при умеренной стоимости; trade-off — требуется точная маршрутизация bounded задач; escalation — architecture, data migration, security или Final V&V».
 
 ---
 

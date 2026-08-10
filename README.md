@@ -1,6 +1,6 @@
 # Instantiatio DPF — Engineering Work Kit
 
-> Work Kit version: `3.0.0` — Released lightweight public baseline
+> Work Kit version: `3.1.0` — Released execution-UX evolution over prior admitted `3.0.0`
 
 Версии, publication status, authoritative loci и SHA-256 компонентов определены в [PACKAGE_MANIFEST.md](PACKAGE_MANIFEST.md).
 
@@ -118,7 +118,7 @@ interaction_mode: standard
 explanation_mode: milestone
 ```
 
-При первом входе default применяется без блокирующего опроса, кратко сообщается пользователю, и Bootstrap продолжается. Project-wide выбор можно сохранить в необязательном `project/INTERACTION_PREFERENCES.yaml`; файл не создаётся только ради фиксации default. Новые инициативы наследуют project preference, а initiative override хранится в том же overlay по Work Context ID и не изменяет admitted Work Context.
+При первом входе агент называет активную комбинацию и кратко показывает все шесть вариантов; выбор необязателен, поэтому Bootstrap продолжается без ожидания. Explicit project-wide выбор можно сохранить в необязательном `project/INTERACTION_PREFERENCES.yaml`; молчание сохраняет `standard + milestone` и не создаёт файл. Новые инициативы наследуют project preference, а initiative override хранится в том же overlay по Work Context ID и не изменяет admitted Work Context.
 
 Настройки можно менять независимо естественной фразой:
 
@@ -133,15 +133,27 @@ explanation_mode: milestone
 
 Даже `compact` не скрывает Candidate status, Human Gates, Admission Requests, критические риски, изменения scope/authority, consequential actions, honest stop и ограничения. `detailed` не раскрывает chain of thought или внутренний анализ и группирует повторяющиеся операции.
 
+«Форсаж» не входит в эти шесть комбинаций. Это отдельный bounded rapid-prototyping execution profile с admitted context, first working result, budget, stop condition, reversible choices, Human Gate triggers, assumptions, prototype limitations, verification и финальным маршрутом `discard | promote_to_engineering`. Он не обходит authority и не превращает prototype в production/release result.
+
 ### 2.2. Выбор конфигурации моделей
 
 При старте новой инициативы агент может один раз необязательно предложить помощь в выборе максимальной, оптимальной или бюджетной конфигурации моделей. Offer не заменяет первый содержательный Bootstrap-вопрос и не блокирует discovery при отказе, молчании или host limitation.
 
-Конкретная композиция выбирается только после достаточного понимания scope, риска, privacy, бюджета и доступных host capabilities. Candidate Model Assignment фиксируется в применимом Working Process/Loop: primary, implementation, review и escalation roles, effort/Thinking mode, availability, privacy boundary, independence, fallback и verification.
+После достаточного понимания scope, риска, privacy, бюджета и host capabilities пользователь сначала получает категорию `максимальная`, `оптимальная` или `бюджетная`, краткий rationale, главный trade-off и escalation trigger. Exact models, роли, effort и pricing показываются по запросу либо когда требуются для material Working Process/Loop decision. Тогда Candidate Model Assignment фиксирует primary, implementation, review и escalation roles, effort/Thinking mode, availability, privacy boundary, independence, fallback и verification.
 
 Практические датированные рекомендации находятся в [`MODEL_SELECTION_RECOMMENDATIONS.md`](MODEL_SELECTION_RECOMMENDATIONS.md). Model Assignment не является presentation preference, не создаёт authority и не отменяет Verification, Human Gates, Admission или honest stop.
 
-### 2.3. Полное покрытие до оптимизации процесса
+### 2.3. Прогресс и завершение
+
+На значимых milestones агент показывает пять полей: `Завершено`, `Сейчас`, `Осталось`, `Открытые вопросы`, `Ближайший Human Gate / следующий допустимый шаг`. Непроверяемый процент готовности не используется. Завершение Task, Run, Loop, Admission baseline и всей initiative различаются; `Mission Complete!` допустимо только после admitted intended outcome и завершения либо explicit disposition всего required scope.
+
+### 2.4. Lessons и optional state projection
+
+После `Mission Complete!` агент может предложить отдельный Post-Initiative Lessons Review. Он начинается только с explicit consent, использует [`templates/POST_INITIATIVE_LESSONS_REVIEW_TEMPLATE.md`](templates/POST_INITIATIVE_LESSONS_REVIEW_TEMPLATE.md) и возвращает Candidate Patterns/Antipatterns для отдельного Process Review Admission. Material failure, critical risk или authority deviation при этом фиксируются сразу как evidence, а не откладываются.
+
+[`templates/STATE_INDEX_TEMPLATE.yaml`](templates/STATE_INDEX_TEMPLATE.yaml) задаёт optional machine-readable projection текущего state. Такой index не предоставляет authority и не заменяет exact Work Context/Process/Task/Run/Admission carriers. Missing, stale, invalid или contradictory projection игнорируется для authority; recovery возвращается к exact carrier refs/hashes и одной согласованной human-readable view.
+
+### 2.5. Полное покрытие до оптимизации процесса
 
 Для нового Working Process агент сначала применяет `FC-13` и выбирает применимые DPF patterns. Затем он разворачивает полную для данного проекта карту результатов, зависимостей, проверок и точек допуска. Optional Product Engineering Composition может использоваться как reference screen, но не становится обязательным lifecycle.
 
@@ -453,6 +465,13 @@ Reference-модели для проектирования project-specific arch
 ## 8. Как начать работу
 
 Operational entry текущего Work Kit определяется Bootstrap Guide. Historical `AI_SDLC_DPF/QUICKSTART.md` не используется для новых инициатив или downstream process design; после Admitted Work Context и Entry Decision применяется `WORKING_PROCESS_AND_LOOPS_GUIDE.md` и непосредственно выбранные DPF/reference/application loci.
+
+### Установка из admitted release ZIP
+
+1. Скачайте admitted release ZIP из доверенного release locus и проверьте опубликованные имя, размер и SHA-256.
+2. Распакуйте архив в отдельный каталог; не запускайте работу внутри ZIP и не смешивайте файлы с другим проектом.
+3. Откройте в Codex корень распакованного каталога — тот, где находятся `AGENTS.md`, `README.md` и Guides.
+4. Напишите первое сообщение или сразу опишите новую инициативу: dispatcher начнёт Bootstrap и покажет Candidate Work Context до consequential work.
 
 Для product/system work действует `FC-13-first operational entry`: `admitted context -> FC-13 -> project-relevant result expansion -> optional PEC screen -> explicit reductions -> Human decision`. PEC из Reference Process подключается только как optional completeness screen после context-driven profile и первичного развёртывания результатов. Он помогает проверить requirements, operational concept/scenarios, User Stories, domain/data/state, architecture/interfaces, UX, security, V&V, construction, transition и learning concerns, но не задаёт первый шаг, обязательный порядок или отдельный файл на каждый concern. Direct Work, script, driver и research spike сохраняют lightweight route или explicit non-use.
 
@@ -1017,7 +1036,7 @@ AI_SDLC_DPF/
 
 Текущий пакет следует рассматривать как:
 
-> Released Instantiatio DPF Work Kit `3.0.0`; admitted local Work Kit `2.5.2`, independently verified Released Work Kit `2.4.0` и их exact ZIP baselines сохранены как predecessor/history. Released metadata in a staged package does not self-admit an archive; reliance and external publication require exact ZIP Admission.
+> Released Instantiatio DPF Work Kit `3.1.0`; exact `3.0.0` остаётся prior admitted local release baseline, а Work Kit `2.5.2` — его local predecessor. Released metadata in a staged package does not self-admit an archive; reliance requires exact ZIP Admission.
 
 DPF имеет контролируемый working release.
 
@@ -1029,7 +1048,7 @@ Model-guidance integration также является operational capability, �
 
 Coverage-first repair устраняет наблюдавшийся operational projection gap: ранее сжатая process map могла неявно поглотить ConOps или User Stories. Новые правила и behavioral scenarios прошли cross-carrier verification и fresh independent challenge с сохранённым `R1-IC-O01`: marker/order automation остаётся bounded regression evidence, а не semantic proof. Field effectiveness всё ещё требует representative multi-project pilots.
 
-Candidate Decision UI `2.5.1` восстановил восемь admitted interactions, полный confirmation boundary, risk ownership и concrete scan target, но re-verification обнаружила остаточные DI-02/03/04/06 и S-49 coverage gaps. Local baseline `2.5.2` завершил эти specializations и responsible-section guards, сохранив chat-first форму и plain-text resilience. Released Work Kit `3.0.0` изменяет release-level identity и lightweight public layer, не изменяя этот behavioral contract. Repository checks не доказывают usability нативного Codex UI; field effectiveness и повторный cross-carrier challenge остаются отдельной downstream работой.
+Candidate Decision UI `2.5.1` восстановил восемь admitted interactions, а local baseline `2.5.2` завершил их specializations и responsible-section guards. Admitted `3.0.0` добавил release-level identity и lightweight public layer. Released Work Kit `3.1.0` добавляет progress/completion grammar, category-first guidance, bounded «Форсаж», post-initiative Lessons и optional verified state projection. Repository checks не доказывают field effectiveness; fresh recovery и independent cross-carrier challenge остаются отдельной downstream работой.
 
 Наиболее ценные следующие улучшения должны появляться из:
 
