@@ -403,17 +403,66 @@ Bootstrap определяет и разрешает две независимы
 Если применимая сохранённая настройка отсутствует, используй:
 
 ```yaml
-interaction_mode: standard
+interaction_mode: compact
 explanation_mode: milestone
 ```
 
-На первом применимом project entry кратко назови активную комбинацию, перечисли все шесть комбинаций, скажи, что выбор optional и Bootstrap продолжится без ожидания. Отдельно упомяни доступность «Форсажа» как bounded execution profile по Working Process Guide: он не является седьмой presentation-настройкой и сам по себе не разрешает выполнение.
+Первый контакт строится вокруг намерения пользователя, а не вокруг матрицы режимов. Начни не более чем с двух коротких строк:
 
-Кратко сообщи:
+```text
+Instantiatio DPF — Engineering Work Runtime
+Среда управляемой инженерной работы человека и агента: от исходной идеи и материалов до проверенного результата и явного решения.
+```
 
-> Использую стандартный режим с пояснением ключевых переходов. Настройки можно изменить в любой момент.
+Затем кратко назови experienced default и CAP:
 
-После этого немедленно продолжи Bootstrap и задай один содержательный адаптивный вопрос. Не требуй выбора настроек, не создавай отдельное preference-интервью и не задерживай переход `not_started → in_discovery`.
+```text
+По умолчанию — компактная работа с сообщениями на ключевых этапах (`compact + milestone`).
+Если задачу можно заранее точно ограничить, я предложу объединённый пакет полномочий (CAP): одно решение на согласованный набор действий, проверок и условий остановки. CAP не включается автоматически.
+```
+
+Покажи пять intent-сценариев. Сценарий рекомендует presentation и entry behavior, но сам не admits Work Context, не выбирает Entry Route/Working Process, не активирует «Форсаж» или CAP и не предоставляет authority.
+
+| Сценарий | Рекомендуемая presentation | Entry guidance и boundary |
+|---|---|---|
+| **Опытный пользователь — рекомендуемый старт** | `compact + milestone` | Начать discovery сразу; CAP предлагать позже только для exact bounded work. |
+| **Я здесь впервые** | `guided + detailed` | Пояснять смысл этапа, терминов и решений без полной лекции до первого вопроса. |
+| **Небольшой проект** | `standard + milestone` | Рассмотреть lightweight route после контекста; малый размер не отменяет verification/authority. |
+| **Форсаж** | presentation mode не выводится | Предложить отдельный bounded prototype envelope и approval; не сохранять как preference. |
+| **Изучить или отладить Runtime** | `standard + detailed` | Показывать method/source/technical detail и recovery checks; product/process changes идут обычным authority route. |
+
+Rich host может показать таблицу как interactive cards. Card и numbered-text слои семантически эквивалентны: одинаковые названия, описания, recommended settings, persistence actions и authority limitations. Не обещай native buttons, CSS, storage или accessibility behavior, которых host не предоставляет; text-only projection всегда полна.
+
+Numbered fallback:
+
+```text
+Можно продолжить с рекомендуемыми настройками или выбрать другой вариант:
+1. Опытный пользователь — compact + milestone; CAP только после отдельного точного согласования.
+2. Я здесь впервые — guided + detailed.
+3. Небольшой проект — standard + milestone; лёгкий маршрут определяется после понимания задачи.
+4. Форсаж — отдельный bounded-профиль, который требует своего согласования.
+5. Изучить или отладить Runtime — standard + detailed.
+
+Выбор необязателен и не задерживает начало. Если хотите сохранить его, скажите «для всего проекта»; иначе явная смена действует в текущей сессии.
+```
+
+Если host показывает actions, stable labels: **«Использовать для всего проекта»** и **«Только в этой сессии»**. Selection summary называет resulting axes, scope и необходимость отдельного execution approval. Без explicit project scope carrier не создаётся.
+
+После presentation немедленно продолжи Bootstrap и задай ровно один содержательный адаптивный вопрос. Не создавай preference-интервью и не задерживай переход `not_started → in_discovery`:
+
+```text
+Как начать:
+- положите имеющиеся документы, схемы или заметки в `project/source/` и попросите меня изучить их;
+- опишите идею или проблему прямо в диалоге;
+- покажите существующий проект и попросите оценить текущее состояние;
+- дайте конкретную инженерную задачу — я сначала проверю применимый контекст и границы.
+
+Материалы не обязаны быть идеально оформлены. Можно начать с черновиков, списка мыслей или короткого описания — структуру работы соберём вместе.
+
+С чего начнём: с идеи, проблемы, имеющихся материалов или конкретной задачи?
+```
+
+Optional model-guidance offer может следовать существующим правилам, но не добавляет второй substantive question и не вытесняет warm handoff.
 
 Если project preference существует, примени его без повторного вопроса. Новая инициатива наследует project preference, если для неё нет override.
 
@@ -428,7 +477,7 @@ host/system constraints
 → session override
 → initiative override
 → project preference
-→ standard + milestone
+→ compact + milestone
 ```
 
 Команда применяется сразу и кратко подтверждается. Она не запускает новый Bootstrap, не изменяет Work Context или Entry Decision, не изменяет Working Process/Loop и не требует Admission.
@@ -441,13 +490,13 @@ Project-level persistence использует необязательный от
 project/INTERACTION_PREFERENCES.yaml
 ```
 
-Создавай его только после явной project-scoped команды пользователя; explicit onboarding selection может сохраняться project-wide только при таком scope. Молчание сохраняет `standard + milestone` и не создаёт carrier. Рекомендуемая схема:
+Создавай его только после явной project-scoped команды пользователя; explicit onboarding selection может сохраняться project-wide только при таком scope. Молчание применяет `compact + milestone`, но не создаёт carrier. Рекомендуемая схема:
 
 ```yaml
 schema_version: 1
 
 project_defaults:
-  interaction_mode: standard
+  interaction_mode: compact
   explanation_mode: milestone
   language: ru
 
@@ -458,6 +507,8 @@ initiative_overrides:
 ```
 
 `language` является отдельной presentation-настройкой и не входит в матрицу `3 × 2`. Initiative override связывается с Work Context ID, но хранится вне admitted Work Context, чтобы изменение формы взаимодействия не требовало re-admission. Неизвестное или недопустимое значение игнорируется с кратким предупреждением и fallback к следующему уровню приоритета; Bootstrap не блокируется.
+
+Schema version `1` остаётся читаемой. Смена product default не переписывает существующие project/initiative preferences; optional scenario metadata может быть только additive. «Форсаж» нельзя сохранять как `interaction_mode`, `explanation_mode` или project default.
 
 #### Неподавляемые сообщения
 
@@ -755,7 +806,7 @@ minimal Work Context
 → process review
 ```
 
-В текущем Work Kit `start_bounded_pilot_loop` не создаёт исключения из операционной иерархии. Если применимого approved Working Process нет, сначала представь минимальную process map и Loop contract по `WORKING_PROCESS_AND_LOOPS_GUIDE.md`. Entry Decision не заменяет их process approval.
+В текущем Runtime `start_bounded_pilot_loop` не создаёт исключения из операционной иерархии. Если применимого approved Working Process нет, сначала представь минимальную process map и Loop contract по `WORKING_PROCESS_AND_LOOPS_GUIDE.md`. Entry Decision не заменяет их process approval.
 
 ### 11.9. Honest stop
 
@@ -875,6 +926,12 @@ bounded scope
 ```
 
 Задавай понятные вопросы, а профессиональные термины используй в итоговом Work Context.
+
+### 12.4. Инженерные представления — только по полезному триггеру
+
+Не добавляй universal diagram interview. При material engineering object, аудитории/решении или repeated receiving use заранее предложи обычным языком полезное представление и назови, перед каким first relying decision оно понадобится; до этого раннее предложение само по себе работу не блокирует. При отсутствии trigger продолжай без catalogue/profile ceremony.
+
+Первое применение по умолчанию локально. При повторном или cross-team receiving use один раз предложи explicit project persistence; silence ничего не закрепляет. Authority, first relying use и Human Gate остаются в Working Process, а вся selection/content/source/freshness/confidentiality mechanics находится в [`catalog/engineering_views/README.md`](catalog/engineering_views/README.md). Разработчик не обязан знать notation или служебные `EV-*`/strength codes.
 
 ---
 

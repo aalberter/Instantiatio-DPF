@@ -1,12 +1,14 @@
-# Instantiatio DPF — Engineering Work Kit
+# Instantiatio DPF — Engineering Work Runtime
 
-> Work Kit version: `3.1.0` — Released execution-UX evolution over prior admitted `3.0.0`
+> Runtime version: `3.2.0` — `released`; predecessor released baseline remains Engineering Work Kit `3.1.0`
 
 Версии, publication status, authoritative loci и SHA-256 компонентов определены в [PACKAGE_MANIFEST.md](PACKAGE_MANIFEST.md).
 
+Состав изменений, совместимость, ограничения и rollback route описаны в [Release Notes 3.2.0](docs/releases/RELEASE_NOTES_3_2_0.md). Runtime 3.2.0 имеет статус `released`; проверенный ZIP и checksum являются handoff для отдельного publication-проекта, а внешняя публикация не заявляется этим репозиторием.
+
 ## 1. Что это
 
-Этот репозиторий содержит операционный Work Kit для проектирования и выполнения agent-enabled engineering work. Разработка программных и сложных систем остаётся поддерживаемой областью применения, но Kit не ограничен software development.
+Этот репозиторий содержит `Instantiatio DPF — Engineering Work Runtime`: среду управляемой инженерной работы человека и агента. Она помогает оформить задачу, выбрать project-specific процесс, выполнить ограниченную работу, проверить результат и получить явное человеческое решение. Runtime поставляется как связанная система operational documents, templates, checks и agent interaction; это не отдельный daemon, hosted service или автономный источник authority.
 
 Пакет связывает нормативную основу, операционную инстанциацию и фактическую проектную работу:
 
@@ -15,7 +17,7 @@ DPF
 → normative engineering framework
 
 Instantiatio DPF
-→ operational Engineering Work Kit
+→ operational Engineering Work Runtime
 → включает защищённую AI SDLC DPF edition как domain-specific DPF payload
 
 Engineering Work Bootstrap
@@ -39,18 +41,19 @@ Project-specific artifacts
 - для bounded pilot;
 - для новой инициативы внутри уже действующего проекта.
 
-Это не готовый универсальный workflow. Пакет помогает построить подходящий рабочий контур под конкретную инициативу.
+Это не готовый универсальный workflow и не автоматическая власть агента. Runtime помогает построить подходящий рабочий контур под конкретную инициативу.
 
 ### 1.1. Public identity, license и provenance
 
 - Short name: **Instantiatio DPF**.
-- Full name: **Instantiatio DPF — Engineering Work Kit**.
+- Current full name: **Instantiatio DPF — Engineering Work Runtime**.
+- Historical admitted baseline: **Instantiatio DPF — Engineering Work Kit 3.1.0**.
 - Canonical repository: [github.com/aalberter/Instantiatio-DPF](https://github.com/aalberter/Instantiatio-DPF).
 - Copyright: `Copyright (c) 2026 Instantiatio DPF contributors`.
 - License: [MIT License](LICENSE).
 - Conceptual foundation: [First Principles Framework — FPF](https://github.com/ailev/FPF).
 
-Instantiatio DPF is an independent engineering Work Kit and evolution layer. It is not an official FPF distribution; no affiliation with or endorsement by the FPF authors or repository owners is claimed. No files from the external FPF repository are included or relicensed by this distribution.
+The historical 3.1.0 release is an independent engineering Work Kit and evolution layer; Runtime is its successor public identity. Instantiatio DPF is not an official FPF distribution; no affiliation with or endorsement by the FPF authors or repository owners is claimed. No files from the external FPF repository are included or relicensed by this distribution.
 
 The release-level identity `Instantiatio DPF` does not rename or generalize the controlled `AI_SDLC_DPF/**` payload, which retains its historical and domain identity.
 
@@ -95,45 +98,74 @@ Engineering Initiative
 
 > Агент организует вход и выполнение работы, но не присваивает себе authority.
 
-### 2.1. Настройки взаимодействия
+### 2.1. Первый вход и настройки взаимодействия
 
-Work Kit поддерживает две независимые настройки формы общения:
+Первое сообщение укладывается в две короткие строки:
 
-- **Interaction Mode** определяет стиль взаимодействия: `guided` (с сопровождением), `standard` (стандартный) или `compact` (компактный);
-- **Explanation Mode** определяет охват пояснений: `detailed` (группы всех внешне значимых действий) или `milestone` (только переходы, решения и ключевые события).
+```text
+Instantiatio DPF — Engineering Work Runtime
+Среда управляемой инженерной работы человека и агента: от исходной идеи и материалов до проверенного результата и явного решения.
+```
 
-Допустимы все шесть комбинаций. Это не authority levels, не Working Process, не Loops и не Human Gates. Default:
+Если более приоритетная настройка отсутствует, Runtime сразу применяет `compact + milestone`: короткие сообщения на ключевых этапах. Для заранее точно ограниченной работы он может предложить **объединённый пакет полномочий** (`Consolidated Authority Package`, CAP) — одно решение на exact действия, проверки, budgets и условия остановки. CAP не включается автоматически.
+
+Можно продолжить с рекомендуемым стартом или выбрать один из пяти intent-сценариев:
+
+1. **Опытный пользователь — рекомендуемый старт.** `compact + milestone`; CAP только после отдельного точного согласования.
+2. **Я здесь впервые.** `guided + detailed`; больше сопровождения без длинной анкеты до начала.
+3. **Небольшой проект.** `standard + milestone`; лёгкий маршрут выбирается после понимания задачи и не отменяет необходимые проверки и решения.
+4. **Форсаж.** Отдельный bounded prototype profile со своим согласованием; это не режим общения и не authority.
+5. **Изучить или отладить Runtime.** `standard + detailed`; больше технических деталей, ссылок на правила и recovery checks.
+
+Host может показать эти варианты как cards, но numbered text является полным переносимым fallback. Оба слоя сохраняют одинаковые названия, смысл, настройки, persistence actions и authority boundaries; Runtime не обещает native controls, CSS или host capabilities, которых нет.
+
+Выбор необязателен и не задерживает Bootstrap. Он рекомендует presentation/entry behavior, но не admits Work Context, не выбирает Working Process, не активирует «Форсаж» или CAP и не разрешает consequential work. После краткого summary Runtime задаёт ровно один содержательный вопрос:
+
+> С чего начнём: с идеи, проблемы, имеющихся материалов или конкретной задачи?
+
+Начать можно любым удобным способом:
+
+- положить документы, схемы или заметки в `project/source/` и попросить изучить их;
+- описать идею или проблему прямо в диалоге;
+- показать существующий проект и попросить оценить состояние;
+- дать конкретную инженерную задачу — Runtime сначала проверит применимый контекст и границы.
+
+Материалы не обязаны быть идеально оформлены. Можно начать с черновиков, списка мыслей или короткого описания — структуру работы соберём вместе.
+
+Runtime сохраняет две независимые presentation-настройки:
+
+- **Interaction Mode**: `guided`, `standard` или `compact`;
+- **Explanation Mode**: `detailed` или `milestone`.
+
+Все шесть комбинаций остаются доступными как secondary controls:
 
 | Interaction Mode | Explanation Mode | Ожидаемая форма |
 |---|---|---|
 | `guided` | `detailed` | Сопровождение и пояснение всех групп значимых действий. |
 | `guided` | `milestone` | Сопровождение на переходах, решениях и gates. |
-| `standard` | `detailed` | Нейтральный стиль с подробным внешним журналом действий. |
+| `standard` | `detailed` | Нейтральный стиль с подробными пояснениями действий. |
 | `standard` | `milestone` | Обычная работа с пояснением ключевых событий. |
 | `compact` | `detailed` | Короткие комментарии ко всем группам значимых действий. |
-| `compact` | `milestone` | Минимальное сопровождение на обязательных точках. |
+| `compact` | `milestone` | Минимальное сопровождение на обязательных точках; product default. |
 
 ```yaml
-interaction_mode: standard
+interaction_mode: compact
 explanation_mode: milestone
 ```
 
-При первом входе агент называет активную комбинацию и кратко показывает все шесть вариантов; выбор необязателен, поэтому Bootstrap продолжается без ожидания. Explicit project-wide выбор можно сохранить в необязательном `project/INTERACTION_PREFERENCES.yaml`; молчание сохраняет `standard + milestone` и не создаёт файл. Новые инициативы наследуют project preference, а initiative override хранится в том же overlay по Work Context ID и не изменяет admitted Work Context.
+Молчание применяет default, но не создаёт preference carrier. Сохранение требует явной project-scoped команды, например «Использовать для всего проекта»; тогда используется optional `project/INTERACTION_PREFERENCES.yaml`. «Только в этой сессии» и естественная команда без scope создают session override и не меняют project preference. Existing schema-version-1 carrier и initiative override сохраняют прежний смысл; «Форсаж» никогда не записывается как presentation mode.
 
-Настройки можно менять независимо естественной фразой:
+Приоритет: host/system constraints → обязательные safety/authority messages → explicit command → session override → initiative override → project preference → `compact + milestone`.
 
-```text
-Дальше работай компактно.
-Объясняй все значимые действия.
-Для этой инициативы используй сопровождение и ключевые события.
-Для всего проекта работай стандартно с подробными пояснениями.
-```
+Обычная выдача говорит как инженер на встрече, а не как machine log:
 
-Без явного scope команда действует до конца текущей сессии. Приоритет: host/system constraints → обязательные safety/authority messages → explicit command → session → initiative → project → default.
+1. `Статус` — понятная суть, результат, последствие, риск или blocker.
+2. `Требуемое решение` — только когда действительно нужен human decision; exact варианты и последствия не скрываются.
+3. `Служебная информация` — полезные IDs, hashes, paths, predicates и evidence для проверки.
 
-Даже `compact` не скрывает Candidate status, Human Gates, Admission Requests, критические риски, изменения scope/authority, consequential actions, honest stop и ограничения. `detailed` не раскрывает chain of thought или внутренний анализ и группирует повторяющиеся операции.
+Пустые второй и третий блоки опускаются. Candidate status, CAP termination, `honest_stop`, критические ограничения, authority/scope changes, failed Verification, Human Gates и Admission всегда остаются видимыми в `Статус`, даже в `compact` или rich UI с collapsible service detail. `detailed` не раскрывает chain of thought и группирует однотипные действия.
 
-«Форсаж» не входит в эти шесть комбинаций. Это отдельный bounded rapid-prototyping execution profile с admitted context, first working result, budget, stop condition, reversible choices, Human Gate triggers, assumptions, prototype limitations, verification и финальным маршрутом `discard | promote_to_engineering`. Он не обходит authority и не превращает prototype в production/release result.
+«Форсаж» остаётся bounded rapid-prototyping execution profile с admitted context, first working result, budget, stop condition, reversible choices, Human Gate triggers, assumptions, prototype limitations, verification и маршрутом `discard | promote_to_engineering`. Он не превращает prototype в production/release result.
 
 ### 2.2. Выбор конфигурации моделей
 
@@ -160,6 +192,34 @@ explanation_mode: milestone
 Только после этого агент отдельно показывает рекомендуемые объединения, сокращения и неприменимые результаты, объясняет принимаемые риски и предлагает оптимизированный процесс. Пользователь получает два согласованных представления одной configuration: инженерную карту с trace и краткое управленческое представление с явно подписанным блоком `Требуемое решение / Required Decision`.
 
 Этот порядок не означает одинаково тяжёлый процесс для всех задач. Direct Work, небольшой script или driver сохраняют лёгкий маршрут, если applicability и material non-use показаны явно, а проверка и возврат остаются достаточными для последствий ошибки.
+
+### 2.6. Объединённый пакет полномочий и внешние методы
+
+Для заранее ограниченной работы Runtime может предложить **объединённый пакет полномочий** (`Consolidated Authority Package`, CAP). В нём одним решением утверждается exact набор входов, действий, файлов или иных effects, фаз, проверок, budgets и stop conditions. Всё за пределами package остаётся неразрешённым, а итоговый результат всё равно требует отдельного Admission.
+
+CAP optional. Если границы нельзя точно сформулировать и проверять, работа идёт обычным пошаговым маршрутом. Успешное завершение CAP не admits result и не запускает следующий Loop автоматически.
+
+Если input, configuration, scope, authority, predicate или budget отклонились от утверждённых условий, affected CAP прекращается как `terminated_on_deviation`, а не ставится на паузу. Runtime сообщает отклонение, последнюю завершённую фазу и уже произведённые effects/evidence, после чего wider work возвращается к обычным пошаговым решениям. Тот же CAP нельзя возобновить. Когда причина понятна и новые exact границы определены, Runtime один раз предлагает подготовить successor Candidate CAP или продолжить пошагово; он ничего не создаёт и не активирует автоматически.
+
+Внешние skills, plugins и методы также не становятся отдельным project process. Очевидная локальная capability используется внутри текущих Task/Run без лишнего сканирования всех доступных skills. Если метод приносит собственные plans, states, lifecycle, authority или verification semantics, Runtime явно map полезные части обратно в действующий процесс и сохраняет их output как Candidate. Несовместимый для текущей работы метод не используется; предлагается compatible fallback или его отключение для Task/session. Host constraints, applicable law, contracts и admitted domain authority сохраняют свой приоритет.
+
+Полная mechanics находится в [`WORKING_PROCESS_AND_LOOPS_GUIDE.md`](WORKING_PROCESS_AND_LOOPS_GUIDE.md), reusable Candidate carrier — в [`templates/CONSOLIDATED_AUTHORITY_PACKAGE_TEMPLATE.md`](templates/CONSOLIDATED_AUTHORITY_PACKAGE_TEMPLATE.md).
+
+### 2.7. Инженерные представления по контексту
+
+Runtime не просит заранее перечислять диаграммы и не показывает полный каталог в приветствии. При material engineering object он заранее и простыми словами предлагает подходящее представление из [`catalog/engineering_views/`](catalog/engineering_views/README.md), но требует его только перед первым решением, которое должно на него опираться. Первое use локально; постоянный профиль предлагается один раз при повторном/cross-team use и создаётся только по explicit project/process decision.
+
+Для material database это составная ER-подача: понятная logical model, необходимые physical details и отдельное source/change/limitation explanation. View остаётся проверяемой проекцией названного source; affected Gate ведёт с baseline difference и consequences, stale/conflict сначала диагностируется. У material view есть concise semantic summary, а full text/table projection создаётся при недоступном формате или точной decision need. Level/non-coverage и confidentiality/external-projection boundary остаются явными.
+
+### 2.8. Варианты организации инженерной работы
+
+Когда проекту недостаточно просто bounded Task, Runtime может предложить подходящую общую форму и инженерные методы из [`catalog/working_process_compositions/`](catalog/working_process_compositions/README.md). Например, для сложной software–equipment системы полезны V-диаграмма и работа по спецификации; для насыщенного предметного продукта могут сочетаться DDD, варианты использования и пользовательские истории — у каждого метода своя задача и явные границы.
+
+Сначала всё равно определяются context, `FC-13` и полная project-relevant карта concerns/results. Малое обратимое изменение проходит без каталожной церемонии. Обычно Runtime рекомендует не более одной контекстной композиции и одного–трёх методов, объясняет пользу, ограничения, альтернативы и непокрытые вопросы. Если выбор непонятен, до утверждения можно запросить подробное сравнение, пример и ожидаемые результаты/усилия.
+
+Выбор карточки не запускает готовый процесс. Он лишь помогает собрать exact Candidate Working Process, который отдельно утверждает process authority. Existing admitted process не меняется автоматически; external skill не может импортировать параллельный lifecycle или authority. Use Cases не скрывают непокрытые operational scenarios, User Stories не заменяют system/architecture/data concerns, DDD не превращает Bounded Context в обязательный microservice, а V-диаграмма не объявляется универсальным Waterfall.
+
+Root [`catalog/`](catalog/README.md) содержит выбираемые product modules и не получает authority. S-01/S-02 остаются core Runtime. Названия каталогов, файлов и stable IDs — английские; основное объяснение разработчику и названия вариантов — обычный русский текст, exact технические детали доступны в `Служебной информации`.
 
 ---
 
@@ -340,6 +400,18 @@ DPF не должен содержать:
 ├── AGENTS.md
 ├── ENGINEERING_WORK_BOOTSTRAP_GUIDE.md
 ├── WORKING_PROCESS_AND_LOOPS_GUIDE.md
+├── catalog/
+│   ├── README.md
+│   ├── engineering_views/
+│   │   ├── README.md
+│   │   ├── CATALOG.md
+│   │   └── templates/
+│   │       └── PROJECT_VIEW_PROFILE.yaml
+│   └── working_process_compositions/
+│       ├── README.md
+│       ├── CATALOG.md
+│       └── templates/
+│           └── WORKING_PROCESS_COMPOSITION_RECORD.yaml
 ├── docs/
 │   ├── DPF_FORMATION_METHOD.md
 │   ├── DPF_FORMATION_REFERENCE.md
@@ -391,7 +463,7 @@ DPF не должен содержать:
 
 ### 6.2. Контролируемый DPF-релиз
 
-Каталог `AI_SDLC_DPF/` является controlled read-only release внутри Work Kit. Distributed kit содержит нормативный DPF и bounded reference/profile/informative carriers, перечисленные в фактическом дереве выше.
+Каталог `AI_SDLC_DPF/` является controlled read-only release внутри Runtime. Distributed Runtime содержит нормативный DPF и bounded reference/profile/informative carriers, перечисленные в фактическом дереве выше.
 
 Provenance-heavy development corpus и governing FPF не заявляются как физически включённые в текущий distributed kit. Их границы и назначение описаны в [DPF Formation Reference](docs/DPF_FORMATION_REFERENCE.md).
 
@@ -464,7 +536,7 @@ Reference-модели для проектирования project-specific arch
 
 ## 8. Как начать работу
 
-Operational entry текущего Work Kit определяется Bootstrap Guide. Historical `AI_SDLC_DPF/QUICKSTART.md` не используется для новых инициатив или downstream process design; после Admitted Work Context и Entry Decision применяется `WORKING_PROCESS_AND_LOOPS_GUIDE.md` и непосредственно выбранные DPF/reference/application loci.
+Operational entry текущего Runtime определяется Bootstrap Guide. Historical `AI_SDLC_DPF/QUICKSTART.md` не используется для новых инициатив или downstream process design; после Admitted Work Context и Entry Decision применяется `WORKING_PROCESS_AND_LOOPS_GUIDE.md` и непосредственно выбранные DPF/reference/application loci.
 
 ### Установка из admitted release ZIP
 

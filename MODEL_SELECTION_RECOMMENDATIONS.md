@@ -1,15 +1,15 @@
-# Рекомендации по выбору LLM для Engineering Work Kit
+# Рекомендации по выбору LLM для Engineering Work Runtime
 
 > Recommendation version: `1.1.0`
 > Status: `admitted_informative_guidance`
 > Evidence snapshot: `2026-08-02`
-> Scope: agent-enabled engineering work с применением Instantiatio DPF — Engineering Work Kit
+> Scope: agent-enabled engineering work с применением Instantiatio DPF — Engineering Work Runtime
 > Receiving use: выбор Candidate Model Assignment для Working Process, Loop, Task или Run
 > Language/encoding: русский, UTF-8
 
 ## TL;DR
 
-Для работы по Kit важна не одна «лучшая модель», а композиция ролей: сильная модель ведёт требования, архитектуру и решения с большим последействием; более экономичная выполняет bounded implementation; независимая модель другого семейства проверяет критические результаты. Ни одна модель не получает authority на Human Gate или Admission.
+Для работы в Runtime важна не одна «лучшая модель», а композиция ролей: сильная модель ведёт требования, архитектуру и решения с большим последействием; более экономичная выполняет bounded implementation; независимая модель другого семейства проверяет критические результаты. Ни одна модель не получает authority на Human Gate или Admission.
 
 | Конфигурация | Рекомендуемая композиция | Для чего подходит | Главный риск |
 |---|---|---|---|
@@ -266,8 +266,8 @@ OpenAI официально позиционирует Sol для сложног
 - появился новый model generation или прежняя модель deprecated;
 - изменилась цена более чем на 25%;
 - изменились context, tool support, data policy или availability;
-- KIT-specific eval обнаружил существенный quality gap;
+- Runtime-specific eval обнаружил существенный quality gap;
 - accumulated pilot evidence показывает повторяемый failure mode;
-- начинается новая версия Work Kit или меняется Reference Process.
+- начинается новая версия Runtime или меняется Reference Process.
 
 При актуализации сначала обновляется evidence snapshot и результаты evals, затем — названия моделей. Устойчивые правила назначения по риску, независимого review, Verification и Human Admission не должны меняться только из-за появления новой модели.

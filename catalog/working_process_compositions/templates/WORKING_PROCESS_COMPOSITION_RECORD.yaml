@@ -1,0 +1,64 @@
+schema_version: "1.0"
+record_id: "candidate-record-id"
+status: "candidate"
+
+project_context:
+  project_id: ""
+  context_summary: ""
+  work_context_ref: ""
+  entry_decision_ref: ""
+
+system_eoc:
+  engineered_system: ""
+  level_of_consideration: ""
+  agentic_process_eoc: ""
+  integration_responsibility: ""
+
+intended_use: ""
+first_relying_use: ""
+consequence: ""
+reversibility: ""
+
+expanded_coverage_basis: []
+
+contextual_composition:
+  composition_id: null
+  disposition: "none_selected"
+  applicability_evidence: []
+  counter_signals: []
+
+methods:
+  selected: []
+  optional: []
+  deferred: []
+  not_selected: []
+
+reusable_modules: []
+project_specific_additions: []
+adaptations: []
+omissions_reductions: []
+residual_gaps: []
+
+representations: []
+
+source_currentness:
+  reviewed_sources: []
+  stale_or_conflicting: []
+  applicability_reviews: []
+
+guards_dependencies:
+  dependencies: []
+  commitment_guards: []
+  first_relying_use_checks: []
+
+candidate_working_process:
+  configuration_id: ""
+  carrier_ref: ""
+  status: "candidate_pending_process_authority_decision"
+
+process_authority_decision:
+  status: "pending"
+  authority: ""
+  decision_record_ref: ""
+
+reopen_triggers: []

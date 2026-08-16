@@ -201,6 +201,20 @@ Iteration сохраняется: failed dependency возвращается к 
 
 Optional `STATE_INDEX.yaml` является только текущей operational projection той же resolved configuration. Он указывает exact carrier refs/hashes, `last_verified`, allowed/prohibited actions, ближайший Gate и reopen routes, но не допускает result и не предоставляет authority. При missing, stale, invalid или contradictory index сообщи проблему, игнорируй его для authority и восстанови state по exact Work Context/Process/Task/Run/Admission carriers. Human-readable chat/Markdown view строится из того же resolved state; расхождение views является verification failure. Создание live index требует отдельного project decision; шаблон находится в `templates/STATE_INDEX_TEMPLATE.yaml`.
 
+##### Triggered «Профиль инженерных представлений»
+
+Engineering-view profile не является обязательным Bootstrap carrier. Первое use может оставаться Loop-local; permanent/reused profile и material delta требуют explicit project/process decision и trace. Подробная selection/content/lifecycle mechanics и optional template принадлежат [`catalog/engineering_views/`](catalog/engineering_views/README.md), а не Working Process Guide.
+
+Core invariant сохраняется: material view называет receiving use и exact authoritative source/configuration, не становится parallel truth молча и не поддерживает affected reliance при stale/conflict. Affected Human Gate показывает current view, material baseline difference и consequence; unrelated Gate переиспользует current verified view. Level of consideration, non-coverage и integration responsibility остаются явными; component/subsystem evidence не доказывает system properties.
+
+##### Triggered «Варианты организации инженерной работы»
+
+После admitted context, `FC-13` и развёрнутой project-relevant concern/result map Working Process design может обратиться к [`catalog/working_process_compositions/`](catalog/working_process_compositions/README.md). Модуль различает контекстную композицию, инженерный метод и reusable concern module; эти типы не являются взаимозаменяемыми lifecycle options. Для малого обратимого Direct Work/Task сохраняется явный no-catalogue route.
+
+Runtime рекомендует максимум одну контекстную композицию и обычно один–три метода по наблюдаемой applicability evidence. Keyword, популярность, число артефактов или numeric fit не являются основанием выбора. До process approval видимы существенные counter-signals, невыбранные альтернативы, adaptations, omissions/reductions, residual gaps и project/domain additions. По запросу или при material uncertainty Runtime предлагает подробное сравнение, обоснование, пример и ожидаемые результаты/усилия без молчаливой смены interaction preferences.
+
+Optional `WORKING_PROCESS_COMPOSITION_RECORD.yaml` сохраняет сложный/persistent выбор, но не создаёт project process или authority. Результатом selection остаётся одна exact Candidate Working Process configuration; reliance разрешает только process authority Admission. Existing admitted Working Process не меняется автоматически. Общие system/product views по-прежнему маршрутизируются через engineering-view module, а method-specific working views ссылаются на authoritative carriers и называют scope/non-coverage.
+
 #### 3.1.7. `WPC-08` — module specialization
 
 Размещай правило в smallest responsible locus: DPF хранит normative invariant; RA — implementation-neutral entity/view contract; Reference Process — reusable fragments; Application Guide — informative use; PAP — bounded assurance strengthening; operational Guides — selection/execution mechanics; project-specific Working Process — actual admitted choice; Run evidence — observation.
@@ -368,7 +382,7 @@ Working Process применяет presentation preferences, определён�
 
 - `interaction_mode`: `guided`, `standard` или `compact`;
 - `explanation_mode`: `detailed` или `milestone`;
-- default: `standard + milestone`.
+- product default: `compact + milestone`.
 
 Настройки изменяют только форму interaction и reporting. Они не изменяют Working Process, Loop contract, Task scope, Run authority, tool permissions, side-effect boundary, Verification, evidence или Admission. Изменение настройки не является Process Review и не требует process approval.
 
@@ -390,6 +404,18 @@ Working Process применяет presentation preferences, определён�
 `detailed` кратко поясняет каждую группу внешне значимых действий: изучаемый source/locus, создаваемый artifact, выбранный Guide/Process/Loop/Task, выполняемую проверку и существенный результат. Однотипные операции объединяются. `milestone` сообщает только о переходах, решениях, gates, consequential Runs, Verification, Candidate Results, Admission, honest stop и Process Review.
 
 Ни одна комбинация не разрешает скрывать Candidate status, Human Gate, Admission Request, authority/scope change, consequential action, critical risk, honest stop или limitation. Не публикуй chain of thought, внутренний анализ или технические микрооперации; объяснение не заменяет evidence или Verification.
+
+#### Человеко-понятная структура ответа
+
+Обычная выдача должна быть похожа на краткое сообщение инженера на рабочей встрече, а не на machine log. Группируй routine tool/file operations и веди читателя от смысла к проверяемым деталям в таком порядке:
+
+1. `Статус` — всегда, когда нужен структурированный отчёт: понятная суть результата или ситуации, практическое последствие, material risk/blocker и следующий полезный шаг. Одних IDs/status codes недостаточно.
+2. `Требуемое решение` — только при реальном Human Gate: exact decision, meaningful options, последствия и recommendation обычным языком. Блок не бывает пустым и не скрывается/collapse.
+3. `Служебная информация` — только когда exact IDs, statuses, hashes, paths, predicates или evidence имеют receiving use. В rich UI блок может collapse, но text-only output сохраняет его после решения.
+
+Если решения или полезных служебных деталей нет, соответствующий блок полностью опускается. Candidate status, CAP `terminated_on_deviation`, `honest_stop`, critical limitation/risk, authority/scope change, failed или inconclusive Verification, Human Gate и Admission остаются явными в `Статус`; consequential meaning нельзя помещать только в `Служебная информация`.
+
+Структура не требует трёх headings в каждом коротком сообщении. Она задаёт стабильный порядок при наличии содержания и согласуется с `WPC-06`: material decision может содержать расширенный basis, но человек сначала понимает ситуацию и требуемое решение, а затем проверяет exact детали.
 
 #### Stage-progress snapshot и completion taxonomy
 
@@ -533,6 +559,120 @@ completion_route: discard | promote_to_engineering
 ```
 
 Агент может самостоятельно выбирать только reversible local technical details внутри exact Task. Вернись к человеку до scope change, persistent или externally valued data, security/privacy/authority change, shared architecture/interface commitment, external effect, non-reversible action или выхода за prototype use. Prototype completion не означает production/release readiness. `promote_to_engineering` запускает обычный admitted requirements/architecture/implementation/verification route; `discard` сохраняет только предусмотренное contract evidence и не разрешает несанкционированное удаление.
+
+### 4.4. Consolidated Authority Package
+
+Объединённый пакет полномочий (`Consolidated Authority Package`, CAP) — optional exact Candidate configuration, в которой одно явное решение process authority может разрешить заранее ограниченную последовательность действий, проверок и conditional transitions. CAP уменьшает повторные approvals, но не является источником authority, lifecycle, Admission mechanism или универсальным default.
+
+Если exact границы нельзя доказать, используй обычный пошаговый маршрут. Отсутствие CAP не является degraded mode.
+
+#### Eligibility contract
+
+До approval CAP обязан назвать:
+
+- stable ID, version, Candidate status и exact configuration/hash;
+- purpose, Engineered System, Agentic Process EoC, receiving use и first relying use;
+- accountable approver и final result Admission authority;
+- exact authoritative/admitted inputs либо closed configuration baseline;
+- allowed/prohibited actions, tools, effects и exact write loci;
+- ordered phases, entry/transition predicates и declared evidence;
+- side-effect budgets: file/effect count, aggregate bytes where applicable, iteration bound и zero budgets for prohibited effects;
+- Human Gate triggers, Verification, recovery/rollback constraints, stop/return и supersession route;
+- явный статус destructive, Git, network, external-system, production, security/privacy, packaging/release/publication effects; silence означает `not allowed`.
+
+Directory wildcard допустим только тогда, когда bounded instances и file-count rule восстанавливаемы. Schema presence недостаточно: значения должны позволять observable enforcement. Reusable template находится в `templates/CONSOLIDATED_AUTHORITY_PACKAGE_TEMPLATE.md`.
+
+#### States and transitions
+
+```text
+candidate
+→ admitted_inactive
+→ active
+→ completed_candidate_pending_admission
+
+active
+→ terminated_on_deviation
+```
+
+`terminated_on_deviation` — terminal execution state одной CAP configuration. `honest_stop` остаётся outcome Run/Session. `admitted | returned_for_refinement | rejected | deferred` остаются Admission Decisions. Не подменяй эти state classes друг другом.
+
+Approval идентифицирует exact CAP configuration/hash и authorized action. Молчание, reaction, двусмысленное «да» или ответ к другой configuration CAP не активируют; запроси clarification.
+
+Перед первым consequential action activation повторно проверяет package/configuration, inputs, authority, allowed loci, budgets и baseline. Перед каждым automatic transition проверь applicable predicates и запиши evidence. Только полный pass разрешает следующий phase. Ordinary reversible work внутри declared phase не требует micro-Admission.
+
+Normal completion возвращает Candidate/partial result и evidence со state `completed_candidate_pending_admission`. Оно не admits result, не authorizes downstream Loop и не изменяет prior authority. Final result Admission остаётся отдельным explicit decision для exact result configuration и first relying use.
+
+#### Deviation, fallback and successor
+
+Failed mandatory predicate, undeclared effect, input/configuration/scope/authority drift или exceeded budget прекращает active CAP как `terminated_on_deviation`. Не pause и не resume тот же package после repair.
+
+User-facing report начинается exact смыслом:
+
+> CAP прекращён: обнаружено отклонение от согласованных условий.
+
+Затем сообщи:
+
+- exact deviation;
+- last completed phase;
+- effects already produced;
+- preserved evidence/Candidate state;
+- почему automatic transitions больше не применимы;
+- Run/Session outcome, включая `honest_stop`, если он действительно наступил;
+- следующий обычный route.
+
+CAP termination не завершает wider initiative автоматически. Дальнейшая consequential работа возвращается к обычным пошаговым authority decisions. Уже созданные результаты остаются Candidate, пока не получат applicable Admission; termination не admits и не rejects их.
+
+Когда cause понятна и новые exact bounds можно сформулировать, Runtime один раз для данного termination event предлагает: подготовить successor Candidate CAP либо продолжить пошагово. Он не создаёт и не активирует successor автоматически. Пока cause неясна или work остаётся unbounded, CAP ещё не предлагай; допустимо bounded ordinary investigation.
+
+#### Verification and recovery
+
+До каждого phase записывай applicable predicates/current configuration. После write phase перечисляй exact touched files/effects и выполняй allowed-locus, budget, source/configuration и claim-specific checks. Automatic destructive rollback не подразумевается: recovery/rollback должен быть отдельно разрешён и безопасен. Failed verification возвращает к smallest responsible work; `admit despite failure` требует отдельного спроектированного exception/risk route.
+
+### 4.5. Внешние навыки и методологическая целостность
+
+External skill, plugin, framework или agentic method может дать bounded capability, но не должен молча создавать parallel lifecycle, project plan, state model, artifact/source-of-truth hierarchy, Verification или Admission mechanism.
+
+Host/system/safety/privacy constraints остаются выше project instructions. Applicable law, contract, admitted domain standard/model и authoritative engineering source входят через normal source/authority mediation; не классифицируй их как subordinate skill. Если higher-priority host behavior несовместим и его нельзя bounded-map, явно сообщи limitation и stop/return route вместо ложного обещания sovereignty.
+
+#### Event-driven gate
+
+Не инвентаризируй и не классифицируй все installed/available skills во время каждого Bootstrap или Run. Gate активируется только когда method:
+
+- действительно invoked;
+- явно requested;
+- либо его applicable instructions вводят material lifecycle/planning/state/artifact/authority/verification semantics.
+
+Классифицируй current use, а не skill «навсегда»:
+
+1. `capability_only` — local technique/tool capability без material process semantics;
+2. `process_bearing_mappable` — содержит полезные capability/steps, но также process semantics, которые можно bounded-map;
+3. `process_incompatible` — для current use нельзя сохранить admitted process/authority/source/verification boundaries.
+
+`capability_only` применяется внутри current Task/Run без user-facing gate или нового carrier, если не становится material. Это silent fast path.
+
+Для `process_bearing_mappable`:
+
+1. назови локальную capability и цель;
+2. map useful actions/results to current Task/Run;
+3. оставь foreign plans/states non-authoritative;
+4. переведи equivalent concepts в Runtime terms, сохраняя material borrowed terminology/provenance;
+5. классифицируй output как Candidate;
+6. проведи его через applicable Verification/Admission;
+7. reject или isolate incompatible parts и назови unresolved conflict.
+
+Material mapping сохраняет:
+
+`method/skill | version/observable identity | requested capability | classification for this use | Runtime Task/Run | accepted technique/output | rejected/translated process semantics | Candidate status | project process changed? | unresolved conflict | fallback/reopen`.
+
+Обычно `project process changed? = no`. Если useful capability требует реального process change, останови mapping и вернись к Process Review/process authority; gate сам не меняет Working Process.
+
+Когда process-bearing method material, в `Статус` назови использованную capability и скажи, изменился ли project process. В `Служебная информация` помести mapping details. Не смешивай foreign terminology с Runtime как будто provenance не существует.
+
+`process_incompatible` не используй для affected work. Сообщи conflict и предложи disable/avoid для Task/session, compatible capability или ordinary return. Если host требует incompatible behavior и его нельзя ограничить, соблюди higher-priority constraint и явно сообщи limitation/stop.
+
+Compatible classification можно reuse только для same skill/version/use class. Reopen при version/behavior/Task/project-authority change или observed drift. Не создавай persistent skill registry, пока repeated use не докажет receiving use и отдельный project/process decision.
+
+CAP не разрешает process-bearing external method только потому, что method доступен. Method/use должен быть declared либо compatibly mapped inside CAP boundary до reliance. Undeclared material method вызывает applicable return или CAP termination.
 
 ---
 

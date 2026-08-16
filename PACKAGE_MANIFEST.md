@@ -1,13 +1,13 @@
-# Instantiatio DPF — Engineering Work Kit Package Manifest
+# Instantiatio DPF — Engineering Work Runtime Package Manifest
 
 ## Publication control
 
 | Field | Value |
 |---|---|
-| Kit version | `3.1.0` |
+| Runtime version | `3.2.0` |
 | Publication status | `released` |
-| Assembly date | `2026-08-10` |
-| Public identity | `Instantiatio DPF — Engineering Work Kit` |
+| Assembly date | `2026-08-16` |
+| Public identity | `Instantiatio DPF — Engineering Work Runtime` |
 | Canonical repository | `https://github.com/aalberter/Instantiatio-DPF` |
 | License | `MIT`; root `LICENSE` |
 | Operational entry | `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` |
@@ -22,7 +22,7 @@ Publication status is separate from semantic versioning. This manifest is the au
 
 | Component | Version | Status | Authoritative locus |
 |---|---|---|---|
-| Engineering Work Kit | `3.1.0` | released | `PACKAGE_MANIFEST.md` and root operational documents |
+| Engineering Work Runtime | `3.2.0` | released | `PACKAGE_MANIFEST.md` and root operational documents |
 | AI SDLC DPF | `1.0.1` | controlled working | `AI_SDLC_DPF/framework/AI_SDLC_DPF.md` |
 | Bootstrap Guide | `1.6.0` | pilot | `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` |
 | Working Process Guide | `1.6.1` | pilot | `WORKING_PROCESS_AND_LOOPS_GUIDE.md` |
@@ -34,7 +34,7 @@ Publication status is separate from semantic versioning. This manifest is the au
 
 ## Compatibility and exclusions
 
-- The Work Kit operational entry is Bootstrap-first. `AI_SDLC_DPF/QUICKSTART.md` is historical, non-operational and superseded by the two root execution Guides.
+- The Runtime operational entry is Bootstrap-first. `AI_SDLC_DPF/QUICKSTART.md` is historical, non-operational and superseded by the two root execution Guides.
 - Distributed repository content covered by the contributors' copyright is available under the standard MIT License in root `LICENSE`; external linked content is not relicensed by this package.
 - `https://github.com/aalberter/Instantiatio-DPF` is the canonical repository identity. External repository creation or publication is separate from this released package configuration.
 - FPF (`https://github.com/ailev/FPF`) is the conceptual foundation. Instantiatio DPF is independent, is not an official FPF distribution and claims no affiliation or endorsement; no external FPF repository files are included or relicensed.
@@ -48,9 +48,10 @@ Publication status is separate from semantic versioning. This manifest is the au
 - Product Engineering Composition is an optional experimental Reference Process realization. It is not a DPF pattern, universal lifecycle, artifact catalogue or project authority.
 - New Working Processes use `FC-13-first operational entry`, expand project-relevant result coverage before explicit reductions and preserve admitted reduction/decision trace. Optional PEC remains a selected reference screen; module specialization and lightweight routes are preserved.
 - Coverage-first cross-carrier verification and fresh independent challenge concluded `pass_with_limitations`. `R1-IC-O01` remains explicit: exact marker/order automation is bounded regression evidence, not semantic proof; material verification retains semantic replay.
-- Admitted `3.0.0` established the local release baseline over predecessor `2.5.2`. Released Work Kit `3.1.0` adds stage progress/completion, six-mode onboarding, category-first guidance, bounded «Форсаж», post-initiative Lessons Review, optional verified state projection and scenarios `S-51—S-60`. Staged released metadata does not self-admit the archive; exact ZIP Admission is required before it supersedes `3.0.0`. It does not claim field-proven effectiveness or external publication.
+- Admitted `3.0.0` established the local release baseline over predecessor `2.5.2`. Released Work Kit `3.1.0` remains the exact predecessor release. Runtime `3.2.0` is the released identity/configuration and adds intent-first onboarding, bounded CAP/external-method safeguards and modular engineering-view/process-composition catalogues while preserving controlled DPF and historical baselines. Its admitted release-readiness basis is `RRP-INST_DPF_EVOL_001-002-v0.1.0`, SHA-256 `A5478A6515CF1932C0043355D16D29FCD5D47EAFF360F9C17240054117E6AB52`; independent review is `IRR-INST_DPF_EVOL_001-RR01-R01-001-v0.1.0`, SHA-256 `877E00A73BBC425F219BCC9DA2C3B4398D730C83A2DDCBF24CA816CF8F3188F8`, disposition `pass_with_nonblocking_limitations`. Field pilot remains `not_performed_non_blocking_limitation`. The verified ZIP/checksum is the handoff to a separate GitHub publication project; Git tag, GitHub Release, upload and external publication remain outside this repository transition.
 - Existing admitted project Working Processes remain valid for their admitted uses. Re-evaluate strengthened concern/guard readiness on a new initiative, new consequential Loop or material process change; do not mass-create PEC carriers.
 - The manifest is the exact distributed inventory. Unlisted live `project/**` carriers are project state and are excluded from distribution comparison, while manifest-listed scaffold `.gitkeep` files remain distribution components.
+- The released ZIP contains exactly the 41 hashed inventory files plus this self-unhashed manifest under root `Instantiatio-DPF-3.2.0/`; its checksum carrier remains outside the archive as publication-project handoff evidence.
 - `.gitattributes` establishes UTF-8/LF-oriented text handling. Normative DPF, Reference Architecture, PAP and historical Quick Start retain declared byte-preserving exceptions and exact hashes.
 - The included `AI_SDLC_DPF/` payload remains byte-for-byte the `Released 2.2.0` assembly provenance declared by its controlled README; this provenance is distinct from the Released Instantiatio DPF Work Kit `3.1.0` wrapper identity. The admitted `3.0.0` local release baseline and its `2.5.2` predecessor remain preserved history.
 
@@ -65,7 +66,7 @@ At the admitted release baseline, `AI_SDLC_DPF/reference/AI_SDLC_SOURCES.md` des
 | Path | Role | SHA-256 |
 |---|---|---|
 | `.gitattributes` | deterministic text/EOL policy | CA0CABA8A9C922FC3243773CC3A555390AB58962DD48F6143CF1B92BAF231122 |
-| `AGENTS.md` | dispatcher | D063C5FF0221BD8B9B8A9F3E4B05F4D6D3FEA8C9CBBBFED05756DB7641F2C20B |
+| `AGENTS.md` | dispatcher | C864D534F4241823941F53F50BF21B86CD229FA52C18E68C02F5F26A70081494 |
 | `AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md` | generated publication view | 57EBD58D7AAA9D1D63461F70025EEA3BE70F7168A3D4CE4BC09765E2287156F3 |
 | `AI_SDLC_DPF/examples/AI_SDLC_WORKED_EXAMPLES.md` | informative examples | 257F98C6C9EFE3EE77CA3EFB9E686B10CA5EAF878453F088F7FAC45AAE49DB93 |
 | `AI_SDLC_DPF/framework/AI_SDLC_APPLICATION_GUIDE.md` | informative guidance | FE8775074E04ACD080BFC8D029D26F99E1B73ED2E9047DF556E267CDC3FE6C55 |
@@ -80,22 +81,31 @@ At the admitted release baseline, `AI_SDLC_DPF/reference/AI_SDLC_SOURCES.md` des
 | `AI_SDLC_DPF/reference/AI_SDLC_OPEN_QUESTIONS.md` | open questions | 62438C39EDF1AB7726A239F9B1DE6C0DAD9E594E983EBCD9FA6BBD6B69BD1ED7 |
 | `AI_SDLC_DPF/reference/AI_SDLC_SOURCES.md` | source register | 8A77D11FF2FDC2371391A0D667C9E46C58C9BDA0B35E93AD8DCD365858C50DD9 |
 | `AI_SDLC_DPF/reference/AI_SDLC_TRACEABILITY.md` | traceability summary | E466EFA819987F7E9BB8A7B95BD17ADAA9FB739C3ED00CFE3FB917F67AC4777F |
+| `catalog/engineering_views/CATALOG.md` | engineering-view catalogue | 9D942D66873F8E44722DD6AD8E5CDAD5F05F178A014734B0979DABF714799C76 |
+| `catalog/engineering_views/README.md` | engineering-view selection method | E449FC44441B02A0AAEE52C149E922762F40DF278C4063DB3B9F5658EC0EC941 |
+| `catalog/engineering_views/templates/PROJECT_VIEW_PROFILE.yaml` | optional project-view profile | 79CFDFED1224D5E4EE7ED66E3B1BC0A4B64E8BCBFF7D9E480D98166C21556A28 |
+| `catalog/README.md` | modular catalogue navigation | 01699614FFE50CEF57A45CF6E7AF826EFA4C9D50D51BA16470ADE26ACBDCD7DC |
+| `catalog/working_process_compositions/CATALOG.md` | process-composition catalogue | BA453CE9A92AD1AF11569B5A3166EB5E60256CDAED6ACDA495E600CBA6DEDA24 |
+| `catalog/working_process_compositions/README.md` | process-composition selection method | 7BCE2F38A2692DF75D69517A924538ADD8557F2B3800E504735B676E609975C0 |
+| `catalog/working_process_compositions/templates/WORKING_PROCESS_COMPOSITION_RECORD.yaml` | optional composition record | 614F3DC3F33A7C13E0ACCE014F769357247C185C32B3A104BE8AC2DF9F11F8DA |
 | `docs/DPF_FORMATION_METHOD.md` | reference/provenance method | 93E6D1D1F4EB9F13B2F51656DE7E6B3D7D2782324D1103AE2BE43E15C700D744 |
 | `docs/DPF_FORMATION_REFERENCE.md` | formation reference | 723E3D9959265995C69F1271ACF2E0429C369B7C080A09B9B0538D5FA3E31AB2 |
-| `docs/KIT_EVOLUTION_ROADMAP.md` | roadmap | BA9FEA6537C018272245AA7998F3DC6856326CF0CE326B437F2C5A1248DC229C |
-| `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` | Bootstrap method | B25365D8AF75B265FD97BCCDF9B3CC21120D682386CBCB6F62848A5991D9E4D9 |
+| `docs/KIT_EVOLUTION_ROADMAP.md` | roadmap | 8EBD312A602BB2AB3AE88D085B0B64864D79780BCB855E537A1BE97CE3EBF7F2 |
+| `docs/releases/RELEASE_NOTES_3_2_0.md` | 3.2.0 release notes | DB8F0F2810B2E7A3EC1BEFE4B852914DA13712B573E9D36DE01F6747840F0D18 |
+| `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` | Bootstrap method | C128168829425264049B0A333FF5DC0C62C62B9D608D2620774950E7B630B354 |
 | `LICENSE` | MIT license | EF4DA070E506CD1018F449FC78BAE57537B96F797264CF56F133E411B5B611EC |
-| `MODEL_SELECTION_RECOMMENDATIONS.md` | admitted informative model guidance | 3064742845E8902411C73B24C3ECF17826A4CCA9F757173D8F0053E1E78ED10D |
+| `MODEL_SELECTION_RECOMMENDATIONS.md` | admitted informative model guidance | 764B43344ED81983C6725BB7993650915BA8E5287E68F6FC790822C229F95431 |
 | `project/artifacts/.gitkeep` | empty project scaffold | 7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6 |
 | `project/source/.gitkeep` | empty project scaffold | 7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6 |
 | `project/src/.gitkeep` | empty project scaffold | 7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6 |
 | `project/tests/.gitkeep` | empty project scaffold | 7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6 |
-| `README.md` | package entry and navigation | BBEEA78701BBAA033266B853D97FE4684DCD084E268723A334F482E7F9F83E7A |
-| `scripts/check_integrity.ps1` | integrity automation | 456FEDD028F6564D41A1C37E9C4DD8237607DD407B7FB09B6C7063685B77B676 |
+| `README.md` | package entry and navigation | D36F128470B86E034D7195FC530FF368AF6E0807D6CF590E8F08FB3EF62B7766 |
+| `scripts/check_integrity.ps1` | integrity automation | B1BD5F3772E7227AA1164B0783996AEF4AC326492E1243C556DB50806F77E985 |
+| `templates/CONSOLIDATED_AUTHORITY_PACKAGE_TEMPLATE.md` | reusable bounded authority package | DD70C8B81EF02D2029B953D6BFDCEB45E589BB02C11A868D99E3818F28F87058 |
 | `templates/POST_INITIATIVE_LESSONS_REVIEW_TEMPLATE.md` | reusable post-initiative review | 3E84967F5AD4AFA442273CAFB15407EC5B397CA7B54D057096E63BEC4121A8B6 |
 | `templates/STATE_INDEX_TEMPLATE.yaml` | optional state projection template | 68473096F407907A08D1B1121EDB2A152F4D68BB590B093A62E4A3D56A75BC76 |
-| `tests/behavioral/BOOTSTRAP_SCENARIOS.md` | behavioral acceptance contract | 05EF4DB0F98D038E3B70CC13FFC13E2B68672868ED0E4660946BC26154F769D2 |
-| `WORKING_PROCESS_AND_LOOPS_GUIDE.md` | process method | 03A3B1ED3C7FC75F6E290D2272D66B408ADEC5B38910F45FACF72B1B14132373 |
+| `tests/behavioral/BOOTSTRAP_SCENARIOS.md` | behavioral acceptance contract | DF0C021BAC8B34D86DD2B7FCE4E6C46A2F2559C2A86874EBBE35D228F6023520 |
+| `WORKING_PROCESS_AND_LOOPS_GUIDE.md` | process method | 1699561E27EA2A5CFB9BD8485D697185FDF5059DECABE9B1029CC02059E307CE |
 
 ## Verification command
 
@@ -105,4 +115,4 @@ On Windows PowerShell:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check_integrity.ps1
 ```
 
-The command verifies UTF-8, declared LF/EOL exceptions, the exact MIT LICENSE, release-level identity and FPF/public-boundary markers, one authoritative root AGENTS entry, bounded live Markdown links and anchors, operational placeholders, required files, DPF pattern/sentinel counts, 60 behavioral scenarios, execution-UX/template and Decision UI guards, coverage-first mappings, model-guidance and PEC semantics, standalone/combined-publication parity, DPF assembly provenance, distributed/live-project separation and the exact 32-row hash inventory. Marker checks remain bounded regression evidence; semantic replay remains required.
+The command verifies UTF-8, declared LF/EOL exceptions, the exact MIT LICENSE, Runtime 3.2.0 released identity, release-note and FPF/public-boundary markers, one authoritative root AGENTS entry, bounded live Markdown links and anchors, operational placeholders, required files, DPF pattern/sentinel counts, exact continuous 136 behavioral scenarios, execution-UX/template and Decision UI guards, coverage-first mappings, model-guidance and PEC semantics, standalone/combined-publication parity, DPF assembly provenance, distributed/live-project separation and the exact 41-row hash inventory. Marker checks remain bounded regression evidence; semantic replay and independent review remain required.

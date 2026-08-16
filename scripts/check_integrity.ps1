@@ -177,6 +177,7 @@ $requiredFiles = @(
     'docs/DPF_FORMATION_METHOD.md',
     'docs/DPF_FORMATION_REFERENCE.md',
     'docs/KIT_EVOLUTION_ROADMAP.md',
+    'docs/releases/RELEASE_NOTES_3_2_0.md',
     'tests/behavioral/BOOTSTRAP_SCENARIOS.md',
     'AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
     'AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
@@ -269,6 +270,7 @@ $bootstrapText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRo
 $workingGuideText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'WORKING_PROCESS_AND_LOOPS_GUIDE.md')
 $agentsText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AGENTS.md')
 $roadmapText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/KIT_EVOLUTION_ROADMAP.md')
+$releaseNotesText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_2_0.md')
 
 # Public wrapper identity, license and provenance contract
 $licensePath = Join-Path $repoRoot 'LICENSE'
@@ -282,10 +284,10 @@ else {
     }
 }
 $emDash = [char]0x2014
-if (-not $readmeText.StartsWith("# Instantiatio DPF $emDash Engineering Work Kit`n")) {
+if (-not $readmeText.StartsWith("# Instantiatio DPF $emDash Engineering Work Runtime`n")) {
     Add-Failure 'README release-level identity is missing'
 }
-if (-not $manifestText.StartsWith("# Instantiatio DPF $emDash Engineering Work Kit Package Manifest`n")) {
+if (-not $manifestText.StartsWith("# Instantiatio DPF $emDash Engineering Work Runtime Package Manifest`n")) {
     Add-Failure 'Manifest release-level identity is missing'
 }
 foreach ($publicIdentityContract in @(
@@ -321,12 +323,12 @@ if ($agentEntryFiles.Count -ne 1 -or $agentEntryFiles[0].FullName -cne (Join-Pat
 }
 
 $versionContracts = @(
-    @{ Component = 'Engineering Work Kit'; Carrier = $readmeText; Label = 'Work Kit version' },
+    @{ Component = 'Engineering Work Runtime'; Carrier = $readmeText; Label = 'Runtime version' },
     @{ Component = 'Bootstrap Guide'; Carrier = $bootstrapText; Label = 'Version' },
     @{ Component = 'Working Process Guide'; Carrier = $workingGuideText; Label = 'Version' },
     @{ Component = 'AGENTS dispatcher'; Carrier = $agentsText; Label = 'Version' }
 )
-$kitVersion = $null
+$runtimeVersion = $null
 foreach ($contract in $versionContracts) {
     $componentPattern = '\| ' + [regex]::Escape($contract.Component) + ' \| \x60([^\x60]+)\x60 \|'
     if ($manifestText -notmatch $componentPattern) {
@@ -334,7 +336,7 @@ foreach ($contract in $versionContracts) {
         continue
     }
     $componentVersion = $matches[1]
-    if ($contract.Component -eq 'Engineering Work Kit') { $kitVersion = $componentVersion }
+    if ($contract.Component -eq 'Engineering Work Runtime') { $runtimeVersion = $componentVersion }
     $carrierPattern = [regex]::Escape($contract.Label) + ': \x60' + [regex]::Escape($componentVersion) + '\x60'
     if ($contract.Carrier -notmatch $carrierPattern) {
         Add-Failure "Component version drift: $($contract.Component) $componentVersion"
@@ -368,8 +370,18 @@ else {
 }
 
 # Package status and accepted limitation visibility
-if ($manifestText -notmatch '\| Publication status \| \x60(candidate|released)\x60 \|') {
-    Add-Failure 'Manifest publication status is missing or invalid'
+if ($manifestText -notmatch '\| Publication status \| \x60released\x60 \|') {
+    Add-Failure 'Manifest publication status must be released in the release configuration'
+}
+foreach ($releasedStatusContract in @(
+    @{ Name = 'README'; Text = $readmeText; Marker = ('> Runtime version: `3.2.0` ' + $emDash + ' `released`; predecessor released baseline remains Engineering Work Kit `3.1.0`') },
+    @{ Name = 'Manifest component'; Text = $manifestText; Marker = '| Engineering Work Runtime | `3.2.0` | released |' },
+    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = '| Engineering Work Runtime | `3.2.0` | released |' },
+    @{ Name = 'Release notes'; Text = $releaseNotesText; Marker = 'Publication status: `released`' }
+)) {
+    if (-not $releasedStatusContract.Text.Contains($releasedStatusContract.Marker)) {
+        Add-Failure "Released status contract mismatch: $($releasedStatusContract.Name)"
+    }
 }
 foreach ($requiredReleasePhrase in @(
     '## Known accepted release limitation',
@@ -379,6 +391,31 @@ foreach ($requiredReleasePhrase in @(
 )) {
     if (-not $manifestText.Contains($requiredReleasePhrase)) {
         Add-Failure "Released package limitation guard missing: $requiredReleasePhrase"
+    }
+}
+
+# Runtime 3.2.0 released release-note contract
+foreach ($releaseNoteMarker in @(
+    "# Instantiatio DPF $emDash Engineering Work Runtime 3.2.0",
+    'Publication status: `released`',
+    "## S-01 $emDash Identity, onboarding and interaction",
+    "## S-02 $emDash Bounded authority and external methods",
+    "## S-03 $emDash Engineering views",
+    "## S-04 $emDash Working Process compositions",
+    '## Compatibility and migration',
+    '## Authority, security and privacy',
+    '## Verification evidence',
+    '## Known limitations',
+    '## Rollback and recovery',
+    '## Release Admission and distribution handoff',
+    'not_performed_non_blocking_limitation',
+    '9E1689A3845ECCA5F70EBA55CA5F99AC09FA80640A7E6B4EE791650396931E21'
+    'A5478A6515CF1932C0043355D16D29FCD5D47EAFF360F9C17240054117E6AB52'
+    '877E00A73BBC425F219BCC9DA2C3B4398D730C83A2DDCBF24CA816CF8F3188F8'
+    'pass_with_nonblocking_limitations'
+)) {
+    if (-not $releaseNotesText.Contains($releaseNoteMarker)) {
+        Add-Failure "Release notes contract gap: $releaseNoteMarker"
     }
 }
 
@@ -489,11 +526,13 @@ if (($governanceStandalone -join "`n") -cne ($governanceCombined -join "`n")) {
 # Behavioral contract coverage
 $scenarioPath = Join-Path $repoRoot 'tests/behavioral/BOOTSTRAP_SCENARIOS.md'
 $scenarioText = Get-Content -Raw -Encoding utf8 -LiteralPath $scenarioPath
-$scenarioHeadings = @([regex]::Matches($scenarioText, '(?m)^## S-[0-9]{2} '))
-if ($scenarioHeadings.Count -ne 60) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 60" }
-foreach ($number in 1..60) {
-    $id = 'S-{0:D2}' -f $number
-    if ($scenarioText -notmatch "(?m)^## $id ") { Add-Failure "Behavioral scenario missing: $id" }
+$scenarioHeadings = @([regex]::Matches($scenarioText, '(?m)^## S-([0-9]+) '))
+if ($scenarioHeadings.Count -ne 136) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 136" }
+$scenarioNumbers = @($scenarioHeadings | ForEach-Object { [int]$_.Groups[1].Value })
+foreach ($number in 1..136) {
+    $occurrences = @($scenarioNumbers | Where-Object { $_ -eq $number }).Count
+    if ($occurrences -eq 0) { Add-Failure "Behavioral scenario missing: S-$number" }
+    elseif ($occurrences -gt 1) { Add-Failure "Behavioral scenario duplicated: S-$number" }
 }
 foreach ($requiredScenarioPhrase in @(
     'Working Process without a suitable Loop',
@@ -739,7 +778,7 @@ foreach ($requiredPreferencePhrase in @(
         Add-Failure "Interaction preference contract gap: $requiredPreferencePhrase"
     }
 }
-if ($bootstrapText -notmatch '(?s)interaction_mode: standard.*explanation_mode: milestone') {
+if ($bootstrapText -notmatch '(?m)^interaction_mode: compact\r?\nexplanation_mode: milestone$') {
     Add-Failure 'Bootstrap preference defaults are missing or reordered'
 }
 if ($workingGuideText -notmatch 'Working Process, Loop contract, Task scope') {
@@ -855,7 +894,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
-    if ($manifestHashRowCount -ne 32) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 32" }
+    if ($manifestHashRowCount -ne 41) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 41" }
 
     $actualInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($file in (Get-ChildItem -LiteralPath $repoRoot -Recurse -Force -File)) {

@@ -4,7 +4,7 @@
 
 ## 1. Назначение
 
-Этот файл является компактным dispatcher текущего Engineering Work Kit. Он выбирает применимый исполнительский locus, сохраняет authority boundaries и не дублирует подробную механику Guides.
+Этот файл является компактным dispatcher `Instantiatio DPF — Engineering Work Runtime`: среды управляемой инженерной работы человека и агента. Он выбирает применимый исполнительский locus, сохраняет authority boundaries и не дублирует подробную механику Guides.
 
 ```text
 Engineering Work Bootstrap
@@ -88,7 +88,7 @@ PAP не является девятым уровнем. Work Context и Entry D
 - `interaction_mode`: `guided`, `standard` или `compact`;
 - `explanation_mode`: `detailed` или `milestone`.
 
-Default — `standard + milestone`. При первом project entry кратко назови active combination, все шесть сочетаний осей и отдельно «Форсаж» как bounded execution profile; выбор optional и не блокирует Bootstrap. Настройки определяются/хранятся по Bootstrap Guide, execution profile — по Working Process Guide.
+Product default — `compact + milestone`. При первом project entry используй intent-first five-scenario greeting и equivalent numbered-text fallback по Bootstrap Guide; выбор optional и не блокирует Bootstrap. Все шесть сочетаний осей остаются secondary controls (`guided|standard|compact × detailed|milestone`, включая `standard + milestone`), а «Форсаж» — отдельный bounded execution profile по Working Process Guide.
 
 Приоритет:
 
@@ -99,7 +99,7 @@ host/system constraints
 → session override
 → initiative override
 → project preference
-→ standard + milestone
+→ compact + milestone
 ```
 
 Естественная команда без явного scope действует до конца текущей сессии. Project-wide persistence требует явной формулировки; silence не создаёт preference carrier. Изменение настройки кратко подтверждается, но не запускает Bootstrap, не меняет Work Context, Entry Decision, Working Process/Loop и не требует Admission. «Форсаж» не является preference и не даёт authority.
@@ -108,7 +108,7 @@ host/system constraints
 
 ### 4.2. Язык и кодировка
 
-Рабочий язык взаимодействия, заголовков решений и создаваемых project-specific carriers — русский, если пользователь или admitted project authority явно не установили иное (`WPC-07`). Технические термины, идентификаторы, код, пути, статусы и точные цитаты не переводи, если перевод меняет системный смысл. Материальное решение оформляй по `WPC-06`: человеко-понятный заголовок ситуации, exact Candidate configuration, видимые последствия/варианты/limitations и явно подписанное `Требуемое решение / Required Decision`; детали остаются в Guides.
+Рабочий язык взаимодействия, заголовков решений и создаваемых project-specific carriers — русский, если пользователь или admitted project authority явно не установили иное (`WPC-07`). Технические термины, идентификаторы, код, пути, статусы и точные цитаты не переводи, если перевод меняет системный смысл. Выдача говорит как инженер на встрече: сначала `Статус` с понятной сутью и последствиями, затем непустое `Требуемое решение / Required Decision` только при реальном gate и полезная `Служебная информация` только для exact IDs/hashes/paths/evidence; critical Candidate/termination/risk/authority/Verification meaning остаётся в `Статус`, порядок блоков сохраняется и пустые блоки не создаются (`WPC-06`). При material engineering object/аудитории/repeated receiving use заранее предложи понятное conventional view по `catalog/engineering_views/`; core сохраняет first relying use/authority/Gate, каталог не создаёт profile/parallel truth.
 
 Все создаваемые и изменяемые текстовые файлы сохраняй в UTF-8. Оригинальные source materials не переводи и не перекодируй без явного запроса.
 
@@ -117,6 +117,7 @@ host/system constraints
 При старте новой инициативы можно один раз кратко предложить помощь в выборе максимальной, оптимальной или бюджетной конфигурации моделей. Offer является необязательным, не заменяет первый содержательный adaptive question и не блокирует Bootstrap при отказе, молчании или недоступности выбора в host.
 
 Не выбирай композицию до понимания scope, риска, privacy, бюджета и host capabilities. Сначала назови категорию, краткий rationale, trade-off и escalation trigger; exact models/details — по запросу или material assignment need. Candidate Model Assignment фиксирует roles, effort, availability, privacy, independence, fallback и verification; он не создаёт authority и не отменяет gates/Admission. Host constraints приоритетны.
+CAP/external-method invariant: optional `CAP` применим только как exact approved configuration с inputs/loci/phases/predicates/budgets/Verification/recovery/final Admission и не создаёт authority; deviation прекращает CAP как `terminated_on_deviation` с сообщением «CAP прекращён: обнаружено отклонение от согласованных условий», evidence и ordinary stepwise return, тот же CAP не resume, successor лишь один раз предлагается после понятных cause/new bounds и никогда не создаётся/активируется автоматически. External skill не заменяет admitted lifecycle/plan/state/source/Verification/Admission: не сканируй skills по умолчанию; actual/requested process-bearing use классифицируй `capability_only | process_bearing_mappable | process_incompatible`, map useful parts в Task/Run либо отклони с fallback, сохраняя host/system/safety/privacy и applicable law/contract/domain authority. Details и template — в Working Process Guide.
 
 ## 5. Новая инициатива
 

@@ -1,18 +1,20 @@
-# Instantiatio DPF — Engineering Work Kit
+# Instantiatio DPF — Engineering Work Runtime
 ## Evolution Roadmap
 
-> **Status:** Informative / Roadmap  
-> **Scope:** развитие всего `Instantiatio DPF — Engineering Work Kit`
-> **Authority:** этот документ не изменяет AI SDLC DPF, Bootstrap Guide, Working Process Guide или project-specific процессы  
+> **Status:** Informative / Roadmap
+> **Scope:** развитие `Instantiatio DPF — Engineering Work Runtime` как successor public identity admitted baseline `Engineering Work Kit 3.1.0`
+> **Authority:** этот документ не изменяет AI SDLC DPF, Bootstrap Guide, Working Process Guide или project-specific процессы
 > **Use:** ориентир для накопления практики, выбора следующих улучшений и предотвращения преждевременного усложнения
 
 ---
 
 ## 1. Назначение
 
-Этот документ фиксирует направления развития `Instantiatio DPF — Engineering Work Kit` после сборки базовой архитектуры.
+Этот документ фиксирует направления развития `Instantiatio DPF — Engineering Work Runtime`. Название `Engineering Work Kit 3.1.0` ниже сохраняется там, где обозначает exact released baseline и историю продукта.
 
-Текущий kit уже включает:
+Текущая release configuration — `Engineering Work Runtime 3.2.0` со статусом `released`. Она объединяет admitted S-01–S-04, modular catalogues и independently verified закрытие integration finding F-01; состав, совместимость и ограничения зафиксированы в [Release Notes 3.2.0](releases/RELEASE_NOTES_3_2_0.md). Проверенный ZIP и checksum передаются отдельному GitHub publication-проекту; внешняя публикация не выполняется этим репозиторием.
+
+Текущий Runtime уже включает:
 
 ```text
 AI SDLC DPF
@@ -76,7 +78,7 @@ DPF, Bootstrap, Process Engine и Agent Layer следует считать не
 
 ## 3. Текущая полнота комплекта
 
-Текущий kit уже поддерживает полный маршрут:
+Текущий Runtime уже поддерживает полный маршрут:
 
 ```text
 неструктурированная потребность
@@ -398,7 +400,7 @@ Work Context version
 
 | Component | Version | Status |
 |---|---:|---|
-| Engineering Work Kit | `3.1.0` | released |
+| Engineering Work Runtime | `3.2.0` | released |
 | AI SDLC DPF | `1.0.1` | controlled working |
 | Bootstrap Guide | `1.6.0` | pilot |
 | Working Process Guide | `1.6.1` | pilot |
@@ -641,7 +643,7 @@ Major-версия не должна выпускаться только из-з
 
 ## 17. Итоговая позиция
 
-Текущий kit находится в правильной точке:
+Текущий Runtime находится в правильной точке:
 
 > Он уже достаточно полный для end-to-end инженерной работы и достаточно компактный для понимания, проверки и пилотного применения.
 
