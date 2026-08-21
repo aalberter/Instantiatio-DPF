@@ -1,6 +1,6 @@
 # Engineering Work Bootstrap Guide
 
-> Version: `1.6.0`
+> Version: `1.7.0`
 
 ## 1. Назначение
 
@@ -516,7 +516,7 @@ Schema version `1` остаётся читаемой. Смена product default
 
 #### Проекция Decision UI
 
-Material Bootstrap decision представляется chat-first по `WPC-06` из `WORKING_PROCESS_AND_LOOPS_GUIDE.md`: выбери применимый `DI-01`—`DI-08`, используй человеко-понятный заголовок ситуации, одну exact Candidate configuration, recommendation, evidence/risks/limitations, видимые allowed/prohibited consequences и явно подписанное `Требуемое решение / Required Decision`. Optional adjacent `.md` хранит подробный basis для той же configuration, когда он нужен для review или recovery. Для `DI-05 Risk` сохраняй accountable risk owner и reopen trigger; clarification является cross-class response state, а не девятой interaction. После решения подтверди outcome/configuration, newly allowed и still-prohibited effects, actor/date when available, decision-record link when created, conditions и next/reopen route. Текст сохраняет смысл без цвета/rich UI, а двусмысленный ответ не создаёт authority.
+Material Bootstrap decision представляется chat-first по `WPC-06` из `WORKING_PROCESS_AND_LOOPS_GUIDE.md`: выбери применимый `DI-01`—`DI-08`, используй человеко-понятный заголовок ситуации, одну exact Candidate configuration, recommendation, evidence/risks/limitations, видимые allowed/prohibited consequences и явно подписанное `Требуемое решение / Required Decision`. При первой material ссылке назови carrier/result понятным названием вместе с exact ID и useful link; в decision confirmation и handoff повтори то же понятное название вместе с exact ID, а не только ID или filename. Optional adjacent `.md` хранит подробный basis для той же configuration, когда он нужен для review или recovery. Для `DI-05 Risk` сохраняй accountable risk owner и reopen trigger; clarification является cross-class response state, а не девятой interaction. После решения подтверди outcome/configuration, newly allowed и still-prohibited effects, actor/date when available, decision-record link when created, conditions и next/reopen route. Текст сохраняет смысл без цвета/rich UI, а двусмысленный ответ не создаёт authority.
 
 ### 7.5. Optional model-guidance offer
 
@@ -1790,7 +1790,7 @@ Preference notice и optional model-guidance offer не являются доп�
 
 ### 34.4. Перед Admission
 
-Агент показывает Candidate Work Context или Entry Decision как структурированный документ: подписывает смысловые блоки, отделяет основания, риски, ограничения и последствия, затем выделяет блок `Требуемое решение / Required Decision` с точной формулировкой ожидаемого решения (`WPC-06`).
+Агент показывает Candidate Work Context или Entry Decision как структурированный документ: подписывает смысловые блоки, отделяет основания, риски, ограничения и последствия, затем выделяет блок `Требуемое решение / Required Decision` с точной формулировкой ожидаемого решения (`WPC-06`). Первая и повторная relying reference сохраняют одно понятное название вместе с exact ID; filename/path остаётся service detail.
 
 Пользовательские заголовки и поясняющий текст формулируются прежде всего по-русски (`WPC-07`). Точные technical terms, идентификаторы, статусы, пути и цитаты сохраняются, когда перевод меняет системный смысл.
 

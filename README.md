@@ -1,10 +1,10 @@
-# Instantiatio DPF — Engineering Work Runtime
+# Instantiatio DPF 3.3.0 — Engineering Work Runtime · Beta
 
-> Runtime version: `3.2.0` — `released`; predecessor released baseline remains Engineering Work Kit `3.1.0`
+> Runtime version: `3.3.0` — publication status `released`; product maturity `Beta`; predecessor released Runtime baseline is `3.2.0`
 
 Версии, publication status, authoritative loci и SHA-256 компонентов определены в [PACKAGE_MANIFEST.md](PACKAGE_MANIFEST.md).
 
-Состав изменений, совместимость, ограничения и rollback route описаны в [Release Notes 3.2.0](docs/releases/RELEASE_NOTES_3_2_0.md). Runtime 3.2.0 имеет статус `released`; проверенный ZIP и checksum являются handoff для отдельного publication-проекта, а внешняя публикация не заявляется этим репозиторием.
+Состав изменений, совместимость, ограничения и recovery route описаны в [Release Notes 3.3.0](docs/releases/RELEASE_NOTES_3_3_0.md). Publication status указан выше и в manifest, но сам по себе не создаёт Release Admission; ZIP, Git tag, upload и внешняя публикация не выполняются и не заявляются.
 
 ## 1. Что это
 
@@ -165,6 +165,8 @@ explanation_mode: milestone
 
 Пустые второй и третий блоки опускаются. Candidate status, CAP termination, `honest_stop`, критические ограничения, authority/scope changes, failed Verification, Human Gates и Admission всегда остаются видимыми в `Статус`, даже в `compact` или rich UI с collapsible service detail. `detailed` не раскрывает chain of thought и группирует однотипные действия.
 
+Material carrier/result впервые называется понятным названием вместе с exact ID и useful link; в Gate, decision confirmation и handoff то же название повторяется вместе с ID. Bare ID, filename и path остаются служебными деталями. При русском project language создаваемые carriers используют русские headings и explanatory prose; English сохраняется для exact technical meaning, а не как декоративный default.
+
 «Форсаж» остаётся bounded rapid-prototyping execution profile с admitted context, first working result, budget, stop condition, reversible choices, Human Gate triggers, assumptions, prototype limitations, verification и маршрутом `discard | promote_to_engineering`. Он не превращает prototype в production/release result.
 
 ### 2.2. Выбор конфигурации моделей
@@ -204,6 +206,12 @@ CAP optional. Если границы нельзя точно сформулир
 Внешние skills, plugins и методы также не становятся отдельным project process. Очевидная локальная capability используется внутри текущих Task/Run без лишнего сканирования всех доступных skills. Если метод приносит собственные plans, states, lifecycle, authority или verification semantics, Runtime явно map полезные части обратно в действующий процесс и сохраняет их output как Candidate. Несовместимый для текущей работы метод не используется; предлагается compatible fallback или его отключение для Task/session. Host constraints, applicable law, contracts и admitted domain authority сохраняют свой приоритет.
 
 Полная mechanics находится в [`WORKING_PROCESS_AND_LOOPS_GUIDE.md`](WORKING_PROCESS_AND_LOOPS_GUIDE.md), reusable Candidate carrier — в [`templates/CONSOLIDATED_AUTHORITY_PACKAGE_TEMPLATE.md`](templates/CONSOLIDATED_AUTHORITY_PACKAGE_TEMPLATE.md).
+
+### 2.6.1. Runtime conformance и durable-state reconciliation
+
+Semantic prohibition не представляется автоматически как технически enforced. Только когда consequential Run действительно полагается на material deterministic boundary, Runtime связывает exact approved semantic source с required capability и actual host/tool/configuration, различает `declared | enforced | compensated | unsupported` и выбирает enforcement, compensating control, Human Gate либо `honest_stop`. Claim `enforced` требует concrete conformance evidence для exact configuration; capability/profile не создаёт authority. Simple reversible work без такого claim остаётся на direct route.
+
+Перед consequential closure/handoff material durable effects сопоставляются с declared Candidate/admitted configuration: effect представлен в result, уже принадлежит exact baseline, связан с external system of record, явно disposable без downstream reliance либо возвращён как unresolved/deferred. Git не обязателен; read-only и clearly disposable work не получает baseline ceremony; persistence не означает Verification или Admission.
 
 ### 2.7. Инженерные представления по контексту
 

@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> Version: `2.6.0`
+> Version: `2.7.0`
 
 ## 1. Назначение
 
@@ -108,7 +108,7 @@ host/system constraints
 
 ### 4.2. Язык и кодировка
 
-Рабочий язык взаимодействия, заголовков решений и создаваемых project-specific carriers — русский, если пользователь или admitted project authority явно не установили иное (`WPC-07`). Технические термины, идентификаторы, код, пути, статусы и точные цитаты не переводи, если перевод меняет системный смысл. Выдача говорит как инженер на встрече: сначала `Статус` с понятной сутью и последствиями, затем непустое `Требуемое решение / Required Decision` только при реальном gate и полезная `Служебная информация` только для exact IDs/hashes/paths/evidence; critical Candidate/termination/risk/authority/Verification meaning остаётся в `Статус`, порядок блоков сохраняется и пустые блоки не создаются (`WPC-06`). При material engineering object/аудитории/repeated receiving use заранее предложи понятное conventional view по `catalog/engineering_views/`; core сохраняет first relying use/authority/Gate, каталог не создаёт profile/parallel truth.
+Рабочий язык взаимодействия, заголовков решений и создаваемых project-specific carriers — русский, если пользователь или admitted project authority явно не установили иное (`WPC-07`). Технические термины, идентификаторы, код, пути, статусы и точные цитаты не переводи, если перевод меняет системный смысл. Выдача говорит как инженер на встрече: сначала `Статус` с понятной сутью и последствиями, затем непустое `Требуемое решение / Required Decision` только при реальном gate и полезная `Служебная информация` только для exact IDs/hashes/paths/evidence; critical Candidate/termination/risk/authority/Verification meaning остаётся в `Статус`, порядок блоков сохраняется и пустые блоки не создаются (`WPC-06`). При material engineering object/аудитории/repeated receiving use заранее предложи понятное conventional view по `catalog/engineering_views/`; core сохраняет first relying use/authority/Gate, каталог не создаёт profile/parallel truth. Сохраняй continuity project-specific carrier: первая material ссылка использует понятное название + exact ID + useful link, последующие Gate/confirmation/handoff повторяют название + ID; bare ID/filename/path остаются service detail.
 
 Все создаваемые и изменяемые текстовые файлы сохраняй в UTF-8. Оригинальные source materials не переводи и не перекодируй без явного запроса.
 
@@ -159,7 +159,7 @@ Project-specific Process — authority-level term. Working Process — его о
 
 Confidence, explanation, доступ к контексту, успешное завершение и способность использовать инструмент не создают authority.
 
-Для consequential action должны быть определены accountable authority, allowed/prohibited actions, side-effect boundary, reversibility, verification, evidence, admission route и stop/return/escalation routes.
+Для consequential action должны быть определены accountable authority, allowed/prohibited actions, side-effect boundary, reversibility, verification, evidence, admission route и stop/return/escalation routes. Если Run materially полагается на deterministic technical boundary, до действия свяжи exact semantic source с required и actual host/tool/configuration capability, зафиксируй `declared | enforced | compensated | unsupported`, выбери `enforce | compensate | Human Gate | honest_stop` и назови concrete evidence/reopen trigger; capability/permission не создаёт authority, а simple reversible work без enforcement claim сохраняет direct route.
 
 Любой существенный AI output сначала является Candidate Result. Базовые Admission Decision statuses: `admitted`, `rejected`, `returned_for_refinement`, `deferred`. `honest_stop` является исходом Session или Run, а не Admission Decision.
 
@@ -173,7 +173,7 @@ Confidence, explanation, доступ к контексту, успешное з
 
 ## 11. Handoff
 
-Для milestone сообщай `Завершено / Сейчас / Осталось / Открытые вопросы / Ближайший Human Gate`; не используй недоказуемый процент. `Mission Complete!` — только для admitted initiative outcome со всем required scope completed/disposed; затем Lessons Review лишь optional с consent. Аналитический handoff также называет Work Context, systems/EoC, facts/assumptions, verification и limitations.
+Для milestone сообщай `Завершено / Сейчас / Осталось / Открытые вопросы / Ближайший Human Gate`; не используй недоказуемый процент. `Mission Complete!` — только для admitted initiative outcome со всем required scope completed/disposed; затем Lessons Review лишь optional с consent. Аналитический handoff также называет Work Context, systems/EoC, facts/assumptions, verification и limitations. Перед successful consequential closure/handoff сопоставь actual material durable effects с declared Candidate/admitted configuration: `represented | already represented | external system of record | disposable without reliance | unresolved/deferred`; read-only/unchanged/disposable work не требует baseline ceremony, persistence не означает Verification/Admission.
 
 При изменении репозитория сообщай изменённые loci, применённый Working Process/Loop, решения, assumptions, выполненные проверки и unresolved issues.
 

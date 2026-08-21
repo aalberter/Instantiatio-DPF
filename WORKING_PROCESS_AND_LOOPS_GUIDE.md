@@ -1,6 +1,6 @@
 # Working Process and Loops Guide
 
-> Version: `1.6.1`
+> Version: `1.7.0`
 
 ## 1. Назначение
 
@@ -442,6 +442,8 @@ Material Candidate Work Context, Working Process, Loop и Admission Request пр
 
 Короткий ответ не требует десяти разделов. Структура обязательна там, где человек принимает material decision. `compact` может сокращать пояснения, но не decision basis.
 
+Одна и та же material configuration сохраняет понятную идентичность через request, decision confirmation и handoff. При первой ссылке покажи `понятное название + exact ID` и descriptive link, если carrier существует и ссылка полезна; при последующей relying reference повтори `понятное название + exact ID`. Bare ID, filename или path допустимы в service details, но не являются достаточной основной идентификацией результата или решения.
+
 Минимальный Required Decision contract:
 
 ```text
@@ -511,6 +513,8 @@ Evidence, assumptions, risks и limitations
 #### `WPC-07` — русский по умолчанию
 
 Пользовательские заголовки, пояснения, рекомендации и decision basis пиши по-русски, если project authority не установила иной язык. English сохраняй для точных technical terms, identifiers, code, paths, statuses, model names и quotations. При первом material use кратко поясни термин по-русски, если это улучшает понимание. Не переводи source quotations или machine identifiers так, чтобы изменился смысл.
+
+То же правило действует для создаваемых project-specific carriers: headings и explanatory prose формируются прежде всего по-русски, а English используется только там, где сохраняет exact technical meaning. Автоматический word-count или запрет English не является достаточным oracle; проверяй смысл, continuity title/ID и отсутствие decorative English.
 
 Presentation preferences меняют объём, но не отменяют `WPC-05/WPC-06/WPC-07`, Candidate status, risks, authority или limitations.
 
@@ -994,6 +998,26 @@ Working Process вводится в действие только после я�
 
 Если Model Assignment материален, дополнительно укажи primary/implementation/review/escalation roles, effort/Thinking mode, host availability, privacy boundary, независимость reviewer, fallback и verification. Для простой механической Task достаточно явно принять host default; не создавай тяжёлый carrier ради заполнения полей.
 
+#### 8.6.1. Conditional Runtime Boundary Conformance Contract
+
+Semantic allowed/prohibited boundary остаётся authority source даже при наличии host automation. Когда consequential Run materially полагается на deterministic technical boundary, до действия установи recoverable mapping:
+
+```text
+exact approved semantic source/configuration
+→ boundary claim
+→ required implementation-neutral capability
+→ actual host/tool/configuration capability
+→ declared | enforced | compensated | unsupported
+→ enforce | compensate | Human Gate | honest_stop
+→ concrete conformance evidence, limitation and invalidation trigger
+```
+
+`declared` не означает `enforced`. Capability, tool permission, profile или projection не предоставляют action/decision authority и не заменяют Task/Run/Admission. Claim `enforced` требует observable evidence для exact configuration; behavioral scenarios, schema presence и integrity markers сами по себе недостаточны.
+
+Default — inline mapping в material Loop/Task/Run/CAP или evidence. Reusable Runtime Capability Profile optional и оправдан repeated/material use одной exact configuration. Machine-readable projection создаётся только при concrete consumer/enforcer, ссылается на semantic source и становится stale/invalid при material source/host/tool/configuration change. Consequential execution не продолжается по stale projection.
+
+Начинай с smallest protected-value set: protected loci, prohibited side effects/external actions, finite budget/terminal outcome и stale semantic binding. Для simple reversible work без material technical-enforcement claim сохраняй semantic boundary, direct review и ordinary Verification без profile/conformance ceremony. Git, worktree, container и CI являются adapters, а не universal vocabulary.
+
 ### 8.7. Verification
 
 Определи verification intent одновременно с Candidate Result.
@@ -1069,6 +1093,7 @@ Task не должна незаметно расширять определен�
 ## Assumptions
 ## Limitations
 ## Verification Performed
+## Actual Effects and Durable-State Reconciliation
 ## Unresolved Issues
 ## Stop Reason
 ## Replay Information
@@ -1084,6 +1109,22 @@ Run должен быть достаточно воспроизводимым д
 - почему получился данный результат.
 
 Полная запись внутреннего рассуждения модели не требуется и не заменяет evidence.
+
+### 10.1. Durable-State Reconciliation перед closure/handoff
+
+Если Run создал material durable effect либо остаётся uncertainty о downstream relevance, перед successful consequential closure/handoff сопоставь actual effects с declared Candidate/admitted configuration. Для каждого material effect сохрани одну recoverable disposition:
+
+```text
+represented_in_result
+already_represented_in_baseline
+external_system_of_record
+disposable_no_reliance
+unresolved_deferred
+```
+
+`external_system_of_record` называет exact recoverable locus/version и не требует Git duplication. `disposable_no_reliance` не предоставляет deletion authority. `unresolved_deferred` блокирует successful consequential closure/handoff и возвращает owner/route. Persistence остаётся отдельной от Verification, Admission, release и publication.
+
+Для read-only Run, unchanged relied baseline или явно temporary/disposable non-relied state достаточно одной строки об отсутствии material unreconciled effects; новый baseline или standalone reconciliation carrier не требуется. Admission Request и handoff показывают unresolved durable state, если оно влияет на relying use.
 
 ---
 

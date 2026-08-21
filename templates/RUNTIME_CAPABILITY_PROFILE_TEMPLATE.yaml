@@ -1,0 +1,58 @@
+{
+  "_usage": "Optional exact-configuration projection. It is not an authority carrier, grants no permission, admits no result and never replaces approved Loop, Task, Run, CAP or Admission sources. Keep the inline contract when repeated/material receiving use is absent.",
+  "schema_version": "1.0",
+  "profile_id": "candidate-runtime-capability-profile",
+  "status": "candidate",
+  "semantic_source": {
+    "carrier_ref": "",
+    "sha256": "",
+    "configuration_id": ""
+  },
+  "runtime_configuration": {
+    "host": "",
+    "host_version": "",
+    "toolchain": [],
+    "material_settings": [],
+    "evidence_date": ""
+  },
+  "capability_bindings": [],
+  "binding_contract": {
+    "boundary_id": "",
+    "boundary_claim": "",
+    "required_capability": "",
+    "actual_capability": "",
+    "conformance_state": "declared",
+    "allowed_conformance_states": [
+      "declared",
+      "enforced",
+      "compensated",
+      "unsupported"
+    ],
+    "control_route": "honest_stop",
+    "allowed_control_routes": [
+      "enforce",
+      "compensate",
+      "human_gate",
+      "honest_stop"
+    ],
+    "evidence_refs": [],
+    "limitations": [],
+    "recovery_route": ""
+  },
+  "authority_boundary": {
+    "capability_grants_authority": false,
+    "profile_grants_permission": false,
+    "profile_admits_result": false
+  },
+  "invalidation_triggers": [
+    "material semantic-source change",
+    "material host, tool or configuration change",
+    "missing, stale, contradictory or failed evidence"
+  ],
+  "revalidation": {
+    "last_verified": "",
+    "verifier_or_run_ref": "",
+    "reopen_route": ""
+  },
+  "_freshness_rule": "declared is never evidence of enforced. Missing, stale or contradictory evidence makes the affected binding unsupported for reliance; a stale profile is ignored for consequential execution and returned to its semantic source."
+}

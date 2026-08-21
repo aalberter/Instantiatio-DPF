@@ -178,7 +178,10 @@ $requiredFiles = @(
     'docs/DPF_FORMATION_REFERENCE.md',
     'docs/KIT_EVOLUTION_ROADMAP.md',
     'docs/releases/RELEASE_NOTES_3_2_0.md',
+    'docs/releases/RELEASE_NOTES_3_3_0.md',
     'tests/behavioral/BOOTSTRAP_SCENARIOS.md',
+    'tests/conformance/RUNTIME_BOUNDARY_CONFORMANCE_PROTOCOL.md',
+    'templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml',
     'AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
     'AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
 )
@@ -270,7 +273,7 @@ $bootstrapText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRo
 $workingGuideText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'WORKING_PROCESS_AND_LOOPS_GUIDE.md')
 $agentsText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AGENTS.md')
 $roadmapText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/KIT_EVOLUTION_ROADMAP.md')
-$releaseNotesText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_2_0.md')
+$releaseNotesText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_3_0.md')
 
 # Public wrapper identity, license and provenance contract
 $licensePath = Join-Path $repoRoot 'LICENSE'
@@ -284,10 +287,12 @@ else {
     }
 }
 $emDash = [char]0x2014
-if (-not $readmeText.StartsWith("# Instantiatio DPF $emDash Engineering Work Runtime`n")) {
+$middleDot = [char]0x00B7
+$candidateIdentity = "Instantiatio DPF 3.3.0 $emDash Engineering Work Runtime $middleDot Beta"
+if (-not $readmeText.StartsWith("# $candidateIdentity`n")) {
     Add-Failure 'README release-level identity is missing'
 }
-if (-not $manifestText.StartsWith("# Instantiatio DPF $emDash Engineering Work Runtime Package Manifest`n")) {
+if (-not $manifestText.StartsWith("# $candidateIdentity $emDash Package Manifest`n")) {
     Add-Failure 'Manifest release-level identity is missing'
 }
 foreach ($publicIdentityContract in @(
@@ -369,18 +374,26 @@ else {
     }
 }
 
-# Package status and accepted limitation visibility
-if ($manifestText -notmatch '\| Publication status \| \x60released\x60 \|') {
-    Add-Failure 'Manifest publication status must be released in the release configuration'
+# Package status, maturity and accepted limitation visibility
+$publicationStatus = $null
+if ($manifestText -notmatch '\| Publication status \| \x60(candidate|released)\x60 \|') {
+    Add-Failure 'Manifest publication status must be candidate or released'
 }
-foreach ($releasedStatusContract in @(
-    @{ Name = 'README'; Text = $readmeText; Marker = ('> Runtime version: `3.2.0` ' + $emDash + ' `released`; predecessor released baseline remains Engineering Work Kit `3.1.0`') },
-    @{ Name = 'Manifest component'; Text = $manifestText; Marker = '| Engineering Work Runtime | `3.2.0` | released |' },
-    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = '| Engineering Work Runtime | `3.2.0` | released |' },
-    @{ Name = 'Release notes'; Text = $releaseNotesText; Marker = 'Publication status: `released`' }
+else {
+    $publicationStatus = $matches[1]
+}
+if ($manifestText -notmatch '\| Product maturity \| \x60Beta\x60 \|') {
+    Add-Failure 'Manifest product maturity must be Beta'
+}
+$releaseNotesPublicationPrefix = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('0KHRgtCw0YLRg9GBINC/0YPQsdC70LjQutCw0YbQuNC4OiA='))
+foreach ($packageStatusContract in @(
+    @{ Name = 'README'; Text = $readmeText; Marker = ('> Runtime version: `3.3.0` ' + $emDash + ' publication status `' + $publicationStatus + '`; product maturity `Beta`; predecessor released Runtime baseline is `3.2.0`') },
+    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.3.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.3.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Release notes'; Text = $releaseNotesText; Marker = ($releaseNotesPublicationPrefix + '`' + $publicationStatus + '`') }
 )) {
-    if (-not $releasedStatusContract.Text.Contains($releasedStatusContract.Marker)) {
-        Add-Failure "Released status contract mismatch: $($releasedStatusContract.Name)"
+    if (-not $packageStatusContract.Text.Contains($packageStatusContract.Marker)) {
+        Add-Failure "Package status contract mismatch: $($packageStatusContract.Name)"
     }
 }
 foreach ($requiredReleasePhrase in @(
@@ -394,26 +407,37 @@ foreach ($requiredReleasePhrase in @(
     }
 }
 
-# Runtime 3.2.0 released release-note contract
-foreach ($releaseNoteMarker in @(
-    "# Instantiatio DPF $emDash Engineering Work Runtime 3.2.0",
-    'Publication status: `released`',
-    "## S-01 $emDash Identity, onboarding and interaction",
-    "## S-02 $emDash Bounded authority and external methods",
-    "## S-03 $emDash Engineering views",
-    "## S-04 $emDash Working Process compositions",
-    '## Compatibility and migration',
-    '## Authority, security and privacy',
-    '## Verification evidence',
-    '## Known limitations',
-    '## Rollback and recovery',
-    '## Release Admission and distribution handoff',
-    'not_performed_non_blocking_limitation',
-    '9E1689A3845ECCA5F70EBA55CA5F99AC09FA80640A7E6B4EE791650396931E21'
-    'A5478A6515CF1932C0043355D16D29FCD5D47EAFF360F9C17240054117E6AB52'
-    '877E00A73BBC425F219BCC9DA2C3B4398D730C83A2DDCBF24CA816CF8F3188F8'
-    'pass_with_nonblocking_limitations'
-)) {
+# Runtime 3.3.0 Beta release-note contract. UTF-8 Base64 keeps Windows PowerShell 5 parsing ASCII-safe.
+$releaseNoteMarkers = @(
+    "# $candidateIdentity",
+    'Release Admission:',
+    '`admitted`',
+    'bounded reliance',
+    '## 1. Runtime Conformance & Enforcement',
+    '`declared`',
+    '`enforced`',
+    '`compensated`',
+    '`unsupported`',
+    '## 3. Result Persistence & Baseline Reconciliation',
+    'closed_dispositioned_exact_configuration',
+    'limited_domain_specific',
+    'pass_no_new_mechanism',
+    'RC-01 = pass_enforced',
+    'RC-06 = unsupported'
+)
+$releaseNoteMarkers += @(
+    '0JLQtdGA0YHQuNGPIFJ1bnRpbWU6IGAzLjMuMGA=',
+    '0JfRgNC10LvQvtGB0YLRjCDQv9GA0L7QtNGD0LrRgtCwOiBgQmV0YWA=',
+    '0JLQvdC10YjQvdGP0Y8g0L/Rg9Cx0LvQuNC60LDRhtC40Y86INC90LUg0LLRi9C/0L7Qu9C90Y/Qu9Cw0YHRjCDQsiDRgNCw0LzQutCw0YUg0Y3RgtC+0Lkg0LjQvdC40YbQuNCw0YLQuNCy0Ys=',
+    '0JrQvtC90YLRgNC+0LvRjCDRgdC+0L7RgtCy0LXRgtGB0YLQstC40Y8gUnVudGltZSDQuCDQv9GA0LjQvdGD0LTQuNGC0LXQu9GM0L3QvtC1INC+0LHQtdGB0L/QtdGH0LXQvdC40LUg0L7Qs9GA0LDQvdC40YfQtdC90LjQuQ==',
+    'IyMgNy4gSHVtYW4gR2F0ZXMg0Lgg0YDQtdGI0LXQvdC40Y8g0YHRgtCw0LvQuCDQv9GA0L7RidC1INGH0LjRgtCw0YLRjA==',
+    'IyMgOC4g0KfRgtC+INC/0YDQvtCy0LXRgNC40LvQuCwg0L3QviDQvdC1INGB0YLQsNC70Lgg0L/RgNC10LLRgNCw0YnQsNGC0Ywg0LIg0L3QvtCy0YvQuSDQvNC10YXQsNC90LjQt9C8',
+    'IyMgMTQuINCh0L7QstC80LXRgdGC0LjQvNC+0YHRgtGMINGBIDMuMi4w',
+    'IyMgMTUuINCn0YLQviDRhNCw0LrRgtC40YfQtdGB0LrQuCDQv9GA0L7QstC10YDQtdC90L4g0LIg0YDQtdC70LjQt9C1',
+    'IyMgMTYuIFJlY292ZXJ5INC4IHJlb3BlbiByb3V0ZQ==',
+    'YEFJX1NETENfRFBGLyoqYCDQvdC1INC40LfQvNC10L3Rj9C70YHRjw=='
+) | ForEach-Object { [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($_)) }
+foreach ($releaseNoteMarker in $releaseNoteMarkers) {
     if (-not $releaseNotesText.Contains($releaseNoteMarker)) {
         Add-Failure "Release notes contract gap: $releaseNoteMarker"
     }
@@ -527,9 +551,9 @@ if (($governanceStandalone -join "`n") -cne ($governanceCombined -join "`n")) {
 $scenarioPath = Join-Path $repoRoot 'tests/behavioral/BOOTSTRAP_SCENARIOS.md'
 $scenarioText = Get-Content -Raw -Encoding utf8 -LiteralPath $scenarioPath
 $scenarioHeadings = @([regex]::Matches($scenarioText, '(?m)^## S-([0-9]+) '))
-if ($scenarioHeadings.Count -ne 136) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 136" }
+if ($scenarioHeadings.Count -ne 150) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 150" }
 $scenarioNumbers = @($scenarioHeadings | ForEach-Object { [int]$_.Groups[1].Value })
-foreach ($number in 1..136) {
+foreach ($number in 1..150) {
     $occurrences = @($scenarioNumbers | Where-Object { $_ -eq $number }).Count
     if ($occurrences -eq 0) { Add-Failure "Behavioral scenario missing: S-$number" }
     elseif ($occurrences -gt 1) { Add-Failure "Behavioral scenario duplicated: S-$number" }
@@ -590,6 +614,11 @@ foreach ($requiredScenarioPhrase in @(
     'Post-Initiative Lessons Review'
     'immediate critical evidence'
     'contradictory YAML'
+    'declared | enforced | compensated | unsupported'
+    'actual containment evidence'
+    'represented_in_result | already_represented_in_baseline | external_system_of_record | disposable_no_reliance | unresolved_deferred'
+    'carrier_reference_continuity'
+    'russian_first_project_carrier'
 )) {
     if (-not $scenarioText.Contains($requiredScenarioPhrase)) {
         Add-Failure "Behavioral contract gap: $requiredScenarioPhrase"
@@ -620,7 +649,21 @@ foreach ($scenarioContract in @(
     @{ Id = 'S-57'; Marker = 'promote_to_engineering' },
     @{ Id = 'S-58'; Marker = 'explicit consent' },
     @{ Id = 'S-59'; Marker = 'Run evidence/observation' },
-    @{ Id = 'S-60'; Marker = 'ignored for authority' }
+    @{ Id = 'S-60'; Marker = 'ignored for authority' },
+    @{ Id = 'S-137'; Marker = 'actual host/tool/configuration capability' },
+    @{ Id = 'S-138'; Marker = 'unsupported' },
+    @{ Id = 'S-139'; Marker = 'actual containment evidence' },
+    @{ Id = 'S-140'; Marker = 'stale/invalid' },
+    @{ Id = 'S-141'; Marker = 'completed actual effects' },
+    @{ Id = 'S-142'; Marker = 'side_effect_escape_blocks_success' },
+    @{ Id = 'S-143'; Marker = 'no_mandatory_profile' },
+    @{ Id = 'S-144'; Marker = 'unresolved_deferred' },
+    @{ Id = 'S-145'; Marker = 'no_material_unreconciled_effects' },
+    @{ Id = 'S-146'; Marker = 'no_mandatory_git_duplication' },
+    @{ Id = 'S-147'; Marker = 'persistence_is_not_admission' },
+    @{ Id = 'S-148'; Marker = 'existing baseline identity' },
+    @{ Id = 'S-149'; Marker = 'carrier_reference_continuity' },
+    @{ Id = 'S-150'; Marker = 'decorative English' }
 )) {
     $pattern = '(?ms)^## ' + [regex]::Escape($scenarioContract.Id) + ' .*?(?=^## S-|^## Acceptance summary)'
     $section = [regex]::Match($scenarioText, $pattern).Value
@@ -833,10 +876,16 @@ else {
 # Execution UX contracts and reusable templates
 $lessonsTemplatePath = Join-Path $repoRoot 'templates/POST_INITIATIVE_LESSONS_REVIEW_TEMPLATE.md'
 $stateTemplatePath = Join-Path $repoRoot 'templates/STATE_INDEX_TEMPLATE.yaml'
+$runtimeCapabilityTemplatePath = Join-Path $repoRoot 'templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml'
+$runtimeConformanceProtocolPath = Join-Path $repoRoot 'tests/conformance/RUNTIME_BOUNDARY_CONFORMANCE_PROTOCOL.md'
 if (-not (Test-Path -LiteralPath $lessonsTemplatePath -PathType Leaf)) { Add-Failure 'Post-Initiative Lessons template is missing' }
 if (-not (Test-Path -LiteralPath $stateTemplatePath -PathType Leaf)) { Add-Failure 'State index template is missing' }
+if (-not (Test-Path -LiteralPath $runtimeCapabilityTemplatePath -PathType Leaf)) { Add-Failure 'Runtime Capability Profile template is missing' }
+if (-not (Test-Path -LiteralPath $runtimeConformanceProtocolPath -PathType Leaf)) { Add-Failure 'Runtime boundary conformance protocol is missing' }
 $lessonsTemplateText = if (Test-Path -LiteralPath $lessonsTemplatePath) { Get-Content -Raw -Encoding utf8 -LiteralPath $lessonsTemplatePath } else { '' }
 $stateTemplateText = if (Test-Path -LiteralPath $stateTemplatePath) { Get-Content -Raw -Encoding utf8 -LiteralPath $stateTemplatePath } else { '' }
+$runtimeCapabilityTemplateText = if (Test-Path -LiteralPath $runtimeCapabilityTemplatePath) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtimeCapabilityTemplatePath } else { '' }
+$runtimeConformanceProtocolText = if (Test-Path -LiteralPath $runtimeConformanceProtocolPath) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtimeConformanceProtocolPath } else { '' }
 $uxContractText = @($agentsText, $bootstrapText, $workingGuideText, $readmeText, $roadmapText, $scenarioText, $modelGuidanceText) -join "`n"
 if (-not $uxContractText.Contains('progress_fields: completed | current | remaining | open_questions | next_gate')) { Add-Failure 'Progress field contract gap' }
 foreach ($uxPhrase in @(
@@ -869,6 +918,24 @@ foreach ($stateBoundary in @('not an authority carrier','grants no authority','a
 }
 if (Test-Path -LiteralPath (Join-Path $repoRoot 'project/STATE_INDEX.yaml')) { Add-Failure 'Unauthorized live project/STATE_INDEX.yaml exists' }
 
+if ($runtimeCapabilityTemplateText) {
+    try {
+        $runtimeCapabilityTemplate = $runtimeCapabilityTemplateText | ConvertFrom-Json
+        if ($runtimeCapabilityTemplate.schema_version -ne '1.0') { Add-Failure 'Runtime Capability Profile schema version gap' }
+        if ($runtimeCapabilityTemplate.authority_boundary.capability_grants_authority -ne $false) { Add-Failure 'Runtime Capability Profile authority boundary gap' }
+        if (@($runtimeCapabilityTemplate.binding_contract.allowed_conformance_states).Count -ne 4) { Add-Failure 'Runtime Capability Profile conformance-state gap' }
+    }
+    catch {
+        Add-Failure 'Runtime Capability Profile YAML 1.2/JSON projection is invalid'
+    }
+}
+foreach ($runtimeCapabilityMarker in @('semantic_source','runtime_configuration','capability_bindings','declared','enforced','compensated','unsupported','human_gate','honest_stop','profile_admits_result')) {
+    if (-not $runtimeCapabilityTemplateText.Contains($runtimeCapabilityMarker)) { Add-Failure "Runtime Capability Profile marker gap: $runtimeCapabilityMarker" }
+}
+foreach ($runtimeConformanceMarker in @('RC-01','RC-02','RC-03','RC-04','RC-05','RC-06','exact runtime_configuration','actual observation and actual effects','honest_stop','pass_enforced')) {
+    if (-not $runtimeConformanceProtocolText.Contains($runtimeConformanceMarker)) { Add-Failure "Runtime conformance protocol marker gap: $runtimeConformanceMarker" }
+}
+
 # Manifest hashes. PACKAGE_MANIFEST.md itself is intentionally not self-hashed.
 $manifestPath = Join-Path $repoRoot 'PACKAGE_MANIFEST.md'
 $manifestInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
@@ -894,7 +961,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
-    if ($manifestHashRowCount -ne 41) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 41" }
+    if ($manifestHashRowCount -ne 44) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 44" }
 
     $actualInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($file in (Get-ChildItem -LiteralPath $repoRoot -Recurse -Force -File)) {
