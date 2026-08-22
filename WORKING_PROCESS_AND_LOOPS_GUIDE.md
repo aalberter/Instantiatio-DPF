@@ -1,6 +1,6 @@
 # Working Process and Loops Guide
 
-> Version: `1.9.0`
+> Version: `1.10.0`
 
 ## 1. Назначение
 
@@ -165,6 +165,18 @@ selected DPF obligations
 ```
 
 Развёрнутая Candidate-карта не является maximum-control lifecycle, обязательным перечнем файлов или доказательством абсолютной полноты. Она показывает project-relevant результаты до их объединения. Independently relied-on result остаётся различимым, если имеет собственные receiving use, owner, admission boundary, verification basis, lifecycle или reopen route.
+
+##### Triggered material human decision obligation
+
+После развёртывания results проверь только material independently relied-on results, для которых downstream transition может требовать отдельного человеческого решения, не сводимого однозначно к уже запланированному Admission/review. Сигналы включают independent human-facing communication или intent, authority/scope/requirement change, external/freeze/production transition, дорогой replay при позднем обнаружении либо отдельные owner, receiving use, Admission boundary или reopen cadence. File count и generated representation сами по себе trigger не создают.
+
+Для каждого trigger сохрани recoverable local record:
+
+`source result/configuration ref | required authority act/decision meaning | accountable authority ref/override | required before transition | blocked effect | decision/evidence basis ref/override | reopen ref/override | disposition`
+
+Ссылайся на уже существующие object/configuration, owner/authority, first relying use, verification/admission и reopen поля; не копируй их без material difference. `required authority act/decision meaning` является plain project meaning, а не новым Runtime enum/status. `blocked effect` ограничивается защищаемым downstream transition и не блокирует разрешённую обратимую подготовку. Допустимые planning dispositions выражаются как `separate`, `combined_with:<local ref>`, `inherited_from:<exact decision/admission>` или `no separate decision`; они не являются Admission statuses.
+
+Одна presentation может объединять решения только при совместимых object/configuration, timing и authority, сохраняя отдельные meaning, outcome, conditions, effects и reopen. Если distinct material decision отсутствует либо exact existing Admission уже полностью покрывает act/use, не создавай record, Gate, form, profile или TL;DR; для review material process coverage достаточно одной bounded no-trigger записи. Markers: `material_human_decision_obligation | no_material_decision_no_ceremony`.
 
 #### 3.1.4. `WPC-03` — восстанавливаемая адаптация
 
@@ -990,7 +1002,7 @@ Working Process необходимо инициировать, если:
 2. определи систему интереса, level of consideration, intended use, consequence, reversibility и first relying use;
 3. через `FC-13` выбери применимые DPF patterns и reference components; не копируй PEC/PAP как default;
 4. разверни project-relevant engineering results по `WPC-02` и проверь optional PEC/project-specific concerns;
-5. disposition results, dependencies, first relying uses и applicable Commitment Guards;
+5. disposition results, dependencies, first relying uses и applicable Commitment Guards; затем выполни conditional material-human-decision screen по `WPC-02` без нового carrier при no-trigger;
 6. представь развёрнутую Candidate map;
 7. отдельно предложи reductions по `WPC-03` и recommended optimized map;
 8. выдели предполагаемые Loops и связи между ними;
@@ -1016,6 +1028,7 @@ Working Process необходимо инициировать, если:
 - связи и зависимости между Loops;
 - explicit concern/result dispositions и причины material non-use/defer;
 - triggered guards, data/baseline reliance и integration responsibility, если применимо;
+- applicable material human decision obligations с required authority act, required-before transition и blocked effect либо bounded no-trigger statement, когда review material process coverage этого требует;
 - первый предлагаемый bounded Loop;
 - verification и admission для ключевых результатов;
 - открытые вопросы, assumptions и limitations;
@@ -1099,6 +1112,8 @@ Working Process вводится в действие только после я�
 ```
 
 Для material Candidate Loop действует `WPC-06 decision wrapper required`: Loop carrier или adjacent presentation, связанная с его exact configuration, показывает `Рекомендация`, evidence/assumptions/risks/limitations, `Варианты решения`, allowed/prohibited effects и return/reopen route. Эти поля не становятся обязательными headings внутри каждого lightweight Loop, если эквивалентный wrapper однозначно сохранён.
+
+Если admitted Working Process содержит applicable material human decision obligation, Loop или adjacent exact contract до первого affected transition ссылается на local obligation и current object/configuration, показывает `pending | current | reopened | not_yet_required`, сохраняет named blocked effect до current decision и не копирует parallel approval map. Bounded preparation может продолжаться только внутри already allowed actions. Stale source, incompatible authority или ambiguous mapping возвращают к smallest responsible process/decision locus. Если Loop не приближается к affected transition, отдельная inherited section/Gate не создаётся. Marker: `loop_inherits_material_decision_obligation`.
 
 ### 8.1. Purpose
 

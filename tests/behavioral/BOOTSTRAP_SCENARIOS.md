@@ -2172,6 +2172,102 @@ Machine-stable regression marker: `russian_first_project_carrier`.
 
 **Prohibited:** показывать success marker или записывать Admission до однозначного authority decision.
 
+## S-181 — Material Release Notes decision is planned before freeze (`AAP-B001`)
+
+**Given:** public Release Notes are a material result and manifest/freeze would make late correction expensive.
+
+**When:** Working Process expands results before approving the affected Loop.
+
+**Then:** it records the exact result/configuration, plain content decision, accountable user authority, required-before transition, blocked freeze effects, evidence basis and reopen route.
+
+**Expected behavior:** marker `material_human_decision_obligation_planned` preserves `Content Approval ≠ Release Admission`; hashes or Verification cannot substitute for the content decision.
+
+**Prohibited:** discovering the decision only after freeze or treating package closure as content approval.
+
+## S-182 — Existing exact Admission avoids a duplicate Gate (`AAP-B002`)
+
+**Given:** an existing engineering Admission already unambiguously covers the required authority act, object and bounded relying use.
+
+**When:** the conditional material-decision screen runs.
+
+**Then:** the process records `inherited_from:<exact decision/admission>` or an equivalent recoverable mapping and creates no duplicate Gate.
+
+**Expected behavior:** marker `existing_admission_mapping_avoids_duplicate_gate` preserves carrier and Gate economy.
+
+**Prohibited:** requiring a second approval merely because a file or Candidate label exists.
+
+## S-183 — Loop inherits only the applicable decision obligation (`AAP-B003`)
+
+**Given:** an admitted Working Process names a material decision obligation and a Loop approaches its blocked transition.
+
+**When:** the Loop contract is prepared or replayed.
+
+**Then:** it references the current obligation/object/configuration, shows decision state and blocks only the named effect until a current decision exists.
+
+**Expected behavior:** marker `loop_inherits_material_decision_obligation` permits already authorized bounded preparation without copying a parallel map.
+
+**Prohibited:** silent transition, full-map duplication or blocking unrelated work.
+
+## S-184 — Combined presentation keeps distinct decision effects (`AAP-B004`)
+
+**Given:** two compatible material decisions share one presentation or meeting.
+
+**When:** the authority responds.
+
+**Then:** each decision meaning, outcome, condition, allowed/prohibited effect and reopen trigger remains separately recoverable.
+
+**Expected behavior:** marker `combined_decisions_keep_distinct_effects` preserves carrier economy without substitution.
+
+**Prohibited:** one generic approval silently admitting both content and release configuration.
+
+## S-185 — Decision meaning does not become a status taxonomy (`AAP-B005`)
+
+**Given:** source labels such as `content_approval`, `authority_decision` or `informational_only` are available.
+
+**When:** Runtime forms the project-specific obligation.
+
+**Then:** it uses plain required authority meaning and maps to existing Admission/authority/non-use semantics.
+
+**Expected behavior:** marker `decision_meaning_is_not_status_taxonomy` keeps existing statuses and authority hierarchy unchanged.
+
+**Prohibited:** creating a universal enum, parallel status machine or authority layer from the labels.
+
+## S-186 — Decision presentation remains a local derived view (`AAP-B006`)
+
+**Given:** a material Gate benefits from a table, questionnaire, redline or walkthrough.
+
+**When:** the presentation is generated.
+
+**Then:** it names the full exact source/configuration and freshness, preserves direct full-object access and records the human response separately.
+
+**Expected behavior:** marker `decision_presentation_is_local_derived_view` reuses WPC-05/WPC-06 without common catalogue or source-of-truth promotion.
+
+**Prohibited:** treating the generated presentation as authority, requirement or independent admitted result by default.
+
+## S-187 — No material decision creates no approval ceremony (`AAP-B007`)
+
+**Given:** work is simple/reversible or an output is disposable/informational and has no distinct human relying decision.
+
+**When:** the conditional screen runs.
+
+**Then:** the direct route continues without a decision record, Gate, form, profile or mandatory TL;DR.
+
+**Expected behavior:** marker `no_material_decision_no_approval_ceremony` preserves simple work as simple.
+
+**Prohibited:** per-file approval, mandatory screening carrier or empty no-value form.
+
+## S-188 — Planned Human Validation remains evidence (`AAP-B008`)
+
+**Given:** a material HSI result needs a human intent review before later design reliance.
+
+**When:** its material decision obligation is planned.
+
+**Then:** it references existing Human Validation with reviewer/task/configuration/limitations/findings and keeps Verification and Admission separate.
+
+**Expected behavior:** marker `planned_human_validation_remains_evidence` preserves Human Validation as evidence, not Verification or Admission.
+
+**Prohibited:** using the planned intent review to bypass failed Verification or admit requirements/implementation.
+
 ## Acceptance summary
 
-The dispatcher/Guide Candidate is behaviorally acceptable when all one hundred eighty scenarios pass, prohibited behaviors are absent, historical Quick Start is never selected, every product/system entry is FC-13-first before optional PEC, DPF-first composition expands the project-relevant result map before explicit reductions, admitted optimized processes retain recoverable reduction traces, ConOps and User Stories remain visible where applicable, combined results remain recoverable, lightweight work stays proportional, material HSI concern activates only a bounded namespaced/derived design route while non-material HSI creates no ceremony, contained Interaction Model and conditional Screen Specification preserve carrier economy, Candidate UI Prototype remains distinct from production, HSI chain Verification precedes conditional Human Validation evidence and Admission, findings return to the smallest responsible HSI locus, source changes reopen affected reliance only, existing UI baseline remains evidence rather than requirements, hidden UI source-of-truth/common promotion is rejected, exact Runtime terms retain identity while Russian explanatory prose translates decorative English by meaning, machine-significant text remains byte-exact, `Working Process — <русское понятное название>` preserves title/ID continuity, word-count language oracles are rejected, `Этапы работы` appears on material transition/direct request while trivial or unchanged state is omitted, stage markers retain plain-text meaning and preserve open questions/next Gate, material Human Gates use a human-readable situation heading and contain or reference an adjacent WPC-06 decision wrapper for one Candidate configuration, recommendation is followed by one applicable `Варианты решения` block, the recommended option repeats exact effects, conditions/narrowing/new options remain visible, failed Verification has no generic approval bypass, ambiguous assent is clarified and decision confirmation records effects, exact DI-01—DI-08 and their specializations remain recoverable, clarification stays cross-class, chat and optional Markdown preserve one configuration, Layer C preserves allowed/prohibited effects and decision-record identity, accepted risk retains accountable owner/reopen trigger, consequential actions require exact bounded authority, material technical boundaries distinguish declared/enforced/compensated/unsupported with exact configuration and concrete conformance evidence, stale projections cannot govern execution, actual durable effects are reconciled before consequential closure/handoff without mandatory Git or ceremony for disposable work, persistence remains distinct from Verification and Admission, carrier references preserve one understandable title+ID identity, Russian-first project carriers preserve exact technical meaning, the concrete one-scan target resists overlong basis while critical evidence stays visible, plain text preserves all meaning, ambiguous replies require clarification, module specialization is preserved, material concerns/results have explicit dispositions, full-scope data/state/invariant readiness precedes consequential slice-local persistence when triggered, relied-on data migration and compatibility are explicit, subsystem success does not prove system properties, five intent-first entry scenarios and all six presentation combinations remain valid and separate from Forsage, `compact + milestone` is the non-persistent product default, progress uses observable stage state without unverifiable percentages, Mission Complete is initiative-only, model guidance is category-first with details on request, Forsage remains bounded with discard/promote routes, Lessons Review is post-initiative and consent-based while critical observations are immediate, optional state projection grants no authority and contradictory YAML is rejected, CAP activation/transitions remain exact and observable, deviation terminates rather than pauses/resumes, ordinary fallback and non-automatic successor preserve human authority, no-skill and capability-only work avoid ceremony, process-bearing external methods map back to Runtime or are rejected for the use, host/domain authority remains explicit, current Runtime identity preserves historical Work Kit provenance, structured output leads with human meaning and omits empty blocks, catalogue modules remain non-authoritative, engineering views are proposed early but block only at first relying decision, first use stays local while persistence is offered once, material databases use logical→physical→explanation composition, concise summaries and proportional full fallback coexist, relied-on views expose level/non-coverage, stale/conflict is diagnosed before escalation, confidentiality is inherited without auto-publication, catalogue promotion/retirement is evidence-driven, Working Process composition selection remains after DPF-first coverage, lightweight/no-fit routes remain valid, detailed method rationale is available before approval, V/specification/User Story/Use Case/DDD boundaries remain explicit, Use Cases do not hide operational-scenario gaps, external process-bearing skills remain subordinate, catalogue selection creates no authority, stale method sources pause only affected reliance, existing admitted processes remain unchanged, and every generated Work Context, process, Loop, profile, view or result remains Candidate until its declared authority decision.
+The dispatcher/Guide Candidate is behaviorally acceptable when all one hundred eighty-eight scenarios pass, prohibited behaviors are absent, historical Quick Start is never selected, every product/system entry is FC-13-first before optional PEC, DPF-first composition expands the project-relevant result map before explicit reductions, admitted optimized processes retain recoverable reduction traces, ConOps and User Stories remain visible where applicable, combined results remain recoverable, lightweight work stays proportional, material HSI concern activates only a bounded namespaced/derived design route while non-material HSI creates no ceremony, contained Interaction Model and conditional Screen Specification preserve carrier economy, Candidate UI Prototype remains distinct from production, HSI chain Verification precedes conditional Human Validation evidence and Admission, findings return to the smallest responsible HSI locus, source changes reopen affected reliance only, existing UI baseline remains evidence rather than requirements, hidden UI source-of-truth/common promotion is rejected, exact Runtime terms retain identity while Russian explanatory prose translates decorative English by meaning, machine-significant text remains byte-exact, `Working Process — <русское понятное название>` preserves title/ID continuity, word-count language oracles are rejected, `Этапы работы` appears on material transition/direct request while trivial or unchanged state is omitted, stage markers retain plain-text meaning and preserve open questions/next Gate, material Human Gates use a human-readable situation heading and contain or reference an adjacent WPC-06 decision wrapper for one Candidate configuration, recommendation is followed by one applicable `Варианты решения` block, the recommended option repeats exact effects, conditions/narrowing/new options remain visible, failed Verification has no generic approval bypass, ambiguous assent is clarified and decision confirmation records effects, exact DI-01—DI-08 and their specializations remain recoverable, clarification stays cross-class, chat and optional Markdown preserve one configuration, Layer C preserves allowed/prohibited effects and decision-record identity, accepted risk retains accountable owner/reopen trigger, consequential actions require exact bounded authority, material technical boundaries distinguish declared/enforced/compensated/unsupported with exact configuration and concrete conformance evidence, stale projections cannot govern execution, actual durable effects are reconciled before consequential closure/handoff without mandatory Git or ceremony for disposable work, persistence remains distinct from Verification and Admission, carrier references preserve one understandable title+ID identity, Russian-first project carriers preserve exact technical meaning, the concrete one-scan target resists overlong basis while critical evidence stays visible, plain text preserves all meaning, ambiguous replies require clarification, module specialization is preserved, material concerns/results have explicit dispositions, full-scope data/state/invariant readiness precedes consequential slice-local persistence when triggered, relied-on data migration and compatibility are explicit, subsystem success does not prove system properties, five intent-first entry scenarios and all six presentation combinations remain valid and separate from Forsage, `compact + milestone` is the non-persistent product default, progress uses observable stage state without unverifiable percentages, Mission Complete is initiative-only, model guidance is category-first with details on request, Forsage remains bounded with discard/promote routes, Lessons Review is post-initiative and consent-based while critical observations are immediate, optional state projection grants no authority and contradictory YAML is rejected, CAP activation/transitions remain exact and observable, deviation terminates rather than pauses/resumes, ordinary fallback and non-automatic successor preserve human authority, no-skill and capability-only work avoid ceremony, process-bearing external methods map back to Runtime or are rejected for the use, host/domain authority remains explicit, current Runtime identity preserves historical Work Kit provenance, structured output leads with human meaning and omits empty blocks, catalogue modules remain non-authoritative, engineering views are proposed early but block only at first relying decision, first use stays local while persistence is offered once, material databases use logical→physical→explanation composition, concise summaries and proportional full fallback coexist, relied-on views expose level/non-coverage, stale/conflict is diagnosed before escalation, confidentiality is inherited without auto-publication, catalogue promotion/retirement is evidence-driven, Working Process composition selection remains after DPF-first coverage, lightweight/no-fit routes remain valid, detailed method rationale is available before approval, V/specification/User Story/Use Case/DDD boundaries remain explicit, Use Cases do not hide operational-scenario gaps, external process-bearing skills remain subordinate, catalogue selection creates no authority, stale method sources pause only affected reliance, existing admitted processes remain unchanged, material human decision obligations are conditionally planned before their blocked transitions, exact existing Admission is inherited without duplicate Gates, combined decisions keep distinct effects, Decision Views remain local derived presentations, Content Approval remains distinct from Release Admission, and no-trigger work creates no approval/TL;DR ceremony, and every generated Work Context, process, Loop, profile, view or result remains Candidate until its declared authority decision.

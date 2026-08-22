@@ -1,20 +1,20 @@
-# Instantiatio DPF 3.4.0 — Engineering Work Runtime · Beta
+# Instantiatio DPF 3.5.0 — Engineering Work Runtime · Beta
 
-> Runtime version: `3.4.0` — publication status `released`; product maturity `Beta`; predecessor released Runtime baseline is `3.3.0`
+> Runtime version: `3.5.0` — publication status `released`; product maturity `Beta`; predecessor released Runtime baseline is `3.4.0`
 
 Версии, publication status, authoritative loci и SHA-256 компонентов определены в [PACKAGE_MANIFEST.md](PACKAGE_MANIFEST.md).
 
-Состав изменений, совместимость, ограничения и recovery route описаны в [Release Notes 3.4.0](docs/releases/RELEASE_NOTES_3_4_0.md). Publication status указан выше и в manifest, но сам по себе не создаёт Release Admission. Exact ZIP/build/Admission evidence фиксируется отдельно; Git tag, upload и внешняя публикация относятся к другому проекту и отдельному authority decision.
+Состав изменений, совместимость, ограничения и recovery route описаны в [Release Notes 3.5.0](docs/releases/RELEASE_NOTES_3_5_0.md). Publication status указан выше и в manifest, но сам по себе не создаёт Release Admission. Exact ZIP/build/Admission evidence фиксируется отдельно; Git tag, upload и внешняя публикация относятся к другому проекту и отдельному authority decision.
 
-### Что изменилось в 3.4.0
+### Что изменилось в 3.5.0
 
-Версия 3.4.0 объединяет optional experimental HSI/UI specialization с более ясным interaction contract Runtime. Для существенной задачи HSI сохраняется производный interaction design basis из действующих requirements, scenarios, roles, rules, constraints и применимых sources; для обычного взаимодействия Runtime объясняет точные термины по-русски, показывает `Этапы работы` на существенных переходах и выводит recommendation вместе со всеми применимыми `Варианты решения`.
+Версия 3.5.0 добавляет раннее планирование material Human decisions в Working Process и Loop contracts: exact object/configuration, meaning, authority, timing, blocked downstream effect, evidence basis и reopen trigger фиксируются до затрагиваемого перехода. Decision View остаётся локальным производным представлением, Human Response записывается отдельно, а Verification, Admission, Content Approval и Release Admission сохраняют разные значения.
 
-Capability не создаёт UI Authority, второй SRS, обязательный UI process, общий catalogue/template carrier, dashboard или дополнительный Human Gate. Для non-UI, простой presentation-only и одношаговой работы сохраняется короткий маршрут. Exact terms, IDs, statuses, code и paths не переводятся; обычный пояснительный English переводится по смыслу.
+Изменение не создаёт новую authority hierarchy, универсальную taxonomy решений, обязательный CAV, формы или TL;DR ceremony. Если material decision отсутствует, применяется прямой короткий маршрут: `no_material_decision_no_ceremony`.
 
 ### Получение и начало работы
 
-После отдельной Release Admission и внешней публикации используйте именно verified asset `Instantiatio-DPF-3.4.0-Beta.zip`, сверяйте опубликованные размер и SHA-256, затем распакуйте единственный top-level каталог. Начинайте с этого `README.md`, `AGENTS.md` и `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`.
+После отдельной Release Admission и внешней публикации используйте именно verified asset `Instantiatio-DPF-3.5.0-Beta.zip`, сверяйте опубликованные размер и SHA-256, затем распакуйте единственный top-level каталог. Начинайте с этого `README.md`, `AGENTS.md` и `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`.
 
 Автоматические GitHub source archives являются другими артефактами: hash и dual-extractor evidence verified ZIP на них не распространяются. Любая правка packaged bytes после зафиксированного ZIP hash требует новой сборки, новых identities и повторной затронутой Verification/Admission.
 

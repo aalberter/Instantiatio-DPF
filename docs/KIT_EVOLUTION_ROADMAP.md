@@ -12,7 +12,7 @@
 
 Этот документ фиксирует направления развития `Instantiatio DPF — Engineering Work Runtime`. Название `Engineering Work Kit 3.1.0` ниже сохраняется там, где обозначает exact released baseline и историю продукта.
 
-Текущая release configuration — `Instantiatio DPF 3.4.0 — Engineering Work Runtime · Beta` с publication status `released`. Она объединяет optional experimental HSI/UI specialization и interaction-clarity correction поверх released Runtime `3.3.0`; состав, совместимость и ограничения зафиксированы в [Release Notes 3.4.0](releases/RELEASE_NOTES_3_4_0.md). Publication status, independent-review evidence, Release Admission и внешняя публикация остаются раздельными состояниями/решениями.
+Текущая release configuration — `Instantiatio DPF 3.5.0 — Engineering Work Runtime · Beta` с publication status `released`. Она добавляет раннее planning material Human decisions в Working Process/Loop contracts поверх released Runtime `3.4.0`; состав, совместимость и ограничения зафиксированы в [Release Notes 3.5.0](releases/RELEASE_NOTES_3_5_0.md). Publication status, independent-review evidence, Release Admission и внешняя публикация остаются раздельными состояниями/решениями.
 
 Текущий Runtime уже включает:
 
@@ -400,10 +400,10 @@ Work Context version
 
 | Component | Version | Status |
 |---|---:|---|
-| Engineering Work Runtime | `3.4.0` | released · Beta |
+| Engineering Work Runtime | `3.5.0` | released · Beta |
 | AI SDLC DPF | `1.0.1` | controlled working |
 | Bootstrap Guide | `1.8.0` | pilot |
-| Working Process Guide | `1.9.0` | pilot |
+| Working Process Guide | `1.10.0` | pilot |
 | AGENTS dispatcher | `2.8.0` | pilot |
 | Model Selection Recommendations | `1.1.0` | admitted informative guidance |
 
