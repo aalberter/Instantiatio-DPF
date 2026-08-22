@@ -1,10 +1,22 @@
-# Instantiatio DPF 3.3.0 — Engineering Work Runtime · Beta
+# Instantiatio DPF 3.4.0 — Engineering Work Runtime · Beta
 
-> Runtime version: `3.3.0` — publication status `released`; product maturity `Beta`; predecessor released Runtime baseline is `3.2.0`
+> Runtime version: `3.4.0` — publication status `released`; product maturity `Beta`; predecessor released Runtime baseline is `3.3.0`
 
 Версии, publication status, authoritative loci и SHA-256 компонентов определены в [PACKAGE_MANIFEST.md](PACKAGE_MANIFEST.md).
 
-Состав изменений, совместимость, ограничения и recovery route описаны в [Release Notes 3.3.0](docs/releases/RELEASE_NOTES_3_3_0.md). Publication status указан выше и в manifest, но сам по себе не создаёт Release Admission; ZIP, Git tag, upload и внешняя публикация не выполняются и не заявляются.
+Состав изменений, совместимость, ограничения и recovery route описаны в [Release Notes 3.4.0](docs/releases/RELEASE_NOTES_3_4_0.md). Publication status указан выше и в manifest, но сам по себе не создаёт Release Admission. Exact ZIP/build/Admission evidence фиксируется отдельно; Git tag, upload и внешняя публикация относятся к другому проекту и отдельному authority decision.
+
+### Что изменилось в 3.4.0
+
+Версия 3.4.0 объединяет optional experimental HSI/UI specialization с более ясным interaction contract Runtime. Для существенной задачи HSI сохраняется производный interaction design basis из действующих requirements, scenarios, roles, rules, constraints и применимых sources; для обычного взаимодействия Runtime объясняет точные термины по-русски, показывает `Этапы работы` на существенных переходах и выводит recommendation вместе со всеми применимыми `Варианты решения`.
+
+Capability не создаёт UI Authority, второй SRS, обязательный UI process, общий catalogue/template carrier, dashboard или дополнительный Human Gate. Для non-UI, простой presentation-only и одношаговой работы сохраняется короткий маршрут. Exact terms, IDs, statuses, code и paths не переводятся; обычный пояснительный English переводится по смыслу.
+
+### Получение и начало работы
+
+После отдельной Release Admission и внешней публикации используйте именно verified asset `Instantiatio-DPF-3.4.0-Beta.zip`, сверяйте опубликованные размер и SHA-256, затем распакуйте единственный top-level каталог. Начинайте с этого `README.md`, `AGENTS.md` и `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`.
+
+Автоматические GitHub source archives являются другими артефактами: hash и dual-extractor evidence verified ZIP на них не распространяются. Любая правка packaged bytes после зафиксированного ZIP hash требует новой сборки, новых identities и повторной затронутой Verification/Admission.
 
 ## 1. Что это
 
@@ -160,10 +172,11 @@ explanation_mode: milestone
 Обычная выдача говорит как инженер на встрече, а не как machine log:
 
 1. `Статус` — понятная суть, результат, последствие, риск или blocker.
-2. `Требуемое решение` — только когда действительно нужен human decision; exact варианты и последствия не скрываются.
-3. `Служебная информация` — полезные IDs, hashes, paths, predicates и evidence для проверки.
+2. `Этапы работы` — одна полезная строка на этап при существенном переходе, после Human Gate, перед handoff или по прямому запросу.
+3. `Рекомендация`, затем один блок `Варианты решения` — только когда действительно нужен human decision; применимые действия и последствия не скрываются.
+4. `Служебная информация` — полезные IDs, hashes, paths, predicates и evidence для проверки.
 
-Пустые второй и третий блоки опускаются. Candidate status, CAP termination, `honest_stop`, критические ограничения, authority/scope changes, failed Verification, Human Gates и Admission всегда остаются видимыми в `Статус`, даже в `compact` или rich UI с collapsible service detail. `detailed` не раскрывает chain of thought и группирует однотипные действия.
+Пустые блоки опускаются. `Этапы работы` не повторяются для простой или неизменившейся работы; completed/current/remaining/returned/blocked различаются текстом, а не только emoji. Первый вариант `Принять рекомендованный вариант` повторяет exact action/configuration/consequence, conditions и более узкая authority остаются видимыми по применимости. Candidate status, CAP termination, `honest_stop`, критические ограничения, authority/scope changes, failed Verification, Human Gates и Admission всегда остаются видимыми в `Статус`, даже в `compact` или rich UI с collapsible service detail. `detailed` не раскрывает chain of thought и группирует однотипные действия.
 
 Material carrier/result впервые называется понятным названием вместе с exact ID и useful link; в Gate, decision confirmation и handoff то же название повторяется вместе с ID. Bare ID, filename и path остаются служебными деталями. При русском project language создаваемые carriers используют русские headings и explanatory prose; English сохраняется для exact technical meaning, а не как декоративный default.
 
@@ -179,7 +192,7 @@ Material carrier/result впервые называется понятным н�
 
 ### 2.3. Прогресс и завершение
 
-На значимых milestones агент показывает пять полей: `Завершено`, `Сейчас`, `Осталось`, `Открытые вопросы`, `Ближайший Human Gate / следующий допустимый шаг`. Непроверяемый процент готовности не используется. Завершение Task, Run, Loop, Admission baseline и всей initiative различаются; `Mission Complete!` допустимо только после admitted intended outcome и завершения либо explicit disposition всего required scope.
+На значимых milestones агент показывает generated block `Этапы работы`: одна полезная строка на этап, `✅` завершено, `🔄` выполняется, `⏳` ожидается, `↩️` возвращено, `⛔` заблокировано. Текст каждой строки сохраняет смысл без emoji. Существенные открытые вопросы и ближайший Human Gate показываются отдельно; непроверяемый процент готовности не используется. Завершение Task, Run, Loop, Admission baseline и всей initiative различаются; `Mission Complete!` допустимо только после admitted intended outcome и завершения либо explicit disposition всего required scope.
 
 ### 2.4. Lessons и optional state projection
 
@@ -191,7 +204,7 @@ Material carrier/result впервые называется понятным н�
 
 Для нового Working Process агент сначала применяет `FC-13` и выбирает применимые DPF patterns. Затем он разворачивает полную для данного проекта карту результатов, зависимостей, проверок и точек допуска. Optional Product Engineering Composition может использоваться как reference screen, но не становится обязательным lifecycle.
 
-Только после этого агент отдельно показывает рекомендуемые объединения, сокращения и неприменимые результаты, объясняет принимаемые риски и предлагает оптимизированный процесс. Пользователь получает два согласованных представления одной configuration: инженерную карту с trace и краткое управленческое представление с явно подписанным блоком `Требуемое решение / Required Decision`.
+Только после этого агент отдельно показывает рекомендуемые объединения, сокращения и неприменимые результаты, объясняет принимаемые риски и предлагает оптимизированный процесс. Пользователь получает два согласованных представления одной configuration: инженерную карту с trace и краткое управленческое представление с `Рекомендация` и единым блоком `Варианты решения`, где видны применимые accept/condition/return/defer/reject routes.
 
 Этот порядок не означает одинаково тяжёлый процесс для всех задач. Direct Work, небольшой script или driver сохраняют лёгкий маршрут, если applicability и material non-use показаны явно, а проверка и возврат остаются достаточными для последствий ошибки.
 
@@ -933,7 +946,7 @@ deferred
 
 Способность агента выполнить действие не создаёт права принять решение.
 
-Human Gate показывается прежде всего как ясное сообщение о конкретной ситуации, а не как методологический ярлык. Восемь interactions `DI-01 Review`, `DI-02 Choice`, `DI-03 Change`, `DI-04 Conflict`, `DI-05 Risk`, `DI-06 Missing input`, `DI-07 Failed verification` и `DI-08 Consequential action` сохраняют свои decision-specific поля; clarification является response state. В чате видны Candidate/configuration, recommendation, evidence/risks/limitations, последствия и `Требуемое решение / Required Decision`. Optional adjacent `.md` описывает ту же configuration; цвет и rich formatting только помогают чтению, а текст сохраняет весь смысл.
+Human Gate показывается прежде всего как ясное сообщение о конкретной ситуации, а не как методологический ярлык. Восемь interactions `DI-01 Review`, `DI-02 Choice`, `DI-03 Change`, `DI-04 Conflict`, `DI-05 Risk`, `DI-06 Missing input`, `DI-07 Failed verification` и `DI-08 Consequential action` сохраняют свои decision-specific поля; clarification является response state. В чате видны Candidate/configuration, recommendation, evidence/risks/limitations и последствия, затем `Рекомендация` и один applicable block `Варианты решения`. Optional adjacent `.md` описывает ту же configuration; цвет и rich formatting только помогают чтению, а текст сохраняет весь смысл.
 
 Пример компактной формы:
 
@@ -945,11 +958,14 @@ Candidate: L-EXAMPLE-001, SHA-256 <exact-hash>
 Разрешает: создать TASK/RUN и изменить перечисленные targets.
 Не разрешает: release, Git или расширение scope.
 
-Требуемое решение / Required Decision
-Ответьте exact approval phrase либо верните Candidate на refinement.
+Варианты решения
+1. Принять рекомендованный вариант — утвердить exact Candidate для одного bounded Run с указанными разрешениями и запретами.
+2. Принять с условиями — сузить targets или добавить Verification.
+3. Вернуть на доработку — сохранить Candidate status без Run authority.
+4. Отложить или отклонить — не начинать Run.
 ```
 
-Для risk acceptance остаются видимыми residual risk, accountable risk owner и reopen trigger; для consequential action указываются exact action, target/configuration, effects, recovery/reversibility и verification. После решения confirmation повторяет exact outcome/configuration, newly allowed и still-prohibited effects, actor/date when available, decision-record link when created и next/reopen route. Двусмысленный ответ не считается Admission. Полная механика определена в [`WORKING_PROCESS_AND_LOOPS_GUIDE.md`](WORKING_PROCESS_AND_LOOPS_GUIDE.md), а Bootstrap-проекция — в [`ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`](ENGINEERING_WORK_BOOTSTRAP_GUIDE.md).
+Первый вариант всегда повторяет exact effect рекомендации; реальные applicable alternatives остаются видимыми. Для risk acceptance показываются residual risk, accountable risk owner и reopen trigger; для consequential action — exact action, target/configuration, effects, recovery/reversibility и verification. Failed или inconclusive Verification не получает generic approval route без отдельно admitted exception. После решения confirmation повторяет exact outcome/configuration, newly allowed и still-prohibited effects, actor/date when available, decision-record link when created и next/reopen route. Двусмысленный ответ не считается Admission. Полная механика определена в [`WORKING_PROCESS_AND_LOOPS_GUIDE.md`](WORKING_PROCESS_AND_LOOPS_GUIDE.md), а Bootstrap-проекция — в [`ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`](ENGINEERING_WORK_BOOTSTRAP_GUIDE.md).
 
 Следует различать:
 

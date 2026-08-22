@@ -1,6 +1,6 @@
 # Working Process and Loops Guide
 
-> Version: `1.7.0`
+> Version: `1.9.0`
 
 ## 1. Назначение
 
@@ -230,6 +230,164 @@ Lower-level carrier может применять и связывать higher-l
 
 Strengthening triggers включают несколько operational scenarios/slices, shared state, external interfaces, system-wide properties, security/authority impact, non-resettable reliance, supplier/operation baseline и высокую цену ошибки.
 
+#### 3.1.9. Специализация HSI/UI по применимости
+
+Marker: `optional_hsi_ui_specialization`.
+
+Эта экспериментальная специализация Runtime применяется только в Working Process со статусом `admitted`, когда Human–System Interaction существенно влияет на указанное использование результата. Она связывает существующие `FC-03/04/05/06/07/08/09/11/13`, Engineering Views, Forsage, Verification и Admission; новый принцип DPF, уровень полномочий, жизненный цикл или общая запись каталога не создаётся.
+
+Bootstrap передаёт сведения о существенной инженерной значимости HSI и контекст решения, но не запускает отдельное интервью по UI и не выбирает специализацию вместо уполномоченного лица процесса. Выбор выполняется при формировании Working Process или Process Review. Основания могут включать:
+
+- несколько существенных экранов, состояний, переходов, альтернативных путей или путей обработки ошибок;
+- поведение, зависящее от роли или полномочий;
+- значимую операционную ошибку, повторную работу, риск для безопасности или соответствия либо отказ от использования при неверном взаимодействии;
+- необходимость проверить замысел взаимодействия с человеком до обязательства по production implementation;
+- управляемое развитие существующего UI baseline.
+
+Это вспомогательные признаки решения, а не оценочная таблица или чек-лист. Working Process фиксирует границы, принятое disposition, защищаемую ценность, первое использование с опорой на результат (`first relying use`), зависимости, Verification/Admission и условие повторного открытия (`reopen trigger`).
+
+```text
+нет существенной задачи HSI
+→ обычный облегчённый маршрут
+→ без дополнительных HSI carriers и церемонии
+
+есть существенная задача HSI
+→ выбрать минимально достаточный набор HSI results
+→ вывести design из точной конфигурации authoritative sources
+→ выполнить сквозную Verification
+→ при необходимости получить evidence Human Validation
+→ выполнить Admission точного design basis до production reliance
+```
+
+Marker: `no_material_hsi_no_ceremony`.
+
+Поздняя активация допустима при изменении границ. Простая стабильная страница может остаться на прямом маршруте `requirements/scenario → implementation/review` без HSI carrier, Candidate UI Prototype или нового Human Gate.
+
+##### Граница полномочий и источников
+
+HSI design выводится из применимых точных конфигураций:
+
+- System/Software Requirements;
+- User/Operational Scenarios;
+- роли и полномочия;
+- бизнес-правила;
+- архитектурные и интерфейсные constraints;
+- применимые standards/normative sources после обычной source mediation;
+- существующий UI baseline для развиваемой системы без автоматического превращения унаследованного поведения в requirement.
+
+User Interaction View, Interaction Model, Screen Specification и UI Prototype являются производными инженерными результатами и представлениями. Они не создают UI Authority, второй SRS или независимый источник product requirements. HSI design basis со статусом `admitted` может быть инженерным решением, на которое опираются, только для указанного использования. Необоснованное требуемое поведение возвращается в authoritative requirement/scenario/rule locus.
+
+`↔` ниже означает двустороннюю проверку покрытия и влияния изменений, а не равные полномочия.
+
+##### Combined HSI design basis — объединённое основание проектирования HSI
+
+Предпочитай:
+
+```text
+подходящий существующий carrier проекта
+→ объединённый раздел или результат
+→ создаваемое восстанавливаемое представление
+→ новый carrier проекта только при самостоятельном жизненном цикле или повторяющемся receiving use
+```
+
+Новый шаблон Runtime не требуется. Project-specific carrier сохраняет один логически объединённый результат с восстанавливаемыми вложенными разделами.
+
+**Идентификация, границы и использование с опорой на результат:** точные result/configuration/status/supersession; уровень и граница системы; границы HSI; `first relying use`; ответственные лица, аудитория и решение; конфигурации источников, их актуальность и конфликты; assumptions, non-coverage, ограничения конфиденциальности и внешнего представления, а также `reopen triggers`.
+
+**Namespaced User Interaction View:** используй идентификатор проекта или домена вида `<project-or-domain>:UIV-<n>`, но не общий `EV-*`. Это представление отвечает на вопрос: что пользователь данной роли видит и делает в существенной задаче и на чём основано каждое взаимодействие? Минимально сохраняются роли, цели и задачи; связанные Requirements/Scenarios/Rules/Constraints; основные, альтернативные и error/recovery paths; связи экранов и состояний; нерешённые вопросы; смысловое резюме и fallback; актуальность и отличие от baseline. `EV-03/04` могут быть вложенными или поддерживающими views для вопросов времени и состояния.
+
+**Contained Interaction Model:** отдельный файл не требуется. По применимости восстановима таблица или схема:
+
+| Текущий экран или состояние | Actor/role | Цель или шаг | Действие или событие | Guard/permission | Следующий экран или состояние | Эффект или результат | Альтернатива, ошибка или восстановление | Authoritative basis |
+|---|---|---|---|---|---|---|---|---|
+
+Разделение допускается только при независимо подтверждённых ответственных лицах, самостоятельном жизненном цикле, отдельной границе Admission или повторяющемся receiving use. Marker: `interaction_model_combined_by_default`.
+
+**Conditional Screen Specification:** включай детали уровня экрана, только если Candidate UI Prototype, implementation или Verification иначе должны изобрести существенное поведение. Несколько экранов могут находиться в одном carrier; отдельный файл на каждый экран не требуется.
+
+| Поле | Минимально необходимый смысл |
+|---|---|
+| идентификатор, название и назначение | стабильная ссылка на экран в заявленных границах design |
+| трассировка к источникам | точные Requirements/Scenarios/Roles/Rules/Constraints |
+| роли и условия входа | actor и guard/state для входа |
+| отображаемая информация | существенное содержание, его смысл и источник |
+| элементы управления и действия | поведение, результат и запрет неопределённого поведения |
+| навигация и переходы | target, cancel/back/exit и обработка тупиковых состояний |
+| полномочия и бизнес-правила | разрешённое и запрещённое поведение, применимый guard |
+| существенные состояния | normal/loading/empty/error/disabled/readonly либо обоснованная неприменимость |
+| validation и confirmation | правила ввода, обратная связь, подтверждение и реакция на ошибку |
+| связанные экраны и согласованность | общие термины, действия, состояния и межэкранные constraints |
+| assumptions и non-coverage | нерешённый вопрос, ответственное лицо и маршрут возврата |
+
+Отдельный Screen Specification требует самостоятельного receiving use, жизненного цикла, ответственного лица и evidence Verification/Admission. До этого он остаётся условным и объединённым. Marker: `screen_specification_conditional_combined`.
+
+##### Candidate UI Prototype, Verification и Human Validation
+
+Candidate UI Prototype — опциональное производное средство проверки замысла, а не production implementation или источник требований. Зафиксируй проверяемый вопрос и аудиторию, точный вход design basis, форму, tool и конфиденциальность, disposable/default status, ограничения и stale trigger. Быстрое создание использует Forsage или equivalent Task/Run со статусом `admitted`; формат или поставщик инструмента не являются универсальными.
+
+Перед Human Validation или Admission design basis выполняй применимые проверки точной конфигурации:
+
+```text
+Requirements / Scenarios / Roles / Rules / Constraints
+↔ namespaced User Interaction View / contained Interaction Model
+↔ conditional Screen Specification
+↔ optional Candidate UI Prototype
+```
+
+Проверь как минимум:
+
+1. Requirements/Scenarios по UI без представления interaction или screen behavior;
+2. существенные элементы UI, отображаемые данные или действия без основания в authoritative sources;
+3. неопределённые поведение, результат, failure или transition действия;
+4. противоречия ролей и полномочий;
+5. недостижимые вход, выход или navigation и необъяснённые тупики;
+6. пропущенные существенные состояния loading/empty/error/disabled/readonly/retry/recovery/cancel;
+7. межэкранные противоречия терминов, элементов управления, состояний или правил;
+8. несоответствие Candidate UI Prototype точной конфигурации design basis;
+9. устаревшие конфигурации источников, design или prototype;
+10. отсутствующие gaps, non-coverage, ответственные лица или маршруты возврата для указанного использования.
+
+Oracle выбирается по проверяемому claim: таблица trace/query, матрица состояний и полномочий, проверка navigation/reachability, проверка согласованности экранов или точное сравнение с prototype. Количество элементов, ссылка, привлекательный layout или usability score не доказывают корректность и полноту.
+
+Verification с результатом `fail` или `inconclusive` возвращает затронутый claim к наименьшему ответственному source/design/prototype result и не обходится через Human Validation. Human Validation применяется условно к существенному решению о замысле взаимодействия и фиксирует роль reviewer, реальную задачу или вопрос, точную configuration, контекст и ограничения наблюдения, observations, findings с ответственными лицами, disagreement и маршрут возврата. Human Validation является evidence, но не Admission. Marker: `human_validation_is_not_admission`.
+
+##### Возврат findings, Admission и передача в production
+
+Существенный finding классифицируется до изменения:
+
+1. `requirement defect/change` → authoritative requirements;
+2. `scenario defect/change` → User/Operational Scenario или equivalent behavior locus;
+3. `interaction/screen design defect` → User Interaction View / contained Interaction Model / Screen Specification;
+4. `presentation-only issue` → presentation layer/prototype без behavior change;
+5. `ambiguous authority/classification` → Human/process authority, без молчаливого выбора.
+
+Изменение source/configuration через `FC-06/07/09` повторно открывает только затронутое HSI reliance. Исправление только представления не скрывает изменение поведения.
+
+По умолчанию объект опоры — точный Combined HSI design basis для указанного использования:
+
+```text
+Candidate combined HSI design basis
+→ сквозная Verification
+→ условное evidence Human Validation
+→ Admission для named prototype/production design-basis use
+→ отдельно ограниченный Task/Run production implementation
+```
+
+Marker: `production_ui_separate_task_run`.
+
+Prototype обычно остаётся evidence/reference. Точная visual reference получает собственную Admission только при указанном downstream fidelity use, configuration, ответственном лице и правиле supersession. Production implementation опирается на применимые authoritative Requirements/Scenarios/Roles/Rules/Constraints и точный HSI design basis со статусом `admitted`; production Verification сравнивает implementation с обоими. Disposable prototype не переименовывается и не продолжается как production.
+
+##### Экономия carriers, неизменяемые границы и повторное открытие
+
+- Общий `EV-*` User Interaction View или `WM-*` HSI module не создаётся без повторно подтверждённой межпроектной ценности и отдельной Admission на уровне продукта.
+- Не вводи обязательный carrier Interaction Model/Screen Specification, отдельный Human Validation Gate, универсальный vendor/tool, CAV/viewer, автоматическую оценку usability или универсальный accessibility claim.
+- Существующие Working Processes со статусом `admitted` не мигрируют автоматически; новая существенная задача HSI использует обычный Process Review.
+- Существующий UI baseline является evidence точной source/configuration, а не requirements по умолчанию; конфликты остаются видимыми.
+- Успешные chain checks не доказывают реальную usability, корректность production, пользу в эксплуатации, ценность общего promotion или release readiness.
+- Повторное открытие выполняется при существенном изменении source/scope/role/rule/interaction, обнаруженном росте церемонии, пропущенной существенной задаче HSI, повторном независимом использовании carrier или framework-level failure; framework hypothesis оформляется отдельно и не меняет controlled DPF молча.
+
+Markers: `no_common_hsi_catalog_promotion | common_hsi_requires_product_admission | hsi_language_semantic_review`.
+
 ### 3.2. Loop
 
 Loop — повторяемый bounded-процесс получения одного определённого типа инженерного результата.
@@ -407,19 +565,22 @@ Working Process применяет presentation preferences, определён�
 
 #### Человеко-понятная структура ответа
 
-Обычная выдача должна быть похожа на краткое сообщение инженера на рабочей встрече, а не на machine log. Группируй routine tool/file operations и веди читателя от смысла к проверяемым деталям в таком порядке:
+Обычная выдача должна быть похожа на краткое сообщение инженера на рабочей встрече, а не на машинный журнал. Группируй однотипные действия с инструментами и файлами и веди читателя от смысла к проверяемым деталям в таком порядке:
 
-1. `Статус` — всегда, когда нужен структурированный отчёт: понятная суть результата или ситуации, практическое последствие, material risk/blocker и следующий полезный шаг. Одних IDs/status codes недостаточно.
-2. `Требуемое решение` — только при реальном Human Gate: exact decision, meaningful options, последствия и recommendation обычным языком. Блок не бывает пустым и не скрывается/collapse.
-3. `Служебная информация` — только когда exact IDs, statuses, hashes, paths, predicates или evidence имеют receiving use. В rich UI блок может collapse, но text-only output сохраняет его после решения.
+1. `Статус` — всегда, когда нужен структурированный отчёт: понятная суть результата или ситуации, практическое последствие, существенный риск/блокировка и следующий полезный шаг. Одних IDs или status codes недостаточно.
+2. `Этапы работы` — только при существенном изменении этапа, после Human Gate, перед handoff или по прямому запросу; это generated projection наблюдаемого состояния, а не отдельный источник состояния.
+3. `Рекомендация` и затем `Варианты решения` — только при реальном Human Gate. Рекомендация объясняет предпочтительный route, а единый блок вариантов показывает применимые действия и последствия. Первый вариант `Принять рекомендованный вариант` повторяет точное действие и последствие.
+4. `Служебная информация` — только когда exact IDs, statuses, hashes, paths, predicates или evidence имеют receiving use. В rich UI блок может сворачиваться, но text-only output сохраняет его после вариантов.
 
-Если решения или полезных служебных деталей нет, соответствующий блок полностью опускается. Candidate status, CAP `terminated_on_deviation`, `honest_stop`, critical limitation/risk, authority/scope change, failed или inconclusive Verification, Human Gate и Admission остаются явными в `Статус`; consequential meaning нельзя помещать только в `Служебная информация`.
+Если решения, изменения этапов или полезных служебных деталей нет, соответствующий блок полностью опускается. Candidate status, CAP `terminated_on_deviation`, `honest_stop`, критическое ограничение/риск, изменение authority/scope, failed или inconclusive Verification, Human Gate и Admission остаются явными в `Статус`; consequential meaning нельзя помещать только в `Служебная информация`.
 
-Структура не требует трёх headings в каждом коротком сообщении. Она задаёт стабильный порядок при наличии содержания и согласуется с `WPC-06`: material decision может содержать расширенный basis, но человек сначала понимает ситуацию и требуемое решение, а затем проверяет exact детали.
+Структура не требует всех headings в каждом коротком сообщении. Она задаёт стабильный порядок при наличии содержания и согласуется с `WPC-06`: существенное решение может содержать расширенные основания, но человек сначала понимает ситуацию, затем видит рекомендацию и все применимые варианты, после чего при необходимости проверяет exact детали.
 
-#### Stage-progress snapshot и completion taxonomy
+#### `Этапы работы` и completion taxonomy
 
-На значимых milestones показывай компактный snapshot с пятью полями: `Завершено`, `Сейчас`, `Осталось`, `Открытые вопросы`, `Ближайший Human Gate / следующий допустимый шаг`. Частота зависит от presentation preferences, но state опирается на наблюдаемые Task/Run/Loop transitions, не на activity или confidence. Не используй проценты готовности без отдельной измеримой модели и не повторяй неизменившийся status ради видимости движения.
+При существенном изменении этапа, после Human Gate, перед milestone handoff или по прямому запросу показывай generated block `Этапы работы`. Одна полезная строка соответствует одному этапу: `✅` завершено, `🔄` выполняется, `⏳` ожидается, `↩️` возвращено, `⛔` заблокировано. Маркер всегда сопровождается явным текстом, поэтому смысл сохраняется без emoji. Легенду поясняй только при первом существенном использовании или неоднозначности. Жёсткого числа строк нет: объединяй внутреннюю детализацию, если она ухудшает ориентацию.
+
+Не показывай блок после каждого tool call, для простой одношаговой работы или при неизменившемся состоянии. Существенные `Открытые вопросы` и `Ближайший Human Gate / следующий допустимый шаг` указывай отдельно, если строки этапов не передают их полностью. Состояние опирается на наблюдаемые Task/Run/Loop transitions, не на activity или confidence. Не используй проценты готовности без отдельной измеримой модели. Marker: `work_stages_generated`.
 
 Machine-stable regression projection: `progress_fields: completed | current | remaining | open_questions | next_gate`.
 
@@ -435,8 +596,8 @@ Material Candidate Work Context, Working Process, Loop и Admission Request пр
 4. scope и authority;
 5. карта работы или результата;
 6. evidence, assumptions, risks и limitations;
-7. рекомендация агента;
-8. **Требуемое решение**;
+7. `Рекомендация` агента;
+8. `Варианты решения` с точным действием и последствием для каждого применимого варианта;
 9. что решение разрешает и не разрешает;
 10. следующий переход и return/reopen route.
 
@@ -444,16 +605,14 @@ Material Candidate Work Context, Working Process, Loop и Admission Request пр
 
 Одна и та же material configuration сохраняет понятную идентичность через request, decision confirmation и handoff. При первой ссылке покажи `понятное название + exact ID` и descriptive link, если carrier существует и ссылка полезна; при последующей relying reference повтори `понятное название + exact ID`. Bare ID, filename или path допустимы в service details, но не являются достаточной основной идентификацией результата или решения.
 
-Минимальный Required Decision contract:
+Минимальный contract вариантов решения:
 
 ```text
-Требуемое решение — <класс>
 Candidate и first relying use
-Рекомендация
-Evidence и limitations
-Решение разрешает / не разрешает
-Допустимые outcomes и return route
-Следующий переход
+Рекомендация и её основание
+Варианты решения: действие → последствие
+Что каждый вариант разрешает / не разрешает
+Return/defer/reject и следующий переход
 ```
 
 #### Decision UI в чате и optional Markdown
@@ -488,17 +647,18 @@ consequential_action → DI-08
 clarification → cross-class response state, not a Decision Interaction
 ```
 
-Общий chat-first порядок чтения:
+Общий порядок чтения в чате:
 
 ```text
 <человеко-понятный заголовок ситуации>
 Candidate status и exact configuration
-Краткий вывод / recommendation
+Краткий вывод
 Что изменится и зачем это нужно сейчас
 Evidence, assumptions, risks и limitations
 Что разрешено / что запрещено
-Требуемое решение / Required Decision
-Текстовые варианты ответа или exact approval phrase
+Рекомендация
+Варианты решения с точными последствиями
+Optional exact approval phrase после всех вариантов
 Следующий переход и return/reopen route
 ```
 
@@ -508,13 +668,21 @@ Evidence, assumptions, risks и limitations
 
 Для `DI-08` точная формула решения содержит action verb, target/configuration, side effects, recovery/reversibility и verification. Для `DI-05` risk/exposure, possible consequence, mitigation, accountable risk owner, review condition/date, reopen trigger, unaccepted residual part и bounded relying use остаются видимыми в request, confirmation и последующем relied-on context. Decision authority и risk owner могут различаться; не объединяй их молча.
 
-После однозначного ответа Layer C явно подтверждает: outcome в plain language и exact status; exact admitted/rejected/returned/deferred configuration; newly allowed effects и what remains prohibited; conditions/limitations; decision actor и date/time when available; descriptive link to the decision record when one created; next authorized transition и return/reopen route. Не показывай success confirmation до существования решения. Не считай двусмысленное `да`, emoji reaction, молчание или ответ не к той configuration Admission либо authority grant: запроси clarification. Стабильные textual actions и exact approval phrase являются переносимым fallback; этот контракт не обещает native Codex controls, CSS, fonts, persistence или accessibility behavior host-продукта.
+Варианты имеют сопоставимую структуру `<действие> — <последствие>` и показываются только по применимости выбранного `DI-*`. Если recommendation существует, первый вариант может называться `Принять рекомендованный вариант`, но сразу повторяет exact действие и последствие; одной ссылки на рекомендацию недостаточно для recoverable authority decision. Conditions, narrower authority и запрос нового/уточнённого варианта остаются видимыми там, где interaction это допускает. Не отмечай рекомендацию success marker до решения. Markers: `applicable_decision_options | recommended_option_exact_effect`.
+
+После однозначного ответа Layer C явно подтверждает: outcome обычным языком и exact status; exact admitted/rejected/returned/deferred configuration; вновь разрешённые и по-прежнему запрещённые effects; conditions/limitations; decision actor и date/time when available; descriptive link to the decision record when one created; next authorized transition и return/reopen route. Не показывай success confirmation до существования решения. Не считай двусмысленное `да`, emoji reaction, молчание или ответ не к той configuration Admission либо authority grant: запроси clarification. Стабильные текстовые действия и exact approval phrase являются переносимым fallback после полного списка вариантов; этот контракт не обещает native Codex controls, CSS, fonts, persistence или accessibility behavior host-продукта. Marker: `decision_confirmation_effects`.
 
 #### `WPC-07` — русский по умолчанию
 
-Пользовательские заголовки, пояснения, рекомендации и decision basis пиши по-русски, если project authority не установила иной язык. English сохраняй для точных technical terms, identifiers, code, paths, statuses, model names и quotations. При первом material use кратко поясни термин по-русски, если это улучшает понимание. Не переводи source quotations или machine identifiers так, чтобы изменился смысл.
+Пользовательские заголовки, пояснения, рекомендации и основания решения пиши по-русски, если project authority не установила иной язык. Применяй semantic categories:
 
-То же правило действует для создаваемых project-specific carriers: headings и explanatory prose формируются прежде всего по-русски, а English используется только там, где сохраняет exact technical meaning. Автоматический word-count или запрет English не является достаточным oracle; проверяй смысл, continuity title/ID и отсутствие decorative English.
+1. exact system terms (`Working Process`, `Loop`, `Task`, `Run`, `Candidate Result`, `Verification`, `Admission`, `Human Gate`, `Work Context`, `Entry Decision`, `Runtime`) сохраняют точную форму; при первом существенном употреблении добавь краткое русское пояснение, если оно помогает аудитории;
+2. named engineering results/interactions сохраняют identity и при необходимости получают русское пояснение при первом употреблении;
+3. IDs, status values, code, paths, commands, quotations и hashes сохраняются byte-exact;
+4. boundary vocabulary вроде `baseline`, `scope`, `authority`, `evidence`, `configuration`, `carrier`, `first relying use`, `reopen trigger` в обычной пояснительной речи передаётся естественно по-русски; English остаётся при первом употреблении или когда важна exact field identity;
+5. ordinary explanatory English переводится по смыслу.
+
+Для системного объекта используй `<exact type> — <русское понятное название>` и exact ID при первой существенной ссылке, например `Working Process — проверка ясности взаимодействия` (`WP-IDPF-340-IC-001`). Русское название поясняет объект, но не переименовывает exact type. То же правило действует для project-specific carriers: headings и explanatory prose формируются прежде всего по-русски. Автоматический word-count, полный запрет English или массовый перевод historical/source content не являются oracle; проверяй смысл, continuity title/ID и отсутствие decorative English. Marker: `interaction_clarity_russian_first`.
 
 Presentation preferences меняют объём, но не отменяют `WPC-05/WPC-06/WPC-07`, Candidate status, risks, authority или limitations.
 
@@ -827,7 +995,7 @@ Working Process необходимо инициировать, если:
 7. отдельно предложи reductions по `WPC-03` и recommended optimized map;
 8. выдели предполагаемые Loops и связи между ними;
 9. предложи первый bounded Loop;
-10. представь ясный Required Decision по `WPC-05/WPC-06/WPC-07`;
+10. представь ясные `Рекомендация` и `Варианты решения` по `WPC-05/WPC-06/WPC-07`;
 11. получи explicit process authority decision;
 12. только после этого создавай process files или выполняй Run.
 
@@ -851,7 +1019,7 @@ Working Process необходимо инициировать, если:
 - первый предлагаемый bounded Loop;
 - verification и admission для ключевых результатов;
 - открытые вопросы, assumptions и limitations;
-- Required Decision, exact allowed/prohibited consequences и return route.
+- `Варианты решения`, exact allowed/prohibited consequences и return route.
 
 Для material Candidate Working Process действует `WPC-06 decision wrapper required`: перечисленное представление должно само содержать WPC-06 basis либо сопровождаться adjacent decision wrapper, связанным с exact Candidate configuration. Короткая однозначная команда пользователя остаётся допустимым ответом, но не заменяет сохраняемую основу решения.
 
@@ -930,7 +1098,7 @@ Working Process вводится в действие только после я�
 ## Change History
 ```
 
-Для material Candidate Loop действует `WPC-06 decision wrapper required`: Loop carrier или adjacent presentation, связанная с его exact configuration, показывает recommendation, evidence/assumptions/risks/limitations, Required Decision, allowed/prohibited effects и return/reopen route. Эти поля не становятся обязательными headings внутри каждого lightweight Loop, если эквивалентный wrapper однозначно сохранён.
+Для material Candidate Loop действует `WPC-06 decision wrapper required`: Loop carrier или adjacent presentation, связанная с его exact configuration, показывает `Рекомендация`, evidence/assumptions/risks/limitations, `Варианты решения`, allowed/prohibited effects и return/reopen route. Эти поля не становятся обязательными headings внутри каждого lightweight Loop, если эквивалентный wrapper однозначно сохранён.
 
 ### 8.1. Purpose
 
@@ -1137,22 +1305,22 @@ Material Admission Request использует `WPC-06 decision wrapper require
 ```
 # ADMISSION-REQUEST-NNN
 
-## Status and Purpose
-## Candidate Result and Configuration
-## First Relying Use
-## Evidence Reviewed
-## Assumptions, Risks and Limitations
-## Recommendation
-## Required Decision
-## Allowed and Prohibited Effects
-## Allowed Outcomes
-## Decision Authority
-## Return and Reopen Route
+## Статус и назначение
+## Candidate Result и configuration
+## Первое использование с опорой на результат
+## Проверенные свидетельства
+## Assumptions, риски и ограничения
+## Рекомендация
+## Варианты решения
+## Разрешённые и запрещённые effects
+## Допустимые outcomes
+## Владелец решения
+## Return и Reopen Route
 ```
 
 Admission Request является Candidate decision presentation, а не уже принятым решением. Для bounded естественного запроса отдельный файл не обязателен, если весь applicable basis явно представлен и configuration recoverable.
 
-В чате Admission Request следует Decision UI contract из `WPC-06`: человеко-понятный situation heading, Candidate и first relying use, видимые последствия и ограничения, `Требуемое решение / Required Decision`, допустимые textual outcomes и return route. Если используется adjacent `.md`, chat summary и файл ссылаются на одну exact configuration. После решения агент подтверждает распознанный outcome и условия; ambiguous reply возвращается на clarification, а не записывается как Admission.
+В чате Admission Request следует Decision UI contract из `WPC-06`: понятный заголовок ситуации, Candidate и first relying use, видимые последствия и ограничения, `Рекомендация`, единый блок `Варианты решения` с применимыми действиями/последствиями и return route. Если используется adjacent `.md`, chat summary и файл ссылаются на одну exact configuration. После решения агент подтверждает распознанный outcome и условия; ambiguous reply возвращается на clarification, а не записывается как Admission.
 
 ### 11.2. Admission Record
 
@@ -1429,7 +1597,7 @@ Working Process готов к началу пилота, когда:
 - назначена authority;
 - имеются stop и return routes;
 - management и engineering views configuration-consistent, если используются обе;
-- Required Decision и последствия понятны пользователю;
+- `Варианты решения` и последствия понятны пользователю;
 - процесс не требует предварительного полного описания всего проекта.
 
 ---

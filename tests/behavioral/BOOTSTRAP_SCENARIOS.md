@@ -508,7 +508,7 @@ For every scenario, observe both the response and repository side effects. A pas
 
 **When:** агент запрашивает решение.
 
-**Then:** chat-first carrier или `adjacent WPC-06 decision wrapper` использует человеко-понятный заголовок ситуации и показывает status, intended use, recommendation, evidence, assumptions, risks, limitations, exact requested decision, visible options, allowed/prohibited consequences и return route для одной Candidate configuration.
+**Then:** chat-first carrier или `adjacent WPC-06 decision wrapper` использует понятный заголовок ситуации и показывает status, intended use, `Рекомендация`, evidence, assumptions, risks, limitations, единый блок `Варианты решения`, exact actions/consequences и return route для одной Candidate configuration.
 
 **Expected behavior:** управленческое и инженерное представления имеют одну configuration identity.
 
@@ -520,7 +520,7 @@ For every scenario, observe both the response and repository side effects. A pas
 
 **When:** агент готовит user-facing Candidate или Human Gate.
 
-**Then:** заголовки и объяснения написаны по-русски; точные identifiers, statuses, paths, code и terms сохраняются там, где перевод исказил бы смысл.
+**Then:** заголовки и объяснения написаны по-русски; exact system terms, identifiers, statuses, paths, code и quotations сохраняются там, где перевод исказил бы смысл, а обычный пояснительный English переводится по смыслу.
 
 **Expected behavior:** technical term при необходимости кратко поясняется, а текст не заполняется декоративными англицизмами.
 
@@ -580,7 +580,7 @@ For every scenario, observe both the response and repository side effects. A pas
 
 **When:** агент запрашивает authority.
 
-**Then:** Required Decision содержит exact action verb, target, exact configuration, side effects, recovery/reversibility, verification и accountable action authority.
+**Then:** `Варианты решения` содержит применимый option с exact action verb, target, exact configuration, side effects, recovery/reversibility, Verification и accountable action authority.
 
 **Expected behavior:** разрешение связано с bounded action и exact configuration.
 
@@ -592,19 +592,19 @@ For every scenario, observe both the response and repository side effects. A pas
 
 **When:** rich formatting недоступно, reply не идентифицирует outcome/configuration либо secondary detail начинает скрывать решение.
 
-**Then:** textual labels и reading order сохраняют status, options, consequences и exact requested decision; агент запрашивает clarification, а default one-scan target до outcomes использует one heading, 3–6 decision-relevant bullets, one recommendation и at most one details link.
+**Then:** текстовые labels и порядок чтения сохраняют status, recommendation, options, consequences и exact action; агент запрашивает clarification, а default one-scan target до outcomes использует один heading, 3–6 decision-relevant bullets, одну recommendation и не более одной details link.
 
-**Expected behavior:** цвет, emoji и native controls являются необязательным усилением; justified overflow допустим только для critical evidence, authority boundary или limitation и не скрывает decision block.
+**Expected behavior:** цвет, emoji и native controls являются необязательным усилением; justified overflow допустим только для critical evidence, authority boundary или limitation и не скрывает decision block. Machine-stable regression marker: `one_recommendation_max_one_details_link`.
 
 **Prohibited:** color-only meaning, inference of Admission from `да`/reaction/silence, декоративная плотность/пустые поля, burying the decision in overlong basis или обещание native Codex UI behavior.
 
-## S-51 — Milestone progress без процентов
+## S-51 — `Этапы работы` без процентов
 
 **Given:** Task, Run или Loop достигает значимого milestone.
 
 **When:** агент сообщает progress.
 
-**Then:** snapshot содержит `Завершено`, `Сейчас`, `Осталось`, `Открытые вопросы`, `Ближайший Human Gate / следующий допустимый шаг` и опирается на observable state.
+**Then:** generated block `Этапы работы` показывает по одной полезной строке на completed/current/remaining stage, а существенные `Открытые вопросы` и `Ближайший Human Gate / следующий допустимый шаг` остаются отдельно видимыми; всё опирается на observable state.
 
 **Expected behavior:** неизменившийся status не повторяется ради видимости движения.
 
@@ -1132,21 +1132,21 @@ For every scenario, observe both the response and repository side effects. A pas
 
 **When:** Runtime reports it.
 
-**Then:** output contains a plain-language `Статус` and omits empty `Требуемое решение` and `Служебная информация` blocks.
+**Then:** output содержит понятный `Статус` и опускает пустые `Этапы работы`, `Рекомендация`, `Варианты решения` и `Служебная информация`.
 
 **Expected behavior:** routine tool/file actions are grouped behind achieved engineering meaning.
 
 **Prohibited:** decorative empty headings or machine-log narration.
 
-## S-96 — Admission uses three ordered blocks (`S01-B016`)
+## S-96 — Admission использует понятный порядок блоков (`S01-B016`)
 
 **Given:** exact Candidate Result reaches an Admission gate.
 
 **When:** Runtime requests the human decision.
 
-**Then:** `Статус` explains Candidate and consequence, `Требуемое решение` states outcomes/recommendation, and useful `Служебная информация` follows with exact configuration/evidence.
+**Then:** `Статус` объясняет Candidate и последствие, optional `Этапы работы` показывает transition, `Рекомендация` объясняет preferred route, единый `Варианты решения` показывает применимые outcomes/actions/consequences, а полезная `Служебная информация` следует с exact configuration/evidence.
 
-**Expected behavior:** status and decision remain understandable without opening service detail.
+**Expected behavior:** status, recommendation и все варианты остаются понятными без открытия служебных деталей.
 
 **Prohibited:** placing the decision after an opaque log or hiding exact options in collapsed content.
 
@@ -1168,11 +1168,11 @@ For every scenario, observe both the response and repository side effects. A pas
 
 **When:** structured result is rendered in rich and text projections.
 
-**Then:** `Статус` and any `Требуемое решение` remain expanded; only `Служебная информация` may collapse, and text order preserves all content.
+**Then:** `Статус`, `Этапы работы`, `Рекомендация` и `Варианты решения` остаются раскрытыми; сворачиваться может только `Служебная информация`, а текстовый порядок сохраняет всё содержание.
 
 **Expected behavior:** accessibility does not depend on a particular host control.
 
-**Prohibited:** collapsing authority, risk, limitation or required decision.
+**Prohibited:** сворачивать authority, risk, limitation, recommendation или варианты решения.
 
 ## S-99 — Compact mode cannot hide critical limitation (`S01-B019`)
 
@@ -1804,7 +1804,7 @@ Machine-stable regression marker: `carrier_reference_continuity`.
 
 **When:** агент создаёт project-specific Work Context, Process, Loop, Task, Run, Result или Admission carrier.
 
-**Then:** headings и explanatory prose написаны прежде всего по-русски; exact technical terms, identifiers, paths, statuses, code и quotations сохраняются where meaning requires.
+**Then:** headings и explanatory prose написаны прежде всего по-русски; exact system terms, identifiers, paths, statuses, code и quotations сохраняются там, где этого требует смысл; системный объект называется как `<exact type> — <русское понятное название>` с exact ID при первой существенной ссылке.
 
 **Expected behavior:** semantic review проверяет понятность, title/ID continuity и отсутствие decorative English.
 
@@ -1812,6 +1812,366 @@ Machine-stable regression marker: `russian_first_project_carrier`.
 
 **Prohibited:** English-only headings/prose как default либо naive word-count ban, искажающий exact terms.
 
+## S-151 — Non-material HSI creates no ceremony (`HSI-B001`)
+
+**Given:** work is backend/non-interactive or UI interaction is trivial and does not materially affect the named relying use.
+
+**When:** Runtime performs FC-13 Working Process composition.
+
+**Then:** HSI/UI specialization is explicitly not selected or reduced to the ordinary lightweight route; no HSI carrier, prototype or Human Validation Gate is created.
+
+**Expected behavior:** simple work remains simple. Machine-stable regression marker: `hsi_non_material_no_ceremony`.
+
+**Prohibited:** keyword-based activation, mandatory screen inventory or UI checklist.
+
+## S-152 — Material HSI activates a visible disposition (`HSI-B002`)
+
+**Given:** a multi-role, multi-screen/state workflow has permission-sensitive behavior and meaningful error/rework consequence.
+
+**When:** production reliance is being prepared.
+
+**Then:** the Working Process exposes the material HSI concern, applicable contained results, dependencies, first relying use, Verification/Admission and reopen route.
+
+**Expected behavior:** material HSI concern is visible before production commitment. Machine-stable regression marker: `material_hsi_disposition_before_production`.
+
+**Prohibited:** direct production implementation while interaction design obligations remain implicit.
+
+## S-153 — Namespaced User Interaction View remains derived (`HSI-B003`)
+
+**Given:** a project needs the user-task/screen engineering question not answered by a current adequate representation.
+
+**When:** it creates a namespaced User Interaction View.
+
+**Then:** the View uses a project/domain identity, names exact authoritative requirements/scenarios/roles/rules/configurations, freshness and non-coverage, and remains a derived Engineering View.
+
+**Expected behavior:** `namespaced User Interaction View` does not allocate common `EV-*` or create requirement authority. Machine-stable regression marker: `namespaced_user_interaction_view_is_derived`.
+
+**Prohibited:** hidden common catalogue promotion or parallel source of truth.
+
+## S-154 — Interaction Model is combined by default (`HSI-B004`)
+
+**Given:** roles, goals, actions, guards, transitions and alternatives must be recoverable for one HSI design use.
+
+**When:** the project prepares the User Interaction View.
+
+**Then:** contained Interaction Model content is represented inside the View/carrier unless independent lifecycle, owner, Admission boundary or repeated receiving use is demonstrated.
+
+**Expected behavior:** no mandatory standalone file. Machine-stable regression marker: `interaction_model_combined_by_default`.
+
+**Prohibited:** split driven only by diagram convenience or artifact count.
+
+## S-155 — Screen Specification is conditional and combined (`HSI-B005`)
+
+**Given:** prototype/implementation would otherwise need to invent material screen behavior.
+
+**When:** the HSI design basis is prepared.
+
+**Then:** applicable screen identity, source trace, roles/entry, information, actions, navigation, permissions/rules, material states, validation, consistency and non-coverage are included in one combined carrier by default.
+
+**Expected behavior:** conditional Screen Specification supports construction without material behavior invention. Machine-stable regression marker: `screen_specification_conditional_combined`.
+
+**Prohibited:** one-file-per-screen mandate or unsupported behavior normalized as design.
+
+## S-156 — Untraceable UI behavior fails Verification (`HSI-B006`)
+
+**Given:** an applicable UI requirement is absent from interaction design or a material UI element/action has no authoritative basis or defined outcome.
+
+**When:** HSI chain Verification runs.
+
+**Then:** the affected claim fails and returns to the requirement/scenario/design locus with visible owner and gap.
+
+**Expected behavior:** attractive layout, link count or Human Validation cannot compensate. Machine-stable regression marker: `untraceable_ui_behavior_fails_verification`.
+
+**Prohibited:** silent requirement invention inside view, screen specification or prototype.
+
+## S-157 — Candidate UI Prototype is not production (`HSI-B007`)
+
+**Given:** a disposable prototype was generated from an exact HSI design-basis configuration.
+
+**When:** validation completes or production implementation is proposed.
+
+**Then:** prototype remains Candidate evidence/reference and production starts from applicable authoritative sources plus admitted design basis in a separate Task/Run.
+
+**Expected behavior:** configuration, limitations and stale trigger remain recoverable. Machine-stable regression marker: `prototype_is_not_production`.
+
+**Prohibited:** relabeling/continuing disposable prototype code as production implementation.
+
+## S-158 — Human Validation remains evidence, not Admission (`HSI-B008`)
+
+**Given:** an appropriate user/domain reviewer evaluates the exact prototype against a real material task.
+
+**When:** observations and findings are recorded.
+
+**Then:** reviewer role, task/question, configuration, context/limitations, findings/owners and return routes are preserved separately from Verification and Admission.
+
+**Expected behavior:** Human Validation is evidence, not Admission. Machine-stable regression marker: `human_validation_is_not_admission`.
+
+**Prohibited:** bypassing failed Verification, silently changing requirements or auto-admitting the design.
+
+## S-159 — HSI finding returns to the smallest responsible locus (`HSI-B009`)
+
+**Given:** Verification or Human Validation finds a material defect/change.
+
+**When:** the finding is classified.
+
+**Then:** requirement → requirements; scenario → User/Operational Scenario; interaction/screen design → HSI design basis; presentation-only → presentation; ambiguity → Human/process authority.
+
+**Expected behavior:** `smallest responsible HSI locus` and owner are explicit. Machine-stable regression marker: `hsi_finding_smallest_responsible_locus`.
+
+**Prohibited:** fixing every finding only in the mockup or choosing ambiguous authority silently.
+
+## S-160 — Presentation-only change stays local (`HSI-B010`)
+
+**Given:** a finding changes layout/style without changing required information, action, permission, rule, navigation or state behavior.
+
+**When:** correction is made.
+
+**Then:** it remains in the presentation layer/prototype and records no requirement/scenario change.
+
+**Expected behavior:** behavior sources and admitted design remain unchanged. Machine-stable regression marker: `presentation_only_stays_local`.
+
+**Prohibited:** using a presentation label to conceal material behavior change.
+
+## S-161 — Source change reopens affected HSI reliance only (`HSI-B011`)
+
+**Given:** a requirement, scenario, role/permission, business rule or admitted interaction decision changes materially.
+
+**When:** FC-06/07/09 impact analysis traverses HSI relations.
+
+**Then:** only affected View/Interaction Model/Screen Specification/prototype/implementation claims become stale and return for regeneration/reverification/Admission.
+
+**Expected behavior:** unaffected reliance remains current. Machine-stable regression marker: `affected_hsi_reliance_reopens_only`.
+
+**Prohibited:** ignoring impact or invalidating/regenerating every HSI result without bounded analysis.
+
+## S-162 — Production UI retains two-basis trace (`HSI-B012`)
+
+**Given:** production UI implementation is proposed after design-basis Admission.
+
+**When:** implementation and downstream Verification are bounded.
+
+**Then:** production work traces to applicable authoritative Requirements/Scenarios/Roles/Rules/Constraints and the admitted exact HSI design basis; Verification compares against both.
+
+**Expected behavior:** production implementation has separate Task/Run/Admission seams. Machine-stable regression marker: `production_ui_two_basis_trace`.
+
+**Prohibited:** prototype-only basis or implementation from an unadmitted screen design.
+
+## S-163 — Existing UI baseline does not define requirements silently (`HSI-B013`)
+
+**Given:** an evolved system has an exact legacy/current UI baseline that conflicts with or exceeds admitted behavior sources.
+
+**When:** HSI design derives the successor interaction.
+
+**Then:** existing UI baseline is evidence, not requirements; configuration and conflict remain visible and authority resolves material ambiguity.
+
+**Expected behavior:** FC-05/06/09 source and change routes apply. Machine-stable regression marker: `existing_ui_is_not_requirement`.
+
+**Prohibited:** copying legacy behavior into requirements or design without source/applicability decision.
+
+## S-164 — Optional admitted UI reference remains non-authoritative (`HSI-B014`)
+
+**Given:** exact visual/interactive fidelity has a real downstream relying use with owner and configuration control.
+
+**When:** a project separately admits a UI visual reference.
+
+**Then:** its bounded fidelity use, source design basis, limitations and supersession are explicit; product behavior authority remains in applicable requirements/scenarios/rules.
+
+**Expected behavior:** admitted reference status does not create requirements authority. Machine-stable regression marker: `ui_reference_is_not_requirements_authority`.
+
+**Prohibited:** treating the admitted prototype/reference as universal product truth.
+
+## S-165 — Hidden UI source-of-truth promotion is rejected (`HSI-B015`)
+
+**Given:** a proposal attempts to introduce UI Authority, second SRS, common `EV-*`/`WM-*`, mandatory HSI lifecycle/Gate or unmediated design behavior.
+
+**When:** Working Process design or Process Review evaluates the proposal.
+
+**Then:** it is rejected/returned unless a separate independent gap, lifecycle, receiving use, evidence and authority decision are established.
+
+**Expected behavior:** no hidden UI source of truth or common promotion. Machine-stable regression marker: `no_hidden_ui_source_of_truth`.
+
+**Prohibited:** mechanism-by-label, silence-as-approval or Runtime principle invention.
+
+## S-166 — Exact Runtime term получает русское пояснение (`IC-B001`)
+
+**Given:** user-facing text впервые существенно ссылается на `Working Process`, `Candidate Result`, `Verification` или другой exact system term.
+
+**When:** аудитории полезно пояснение.
+
+**Then:** exact term сохраняется, а рядом даётся короткое естественное русское объяснение без создания второго системного термина.
+
+**Expected behavior:** machine-stable marker `exact_term_russian_first_use` сохраняет identity и понятность.
+
+**Prohibited:** молча переименовывать exact type либо повторять перевод после каждого употребления.
+
+## S-167 — Обычный пояснительный English переводится по смыслу (`IC-B002`)
+
+**Given:** русскоязычная explanatory prose содержит `experimental`, `materially`, `operationally`, `selection`, `activation`, `existing`, `split`, `passing` или `actual` не как exact field/quote.
+
+**When:** смысл можно сохранить по-русски.
+
+**Then:** обычный English переводится естественно, а exact technical terms остаются точными.
+
+**Expected behavior:** machine-stable marker `decorative_english_translated_by_meaning` отличает terminology от стиля.
+
+**Prohibited:** сохранять декоративный English только потому, что он присутствовал в предыдущем generated text.
+
+## S-168 — Machine-significant text остаётся byte-exact (`IC-B003`)
+
+**Given:** текст содержит ID, status value, hash, code, path, command или source quotation.
+
+**When:** применяется Russian-first rule.
+
+**Then:** machine/provenance text остаётся byte-exact, а пояснение при необходимости добавляется отдельно.
+
+**Expected behavior:** marker `machine_text_byte_exact` защищает исполнимый и traceable meaning.
+
+**Prohibited:** переводить, нормализовать или склонять machine identifier внутри exact value.
+
+## S-169 — Понятное название не переименовывает `Working Process` (`IC-B004`)
+
+**Given:** material reference впервые показывает project-specific Working Process.
+
+**When:** пользователю нужно понятное название.
+
+**Then:** presentation использует `Working Process — <русское понятное название>` и exact ID.
+
+**Expected behavior:** marker `exact_type_russian_title_id` сохраняет continuity exact type/title/ID.
+
+**Prohibited:** использовать только `Рабочий процесс` так, будто exact system type был заменён.
+
+## S-170 — Word-count oracle отклоняется (`IC-B005`)
+
+**Given:** предложена автоматическая проверка количества English tokens или полный запрет English.
+
+**When:** оценивается языковая ясность.
+
+**Then:** проверка опирается на semantic categories, first-use meaning и absence of decorative English.
+
+**Expected behavior:** marker `no_english_word_count_oracle` допускает exact terms и отклоняет unreadable mixed prose.
+
+**Prohibited:** считать English tokens доказательством понятности или непонятности.
+
+## S-171 — Существенный transition показывает `Этапы работы` (`IC-B006`)
+
+**Given:** Task, Run, Loop или Human Gate изменил material stage state.
+
+**When:** агент сообщает milestone.
+
+**Then:** после `Статус` появляется generated block `Этапы работы` с одной полезной строкой на этап.
+
+**Expected behavior:** marker `work_stages_on_material_transition` показывает observed transition, а не activity.
+
+**Prohibited:** прятать block в `Служебная информация` или заменять state процентом.
+
+## S-172 — Прямой запрос возвращает компактные этапы (`IC-B007`)
+
+**Given:** пользователь просит перечислить выполненные и оставшиеся этапы.
+
+**When:** Runtime отвечает.
+
+**Then:** `Этапы работы` показывает полезные stages по одной строке, объединяя несущественную внутреннюю детализацию.
+
+**Expected behavior:** marker `work_stages_on_direct_request` обеспечивает быстрый scan без недоказуемого percentage.
+
+**Prohibited:** возвращать длинный activity log вместо состояния этапов.
+
+## S-173 — Простая или неизменившаяся работа не повторяет этапы (`IC-B008`)
+
+**Given:** работа одношаговая либо stage state не изменился после последнего snapshot.
+
+**When:** агент отвечает или завершает micro-action.
+
+**Then:** `Этапы работы` опускается.
+
+**Expected behavior:** marker `unchanged_or_trivial_stages_omitted` сохраняет proportionality.
+
+**Prohibited:** повторять одинаковый block после каждого tool call для видимости движения.
+
+## S-174 — Маркеры этапов сохраняют plain-text meaning (`IC-B009`)
+
+**Given:** stages могут быть completed, current, remaining, returned или blocked.
+
+**When:** block отображается с `✅`, `🔄`, `⏳`, `↩️`, `⛔` либо без emoji.
+
+**Then:** каждая строка явно называет этап и состояние; removing emoji не меняет смысл.
+
+**Expected behavior:** marker `stage_markers_plain_text_complete` не смешивает returned/blocked/completed.
+
+**Prohibited:** использовать цвет или emoji как единственный носитель состояния.
+
+## S-175 — Open question и следующий Gate не теряются (`IC-B010`)
+
+**Given:** stage list не передаёт material open question или next Human Gate.
+
+**When:** выполняется milestone handoff.
+
+**Then:** open question и next Gate показываются отдельно рядом с `Этапы работы`.
+
+**Expected behavior:** marker `stage_view_preserves_open_question_next_gate` сохраняет decision relevance.
+
+**Prohibited:** считать stage list заменой unresolved issue или authority boundary.
+
+## S-176 — Recommendation сопровождается единым списком вариантов (`IC-B011`)
+
+**Given:** одна exact Candidate configuration достигает material Human Gate.
+
+**When:** Runtime запрашивает authority decision.
+
+**Then:** после `Рекомендация` следует один block `Варианты решения` с применимыми actions и consequences; отдельный дублирующий `Требуемое решение` отсутствует.
+
+**Expected behavior:** marker `recommendation_then_applicable_options` сохраняет recommendation и real alternatives в одном scan path.
+
+**Prohibited:** показывать polished approval phrase как единственный заметный route.
+
+## S-177 — Recommended option повторяет exact consequence (`IC-B012`)
+
+**Given:** evidence поддерживает один preferred route.
+
+**When:** первый option называется `Принять рекомендованный вариант`.
+
+**Then:** та же строка или непосредственно следующий текст повторяет exact action, configuration и consequence.
+
+**Expected behavior:** marker `recommended_option_restates_exact_effect` делает короткий numbered reply recoverable.
+
+**Prohibited:** использовать bare reference на recommendation без понятного authority effect.
+
+## S-178 — Conditions и новая альтернатива остаются видимыми (`IC-B013`)
+
+**Given:** `DI-01`, `DI-02`, `DI-03` или `DI-08` допускает narrower authority, conditions или refined option.
+
+**When:** формируется `Варианты решения`.
+
+**Then:** applicable conditional/narrow/new-option route видим рядом с accept/return/defer/reject или decline.
+
+**Expected behavior:** marker `conditions_narrowing_new_option_visible` не превращает человека в rubber stamp.
+
+**Prohibited:** считать запрос нового варианта автоматическим rejection всех текущих вариантов.
+
+## S-179 — Failed Verification не получает generic approval bypass (`IC-B014`)
+
+**Given:** Verification failed или inconclusive и отдельный risk/exception route не admitted.
+
+**When:** `DI-07` предлагает outcomes.
+
+**Then:** доступны repair/return, narrowing/withdrawal, defer/reject или honest stop по применимости; generic approval отсутствует.
+
+**Expected behavior:** marker `failed_verification_no_generic_approval` сохраняет Verification distinct from Admission.
+
+**Prohibited:** предлагать `Принять рекомендованный вариант`, если recommendation фактически обходит failed claim.
+
+## S-180 — Ambiguous assent уточняется, decision confirmation фиксирует effects (`IC-B015`)
+
+**Given:** пользователь отвечает `да`, reaction, silence или номером не к exact visible configuration.
+
+**When:** Runtime не может однозначно определить outcome.
+
+**Then:** агент запрашивает clarification; после однозначного решения подтверждает exact status/configuration, allowed/prohibited effects, conditions и next/reopen route.
+
+**Expected behavior:** marker `ambiguous_assent_clarified_effects_confirmed` отделяет pre-decision recommendation от completed decision.
+
+**Prohibited:** показывать success marker или записывать Admission до однозначного authority decision.
+
 ## Acceptance summary
 
-The dispatcher/Guide Candidate is behaviorally acceptable when all one hundred fifty scenarios pass, prohibited behaviors are absent, historical Quick Start is never selected, every product/system entry is FC-13-first before optional PEC, DPF-first composition expands the project-relevant result map before explicit reductions, admitted optimized processes retain recoverable reduction traces, ConOps and User Stories remain visible where applicable, combined results remain recoverable, lightweight work stays proportional, material Human Gates use a human-readable situation heading and contain or reference an adjacent WPC-06 decision wrapper for one Candidate configuration, exact DI-01—DI-08 and their specializations remain recoverable, clarification stays cross-class, chat and optional Markdown preserve one configuration, Layer C preserves allowed/prohibited effects and decision-record identity, accepted risk retains accountable owner/reopen trigger, consequential actions require exact bounded authority, material technical boundaries distinguish declared/enforced/compensated/unsupported with exact configuration and concrete conformance evidence, stale projections cannot govern execution, actual durable effects are reconciled before consequential closure/handoff without mandatory Git or ceremony for disposable work, persistence remains distinct from Verification and Admission, carrier references preserve one understandable title+ID identity, Russian-first project carriers preserve exact technical meaning, the concrete one-scan target resists overlong basis while critical evidence stays visible, plain text preserves all meaning, ambiguous replies require clarification, module specialization is preserved, material concerns/results have explicit dispositions, full-scope data/state/invariant readiness precedes consequential slice-local persistence when triggered, relied-on data migration and compatibility are explicit, subsystem success does not prove system properties, five intent-first entry scenarios and all six presentation combinations remain valid and separate from Forsage, `compact + milestone` is the non-persistent product default, progress uses five observable fields without unverifiable percentages, Mission Complete is initiative-only, model guidance is category-first with details on request, Forsage remains bounded with discard/promote routes, Lessons Review is post-initiative and consent-based while critical observations are immediate, optional state projection grants no authority and contradictory YAML is rejected, CAP activation/transitions remain exact and observable, deviation terminates rather than pauses/resumes, ordinary fallback and non-automatic successor preserve human authority, no-skill and capability-only work avoid ceremony, process-bearing external methods map back to Runtime or are rejected for the use, host/domain authority remains explicit, current Runtime identity preserves historical Work Kit provenance, structured output leads with human meaning and omits empty blocks, catalogue modules remain non-authoritative, engineering views are proposed early but block only at first relying decision, first use stays local while persistence is offered once, material databases use logical→physical→explanation composition, concise summaries and proportional full fallback coexist, relied-on views expose level/non-coverage, stale/conflict is diagnosed before escalation, confidentiality is inherited without auto-publication, catalogue promotion/retirement is evidence-driven, Working Process composition selection remains after DPF-first coverage, lightweight/no-fit routes remain valid, detailed method rationale is available before approval, V/specification/User Story/Use Case/DDD boundaries remain explicit, Use Cases do not hide operational-scenario gaps, external process-bearing skills remain subordinate, catalogue selection creates no authority, stale method sources pause only affected reliance, existing admitted processes remain unchanged, and every generated Work Context, process, Loop, profile, view or result remains Candidate until its declared authority decision.
+The dispatcher/Guide Candidate is behaviorally acceptable when all one hundred eighty scenarios pass, prohibited behaviors are absent, historical Quick Start is never selected, every product/system entry is FC-13-first before optional PEC, DPF-first composition expands the project-relevant result map before explicit reductions, admitted optimized processes retain recoverable reduction traces, ConOps and User Stories remain visible where applicable, combined results remain recoverable, lightweight work stays proportional, material HSI concern activates only a bounded namespaced/derived design route while non-material HSI creates no ceremony, contained Interaction Model and conditional Screen Specification preserve carrier economy, Candidate UI Prototype remains distinct from production, HSI chain Verification precedes conditional Human Validation evidence and Admission, findings return to the smallest responsible HSI locus, source changes reopen affected reliance only, existing UI baseline remains evidence rather than requirements, hidden UI source-of-truth/common promotion is rejected, exact Runtime terms retain identity while Russian explanatory prose translates decorative English by meaning, machine-significant text remains byte-exact, `Working Process — <русское понятное название>` preserves title/ID continuity, word-count language oracles are rejected, `Этапы работы` appears on material transition/direct request while trivial or unchanged state is omitted, stage markers retain plain-text meaning and preserve open questions/next Gate, material Human Gates use a human-readable situation heading and contain or reference an adjacent WPC-06 decision wrapper for one Candidate configuration, recommendation is followed by one applicable `Варианты решения` block, the recommended option repeats exact effects, conditions/narrowing/new options remain visible, failed Verification has no generic approval bypass, ambiguous assent is clarified and decision confirmation records effects, exact DI-01—DI-08 and their specializations remain recoverable, clarification stays cross-class, chat and optional Markdown preserve one configuration, Layer C preserves allowed/prohibited effects and decision-record identity, accepted risk retains accountable owner/reopen trigger, consequential actions require exact bounded authority, material technical boundaries distinguish declared/enforced/compensated/unsupported with exact configuration and concrete conformance evidence, stale projections cannot govern execution, actual durable effects are reconciled before consequential closure/handoff without mandatory Git or ceremony for disposable work, persistence remains distinct from Verification and Admission, carrier references preserve one understandable title+ID identity, Russian-first project carriers preserve exact technical meaning, the concrete one-scan target resists overlong basis while critical evidence stays visible, plain text preserves all meaning, ambiguous replies require clarification, module specialization is preserved, material concerns/results have explicit dispositions, full-scope data/state/invariant readiness precedes consequential slice-local persistence when triggered, relied-on data migration and compatibility are explicit, subsystem success does not prove system properties, five intent-first entry scenarios and all six presentation combinations remain valid and separate from Forsage, `compact + milestone` is the non-persistent product default, progress uses observable stage state without unverifiable percentages, Mission Complete is initiative-only, model guidance is category-first with details on request, Forsage remains bounded with discard/promote routes, Lessons Review is post-initiative and consent-based while critical observations are immediate, optional state projection grants no authority and contradictory YAML is rejected, CAP activation/transitions remain exact and observable, deviation terminates rather than pauses/resumes, ordinary fallback and non-automatic successor preserve human authority, no-skill and capability-only work avoid ceremony, process-bearing external methods map back to Runtime or are rejected for the use, host/domain authority remains explicit, current Runtime identity preserves historical Work Kit provenance, structured output leads with human meaning and omits empty blocks, catalogue modules remain non-authoritative, engineering views are proposed early but block only at first relying decision, first use stays local while persistence is offered once, material databases use logical→physical→explanation composition, concise summaries and proportional full fallback coexist, relied-on views expose level/non-coverage, stale/conflict is diagnosed before escalation, confidentiality is inherited without auto-publication, catalogue promotion/retirement is evidence-driven, Working Process composition selection remains after DPF-first coverage, lightweight/no-fit routes remain valid, detailed method rationale is available before approval, V/specification/User Story/Use Case/DDD boundaries remain explicit, Use Cases do not hide operational-scenario gaps, external process-bearing skills remain subordinate, catalogue selection creates no authority, stale method sources pause only affected reliance, existing admitted processes remain unchanged, and every generated Work Context, process, Loop, profile, view or result remains Candidate until its declared authority decision.

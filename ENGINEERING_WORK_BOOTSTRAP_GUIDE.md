@@ -1,6 +1,6 @@
 # Engineering Work Bootstrap Guide
 
-> Version: `1.7.0`
+> Version: `1.8.0`
 
 ## 1. Назначение
 
@@ -516,7 +516,7 @@ Schema version `1` остаётся читаемой. Смена product default
 
 #### Проекция Decision UI
 
-Material Bootstrap decision представляется chat-first по `WPC-06` из `WORKING_PROCESS_AND_LOOPS_GUIDE.md`: выбери применимый `DI-01`—`DI-08`, используй человеко-понятный заголовок ситуации, одну exact Candidate configuration, recommendation, evidence/risks/limitations, видимые allowed/prohibited consequences и явно подписанное `Требуемое решение / Required Decision`. При первой material ссылке назови carrier/result понятным названием вместе с exact ID и useful link; в decision confirmation и handoff повтори то же понятное название вместе с exact ID, а не только ID или filename. Optional adjacent `.md` хранит подробный basis для той же configuration, когда он нужен для review или recovery. Для `DI-05 Risk` сохраняй accountable risk owner и reopen trigger; clarification является cross-class response state, а не девятой interaction. После решения подтверди outcome/configuration, newly allowed и still-prohibited effects, actor/date when available, decision-record link when created, conditions и next/reopen route. Текст сохраняет смысл без цвета/rich UI, а двусмысленный ответ не создаёт authority.
+Существенное Bootstrap-решение представляется прежде всего в чате по `WPC-06` из `WORKING_PROCESS_AND_LOOPS_GUIDE.md`: выбери применимый `DI-01`—`DI-08`, используй понятный заголовок ситуации, одну exact Candidate configuration, русскоязычную `Рекомендация`, основания/риски/ограничения, видимые разрешённые и запрещённые последствия и единый блок `Варианты решения`. Первый пункт `Принять рекомендованный вариант` повторяет точное действие и последствие; применимые альтернативы остаются равноправно видимыми. При первой существенной ссылке назови carrier/result понятным названием вместе с exact ID и полезной ссылкой; в подтверждении решения и handoff повтори то же название вместе с exact ID, а не только ID или filename. Optional adjacent `.md` хранит подробные основания той же configuration, когда они нужны для review или восстановления. Для `DI-05 Risk` сохраняй accountable risk owner и reopen trigger; clarification является cross-class response state, а не девятой interaction. После решения подтверди outcome/configuration, вновь разрешённые и по-прежнему запрещённые effects, actor/date when available, ссылку на decision record, условия и следующий/reopen route. Текст сохраняет смысл без цвета или rich UI, а двусмысленный ответ не создаёт authority. Markers: `applicable_decision_options | recommended_option_exact_effect | decision_confirmation_effects`.
 
 ### 7.5. Optional model-guidance offer
 
@@ -1790,9 +1790,9 @@ Preference notice и optional model-guidance offer не являются доп�
 
 ### 34.4. Перед Admission
 
-Агент показывает Candidate Work Context или Entry Decision как структурированный документ: подписывает смысловые блоки, отделяет основания, риски, ограничения и последствия, затем выделяет блок `Требуемое решение / Required Decision` с точной формулировкой ожидаемого решения (`WPC-06`). Первая и повторная relying reference сохраняют одно понятное название вместе с exact ID; filename/path остаётся service detail.
+Агент показывает Candidate Work Context или Entry Decision как структурированный документ: подписывает смысловые блоки, отделяет основания, риски, ограничения и последствия, затем показывает `Рекомендация` и единый блок `Варианты решения` с точными действиями и последствиями (`WPC-06`). Первая и повторная relying reference сохраняют одно понятное название вместе с exact ID; filename/path остаётся служебной деталью.
 
-Пользовательские заголовки и поясняющий текст формулируются прежде всего по-русски (`WPC-07`). Точные technical terms, идентификаторы, статусы, пути и цитаты сохраняются, когда перевод меняет системный смысл.
+Пользовательские заголовки и поясняющий текст формулируются прежде всего по-русски (`WPC-07`). Точные системные термины, идентификаторы, статусы, пути и цитаты сохраняются, когда перевод меняет системный смысл; обычный пояснительный English переводится по смыслу. Marker: `interaction_clarity_russian_first`.
 
 Bootstrap подготавливает достаточные входы для последующей DPF-first composition (`WPC-01`), но не выбирает Working Process вместо его process authority.
 
@@ -1817,7 +1817,7 @@ Bootstrap подготавливает достаточные входы для 
 
 ### 34.7. Progress и completion
 
-На значимом milestone показывай `Завершено`, `Сейчас`, `Осталось`, `Открытые вопросы`, `Ближайший Human Gate / следующий допустимый шаг`; не подменяй observable state процентом готовности. Различай завершение Task, Run, Loop, Admission baseline и всей initiative. `Mission Complete!` допустимо только когда admitted intended outcome существует и весь required scope завершён либо явно disposed; Candidate, passing check, закончившийся Run или exhausted budget этого статуса не создают. После initiative completion можно отдельно предложить optional Post-Initiative Lessons Review, но не выполнять его без explicit consent.
+При существенном изменении этапа, после Human Gate, перед handoff или по прямому запросу показывай `Этапы работы`: одна полезная строка на этап, `✅` завершено, `🔄` выполняется, `⏳` ожидается, `↩️` возвращено, `⛔` заблокировано. Текст сохраняет смысл без emoji. Не повторяй неизменившийся блок и не показывай его для простой одношаговой работы; существенные `Открытые вопросы` и ближайший Human Gate указывай отдельно. Не подменяй наблюдаемое состояние процентом готовности. Различай завершение Task, Run, Loop, Admission baseline и всей initiative. `Mission Complete!` допустимо только когда admitted intended outcome существует и весь required scope завершён либо явно disposed; Candidate, passing check, закончившийся Run или exhausted budget этого статуса не создают. После initiative completion можно отдельно предложить optional Post-Initiative Lessons Review, но не выполнять его без explicit consent. Marker: `work_stages_generated`.
 
 ---
 

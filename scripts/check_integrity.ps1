@@ -179,6 +179,7 @@ $requiredFiles = @(
     'docs/KIT_EVOLUTION_ROADMAP.md',
     'docs/releases/RELEASE_NOTES_3_2_0.md',
     'docs/releases/RELEASE_NOTES_3_3_0.md',
+    'docs/releases/RELEASE_NOTES_3_4_0.md',
     'tests/behavioral/BOOTSTRAP_SCENARIOS.md',
     'tests/conformance/RUNTIME_BOUNDARY_CONFORMANCE_PROTOCOL.md',
     'templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml',
@@ -273,7 +274,7 @@ $bootstrapText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRo
 $workingGuideText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'WORKING_PROCESS_AND_LOOPS_GUIDE.md')
 $agentsText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AGENTS.md')
 $roadmapText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/KIT_EVOLUTION_ROADMAP.md')
-$releaseNotesText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_3_0.md')
+$releaseNotesText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_4_0.md')
 
 # Public wrapper identity, license and provenance contract
 $licensePath = Join-Path $repoRoot 'LICENSE'
@@ -288,7 +289,7 @@ else {
 }
 $emDash = [char]0x2014
 $middleDot = [char]0x00B7
-$candidateIdentity = "Instantiatio DPF 3.3.0 $emDash Engineering Work Runtime $middleDot Beta"
+$candidateIdentity = "Instantiatio DPF 3.4.0 $emDash Engineering Work Runtime $middleDot Beta"
 if (-not $readmeText.StartsWith("# $candidateIdentity`n")) {
     Add-Failure 'README release-level identity is missing'
 }
@@ -385,12 +386,11 @@ else {
 if ($manifestText -notmatch '\| Product maturity \| \x60Beta\x60 \|') {
     Add-Failure 'Manifest product maturity must be Beta'
 }
-$releaseNotesPublicationPrefix = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('0KHRgtCw0YLRg9GBINC/0YPQsdC70LjQutCw0YbQuNC4OiA='))
 foreach ($packageStatusContract in @(
-    @{ Name = 'README'; Text = $readmeText; Marker = ('> Runtime version: `3.3.0` ' + $emDash + ' publication status `' + $publicationStatus + '`; product maturity `Beta`; predecessor released Runtime baseline is `3.2.0`') },
-    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.3.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
-    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.3.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
-    @{ Name = 'Release notes'; Text = $releaseNotesText; Marker = ($releaseNotesPublicationPrefix + '`' + $publicationStatus + '`') }
+    @{ Name = 'README'; Text = $readmeText; Marker = ('> Runtime version: `3.4.0` ' + $emDash + ' publication status `' + $publicationStatus + '`; product maturity `Beta`; predecessor released Runtime baseline is `3.3.0`') },
+    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.4.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.4.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Release notes'; Text = $releaseNotesText; Marker = ('- Publication status: `' + $publicationStatus + '`') }
 )) {
     if (-not $packageStatusContract.Text.Contains($packageStatusContract.Marker)) {
         Add-Failure "Package status contract mismatch: $($packageStatusContract.Name)"
@@ -407,39 +407,94 @@ foreach ($requiredReleasePhrase in @(
     }
 }
 
-# Runtime 3.3.0 Beta release-note contract. UTF-8 Base64 keeps Windows PowerShell 5 parsing ASCII-safe.
-$releaseNoteMarkers = @(
-    "# $candidateIdentity",
-    'Release Admission:',
-    '`admitted`',
-    'bounded reliance',
-    '## 1. Runtime Conformance & Enforcement',
-    '`declared`',
-    '`enforced`',
-    '`compensated`',
-    '`unsupported`',
-    '## 3. Result Persistence & Baseline Reconciliation',
-    'closed_dispositioned_exact_configuration',
-    'limited_domain_specific',
-    'pass_no_new_mechanism',
-    'RC-01 = pass_enforced',
-    'RC-06 = unsupported'
+# Runtime 3.4.0 Beta release-note contract.
+$decodeReleaseNoteMarker = { param([string]$value) [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($value)) }
+$releaseNoteStages = & $decodeReleaseNoteMarker 'YNCt0YLQsNC/0Ysg0YDQsNCx0L7RgtGLYA=='
+$releaseNoteOptions = & $decodeReleaseNoteMarker 'YNCS0LDRgNC40LDQvdGC0Ysg0YDQtdGI0LXQvdC40Y9g'
+$releaseNoteRecommended = & $decodeReleaseNoteMarker 'YNCf0YDQuNC90Y/RgtGMINGA0LXQutC+0LzQtdC90LTQvtCy0LDQvdC90YvQuSDQstCw0YDQuNCw0L3RgmA='
+$legacyRequiredDecision = & $decodeReleaseNoteMarker '0KLRgNC10LHRg9C10LzQvtC1INGA0LXRiNC10L3QuNC1'
+$releaseNoteOrderedHeadings = @(
+    (& $decodeReleaseNoteMarker 'IyMg0JrRgNCw0YLQutC+INC+INCy0YvQv9GD0YHQutC1'),
+    (& $decodeReleaseNoteMarker 'IyMg0JPQu9Cw0LLQvdGL0LUg0LjQt9C80LXQvdC10L3QuNGP'),
+    '### Optional HSI/UI capability',
+    (& $decodeReleaseNoteMarker 'IyMjINCv0YHQvdC+0YHRgtGMINCy0LfQsNC40LzQvtC00LXQudGB0YLQstC40Y8='),
+    (& $decodeReleaseNoteMarker 'IyMg0JrQvtC80YMg0Y3RgtC+INC90YPQttC90L4='),
+    (& $decodeReleaseNoteMarker 'IyMg0KHQvtCy0LzQtdGB0YLQuNC80L7RgdGC0Yw='),
+    (& $decodeReleaseNoteMarker 'IyMg0KHQutCw0YfQsNGC0Ywg0Lgg0L/RgNC+0LLQtdGA0LjRgtGM'),
+    (& $decodeReleaseNoteMarker 'IyMg0J/RgNC+0LLQtdGA0LrQsCDQuCDQvtCz0YDQsNC90LjRh9C10L3QuNGP'),
+    (& $decodeReleaseNoteMarker 'IyMgUmVjb3Zlcnkg0Lgg0LPRgNCw0L3QuNGG0Ysg0L/QvtC70L3QvtC80L7Rh9C40Lk=')
 )
-$releaseNoteMarkers += @(
-    '0JLQtdGA0YHQuNGPIFJ1bnRpbWU6IGAzLjMuMGA=',
-    '0JfRgNC10LvQvtGB0YLRjCDQv9GA0L7QtNGD0LrRgtCwOiBgQmV0YWA=',
-    '0JLQvdC10YjQvdGP0Y8g0L/Rg9Cx0LvQuNC60LDRhtC40Y86INC90LUg0LLRi9C/0L7Qu9C90Y/Qu9Cw0YHRjCDQsiDRgNCw0LzQutCw0YUg0Y3RgtC+0Lkg0LjQvdC40YbQuNCw0YLQuNCy0Ys=',
-    '0JrQvtC90YLRgNC+0LvRjCDRgdC+0L7RgtCy0LXRgtGB0YLQstC40Y8gUnVudGltZSDQuCDQv9GA0LjQvdGD0LTQuNGC0LXQu9GM0L3QvtC1INC+0LHQtdGB0L/QtdGH0LXQvdC40LUg0L7Qs9GA0LDQvdC40YfQtdC90LjQuQ==',
-    'IyMgNy4gSHVtYW4gR2F0ZXMg0Lgg0YDQtdGI0LXQvdC40Y8g0YHRgtCw0LvQuCDQv9GA0L7RidC1INGH0LjRgtCw0YLRjA==',
-    'IyMgOC4g0KfRgtC+INC/0YDQvtCy0LXRgNC40LvQuCwg0L3QviDQvdC1INGB0YLQsNC70Lgg0L/RgNC10LLRgNCw0YnQsNGC0Ywg0LIg0L3QvtCy0YvQuSDQvNC10YXQsNC90LjQt9C8',
-    'IyMgMTQuINCh0L7QstC80LXRgdGC0LjQvNC+0YHRgtGMINGBIDMuMi4w',
-    'IyMgMTUuINCn0YLQviDRhNCw0LrRgtC40YfQtdGB0LrQuCDQv9GA0L7QstC10YDQtdC90L4g0LIg0YDQtdC70LjQt9C1',
-    'IyMgMTYuIFJlY292ZXJ5INC4IHJlb3BlbiByb3V0ZQ==',
-    'YEFJX1NETENfRFBGLyoqYCDQvdC1INC40LfQvNC10L3Rj9C70YHRjw=='
-) | ForEach-Object { [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($_)) }
-foreach ($releaseNoteMarker in $releaseNoteMarkers) {
+$previousReleaseNoteHeadingIndex = -1
+foreach ($releaseNoteHeading in $releaseNoteOrderedHeadings) {
+    $headingPattern = '(?m)^' + [regex]::Escape($releaseNoteHeading) + '$'
+    $headingMatches = [regex]::Matches($releaseNotesText, $headingPattern)
+    if ($headingMatches.Count -ne 1) {
+        Add-Failure "Release notes heading count mismatch: $releaseNoteHeading ($($headingMatches.Count))"
+        continue
+    }
+    if ($headingMatches[0].Index -le $previousReleaseNoteHeadingIndex) {
+        Add-Failure "Release notes heading order mismatch: $releaseNoteHeading"
+    }
+    $previousReleaseNoteHeadingIndex = $headingMatches[0].Index
+}
+
+$releaseNoteRequiredMarkers = @(
+    "# $candidateIdentity",
+    '- Publication status: `released`',
+    'Release Admission:',
+    (& $decodeReleaseNoteMarker '0L3QtSDRgdC+0LfQtNCw0Y7RgiBSZWxlYXNlIEFkbWlzc2lvbg=='),
+    'optional experimental',
+    (& $decodeReleaseNoteMarker 'SHVtYW7igJNTeXN0ZW0gSW50ZXJhY3Rpb24='),
+    'derived engineering view',
+    'Interaction Model',
+    'Screen Specification',
+    (& $decodeReleaseNoteMarker 'SHVtYW4gVmFsaWRhdGlvbiDQvdC1INC30LDQvNC10L3Rj9C10YIgVmVyaWZpY2F0aW9u'),
+    (& $decodeReleaseNoteMarker '0L/RgNC+0YLQvtGC0LjQvyDQvdC1INGB0YLQsNC90L7QstC40YLRgdGPIHByb2R1Y3Rpb24gaW1wbGVtZW50YXRpb24='),
+    (& $decodeReleaseNoteMarker '0L3QtSDQvNC40LPRgNC40YDRg9GO0YIg0LDQstGC0L7QvNCw0YLQuNGH0LXRgdC60Lg='),
+    (& $decodeReleaseNoteMarker 'YNCt0YLQsNC/0Ysg0YDQsNCx0L7RgtGLYA=='),
+    (& $decodeReleaseNoteMarker 'YNCg0LXQutC+0LzQtdC90LTQsNGG0LjRj2A='),
+    (& $decodeReleaseNoteMarker 'YNCS0LDRgNC40LDQvdGC0Ysg0YDQtdGI0LXQvdC40Y9g'),
+    (& $decodeReleaseNoteMarker 'YNCf0YDQuNC90Y/RgtGMINGA0LXQutC+0LzQtdC90LTQvtCy0LDQvdC90YvQuSDQstCw0YDQuNCw0L3RgmA='),
+    'ambiguous assent',
+    (& $decodeReleaseNoteMarker 'YFMtMWDigJNgUy0xODBg'),
+    'Instantiatio-DPF-3.4.0-Beta.zip',
+    (& $decodeReleaseNoteMarker 'dG9wLWxldmVsINC60LDRgtCw0LvQvtCzIGBJbnN0YW50aWF0aW8tRFBGLTMuNC4wLUJldGFg'),
+    (& $decodeReleaseNoteMarker 'YDQ2YCDRhNCw0LnQu9C+0LI='),
+    '`RELEASE_CANDIDATE.json`',
+    'GitHub source archives',
+    'synthetic pilot',
+    'no field-benefit claim',
+    'common promotion',
+    'CAV'
+)
+foreach ($releaseNoteMarker in $releaseNoteRequiredMarkers) {
     if (-not $releaseNotesText.Contains($releaseNoteMarker)) {
         Add-Failure "Release notes contract gap: $releaseNoteMarker"
+    }
+}
+
+if ([regex]::Matches($releaseNotesText, '(?m)^- Publication status:').Count -ne 1) {
+    Add-Failure 'Release notes publication-status statement must occur exactly once'
+}
+
+$releaseNoteForbiddenMarkers = @(
+    (& $decodeReleaseNoteMarker '0KHRgtCw0YLRg9GBINC/0YPQsdC70LjQutCw0YbQuNC4Og=='),
+    '`separate_decision_required`',
+    (& $decodeReleaseNoteMarker 'IyMg0KfRgtC+INC40LfQvNC10L3QuNC70L7RgdGM'),
+    (& $decodeReleaseNoteMarker 'IyMg0J/QvtGH0LXQvNGDINGN0YLQviDQu9GD0YfRiNC1'),
+    (& $decodeReleaseNoteMarker 'IyMg0KHQvtCy0LzQtdGB0YLQuNC80L7RgdGC0Ywg0LggbWlncmF0aW9u'),
+    (& $decodeReleaseNoteMarker 'IyMg0KHQstC40LTQtdGC0LXQu9GM0YHRgtCy0LAg0Lgg0L7Qs9GA0LDQvdC40YfQtdC90LjRjw=='),
+    (& $decodeReleaseNoteMarker 'IyMg0KHQutCw0YfQsNGC0Ywg0Lgg0L3QsNGH0LDRgtGMINGA0LDQsdC+0YLRgw=='),
+    (& $decodeReleaseNoteMarker 'IyMg0JfQsNC80LXQvdCwIGhhbmRvZmYg0LIg0YLQvtC5INC20LUg0LLQtdGA0YHQuNC4'),
+    (& $decodeReleaseNoteMarker 'IyMg0JLQvtGB0YHRgtCw0L3QvtCy0LvQtdC90LjQtSDQuCDQv9C+0LLRgtC+0YDQvdC+0LUg0L7RgtC60YDRi9GC0LjQtQ=='),
+    (& $decodeReleaseNoteMarker 'IyMg0JPRgNCw0L3QuNGG0LAg0L/QvtC70L3QvtC80L7Rh9C40Lk='),
+    (& $decodeReleaseNoteMarker '0LHRg9C00YPRgiDQt9Cw0YTQuNC60YHQuNGA0L7QstCw0L3RiyDQvtGC0LTQtdC70YzQvdC+'),
+    (& $decodeReleaseNoteMarker '0J/QvtGB0LvQtSDQvtGC0LTQtdC70YzQvdC+0LkgUmVsZWFzZSBBZG1pc3Npb24='),
+    (& $decodeReleaseNoteMarker '0LTQviDQvtGC0LTQtdC70YzQvdC+0LPQviBleGFjdCB0cmFuc2l0aW9uL2J1aWxkIGF1dGhvcml0eSDQuCDQvdC+0LLQvtC5IFJlbGVhc2UgQWRtaXNzaW9u')
+)
+foreach ($releaseNoteForbiddenMarker in $releaseNoteForbiddenMarkers) {
+    if ($releaseNotesText.Contains($releaseNoteForbiddenMarker)) {
+        Add-Failure "Release notes stale or forbidden marker: $releaseNoteForbiddenMarker"
     }
 }
 
@@ -458,6 +513,10 @@ foreach ($requiredPhrase in @(
     'explanation_mode',
     'standard + milestone'
     'explicit disposition'
+    'interaction_clarity_russian_first'
+    'work_stages_generated'
+    'applicable_decision_options'
+    'recommended_option_exact_effect'
 )) {
     if (-not (($agentLines -join "`n").Contains($requiredPhrase))) {
         Add-Failure "AGENTS dispatcher guardrail missing: $requiredPhrase"
@@ -492,8 +551,8 @@ foreach ($wpcId in 1..9) {
     }
 }
 foreach ($mapping in @(
-    @{ Name = 'Bootstrap Guide'; Text = $bootstrapText; Markers = @('WPC-01', 'WPC-06', 'WPC-07', 'FC-13', 'Required Decision') },
-    @{ Name = 'AGENTS dispatcher'; Text = $agentsText; Markers = @('WPC-01', 'WPC-03', 'WPC-06', 'WPC-07', 'WPC-08', 'WPC-09', 'FC-13', 'Required Decision', 'project-relevant Candidate coverage map') },
+    @{ Name = 'Bootstrap Guide'; Text = $bootstrapText; Markers = @('WPC-01', 'WPC-06', 'WPC-07', 'FC-13', 'applicable_decision_options') },
+    @{ Name = 'AGENTS dispatcher'; Text = $agentsText; Markers = @('WPC-01', 'WPC-03', 'WPC-06', 'WPC-07', 'WPC-08', 'WPC-09', 'FC-13', 'applicable_decision_options', 'project-relevant Candidate coverage map') },
     @{ Name = 'README navigation'; Text = $readmeText; Markers = @('FC-13-first operational entry', 'admitted context -> FC-13 -> project-relevant result expansion -> optional PEC screen -> explicit reductions -> Human decision') },
     @{ Name = 'Working Process carrier'; Text = $workingGuideText; Markers = @('admitted reduction trace', 'WPC-06 decision wrapper required', 'Admission Request and Candidate Configuration') }
 )) {
@@ -551,9 +610,9 @@ if (($governanceStandalone -join "`n") -cne ($governanceCombined -join "`n")) {
 $scenarioPath = Join-Path $repoRoot 'tests/behavioral/BOOTSTRAP_SCENARIOS.md'
 $scenarioText = Get-Content -Raw -Encoding utf8 -LiteralPath $scenarioPath
 $scenarioHeadings = @([regex]::Matches($scenarioText, '(?m)^## S-([0-9]+) '))
-if ($scenarioHeadings.Count -ne 150) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 150" }
+if ($scenarioHeadings.Count -ne 180) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 180" }
 $scenarioNumbers = @($scenarioHeadings | ForEach-Object { [int]$_.Groups[1].Value })
-foreach ($number in 1..150) {
+foreach ($number in 1..180) {
     $occurrences = @($scenarioNumbers | Where-Object { $_ -eq $number }).Count
     if ($occurrences -eq 0) { Add-Failure "Behavioral scenario missing: S-$number" }
     elseif ($occurrences -gt 1) { Add-Failure "Behavioral scenario duplicated: S-$number" }
@@ -594,7 +653,7 @@ foreach ($requiredScenarioPhrase in @(
     'contained results'
     'WPC-09'
     'declared MVP scope'
-    'exact requested decision'
+    'exact actions/consequences'
     'project language'
     'DPF/RA/RP/Application Guide/PAP'
     'DI-01'
@@ -619,6 +678,20 @@ foreach ($requiredScenarioPhrase in @(
     'represented_in_result | already_represented_in_baseline | external_system_of_record | disposable_no_reliance | unresolved_deferred'
     'carrier_reference_continuity'
     'russian_first_project_carrier'
+    'material HSI concern'
+    'namespaced User Interaction View'
+    'contained Interaction Model'
+    'conditional Screen Specification'
+    'Candidate UI Prototype'
+    'Human Validation is evidence, not Admission'
+    'smallest responsible HSI locus'
+    'existing UI baseline is evidence, not requirements'
+    'no hidden UI source of truth'
+    'exact_term_russian_first_use'
+    'decorative_english_translated_by_meaning'
+    'work_stages_on_material_transition'
+    'recommended_option_restates_exact_effect'
+    'failed_verification_no_generic_approval'
 )) {
     if (-not $scenarioText.Contains($requiredScenarioPhrase)) {
         Add-Failure "Behavioral contract gap: $requiredScenarioPhrase"
@@ -632,7 +705,7 @@ foreach ($scenarioContract in @(
     @{ Id = 'S-40'; Marker = 'contained results' },
     @{ Id = 'S-41'; Marker = 'WPC-09' },
     @{ Id = 'S-42'; Marker = 'declared MVP scope' },
-    @{ Id = 'S-43'; Marker = 'exact requested decision' },
+    @{ Id = 'S-43'; Marker = 'exact actions/consequences' },
     @{ Id = 'S-44'; Marker = 'project language' },
     @{ Id = 'S-45'; Marker = 'DPF/RA/RP/Application Guide/PAP' },
     @{ Id = 'S-46'; Marker = 'cross-class response state' },
@@ -663,7 +736,37 @@ foreach ($scenarioContract in @(
     @{ Id = 'S-147'; Marker = 'persistence_is_not_admission' },
     @{ Id = 'S-148'; Marker = 'existing baseline identity' },
     @{ Id = 'S-149'; Marker = 'carrier_reference_continuity' },
-    @{ Id = 'S-150'; Marker = 'decorative English' }
+    @{ Id = 'S-150'; Marker = 'decorative English' },
+    @{ Id = 'S-151'; Marker = 'hsi_non_material_no_ceremony' },
+    @{ Id = 'S-152'; Marker = 'material_hsi_disposition_before_production' },
+    @{ Id = 'S-153'; Marker = 'namespaced_user_interaction_view_is_derived' },
+    @{ Id = 'S-154'; Marker = 'interaction_model_combined_by_default' },
+    @{ Id = 'S-155'; Marker = 'screen_specification_conditional_combined' },
+    @{ Id = 'S-156'; Marker = 'untraceable_ui_behavior_fails_verification' },
+    @{ Id = 'S-157'; Marker = 'prototype_is_not_production' },
+    @{ Id = 'S-158'; Marker = 'human_validation_is_not_admission' },
+    @{ Id = 'S-159'; Marker = 'hsi_finding_smallest_responsible_locus' },
+    @{ Id = 'S-160'; Marker = 'presentation_only_stays_local' },
+    @{ Id = 'S-161'; Marker = 'affected_hsi_reliance_reopens_only' },
+    @{ Id = 'S-162'; Marker = 'production_ui_two_basis_trace' },
+    @{ Id = 'S-163'; Marker = 'existing_ui_is_not_requirement' },
+    @{ Id = 'S-164'; Marker = 'ui_reference_is_not_requirements_authority' },
+    @{ Id = 'S-165'; Marker = 'no_hidden_ui_source_of_truth' },
+    @{ Id = 'S-166'; Marker = 'exact_term_russian_first_use' },
+    @{ Id = 'S-167'; Marker = 'decorative_english_translated_by_meaning' },
+    @{ Id = 'S-168'; Marker = 'machine_text_byte_exact' },
+    @{ Id = 'S-169'; Marker = 'exact_type_russian_title_id' },
+    @{ Id = 'S-170'; Marker = 'no_english_word_count_oracle' },
+    @{ Id = 'S-171'; Marker = 'work_stages_on_material_transition' },
+    @{ Id = 'S-172'; Marker = 'work_stages_on_direct_request' },
+    @{ Id = 'S-173'; Marker = 'unchanged_or_trivial_stages_omitted' },
+    @{ Id = 'S-174'; Marker = 'stage_markers_plain_text_complete' },
+    @{ Id = 'S-175'; Marker = 'stage_view_preserves_open_question_next_gate' },
+    @{ Id = 'S-176'; Marker = 'recommendation_then_applicable_options' },
+    @{ Id = 'S-177'; Marker = 'recommended_option_restates_exact_effect' },
+    @{ Id = 'S-178'; Marker = 'conditions_narrowing_new_option_visible' },
+    @{ Id = 'S-179'; Marker = 'failed_verification_no_generic_approval' },
+    @{ Id = 'S-180'; Marker = 'ambiguous_assent_clarified_effects_confirmed' }
 )) {
     $pattern = '(?ms)^## ' + [regex]::Escape($scenarioContract.Id) + ' .*?(?=^## S-|^## Acceptance summary)'
     $section = [regex]::Match($scenarioText, $pattern).Value
@@ -671,6 +774,48 @@ foreach ($scenarioContract in @(
         Add-Failure "Behavioral scenario mapping gap: $($scenarioContract.Id) -> $($scenarioContract.Marker)"
     }
 }
+
+# HSI/UI markers are bounded structural regression evidence only.
+# They do not prove UI correctness, usability, field benefit, Admission or release readiness.
+$hsiGuideSection = [regex]::Match(
+    $workingGuideText,
+    '(?ms)^#### 3\.1\.9\. .*?HSI/UI.*?(?=^### 3\.2\.)'
+).Value
+foreach ($hsiGuideMarker in @(
+    'optional_hsi_ui_specialization',
+    'no_material_hsi_no_ceremony',
+    '<project-or-domain>:UIV-<n>',
+    'interaction_model_combined_by_default',
+    'screen_specification_conditional_combined',
+    'Requirements / Scenarios / Roles / Rules / Constraints',
+    'Candidate UI Prototype',
+    'human_validation_is_not_admission',
+    'requirement defect/change',
+    'presentation-only issue',
+    'production_ui_separate_task_run',
+    'no_common_hsi_catalog_promotion',
+    'common_hsi_requires_product_admission',
+    '`EV-*`'
+    '`WM-*`'
+)) {
+    if (-not $hsiGuideSection.Contains($hsiGuideMarker)) {
+        Add-Failure "HSI/UI Guide contract gap: $hsiGuideMarker"
+    }
+}
+foreach ($decorativeHsiPhrase in @(
+    'No common',
+    'No mandatory',
+    'Existing Working Processes',
+    'Existing UI baseline',
+    'Passing chain checks',
+    'actual usability'
+)) {
+    if ($hsiGuideSection.Contains($decorativeHsiPhrase)) {
+        Add-Failure "HSI/UI decorative English regression: $decorativeHsiPhrase"
+    }
+}
+# These exact known-phrase guards are not a general English-token or clarity oracle.
+# Full semantic language review remains required.
 
 # Immediate critical evidence guards are section-scoped regression evidence.
 # Semantic replay remains responsible for bounded-route and authority meaning.
@@ -717,8 +862,8 @@ foreach ($repairedScenarioContract in @(
 # Decision UI cross-carrier markers are regression evidence; semantic replay remains required.
 $decisionUiCarriers = @($agentsText, $bootstrapText, $workingGuideText, $readmeText, $scenarioText) -join "`n"
 foreach ($requiredDecisionUiPhrase in @(
-    'human-readable situation heading',
-    'Required Decision',
+    'applicable_decision_options',
+    'recommended_option_exact_effect',
     'exact Candidate configuration',
     'risk acceptance',
     'consequential action',
@@ -753,7 +898,7 @@ foreach ($locusContract in @(
         'defer the blocked reliance', 'uploaded file does not become authoritative'
     ) },
     @{ Name = 'Working Process Layer C'; Text = $workingDecisionUiSection; Markers = @(
-        'newly allowed effects', 'what remains prohibited', 'decision actor',
+        'decision_confirmation_effects', 'decision actor',
         'date/time when available', 'decision record when one created', 'return/reopen route'
     ) },
     @{ Name = 'Working Process risk accountability'; Text = $workingDecisionUiSection; Markers = @(
@@ -766,7 +911,7 @@ foreach ($locusContract in @(
     ) },
     @{ Name = 'Bootstrap Decision UI projection'; Text = $bootstrapText; Markers = @(
         'DI-01', 'DI-08', 'accountable risk owner', 'reopen trigger',
-        'newly allowed', 'still-prohibited', 'decision-record link'
+        'decision_confirmation_effects', 'decision record'
     ) },
     @{ Name = 'README Decision UI projection'; Text = $readmeText; Markers = @(
         'DI-01 Review', 'DI-08 Consequential action', 'accountable risk owner',
@@ -778,6 +923,37 @@ foreach ($locusContract in @(
             Add-Failure "Decision UI per-locus gap: $($locusContract.Name) -> $marker"
         }
     }
+}
+
+# Interaction-clarity markers are bounded structural regression evidence only.
+# They do not prove comprehension, usability, Admission or release readiness.
+foreach ($clarityContract in @(
+    @{ Name = 'AGENTS interaction clarity'; Text = $agentsText; Markers = @(
+        'interaction_clarity_russian_first', 'work_stages_generated',
+        'applicable_decision_options', 'recommended_option_exact_effect', 'success marker'
+    ) },
+    @{ Name = 'Bootstrap interaction clarity'; Text = $bootstrapText; Markers = @(
+        'interaction_clarity_russian_first', 'work_stages_generated',
+        'applicable_decision_options', 'recommended_option_exact_effect'
+    ) },
+    @{ Name = 'Working Process interaction clarity'; Text = $workingGuideText; Markers = @(
+        'semantic categories', 'interaction_clarity_russian_first',
+        'work_stages_generated', 'applicable_decision_options',
+        'recommended_option_exact_effect', 'decision_confirmation_effects'
+    ) },
+    @{ Name = 'README interaction clarity'; Text = $readmeText; Markers = @(
+        $releaseNoteStages, $releaseNoteOptions, $releaseNoteRecommended,
+        'applicable alternatives', 'inconclusive Verification', 'generic approval route'
+    ) }
+)) {
+    foreach ($marker in $clarityContract.Markers) {
+        if (-not $clarityContract.Text.Contains($marker)) {
+            Add-Failure "Interaction clarity per-locus gap: $($clarityContract.Name) -> $marker"
+        }
+    }
+}
+if ($readmeText.Contains($legacyRequiredDecision)) {
+    Add-Failure 'README retains superseded Required Decision block'
 }
 
 foreach ($scenarioSpecialization in @(
@@ -792,8 +968,8 @@ foreach ($scenarioSpecialization in @(
     ) },
     @{ Id = 'S-47'; Markers = @('newly allowed', 'still-prohibited', 'actor/date when available', 'decision-record link when created') },
     @{ Id = 'S-48'; Markers = @('accountable risk owner', 'reopen trigger', 'bounded relying use') },
-    @{ Id = 'S-49'; Markers = @('exact action verb', 'target', 'exact configuration', 'side effects', 'recovery/reversibility', 'verification', 'accountable action authority') },
-    @{ Id = 'S-50'; Markers = @('one-scan target', 'decision-relevant bullets', 'one recommendation', 'at most one details link', 'justified overflow') }
+    @{ Id = 'S-49'; Markers = @('exact action verb', 'target', 'exact configuration', 'side effects', 'recovery/reversibility', 'Verification', 'accountable action authority') },
+    @{ Id = 'S-50'; Markers = @('one-scan target', 'decision-relevant bullets', 'one_recommendation_max_one_details_link', 'justified overflow') }
 )) {
     $pattern = '(?ms)^## ' + [regex]::Escape($scenarioSpecialization.Id) + ' .*?(?=^## S-|^## Acceptance summary)'
     $section = [regex]::Match($scenarioText, $pattern).Value
@@ -961,7 +1137,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
-    if ($manifestHashRowCount -ne 44) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 44" }
+    if ($manifestHashRowCount -ne 45) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 45" }
 
     $actualInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($file in (Get-ChildItem -LiteralPath $repoRoot -Recurse -Force -File)) {
