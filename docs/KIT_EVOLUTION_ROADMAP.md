@@ -12,7 +12,7 @@
 
 Этот документ фиксирует направления развития `Instantiatio DPF — Engineering Work Runtime`. Название `Engineering Work Kit 3.1.0` ниже сохраняется там, где обозначает exact released baseline и историю продукта.
 
-Текущая release configuration — `Instantiatio DPF 3.5.0 — Engineering Work Runtime · Beta` с publication status `released`. Она добавляет раннее planning material Human decisions в Working Process/Loop contracts поверх released Runtime `3.4.0`; состав, совместимость и ограничения зафиксированы в [Release Notes 3.5.0](releases/RELEASE_NOTES_3_5_0.md). Publication status, independent-review evidence, Release Admission и внешняя публикация остаются раздельными состояниями/решениями.
+Текущая release configuration — `Instantiatio DPF 3.6.0 — Engineering Work Runtime · Beta`, embedded publication status `released`; её состав и ограничения зафиксированы в [Release Notes 3.6.0](releases/RELEASE_NOTES_3_6_0.md). Released predecessor — `3.5.0`. Embedded status, independent-review evidence, final package Admission и внешняя публикация остаются раздельными состояниями/решениями.
 
 Текущий Runtime уже включает:
 
@@ -36,7 +36,7 @@ Project-specific Work
 
 На текущем этапе комплект считается достаточным для end-to-end пилотного применения.
 
-Released Work Kit `2.2.0` устранил process-composition gap; `2.3.0` добавил model-selection guidance; `2.4.0` исправил operational projection gap; `2.5.2` завершил Decision UI specializations и стал local predecessor. Admitted `3.0.0` добавил release-level identity `Instantiatio DPF` и lightweight public layer. Released Work Kit `3.1.0` добавляет progress/completion grammar, явное представление шести modes, category-first model guidance, bounded «Форсаж», post-initiative Lessons Review и optional verified state projection. Normative DPF `1.0.1`, Reference Architecture, Reference Process, Application Guide и PAP не изменяются.
+Released Work Kit `2.2.0` устранил process-composition gap; `2.3.0` добавил model-selection guidance; `2.4.0` исправил operational projection gap; `2.5.2` завершил Decision UI specializations. Admitted `3.0.0` добавил release-level identity, Released Work Kit `3.1.0` — progress/completion grammar и optional state projection, а Runtime `3.5.0` — раннее планирование material Human decisions. Released Runtime `3.6.0` добавляет Engineering Review View в том же Gate, host-neutral capability/substrate boundary, proportional CAP/reviewer guards, deterministic re-entry и согласованную release documentation. Normative DPF `1.0.1`, Reference Architecture, Reference Process, Application Guide и PAP не изменяются.
 
 Следующее развитие должно основываться прежде всего на:
 
@@ -116,7 +116,9 @@ Released Work Kit `3.1.0` делает состояние инициативы �
 
 ---
 
-## 4. Ближайший этап: стабилизация v2
+## 4. Накопленная программа стабилизации
+
+Разделы `4.1…4.5` сохраняют исторические и повторно используемые направления проверки. Они не обозначают текущую версию продукта и не заменяют release configuration `3.6.0` и её дальнейший field-evidence route.
 
 ### 4.1. Integrity Review
 
@@ -396,15 +398,15 @@ Work Context version
 
 ### 9.1. Минимальная таблица версий
 
-Фактические версии, publication status, authoritative loci и SHA-256 release components хранятся в [`PACKAGE_MANIFEST.md`](../PACKAGE_MANIFEST.md). README содержит ссылку на manifest и не дублирует изменяемые hashes.
+В released package фактические версии, publication status, authoritative loci и SHA-256 components хранятся в [`PACKAGE_MANIFEST.md`](../PACKAGE_MANIFEST.md). Для `3.6.0` manifest закрывает exact distributed inventory; README не дублирует изменяемые hashes.
 
 | Component | Version | Status |
 |---|---:|---|
-| Engineering Work Runtime | `3.5.0` | released · Beta |
+| Engineering Work Runtime | `3.6.0` | released · Beta |
 | AI SDLC DPF | `1.0.1` | controlled working |
-| Bootstrap Guide | `1.8.0` | pilot |
-| Working Process Guide | `1.10.0` | pilot |
-| AGENTS dispatcher | `2.8.0` | pilot |
+| Bootstrap Guide | `1.9.0` | operational |
+| Working Process Guide | `1.11.0` | operational |
+| AGENTS dispatcher | `2.9.0` | operational |
 | Model Selection Recommendations | `1.1.0` | admitted informative guidance |
 
 ### 9.2. Migration Rules
@@ -585,14 +587,9 @@ source revision and Candidate Lesson
 ## 14. Предлагаемая последовательность развития
 
 ```text
-v2 integrity review
-→ behavioral tests
-→ first real pilot
-→ repair release
-→ independent cross-carrier verification of Candidate 2.2.0
-→ 2–3 representative PEC pilots
-→ model-assignment KIT-specific evals and routing pilots
-→ coverage-first independent challenge and multi-project pilots
+3.6.0 released package
+→ exact local bundle Admission and controlled external-project handoff
+→ representative host/substrate and multi-project pilots
 → reusable Loop candidates
 → first application profile
 → conformance audit
@@ -624,19 +621,14 @@ Major-версия не должна выпускаться только из-з
 
 ## 16. Ближайшее практическое решение
 
-На текущем этапе рекомендуемый план:
+После формирования exact release package рекомендуемый план:
 
 ```text
-сохранить admitted 2.2.0 release baseline и protected DPF bytes
-→ сохранить admitted 2.3.0 model-guidance integration
-→ сохранить independently verified Released 2.4.0 coverage-first baseline и clean package
-→ сохранить admitted local 2.5.2 Decision Interaction completion baseline
-→ сохранить admitted 3.0.0 lightweight public identity без semantic regression
-→ выполнить source-heavy multi-slice pilot
-→ выполнить lightweight script/driver counterpilot
-→ выполнить integrated или PAP-strengthened review
-→ измерить overhead и avoidable rework
-→ открыть следующий repair только по field evidence
+сохранить protected DPF `1.0.1` и admitted Runtime semantics
+→ передавать только exact local bundle после final package Admission
+→ проверить полученные identities в отдельном publication project
+→ выполнить tag/upload/publication только по его authority
+→ открывать следующий semantic repair только по field evidence
 ```
 
 ---

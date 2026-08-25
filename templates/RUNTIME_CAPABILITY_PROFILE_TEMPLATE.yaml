@@ -1,8 +1,12 @@
 {
   "_usage": "Optional exact-configuration projection. It is not an authority carrier, grants no permission, admits no result and never replaces approved Loop, Task, Run, CAP or Admission sources. Keep the inline contract when repeated/material receiving use is absent.",
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "profile_id": "candidate-runtime-capability-profile",
   "status": "candidate",
+  "profile_revision": "1",
+  "supersedes_ref": "",
+  "supersedes_sha256": "",
+  "material_change_summary": [],
   "semantic_source": {
     "carrier_ref": "",
     "sha256": "",
@@ -35,6 +39,7 @@
       "human_gate",
       "honest_stop"
     ],
+    "case_evidence_refs": [],
     "evidence_refs": [],
     "limitations": [],
     "recovery_route": ""
@@ -54,5 +59,7 @@
     "verifier_or_run_ref": "",
     "reopen_route": ""
   },
-  "_freshness_rule": "declared is never evidence of enforced. Missing, stale or contradictory evidence makes the affected binding unsupported for reliance; a stale profile is ignored for consequential execution and returned to its semantic source."
+  "_freshness_rule": "declared is never evidence of enforced. Missing, stale or contradictory evidence makes the affected binding unsupported for reliance; a stale profile is ignored for consequential execution and returned to its semantic source.",
+  "_compatibility_rule": "A valid schema 1.0 profile remains readable. Missing profile_revision, supersedes_ref, supersedes_sha256, material_change_summary or case_evidence_refs means not supplied; it never invents supersession or fresh qualification history.",
+  "_maintenance_rule": "Qualification is demand-driven for one exact accessible configuration. A successor uses a new profile identity/revision/hash and fresh fixed RC-01...RC-06 dispositions before new enforced reliance; predecessor evidence remains historical comparison only."
 }

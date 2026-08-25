@@ -1,6 +1,6 @@
 # Модуль инженерных представлений
 
-> Version: `0.1.0-candidate`
+> Version: `0.2.0-candidate`
 
 ## 1. Назначение и authority boundary
 
@@ -82,9 +82,22 @@ View по умолчанию является проверяемой проек�
 
 Conflicting views не сливаются и не выбираются молча. Статус сначала объясняет человеку расхождение и последствие, затем при необходимости показывает exact sources/configurations в service detail.
 
-## 7. Human Gate и baseline difference
+## 7. Engineering Review View и baseline difference
 
 Affected Human Gate показывает current applicable view, material difference от admitted/review baseline и последствия для решения. Full new picture без понятного delta недостаточна. Unrelated Gate ссылается на последнее verified view без regeneration или повторного согласования.
+
+Перед первым material relying decision current applicable Engineering Review View включается в тот же Gate или получает из него safe resolvable reference. Gate сохраняет exact Candidate/result configuration, View identity/configuration, verification/freshness и stable local element refs внутри exact View configuration. Refs могут быть понятными локальными identifiers вроде `A-01`, `D-03` или `API-04`; они не создают новый catalogue entry, authority или source of truth.
+
+Addressed feedback lifecycle:
+
+1. Human Response связывает exact Candidate ref, View ref/configuration и supplied element ref;
+2. feedback не мутирует source/View truth и не создаёт Admission;
+3. question, change request, condition или observation возвращается к smallest responsible authoritative source;
+4. после authorized Candidate/source change affected View регенерируется и повторно проверяется;
+5. следующий Gate сначала показывает material local delta и downstream effects;
+6. unaffected elements переиспользуются, пока impact не оправдывает full review.
+
+Missing/stale/conflicting `required_by_default` View блокирует только affected relying decision и возвращается к preparation/Verification. Если exact Candidate уже представлен, применим существующий `returned_for_refinement`; отдельный partial-Admission status не создаётся. Unrelated authorized reversible preparation может продолжаться. Trivial/reversible work и Gate без material engineering object не создают View ceremony. Markers: `engineering_review_view_same_gate | stable_view_element_refs | addressed_element_feedback_returns_to_source | regenerated_view_delta_leads | missing_view_blocks_affected_reliance_only`.
 
 Каждое relied-on representation явно сохраняет level/boundary и non-coverage. Component/subsystem success не доказывает integration или system-level properties; system owner и integration responsibility остаются видимыми.
 

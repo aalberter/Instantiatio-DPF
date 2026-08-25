@@ -1,6 +1,6 @@
 # Working Process and Loops Guide
 
-> Version: `1.10.0`
+> Version: `1.11.0`
 
 ## 1. Назначение
 
@@ -213,11 +213,42 @@ Iteration сохраняется: failed dependency возвращается к 
 
 Optional `STATE_INDEX.yaml` является только текущей operational projection той же resolved configuration. Он указывает exact carrier refs/hashes, `last_verified`, allowed/prohibited actions, ближайший Gate и reopen routes, но не допускает result и не предоставляет authority. При missing, stale, invalid или contradictory index сообщи проблему, игнорируй его для authority и восстанови state по exact Work Context/Process/Task/Run/Admission carriers. Human-readable chat/Markdown view строится из того же resolved state; расхождение views является verification failure. Создание live index требует отдельного project decision; шаблон находится в `templates/STATE_INDEX_TEMPLATE.yaml`.
 
+##### Deterministic re-entry and recovery composition
+
+Context compaction/transcript loss, новый chat/session/model/agent, host restart/handoff, interruption/long pause или explicit continuation request вызывают re-entry resolution до создания новой Task или нового Bootstrap. Это dispatcher composition существующих carriers и reconciliation, а не новый Runtime state, authority carrier, daemon, event log или database.
+
+Разрешай состояние по трём независимым классам:
+
+```text
+authority
+→ exact admitted Work Context + Entry Decision + Working Process/Loop + Admission/authorization decisions
+
+relied configuration
+→ active initiative + source/product baseline + exact carrier/configuration refs and hashes
+
+factual execution state
+→ current Task/Run + actual durable effects + Candidate/Gate + unresolved/stop/reopen routes
+```
+
+Process/Admission decisions определяют authority; exact source/configuration carriers — relied configuration; Task/Run/effect evidence — factual state. Chat memory, filename, modification time, confidence, tool/provider state и stale projection не заменяют эти loci. Optional `STATE_INDEX` используется только после currentness/consistency check; contradiction возвращает к exact carriers и actual-effects reconciliation по §10.1.
+
+Если explicit continuation однозначно соответствует ровно одной recoverable non-closed initiative, продолжай её и не создавай новый Bootstrap. Несколько plausible initiatives требуют compact Human Gate selection с exact identities и consequences. Missing/broken Admission ref, relied hash или carrier/effect conflict блокирует только affected continuation и называет repair/return owner. Pending Admission блокирует dependent/bypass Task, но не already authorized independent reversible preparation.
+
+Recovered presentation кратко показывает initiative, baseline/configuration, current Loop/Task/Run, Candidate/Gate, allowed next action, blocked actions и unresolved/reopen route. Если active initiative отсутствует, обычный Bootstrap начинается без recovery ceremony. Valid projection и exact-carrier resolution должны давать одну semantic state; расхождение является Verification failure. Markers: `deterministic_reentry_before_bootstrap | authority_configuration_factual_state_separated | stale_state_index_ignored | ambiguous_initiative_requires_selection | pending_admission_blocks_dependent_bypass_only`.
+
 ##### Triggered «Профиль инженерных представлений»
 
 Engineering-view profile не является обязательным Bootstrap carrier. Первое use может оставаться Loop-local; permanent/reused profile и material delta требуют explicit project/process decision и trace. Подробная selection/content/lifecycle mechanics и optional template принадлежат [`catalog/engineering_views/`](catalog/engineering_views/README.md), а не Working Process Guide.
 
 Core invariant сохраняется: material view называет receiving use и exact authoritative source/configuration, не становится parallel truth молча и не поддерживает affected reliance при stale/conflict. Affected Human Gate показывает current view, material baseline difference и consequence; unrelated Gate переиспользует current verified view. Level of consideration, non-coverage и integration responsibility остаются явными; component/subsystem evidence не доказывает system properties.
+
+##### Engineering Review View в том же Human Gate
+
+Когда material architecture, data, interface, interaction или другой engineering result должен стать основой первого relying decision, current applicable Engineering Review View включается в тот же Human Gate либо получает safe resolvable reference из него. Gate называет exact Candidate/result configuration, View identity/configuration, verification/freshness и stable local element refs внутри этой View configuration, например `A-01`, `D-03` или `API-04`. Element ref облегчает addressed review, но не создаёт новый общий `EV-*`, status, authority level или source of truth.
+
+Если `required_by_default` View missing, stale, conflicting или неразрешима, блокируется только affected relying decision. View возвращается к preparation/Verification; если exact Candidate уже представлен для Admission, используй существующий `returned_for_refinement`. Уже разрешённая unrelated reversible preparation может продолжаться. Trivial/reversible work и Gates без material engineering object не создают View ceremony.
+
+Addressed Human Response сохраняет exact Candidate ref, View ref/configuration и element ref, когда он указан. Feedback само не изменяет source, View truth, Candidate status или Admission: оно становится question, change request, condition или element observation и возвращается к smallest responsible authoritative source. После authorized source/Candidate change affected View регенерируется и повторно проверяется; следующий Gate сначала показывает material local delta и downstream effects. Unaffected elements переиспользуются, пока impact не оправдывает full review. Independent reviewer findings, когда этот trigger применяется, входят как claim-referenced Evidence в тот же Gate и не создают второй approval ladder. Markers: `engineering_review_view_same_gate | stable_view_element_refs | addressed_element_feedback_returns_to_source | regenerated_view_delta_leads | missing_view_blocks_affected_reliance_only`.
 
 ##### Triggered «Варианты организации инженерной работы»
 
@@ -584,6 +615,8 @@ Working Process применяет presentation preferences, определён�
 3. `Рекомендация` и затем `Варианты решения` — только при реальном Human Gate. Рекомендация объясняет предпочтительный route, а единый блок вариантов показывает применимые действия и последствия. Первый вариант `Принять рекомендованный вариант` повторяет точное действие и последствие.
 4. `Служебная информация` — только когда exact IDs, statuses, hashes, paths, predicates или evidence имеют receiving use. В rich UI блок может сворачиваться, но text-only output сохраняет его после вариантов.
 
+Если структурированное сообщение использует эти major service blocks, оформляй их как Markdown headings level 2: `## Статус`, `## Этапы работы`, `## Рекомендация`, `## Варианты решения`, `## Служебная информация`. Nested decision/evidence content использует level 3 или ниже. Короткий неструктурированный ответ может опустить headings полностью; weak pseudo-heading или H3 major block не является допустимым fallback. Контракт не требует native UI, CSS или конкретных fonts. Marker: `structured_service_headings_h2`.
+
 Если решения, изменения этапов или полезных служебных деталей нет, соответствующий блок полностью опускается. Candidate status, CAP `terminated_on_deviation`, `honest_stop`, критическое ограничение/риск, изменение authority/scope, failed или inconclusive Verification, Human Gate и Admission остаются явными в `Статус`; consequential meaning нельзя помещать только в `Служебная информация`.
 
 Структура не требует всех headings в каждом коротком сообщении. Она задаёт стабильный порядок при наличии содержания и согласуется с `WPC-06`: существенное решение может содержать расширенные основания, но человек сначала понимает ситуацию, затем видит рекомендацию и все применимые варианты, после чего при необходимости проверяет exact детали.
@@ -724,6 +757,31 @@ authority
 
 Authority invariant: model capability does not change Task authority.
 
+### 4.2.1. Conditional independent review и recursive control guard
+
+Independent review активируется только при material trigger: architecture baseline; authority/security change; system integration result; consequential migration/release Candidate; material Verification uncertainty; explicit process-authority requirement; либо selected sampling после repeated similar slices. Low-impact local work и confidence/file/model/tool count trigger не создают.
+
+Minimum review contract остаётся внутри applicable Working Process/Loop/Task/Run/Model Assignment и называет:
+
+- reviewer identity и independence class;
+- exact claims, Candidate/configuration и permitted context/privacy boundary;
+- prohibited actions; default — no Candidate modification и no Admission authority;
+- evidence/findings format, limitations и disagreement;
+- failed/inconclusive smallest-responsible return route.
+
+Reviewer verdict является Evidence/Observation, а не Verification или Admission. Если review authority/context отсутствует, вернись к process authority до disclosure/action. Reviewer, желающий изменить Candidate, сначала получает separate bounded Task и explicit modification authority; finding само этого не разрешает. Когда Engineering Review View и independent review применимы к одной architecture/integration/release configuration, reviewer получает отдельную read-only Task/Run, а claim-referenced findings входят в тот же applicable Human Gate; failed/inconclusive finding блокирует только affected relying claim. Второй mandatory Admission или approval ladder не создаётся. Marker: `conditional_independent_review | reviewer_evidence_not_admission | independent_review_composes_with_engineering_gate`.
+
+При material expansion Verification/control topology новый слой разрешён только если он защищает хотя бы одно:
+
+```text
+new material claim
+OR new material risk
+OR new trust boundary
+OR required independence
+```
+
+Без такого value expansion останови recursive escalation и используй existing Verification/evidence contract. Loci, agents, tools или verifier count сами по себе diagnostic only. Active Candidate iteration использует proportional local verification; full exact configuration/hash closure выполняется на frozen Candidate перед reliance. Marker: `recursive_control_requires_new_protected_value | active_iteration_local_verification | frozen_candidate_exact_closure`.
+
 ### 4.3. Execution profile «Форсаж»
 
 «Форсаж» — отдельный bounded rapid-prototyping execution profile, а не presentation mode, maturity level или bypass. Он доступен только внутри admitted context и отдельно утверждённого Loop/Task envelope. До старта зафиксируй:
@@ -749,6 +807,20 @@ completion_route: discard | promote_to_engineering
 Объединённый пакет полномочий (`Consolidated Authority Package`, CAP) — optional exact Candidate configuration, в которой одно явное решение process authority может разрешить заранее ограниченную последовательность действий, проверок и conditional transitions. CAP уменьшает повторные approvals, но не является источником authority, lifecycle, Admission mechanism или универсальным default.
 
 Если exact границы нельзя доказать, используй обычный пошаговый маршрут. Отсутствие CAP не является degraded mode.
+
+#### Opportunity detection and one-time offer
+
+Runtime предлагает подготовить Candidate CAP один раз, только когда одновременно наблюдаемы все material signals:
+
+- admitted Working Process и repeatable Loop/sequence;
+- known bounded phases и stable authority;
+- exact sources/baseline и allowed/prohibited loci/effects;
+- repeated Verification predicates и finite budgets;
+- explicit deviations/stop conditions;
+- low/moderate controlled consequence;
+- final Candidate всё равно использует existing Admission route.
+
+Exploratory, unbounded, high-uncertainty или high-consequence work не получает CAP offer и остаётся пошаговым. Отказ подавляет повторное предложение до нового material trigger. Opportunity detection не создаёт/активирует CAP и не предоставляет authority. Marker: `cap_opportunity_all_signals | cap_offer_once | cap_refusal_suppressed_until_material_trigger`.
 
 #### Eligibility contract
 
@@ -783,6 +855,8 @@ active
 Approval идентифицирует exact CAP configuration/hash и authorized action. Молчание, reaction, двусмысленное «да» или ответ к другой configuration CAP не активируют; запроси clarification.
 
 Перед первым consequential action activation повторно проверяет package/configuration, inputs, authority, allowed loci, budgets и baseline. Перед каждым automatic transition проверь applicable predicates и запиши evidence. Только полный pass разрешает следующий phase. Ordinary reversible work внутри declared phase не требует micro-Admission.
+
+Automatic transition внутри exact active CAP может передавать только internal intermediate state/evidence без independent result identity или downstream first relying use и только внутри уже authorized package/Run. Любой named `Candidate Result`, включая result, запрошенный следующей phase для reliance, останавливается на existing Human Gate/Admission route. CAP не создаёт exception к `Candidate Result ≠ Relied-on Result`. Marker: `cap_internal_non_result_state_only | cap_candidate_reliance_requires_admission`.
 
 Normal completion возвращает Candidate/partial result и evidence со state `completed_candidate_pending_admission`. Оно не admits result, не authorizes downstream Loop и не изменяет prior authority. Final result Admission остаётся отдельным explicit decision для exact result configuration и first relying use.
 
@@ -847,6 +921,23 @@ Host/system/safety/privacy constraints остаются выше project instruc
 Material mapping сохраняет:
 
 `method/skill | version/observable identity | requested capability | classification for this use | Runtime Task/Run | accepted technique/output | rejected/translated process semantics | Candidate status | project process changed? | unresolved conflict | fallback/reopen`.
+
+Для material external provider/method отдельно сохраняй foreign-state/authority/evidence mapping:
+
+```text
+provider/method identity + exact version/configuration
+→ requested capability + current-use classification
+→ Runtime Task/Run target, inputs/outputs and allowed/prohibited effects
+→ foreign state/event
+→ Runtime interpretation
+→ explicit not_equivalent_to
+→ allowed effect
+→ Evidence section + fallback/reconciliation/invalidation
+```
+
+Foreign `queued | running | done | approved | passed` остаётся provider state/evidence и не становится Runtime lifecycle state, Verification, Admission или authority. Evidence section называет claim, exact checks, artifacts/hashes/effects, coverage/non-coverage, limitations, freshness, provider/configuration и retrieval locus. Provider identity/configuration drift делает affected mapping/evidence stale before relying use. Два provider-distinct verifier records могут нормализоваться в одинаковые Evidence fields, но provider identity и limitations не стираются.
+
+Default — inline mapping в current Task/Run evidence. Physical `EXTERNAL_INTEGRATION_PROFILE` оправдан только если существуют как минимум два repeated/material mappings и independent receiving use, которые нельзя безопасно и согласованно удержать inline плюс Runtime Capability Profile. Иначе behavior сохраняется, carrier не создаётся. Evidence Envelope является section существующего Run/evidence output, а не новой universal core entity. Marker: `foreign_state_not_admission | provider_drift_stales_mapping | external_mapping_inline_by_default | external_profile_two_mappings_independent_reuse_predicate`.
 
 Обычно `project process changed? = no`. Если useful capability требует реального process change, останови mapping и вернись к Process Review/process authority; gate сам не меняет Working Process.
 
@@ -1200,6 +1291,35 @@ exact approved semantic source/configuration
 Default — inline mapping в material Loop/Task/Run/CAP или evidence. Reusable Runtime Capability Profile optional и оправдан repeated/material use одной exact configuration. Machine-readable projection создаётся только при concrete consumer/enforcer, ссылается на semantic source и становится stale/invalid при material source/host/tool/configuration change. Consequential execution не продолжается по stale projection.
 
 Начинай с smallest protected-value set: protected loci, prohibited side effects/external actions, finite budget/terminal outcome и stale semantic binding. Для simple reversible work без material technical-enforcement claim сохраняй semantic boundary, direct review и ordinary Verification без profile/conformance ceremony. Git, worktree, container и CI являются adapters, а не universal vocabulary.
+
+##### Demand-driven qualification maintenance
+
+Qualification требуется только перед consequential Run, который materially полагается на technical boundary. Ordinary Runtime use и simple reversible work не создают host-maintenance obligation. Qualification связывается прежде всего с observed capabilities одной exact accessible configuration; host family, version/build и evidence date остаются evidence/diagnostic fields. Unknown build записывается как `unknown` с limitation, а не изобретается.
+
+Host version/build change запускает manual material-change screen, но сам по себе не делает Runtime incompatible и не требует Runtime release. Material changes включают enforcement backend/OS, sandbox/write boundary, approval/tool/network policy, Verification/evidence surface, recovery behavior или capability semantics. UI wording, unrelated features и internal refactoring с unchanged observed behavior сами по себе material change не являются.
+
+Initial qualification и каждая demanded requalification используют fixed `RC-01…RC-06` suite без automatic/selective impact subset. Каждый case получает explicit disposition: fresh `executed`, `inapplicable` с rationale или `not_executed_honest_stop`; non-executed case не поддерживает `enforced`. Profile покрывает или явно marks unsupported как минимум write/isolation boundary, network/tool boundary, verification execution и evidence/recovery. Maintenance ceiling — шесть case dispositions на demanded exact configuration, а не постоянная работа и не Runtime release.
+
+Новая exact configuration создаёт new Candidate profile identity/revision/hash с `supersedes_ref`, `supersedes_sha256`, `material_change_summary` и per-binding `case_evidence_refs`. Prior definitions/evidence остаются historical comparison/provenance; fresh successor conformance claim использует fresh observations. Unsupported change затрагивает только affected binding и route `compensate | Human Gate | honest_stop`. Automatic fingerprinting, automatic impact analysis/requalification и qualification issuance не входят в Runtime. Markers: `qualification_demand_driven | fixed_rc01_rc06_full_disposition | successor_profile_fresh_evidence | host_update_no_runtime_release | automatic_requalification_deferred`.
+
+##### Stable execution-substrate and repository adapter contract
+
+Runtime не branches on substrate/vendor version и не интерпретирует internal HAR/worktree/container/VM/sandbox/CI states. Opaque identity/version/configuration хранится только как exact evidence и invalidation trigger. Stable properties распределяются по существующим carriers:
+
+| Stable property | Existing responsible locus |
+|---|---|
+| starting baseline/configuration | Loop/Task/Run inputs and baseline fields |
+| isolation plus protected/writable loci | capability binding + exact configuration |
+| network/external-effect boundary | capability binding + side-effect boundary |
+| resource/iteration/retry bounds | Loop/Task/Run/CAP budgets |
+| launch/teardown | exact adapter action in Run |
+| expected/prohibited effects | Task/Run contract |
+| verification/evidence | Run evidence + conformance protocol |
+| resulting exact state | Candidate/baseline identity where applicable |
+| interruption/recovery | Run outcome + `RC-04` |
+| durable-state reconciliation | existing §10.1 dispositions |
+
+Repository control mapping remains `semantic boundary → required repository capability → exact concrete control/configuration → enforced | compensated | unsupported → positive/negative observation → drift/invalidation trigger`. Reference tests use only sacrificial temporary repository/workspace; no Git/CI field is universal. Marker: `substrate_version_opaque_evidence_only | stable_substrate_properties_existing_carriers | repository_control_is_adapter`.
 
 ### 8.7. Verification
 

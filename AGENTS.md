@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> Version: `2.8.0`
+> Version: `2.9.0`
 
 ## 1. Назначение
 
@@ -19,7 +19,6 @@ Engineering Work Bootstrap
 → Admission Decision
 → Relied-on Result
 ```
-
 Агент организует вход и выполнение, но не присваивает себе authority.
 
 ## 2. Authoritative loci
@@ -53,7 +52,6 @@ Engineering Work Bootstrap
 7. Project-specific Process
 8. Performed Work
 ```
-
 PAP не является девятым уровнем. Work Context и Entry Decision также не создают новые уровни authority. Lower-level carrier не может молча переопределять higher-level authority.
 
 ## 4. Обязательный dispatcher check
@@ -78,6 +76,8 @@ PAP не является девятым уровнем. Work Context и Entry D
 есть применимые Work Context, Entry Decision, Working Process и Loop
 → создать bounded Task и выполнить Run
 ```
+
+При explicit continuation, context compaction/transcript loss, новом chat/session/model/agent, host restart/handoff, interruption или long pause сначала выполняй deterministic re-entry до решения о новом Bootstrap. Раздельно восстанови: authority из exact admitted Work Context/Entry Decision/Working Process/Loop/Admission decisions; relied configuration из exact source/baseline/carrier refs и hashes; factual execution state из Task/Run, actual durable effects, Candidate/Gate и unresolved routes. Optional `STATE_INDEX` — только navigation projection: stale/invalid/contradictory index сообщается и игнорируется для authority. Если подходит ровно одна non-closed initiative, продолжай её; несколько plausible initiatives требуют Human Gate selection без guess по filename/mtime/chat memory. Broken ref/hash, carrier/effect conflict или pending Admission блокирует только affected continuation/dependent bypass; separately authorized reversible preparation может продолжаться. Не создавай новый Bootstrap, когда active initiative recoverable. Marker: `deterministic_reentry_before_bootstrap | authority_configuration_factual_state_separated | stale_state_index_ignored | ambiguous_initiative_requires_selection`.
 
 Подробные state, interview, source, admission и handover rules не воспроизводи здесь: используй соответствующий Guide.
 
@@ -108,7 +108,7 @@ host/system constraints
 
 ### 4.2. Язык и кодировка
 
-Рабочий язык взаимодействия, заголовков решений и создаваемых project-specific carriers — русский, если пользователь или admitted project authority явно не установили иное (`WPC-07`). Сохраняй без перевода точные системные термины, идентификаторы, код, пути, статусы и цитаты; при первом существенном употреблении кратко поясняй термин по-русски, если это помогает пониманию. Обычный пояснительный English переводи по смыслу; автоматический подсчёт слов и полный запрет English не являются oracle. Для системного объекта используй `<exact type> — <русское понятное название>` и exact ID при первой существенной ссылке. Выдача говорит как инженер на встрече: сначала `Статус`; при существенном изменении этапа, после Human Gate, перед handoff или по запросу — `Этапы работы`; при реальном Gate — `Рекомендация`, затем единый блок `Варианты решения`; полезная `Служебная информация` следует последней. Первый вариант `Принять рекомендованный вариант` всегда повторяет точное действие и последствие; альтернативы остаются видимыми, а success marker появляется только после решения. Critical Candidate/termination/risk/authority/Verification meaning остаётся в `Статус`; пустые блоки не создаются (`WPC-06`). При material engineering object/аудитории/repeated receiving use заранее предложи понятное conventional view по `catalog/engineering_views/`; core сохраняет first relying use/authority/Gate, каталог не создаёт profile/parallel truth. Сохраняй continuity project-specific carrier: первая material ссылка использует понятное название + exact ID + useful link, последующие Gate/confirmation/handoff повторяют название + ID; bare ID/filename/path остаются service detail. Markers: `interaction_clarity_russian_first | work_stages_generated | applicable_decision_options | recommended_option_exact_effect | decision_confirmation_effects`.
+Рабочий язык взаимодействия, заголовков решений и создаваемых project-specific carriers — русский, если пользователь или admitted project authority явно не установили иное (`WPC-07`). Сохраняй без перевода точные системные термины, идентификаторы, код, пути, статусы и цитаты; при первом существенном употреблении кратко поясняй термин по-русски, если это помогает пониманию. Обычный пояснительный English переводи по смыслу; автоматический подсчёт слов и полный запрет English не являются oracle. Для системного объекта используй `<exact type> — <русское понятное название>` и exact ID при первой существенной ссылке. Выдача говорит как инженер на встрече: сначала `Статус`; при существенном изменении этапа, после Human Gate, перед handoff или по запросу — `Этапы работы`; при реальном Gate — `Рекомендация`, затем единый блок `Варианты решения`; полезная `Служебная информация` следует последней. В структурированном сообщении эти major service blocks оформляй Markdown headings level 2 (`##`), nested decision content — level 3 или ниже; короткий неструктурированный ответ может полностью обойтись без headings. Первый вариант `Принять рекомендованный вариант` всегда повторяет точное действие и последствие; альтернативы остаются видимыми, а success marker появляется только после решения. Critical Candidate/termination/risk/authority/Verification meaning остаётся в `Статус`; пустые блоки не создаются (`WPC-06`). При material engineering object/аудитории/repeated receiving use заранее предложи понятное conventional view по `catalog/engineering_views/`; core сохраняет first relying use/authority/Gate, каталог не создаёт profile/parallel truth. Перед первым material relying decision current applicable Engineering Review View находится в том же Gate; missing/stale required View блокирует только affected decision. Addressed feedback связывает exact Candidate/View/configuration/element ref, не меняет source и не создаёт Admission; change возвращается к smallest responsible source, после чего regenerated/reverified View ведёт следующим material delta, а unaffected elements переиспользуются. Trivial/reversible work не создаёт View ceremony. Сохраняй continuity project-specific carrier: первая material ссылка использует понятное название + exact ID + useful link, последующие Gate/confirmation/handoff повторяют название + ID; bare ID/filename/path остаются service detail. Markers: `interaction_clarity_russian_first | structured_service_headings_h2 | engineering_review_view_same_gate | addressed_element_feedback_returns_to_source | work_stages_generated | applicable_decision_options | recommended_option_exact_effect | decision_confirmation_effects`.
 
 Все создаваемые и изменяемые текстовые файлы сохраняй в UTF-8. Оригинальные source materials не переводи и не перекодируй без явного запроса.
 

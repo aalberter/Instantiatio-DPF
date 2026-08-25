@@ -181,7 +181,10 @@ $requiredFiles = @(
     'docs/releases/RELEASE_NOTES_3_3_0.md',
     'docs/releases/RELEASE_NOTES_3_4_0.md',
     'docs/releases/RELEASE_NOTES_3_5_0.md',
+    'docs/releases/RELEASE_NOTES_3_6_0.md',
+    'examples/CODEX_REFERENCE_CAPABILITY_PROFILE.yaml',
     'tests/behavioral/BOOTSTRAP_SCENARIOS.md',
+    'tests/behavioral/RUNTIME_3_6_OPERATIONAL_SCENARIOS.md',
     'tests/conformance/RUNTIME_BOUNDARY_CONFORMANCE_PROTOCOL.md',
     'templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml',
     'AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
@@ -277,6 +280,8 @@ $agentsText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 
 $roadmapText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/KIT_EVOLUTION_ROADMAP.md')
 $releaseNotesText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_4_0.md')
 $releaseNotes350Text = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_5_0.md')
+$releaseNotes360Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_6_0.md'
+$releaseNotes360Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes360Path
 
 # Public wrapper identity, license and provenance contract
 $licensePath = Join-Path $repoRoot 'LICENSE'
@@ -291,12 +296,14 @@ else {
 }
 $emDash = [char]0x2014
 $middleDot = [char]0x00B7
+$decodeUtf8Marker = { param([string]$value) [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($value)) }
 $candidateIdentity = "Instantiatio DPF 3.4.0 $emDash Engineering Work Runtime $middleDot Beta"
-$candidate350Identity = "Instantiatio DPF 3.5.0 $emDash Engineering Work Runtime $middleDot Beta"
-if (-not $readmeText.StartsWith("# $candidate350Identity`n")) {
+$releaseIdentity = "Instantiatio DPF 3.6.0 $emDash Engineering Work Runtime $middleDot Beta"
+$readmeIdentity = "Instantiatio DPF (iDPF) 3.6.0 $emDash Engineering Work Runtime $middleDot Beta"
+if (-not $readmeText.StartsWith("# $readmeIdentity`n")) {
     Add-Failure 'README release-level identity is missing'
 }
-if (-not $manifestText.StartsWith("# $candidate350Identity $emDash Package Manifest`n")) {
+if (-not $manifestText.StartsWith("# $releaseIdentity $emDash Package Manifest`n")) {
     Add-Failure 'Manifest release-level identity is missing'
 }
 foreach ($publicIdentityContract in @(
@@ -304,11 +311,11 @@ foreach ($publicIdentityContract in @(
     @{ Name = 'README MIT link'; Text = $readmeText; Marker = '[MIT License](LICENSE)' },
     @{ Name = 'README canonical repository'; Text = $readmeText; Marker = 'https://github.com/aalberter/Instantiatio-DPF' },
     @{ Name = 'README FPF source'; Text = $readmeText; Marker = 'https://github.com/ailev/FPF' },
-    @{ Name = 'README independent layer'; Text = $readmeText; Marker = 'independent engineering Work Kit and evolution layer' },
-    @{ Name = 'README non-official boundary'; Text = $readmeText; Marker = 'not an official FPF distribution' },
-    @{ Name = 'README non-affiliation boundary'; Text = $readmeText; Marker = 'no affiliation with or endorsement by the FPF authors or repository owners is claimed' },
-    @{ Name = 'README no-redistribution boundary'; Text = $readmeText; Marker = 'No files from the external FPF repository are included or relicensed by this distribution' },
-    @{ Name = 'README protected identity'; Text = $readmeText; Marker = 'does not rename or generalize the controlled `AI_SDLC_DPF/**` payload' }
+    @{ Name = 'README portable Runtime identity'; Text = $readmeText; Marker = (& $decodeUtf8Marker 'KippRFBGIOKAlCDQv9C10YDQtdC90L7RgdC40LzQsNGPINGB0YDQtdC00LAg0L7RgNCz0LDQvdC40LfQsNGG0LjQuCDQuNC90LbQtdC90LXRgNC90L7QuSDRgNCw0LHQvtGC0Ysg0YfQtdC70L7QstC10LrQsCDQuCBBSS3QsNCz0LXQvdGC0L7Qsi4qKg==') },
+    @{ Name = 'README non-official boundary'; Text = $readmeText; Marker = (& $decodeUtf8Marker '0L3QtSDRj9Cy0LvRj9C10YLRgdGPINC+0YTQuNGG0LjQsNC70YzQvdC+0Lkg0LTQuNGB0YLRgNC40LHRg9GG0LjQtdC5IEZQRg==') },
+    @{ Name = 'README non-affiliation boundary'; Text = $readmeText; Marker = (& $decodeUtf8Marker 'YWZmaWxpYXRpb24g0LjQu9C4IGVuZG9yc2VtZW50INCw0LLRgtC+0YDQsNC80LggRlBGINC90LUg0LfQsNGP0LLQu9GP0Y7RgtGB0Y8=') },
+    @{ Name = 'README no-redistribution boundary'; Text = $readmeText; Marker = (& $decodeUtf8Marker '0JLQvdC10YjQvdC40LUgRlBGLdGE0LDQudC70Ysg0L3QtSDQstC60LvRjtGH0LDRjtGC0YHRjyDQsiDQv9Cw0LrQtdGCINC4INC90LUgcmVsaWNlbnNlZA==') },
+    @{ Name = 'README protected identity'; Text = $readmeText; Marker = (& $decodeUtf8Marker 'YEFJX1NETENfRFBGLyoqYCDRj9Cy0LvRj9C10YLRgdGPIHByb3RlY3RlZCByZWFkLW9ubHkgbG9jdXM=') }
 )) {
     if (-not $publicIdentityContract.Text.Contains($publicIdentityContract.Marker)) {
         Add-Failure "$($publicIdentityContract.Name) missing"
@@ -332,7 +339,7 @@ if ($agentEntryFiles.Count -ne 1 -or $agentEntryFiles[0].FullName -cne (Join-Pat
 }
 
 $versionContracts = @(
-    @{ Component = 'Engineering Work Runtime'; Carrier = $readmeText; Label = 'Runtime version' },
+    @{ Component = 'Engineering Work Runtime'; Carrier = $readmeText; Label = (& $decodeUtf8Marker '0JLQtdGA0YHQuNGPIGlEUEYgUnVudGltZQ==') },
     @{ Component = 'Bootstrap Guide'; Carrier = $bootstrapText; Label = 'Version' },
     @{ Component = 'Working Process Guide'; Carrier = $workingGuideText; Label = 'Version' },
     @{ Component = 'AGENTS dispatcher'; Carrier = $agentsText; Label = 'Version' }
@@ -390,9 +397,9 @@ if ($manifestText -notmatch '\| Product maturity \| \x60Beta\x60 \|') {
     Add-Failure 'Manifest product maturity must be Beta'
 }
 foreach ($packageStatusContract in @(
-    @{ Name = 'README'; Text = $readmeText; Marker = ('> Runtime version: `3.5.0` ' + $emDash + ' publication status `' + $publicationStatus + '`; product maturity `Beta`; predecessor released Runtime baseline is `3.4.0`') },
-    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.5.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
-    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.5.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
+    @{ Name = 'README'; Text = $readmeText; Marker = (& $decodeUtf8Marker 'PiDQktC10YDRgdC40Y8gaURQRiBSdW50aW1lOiBgMy42LjBgOyDQstGB0YLRgNC+0LXQvdC90YvQuSDRgdGC0LDRgtGD0YEg0LLRi9C/0YPRgdC60LA6IGByZWxlYXNlZGA7INC30YDQtdC70L7RgdGC0Ywg0L/RgNC+0LTRg9C60YLQsDogYEJldGFgOyDQstGL0L/Rg9GJ0LXQvdC90YvQuSDQv9GA0LXQtNGI0LXRgdGC0LLQtdC90L3QuNC6OiBgMy41LjBg') },
+    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.6.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.6.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
 )) {
     if (-not $packageStatusContract.Text.Contains($packageStatusContract.Marker)) {
         Add-Failure "Package status contract mismatch: $($packageStatusContract.Name)"
@@ -406,6 +413,26 @@ foreach ($requiredReleasePhrase in @(
 )) {
     if (-not $manifestText.Contains($requiredReleasePhrase)) {
         Add-Failure "Released package limitation guard missing: $requiredReleasePhrase"
+    }
+}
+if ((Get-FileHash -Algorithm SHA256 -LiteralPath $releaseNotes360Path).Hash -ne 'D123D46B8CD7AD3F6F5E802F8CEED18128E4D93CA7A254BF67F4D520601BDDF8') {
+    Add-Failure 'Admitted Release Notes 3.6.0 hash mismatch'
+}
+if (-not $releaseNotes360Text.Contains('> Release status: `released`')) {
+    Add-Failure 'Release Notes 3.6.0 public release-status marker missing'
+}
+foreach ($staleReleaseNotes360Marker in @(
+    'candidate_pending_admission',
+    'Final assembly date: pending',
+    'Current engineering state | Candidate',
+    'Planned ZIP',
+    'L05',
+    'L06',
+    'package closure remains deferred',
+    'final ZIP do not exist'
+)) {
+    if ($releaseNotes360Text.Contains($staleReleaseNotes360Marker)) {
+        Add-Failure "Release Notes 3.6.0 stale assembly marker: $staleReleaseNotes360Marker"
     }
 }
 
@@ -591,7 +618,7 @@ foreach ($wpcId in 1..9) {
 foreach ($mapping in @(
     @{ Name = 'Bootstrap Guide'; Text = $bootstrapText; Markers = @('WPC-01', 'WPC-06', 'WPC-07', 'FC-13', 'applicable_decision_options') },
     @{ Name = 'AGENTS dispatcher'; Text = $agentsText; Markers = @('WPC-01', 'WPC-03', 'WPC-06', 'WPC-07', 'WPC-08', 'WPC-09', 'FC-13', 'applicable_decision_options', 'project-relevant Candidate coverage map') },
-    @{ Name = 'README navigation'; Text = $readmeText; Markers = @('FC-13-first operational entry', 'admitted context -> FC-13 -> project-relevant result expansion -> optional PEC screen -> explicit reductions -> Human decision') },
+    @{ Name = 'README navigation'; Text = $readmeText; Markers = @((& $decodeUtf8Marker '0J/RgNC+0YbQtdGB0YEg0L/RgNC+0LXQutGC0LjRgNGD0LXRgtGB0Y8g0L/QvtC0INC30LDQtNCw0YfRgw=='), 'WORKING_PROCESS_AND_LOOPS_GUIDE.md') },
     @{ Name = 'Working Process carrier'; Text = $workingGuideText; Markers = @('admitted reduction trace', 'WPC-06 decision wrapper required', 'Admission Request and Candidate Configuration') }
 )) {
     foreach ($marker in $mapping.Markers) {
@@ -924,7 +951,7 @@ foreach ($requiredDecisionUiPhrase in @(
     'applicable_decision_options',
     'recommended_option_exact_effect',
     'exact Candidate configuration',
-    'risk acceptance',
+    'risk_acceptance',
     'consequential action',
     'plain text',
     'clarification'
@@ -973,8 +1000,10 @@ foreach ($locusContract in @(
         'decision_confirmation_effects', 'decision record'
     ) },
     @{ Name = 'README Decision UI projection'; Text = $readmeText; Markers = @(
-        'DI-01 Review', 'DI-08 Consequential action', 'accountable risk owner',
-        'reopen trigger', 'newly allowed', 'still-prohibited', 'decision-record link'
+        (& $decodeUtf8Marker 'SHVtYW4gR2F0ZSDigJQg0YLQvtGH0LrQsCDRgNC10YjQtdC90LjRjyDRh9C10LvQvtCy0LXQutCw'),
+        (& $decodeUtf8Marker 'IyMg0KHRgtCw0YLRg9GB'), (& $decodeUtf8Marker 'IyMg0K3RgtCw0L/RiyDRgNCw0LHQvtGC0Ys='),
+        (& $decodeUtf8Marker 'IyMg0KDQtdC60L7QvNC10L3QtNCw0YbQuNGP'), (& $decodeUtf8Marker 'IyMg0JLQsNGA0LjQsNC90YLRiyDRgNC10YjQtdC90LjRjw=='),
+        (& $decodeUtf8Marker '0YHQvNGL0YHQuyDRgNC10YjQtdC90LjRjw==')
     ) }
 )) {
     foreach ($marker in $locusContract.Markers) {
@@ -1001,8 +1030,10 @@ foreach ($clarityContract in @(
         'recommended_option_exact_effect', 'decision_confirmation_effects'
     ) },
     @{ Name = 'README interaction clarity'; Text = $readmeText; Markers = @(
-        $releaseNoteStages, $releaseNoteOptions, $releaseNoteRecommended,
-        'applicable alternatives', 'inconclusive Verification', 'generic approval route'
+        (& $decodeUtf8Marker 'IyMg0KHRgtCw0YLRg9GB'), (& $decodeUtf8Marker 'IyMg0K3RgtCw0L/RiyDRgNCw0LHQvtGC0Ys='),
+        (& $decodeUtf8Marker 'IyMg0KDQtdC60L7QvNC10L3QtNCw0YbQuNGP'), (& $decodeUtf8Marker 'IyMg0JLQsNGA0LjQsNC90YLRiyDRgNC10YjQtdC90LjRjw=='),
+        (& $decodeUtf8Marker '0Log0YfQtdC80YMg0L/RgNC40LLQtdC00ZHRgiDQutCw0LbQtNGL0Lkg0LLQsNGA0LjQsNC90YI='),
+        (& $decodeUtf8Marker '0LrQsNC60L7QtSDQutC+0L3QutGA0LXRgtC90L7QtSDQtNC10LnRgdGC0LLQuNC1INGA0LXQutC+0LzQtdC90LTRg9C10YLRgdGP')
     ) }
 )) {
     foreach ($marker in $clarityContract.Markers) {
@@ -1062,16 +1093,12 @@ if ($bootstrapText -notmatch '(?m)^interaction_mode: compact\r?\nexplanation_mod
 if ($workingGuideText -notmatch 'Working Process, Loop contract, Task scope') {
     Add-Failure 'Working Process preference boundary is missing'
 }
-foreach ($combination in @(
-    '| `guided` | `detailed` |',
-    '| `guided` | `milestone` |',
-    '| `standard` | `detailed` |',
-    '| `standard` | `milestone` |',
-    '| `compact` | `detailed` |',
-    '| `compact` | `milestone` |'
+foreach ($readmePreferenceMarker in @(
+    '`guided`', '`standard`', '`compact`', '`detailed`', '`milestone`',
+    (& $decodeUtf8Marker '0L3QtdC30LDQstC40YHQuNC80L4=')
 )) {
-    if (-not $readmeText.Contains($combination)) {
-        Add-Failure "README interaction combination is missing: $combination"
+    if (-not $readmeText.Contains($readmePreferenceMarker)) {
+        Add-Failure "README interaction preference is missing: $readmePreferenceMarker"
     }
 }
 
@@ -1156,7 +1183,7 @@ if (Test-Path -LiteralPath (Join-Path $repoRoot 'project/STATE_INDEX.yaml')) { A
 if ($runtimeCapabilityTemplateText) {
     try {
         $runtimeCapabilityTemplate = $runtimeCapabilityTemplateText | ConvertFrom-Json
-        if ($runtimeCapabilityTemplate.schema_version -ne '1.0') { Add-Failure 'Runtime Capability Profile schema version gap' }
+        if ($runtimeCapabilityTemplate.schema_version -ne '1.1') { Add-Failure 'Runtime Capability Profile schema version gap' }
         if ($runtimeCapabilityTemplate.authority_boundary.capability_grants_authority -ne $false) { Add-Failure 'Runtime Capability Profile authority boundary gap' }
         if (@($runtimeCapabilityTemplate.binding_contract.allowed_conformance_states).Count -ne 4) { Add-Failure 'Runtime Capability Profile conformance-state gap' }
     }
@@ -1196,7 +1223,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
-    if ($manifestHashRowCount -ne 46) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 46" }
+    if ($manifestHashRowCount -ne 49) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 49" }
 
     $actualInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($file in (Get-ChildItem -LiteralPath $repoRoot -Recurse -Force -File)) {

@@ -1,6 +1,6 @@
 # Engineering Work Bootstrap Guide
 
-> Version: `1.8.0`
+> Version: `1.9.0`
 
 ## 1. Назначение
 
@@ -82,6 +82,31 @@ Bootstrap не требуется заново, если:
 - новая Task не меняет intended outcome, system of interest, authority или receiving use.
 
 При сомнении агент должен предложить Bootstrap и кратко объяснить, зачем он нужен.
+
+### 2.1. Re-entry boundary перед новым Bootstrap
+
+Explicit request продолжить существующую работу, context compaction/transcript loss, новый chat/session/model/agent, host restart или handoff, interruption/long pause сначала запускают read-only re-entry check. Новый Bootstrap допустим только после этого check, если applicable active initiative действительно не восстановима или запрос materially создаёт новую initiative.
+
+Re-entry не создаёт новый lifecycle, authority или state database. Он раздельно разрешает три класса:
+
+| Класс | Responsible evidence | Не подменяется |
+|---|---|---|
+| authority | exact admitted Work Context, Entry Decision, Working Process/Loop и Admission/authorization decisions | chat summary, filename, modification time, tool state |
+| relied configuration | active initiative, exact source/product baseline, carrier refs/configurations и hashes | optional index, memory или latest-looking file |
+| factual execution state | current Task/Run, actual durable effects, Candidate/Gate, unresolved issues и stop/reopen routes | declared plan/status без reconciliation |
+
+Optional `STATE_INDEX` ускоряет navigation только когда valid, current и consistent. Missing, stale, invalid или contradictory index сообщается и игнорируется для authority; exact carriers и actual effects имеют приоритет. Before consequential continuation actual durable effects reconciled по Working Process Guide.
+
+Resolution rules:
+
+1. если explicit continuation однозначно соответствует ровно одной recoverable non-closed initiative, восстанови её без нового Bootstrap;
+2. если остаются несколько plausible initiatives, представь Human Gate selection с exact identities/consequences; не выбирай по filename, modification time, chat memory или confidence;
+3. missing/broken Admission ref, relied hash или carrier/effect contradiction блокирует только affected continuation и называет exact repair/return owner;
+4. pending Admission блокирует dependent/bypass Task, но не уже authorized independent reversible preparation;
+5. compact recovered presentation называет initiative, baseline/configuration, current Loop/Task/Run, Candidate/Gate, allowed next action, blocked actions и unresolved/reopen route;
+6. если active initiative отсутствует, обычный Bootstrap начинается без recovery ceremony или обязательного index carrier.
+
+Markers: `deterministic_reentry_before_bootstrap | authority_configuration_factual_state_separated | stale_state_index_ignored | ambiguous_initiative_requires_selection | pending_admission_blocks_dependent_bypass_only`.
 
 ---
 

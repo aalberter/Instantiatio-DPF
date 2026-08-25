@@ -1,0 +1,153 @@
+{
+  "_usage": "Dated Candidate reference and schema/protocol fixture for one observed Codex desktop configuration. It is not a maintained-current qualification, grants no authority or permission, proves no universal host/field effectiveness and must not govern another build/configuration.",
+  "schema_version": "1.1",
+  "profile_id": "codex-desktop-reference-2026-08-24",
+  "status": "candidate",
+  "profile_revision": "1",
+  "supersedes_ref": "",
+  "supersedes_sha256": "",
+  "material_change_summary": [
+    "initial dated Candidate reference; no predecessor qualification"
+  ],
+  "semantic_source": {
+    "carrier_ref": "WORKING_PROCESS_AND_LOOPS_GUIDE.md#861-conditional-runtime-boundary-conformance-contract",
+    "sha256": "A25BC0029F6A09DE5100B6B86A88A50EF19653D2349A5241EAB061392A43B9B9",
+    "configuration_id": "Working Process Guide 1.11.0 Candidate delta under LOOP-IDPF-360-03 v0.1"
+  },
+  "runtime_configuration": {
+    "host": "Codex desktop",
+    "host_version": "unknown",
+    "toolchain": [
+      "apply_patch local text edits",
+      "exec_command",
+      "PowerShell 5.1.26100.9168"
+    ],
+    "material_settings": [
+      "filesystem sandbox reported as workspace-write; exact per-file semantic allow-list compensated by patch and ZIP-delta audit",
+      "network/external calls budget for evidence run: zero",
+      "workspace is not a Git repository and was not used as repository fixture",
+      "disposable fixture prefix: idpf-360-l03-* under the OS temp directory"
+    ],
+    "evidence_date": "2026-08-24"
+  },
+  "capability_bindings": [
+    {
+      "boundary_id": "write-isolation-boundary",
+      "boundary_claim": "Product writes remain inside the exact authorized path set and fixture-local prohibited effects are detected/reconciled.",
+      "required_capability": "path-scoped write/isolation plus exact-effect observation",
+      "actual_capability": "workspace-write sandbox with semantic exact-path allow-list, apply_patch targeting, pre/post hashes and ZIP-delta audit",
+      "conformance_state": "compensated",
+      "control_route": "compensate",
+      "case_evidence_refs": [
+        "RUN-IDPF-360-03-001#RC-01",
+        "RUN-IDPF-360-03-001#RC-02"
+      ],
+      "evidence_refs": [
+        "RC-01 executed/compensated: fixture-local prohibited effect detected=true",
+        "RC-02 executed/compensated: effect outside allowed work set detected=true"
+      ],
+      "limitations": [
+        "No claim that the observed host sandbox technically enforces the project-specific per-file allow-list.",
+        "Negative effects occurred only in an authorized sacrificial temporary fixture and were removed."
+      ],
+      "recovery_route": "stop on unexpected delta; preserve exact effects/evidence; return to Run authority"
+    },
+    {
+      "boundary_id": "network-tool-boundary",
+      "boundary_claim": "The evidence Run performs no network or external-account action.",
+      "required_capability": "zero external/network effect or safe unsupported routing",
+      "actual_capability": "network action not authorized or attempted in the exact evidence Run",
+      "conformance_state": "unsupported",
+      "control_route": "honest_stop",
+      "case_evidence_refs": [
+        "RUN-IDPF-360-03-001#RC-06"
+      ],
+      "evidence_refs": [
+        "RC-06 executed/unsupported: required network/external-call capability routed to honest_stop; network calls=0"
+      ],
+      "limitations": [
+        "No network-enforcement or connectivity claim was tested.",
+        "Unsupported applies only to the affected binding and exact Run authority/configuration."
+      ],
+      "recovery_route": "compensation, Human Gate or honest_stop before any affected consequential action"
+    },
+    {
+      "boundary_id": "verification-execution",
+      "boundary_claim": "Finite deterministic local checks stop on declared budget and expose pass/fail evidence.",
+      "required_capability": "bounded local verification execution",
+      "actual_capability": "PowerShell deterministic checks with explicit file/byte/command/time budgets",
+      "conformance_state": "enforced",
+      "control_route": "enforce",
+      "case_evidence_refs": [
+        "RUN-IDPF-360-03-001#RC-03",
+        "RUN-IDPF-360-03-001#focused-checks"
+      ],
+      "evidence_refs": [
+        "RC-03 executed/enforced: finite budget halted before third write=true",
+        "fixture command invocations=1; created file events=10; written bytes=172; elapsed seconds=0.187"
+      ],
+      "limitations": [
+        "Evidence covers only the local deterministic fixture/checker behavior, not arbitrary commands or external providers."
+      ],
+      "recovery_route": "failed or exceeded verification returns the affected claim to the smallest responsible Task"
+    },
+    {
+      "boundary_id": "evidence-recovery",
+      "boundary_claim": "Interrupted/changed fixture state and stale semantic binding are observable and recoverable before reliance.",
+      "required_capability": "effect evidence, interruption recovery and stale-binding rejection",
+      "actual_capability": "Run record plus deterministic H0/final tree hash and semantic-source hash comparison",
+      "conformance_state": "compensated",
+      "control_route": "compensate",
+      "case_evidence_refs": [
+        "RUN-IDPF-360-03-001#RC-04",
+        "RUN-IDPF-360-03-001#RC-05"
+      ],
+      "evidence_refs": [
+        "RC-04 executed/compensated: partial effect observed and recovered=true",
+        "RC-05 executed/enforced: stale semantic binding rejected before action=true",
+        "fixture H0=E07535627214641F6DA3C307BF780FC368BD1D177B5FABCCF27566CD58F1186B",
+        "fixture final hash=E07535627214641F6DA3C307BF780FC368BD1D177B5FABCCF27566CD58F1186B; cleanup=true"
+      ],
+      "limitations": [
+        "The evidence Run is project formation evidence and is not distributed with this example.",
+        "This profile is a schema/protocol fixture and readable reference, not a standalone qualification certificate."
+      ],
+      "recovery_route": "reconcile exact effects; block closure on unresolved_deferred; validate exact temp path before cleanup"
+    }
+  ],
+  "binding_contract": {
+    "allowed_conformance_states": [
+      "declared",
+      "enforced",
+      "compensated",
+      "unsupported"
+    ],
+    "allowed_control_routes": [
+      "enforce",
+      "compensate",
+      "human_gate",
+      "honest_stop"
+    ],
+    "fresh_enforced_claim_requires_case_evidence_refs": true
+  },
+  "authority_boundary": {
+    "capability_grants_authority": false,
+    "profile_grants_permission": false,
+    "profile_admits_result": false
+  },
+  "invalidation_triggers": [
+    "material semantic-source change",
+    "enforcement backend or OS change",
+    "sandbox/write or approval/tool/network policy change",
+    "verification/evidence or recovery behavior change",
+    "capability semantics change",
+    "missing, stale, contradictory or failed evidence"
+  ],
+  "revalidation": {
+    "last_verified": "2026-08-24",
+    "verifier_or_run_ref": "RUN-IDPF-360-03-001",
+    "reopen_route": "Create a new Candidate profile identity/revision/hash and execute fresh fixed RC-01...RC-06 dispositions before new enforced reliance."
+  },
+  "_freshness_rule": "This exact dated profile does not become current for a successor Codex build/configuration. Version/build change triggers a manual material-change screen; predecessor evidence remains historical only.",
+  "_maintenance_rule": "No work is performed merely to keep this distributed example current. Codex updates do not require an iDPF release. Automatic fingerprinting, selective impact analysis and automatic requalification are deferred."
+}
