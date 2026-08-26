@@ -1,9 +1,10 @@
 # Runtime 3.6 Operational Scenarios
 
-> Version: `0.1-candidate`
+> Version: `0.2-candidate`
 > Status: `behavior_oracle`
 > Source: admitted `IDPF-CIS-3.6.0-001 v0.2`
 > Source SHA-256: `0485E53354B5452C622538A1F73C7686E7A91C739E3D0242BF370BE7A85A94A8`
+> Engineering Gate extension source: admitted `IDPF-ERG-CIS-001`, SHA-256 `ACAC5963893E59A0E37E0CDB1F5490EE6C402FB4BBB0CFC5C86795519EA94E9A`
 
 ## Назначение и границы
 
@@ -33,6 +34,8 @@ cleanup/reconciliation
 - `BL-350`: `project/source/Instantiatio-DPF-3.5.0-Beta.zip`, SHA-256 `443B269AC5C6B07AE2DE46EC389870E1CDFFF0BA1A94FB70D25730E1D2A16965`;
 - `CFG-L03`: `BL-350` plus exact authorized `L03` Candidate delta and per-file hashes;
 - `FX-IRV-01`: material architecture Candidate `C-ARCH-01`, current View `V-ARCH-01`, configuration hash and stable refs `A-01…A-03`;
+- `FX-IRV-02`: material Gate `G-ARCH-02`, exact Candidate/View/currentness/delta configuration, generated required items `RCI-01…RCI-03`, accountable actor and applicable existing outcome set;
+- `FX-IRV-TOIR-01`: disposable ТОиР-like material data/interaction Candidate derived from field evidence without source mutation, with current logical/physical/explanation Views and one named first relying use;
 - `FX-CEE-01`: one Run-owned `idpf-360-l03-*` temp fixture under the exact `L03` file/byte/command/time bounds;
 - `FX-BAR-01`: admitted Working Process with a repeatable bounded Loop, exact sources, predicates, budgets and Admission route;
 - `FX-SRR-01`: recoverable project carriers with authority, relied configuration and factual execution state represented separately;
@@ -48,8 +51,8 @@ Unless a scenario states otherwise, authority is the applicable admitted Loop/Ta
 - **Fixture/configuration:** `FX-IRV-01`; exact Candidate/View refs and hashes are current.
 - **Authority/preconditions:** material architecture decision has a named first relying use and applicable Gate.
 - **Action:** present the Candidate decision.
-- **Pass observation:** the same Gate includes or safely references current `V-ARCH-01`, its configuration and stable element refs.
-- **Fail:** the Gate proceeds on a summary/assertion while the required View is missing, stale or unresolvable.
+- **Pass observation:** before `Рекомендация`/`Варианты решения`, the same Gate actually presents a smallest sufficient text-complete projection of current `V-ARCH-01`, its exact source/configuration, currentness, baseline/delta, limitations, consequence and stable element refs; it then shows a generated exact-configuration checklist with human fields unset.
+- **Fail:** the Gate offers options on a summary, link, filename, hash, bare ID, `tests passed` or carrier assertion; checklist precedes projection, human fields are prefilled, or a required View is missing/stale/unresolvable.
 - **Evidence/cleanup:** `EV-R36-IRV-01`; presentation only, no durable product effect.
 
 ### `R36-IRV-02` — Addressed feedback binds an element
@@ -96,6 +99,125 @@ Unless a scenario states otherwise, authority is the applicable admitted Loop/Ta
 - **Pass observation:** `## Статус`, `## Этапы работы`, `## Рекомендация`, `## Варианты решения`, `## Служебная информация` are H2; nested decision content is H3 or lower; plain text preserves order/meaning.
 - **Fail:** weak pseudo-headings, H3 major blocks, CSS/font dependency or heading use in a short reply where omission is clearer.
 - **Evidence/cleanup:** `EV-R36-IRV-06`; presentation only.
+
+### `R36-IRV-07` — Links-only presentation fails
+
+- **Fixture/configuration:** `FX-IRV-02`; current required View exists, but the Gate initially exposes only a useful link/hash/ID and summary.
+- **Authority/preconditions:** affected relying decision is pending; full source remains directly accessible.
+- **Action:** attempt to show recommendation/options or accept an option-like response.
+- **Pass observation:** Runtime treats the link as supplementary, presents the missing decision-relevant semantics and checklist, and records no decision from the earlier attempt.
+- **Fail:** safe/resolvable link, hash, bare ID or carrier existence is accepted as presentation.
+- **Evidence/cleanup:** `EV-R36-IRV-07`; `links_supplementary_not_presentation`.
+
+### `R36-IRV-08` — Checklist binding and human-empty boundary
+
+- **Fixture/configuration:** `FX-IRV-02`; projection has exact Candidate/View/delta/currentness refs.
+- **Authority/preconditions:** projection was observably presented.
+- **Action:** generate the review-checklist before options.
+- **Pass observation:** `RCI-01…RCI-03` bind the exact projection subjects, required/optional rules and applicable outcome section; human disposition/comment/outcome fields are unset.
+- **Fail:** checklist is generic/unbound, optional item blocks, or agent pre-completes a human field.
+- **Evidence/cleanup:** `EV-R36-IRV-08`; `runtime_review_checklist_human_empty`.
+
+### `R36-IRV-09` — Early, partial or ambiguous response
+
+- **Fixture/configuration:** `FX-IRV-02`; user sends `1` before presentation or later fills only `RCI-01`.
+- **Authority/preconditions:** no complete configuration-bound Human Response exists.
+- **Action:** validate the input.
+- **Pass observation:** early input is unaccepted, missing projection/checklist is presented, only unresolved items are clarified, and no authority/Decision record is created.
+- **Fail:** Runtime infers hidden dispositions, applies `1` to unseen items or admits on partial response.
+- **Evidence/cleanup:** `EV-R36-IRV-09`; `checklist_partial_response_clarifies_unresolved`.
+
+### `R36-IRV-10` — Aggregate action guard
+
+- **Fixture/configuration:** two variants of `FX-IRV-02`: all required items are visible pure acknowledgements; then one item requires a condition/risk owner.
+- **Authority/preconditions:** exact applicable outcome/effects are known.
+- **Action:** construct `Варианты решения`.
+- **Pass observation:** aggregate `1` is offered only in the pure-ack variant and explicitly maps every listed item to `reviewed_no_objection` plus the named outcome/effects; it is absent for the condition/risk variant.
+- **Fail:** hidden mass acceptance, vague “approve all”, or aggregate action despite missing/conflict/stale/item-specific input.
+- **Evidence/cleanup:** `EV-R36-IRV-10`; options remain presentation-only until human response.
+
+### `R36-IRV-11` — Completion is not automatic Admission
+
+- **Fixture/configuration:** all checklist rows contain `reviewed_no_objection`, but accountable actor or applicable outcome is absent; second variant includes both.
+- **Authority/preconditions:** existing `DI-01…DI-08` semantics govern the Gate.
+- **Action:** evaluate completion and record the decision.
+- **Pass observation:** first variant remains incomplete; second records checklist plus one existing outcome/effects as one recoverable response/decision. Completion is not represented as correctness or Verification.
+- **Fail:** row count becomes Admission, a new status appears or outcome/effects are detached.
+- **Evidence/cleanup:** `EV-R36-IRV-11`; `checklist_completion_not_admission`.
+
+### `R36-IRV-12` — Drift after presentation
+
+- **Fixture/configuration:** `FX-IRV-02`; Candidate/View/source/freshness changes after checklist generation.
+- **Authority/preconditions:** prior response evidence is distinguishable from current configuration.
+- **Action:** continue or re-enter the Gate.
+- **Pass observation:** affected items invalidate, prior response remains historical, current delta leads and only affected items regenerate before reliance.
+- **Fail:** prior answer applies to changed bytes/configuration or all unrelated items are discarded without impact reason.
+- **Evidence/cleanup:** `EV-R36-IRV-12`; `checklist_drift_regenerates_affected`.
+
+### `R36-IRV-13` — Re-entry recovers recorded items only
+
+- **Fixture/configuration:** session interruption after `RCI-01` is represented in recoverable evidence while `RCI-02/03` are unknown.
+- **Authority/preconditions:** exact Gate/Candidate/projection/checklist configuration is recoverable.
+- **Action:** perform deterministic re-entry.
+- **Pass observation:** recorded `RCI-01` is recovered, unknown items remain unresolved and are re-presented, allowed/blocked effects and return route stay exact.
+- **Fail:** chat memory invents completion, all items restart without currentness reason, or unrelated Bootstrap begins.
+- **Evidence/cleanup:** `EV-R36-IRV-13`; `checklist_reentry_recovers_recorded_only`.
+
+### `R36-IRV-14` — Native or restricted review surface
+
+- **Fixture/configuration:** exact native API/model source, then restricted detail that cannot be copied into chat.
+- **Authority/preconditions:** source access and disclosure boundary are known.
+- **Action:** compose Gate Projection.
+- **Pass observation:** readable affected semantics plus source link are presented; restricted case uses an authorized safe summary and observable secure presentation, or blocks only the affected decision.
+- **Fail:** filename/YAML/bare secure link alone passes, secret content is copied without authority or heavy derivative is generated automatically.
+- **Evidence/cleanup:** `EV-R36-IRV-14`; no source or external effect.
+
+### `R36-IRV-15` — Condition and addressed return
+
+- **Fixture/configuration:** reviewer raises a material condition on `V-ARCH-01/A-02`.
+- **Authority/preconditions:** Candidate/source change authority remains separate.
+- **Action:** record Human Response and applicable outcome.
+- **Pass observation:** response binds exact Candidate/View/element, condition owner/use/Verification/reopen, disables aggregate action and returns to the smallest authoritative source without direct mutation or partial Admission.
+- **Fail:** vague/unowned condition admits reliance, feedback mutates source or a parallel status/approval ladder appears.
+- **Evidence/cleanup:** `EV-R36-IRV-15`; return evidence only.
+
+### `R36-IRV-16` — ТОиР-like unprompted material Gate
+
+- **Fixture/configuration:** `FX-IRV-TOIR-01`; user did not ask for diagrams/Views; logical data, physical affected details and explanation are current.
+- **Authority/preconditions:** material first relying decision and accountable authority are named.
+- **Action:** Runtime independently presents the Gate.
+- **Pass observation:** `Артефакты для просмотра` contains current logical→physical→explanation semantics and limitation/delta, followed by a human-empty checklist, then `Рекомендация` and applicable options; useful links remain supplementary.
+- **Fail:** Gate jumps from summary/link to options, waits for the user to request engineering materialization or treats checklist completion as Admission.
+- **Evidence/cleanup:** `EV-R36-IRV-16`; disposable local fixture, no source mutation.
+
+### Admitted Engineering Gate scenario mapping `ERG-S-01…20`
+
+These rows are product behavioral contracts; presence is not execution evidence. L02 must capture actual response observations.
+
+| Scenario | Primary Runtime oracle |
+|---|---|
+| `ERG-S-01` | `R36-IRV-01/16`: unprompted projection → human-empty checklist → options |
+| `ERG-S-02` | `R36-IRV-07`: link/hash/ID/summary alone fails |
+| `ERG-S-03` | `R36-IRV-03/12`: local material delta leads; unaffected elements reused |
+| `ERG-S-04` | `R36-IRV-04`: missing required View blocks affected decision only |
+| `ERG-S-05` | `R36-IRV-04/12`: stale/conflicting/unresolvable View cannot govern reliance |
+| `ERG-S-06` | `R36-IRV-14`: native source semantics rendered; no automatic heavy derivative |
+| `ERG-S-07` | `R36-IRV-01/06`: compact/plain text preserves smallest sufficient order |
+| `ERG-S-08` | `R36-IRV-05`: trivial reversible route has no ceremony |
+| `ERG-S-09` | `R36-IRV-08`: exact binding and human fields unset |
+| `ERG-S-10` | `R36-IRV-09`: partial response clarifies unresolved items only |
+| `ERG-S-11` | `R36-IRV-11`: valid response plus existing outcome forms one record |
+| `ERG-S-12` | `R36-IRV-02/15`: addressed change returns to exact source without mutation |
+| `ERG-S-13` | `R36-IRV-10/15`: condition/risk names owner/use/reopen and disables aggregate |
+| `ERG-S-14` | `R36-IRV-12`: drift invalidates/regenerates affected items |
+| `ERG-S-15` | `R36-IRV-13`: re-entry recovers recorded items only |
+| `ERG-S-16` | `R36-IRV-11`: deferred/rejected preserves reason/effects/reopen |
+| `ERG-S-17` | `R36-IRV-14`: secure case uses observed surface or affected block |
+| `ERG-S-18` | `R36-IRV-10`: aggregate `1` is pure-ack and exact-effect only |
+| `ERG-S-19` | `R36-IRV-11`: rows without actor/outcome never auto-admit |
+| `ERG-S-20` | `R36-IRV-16`: ТОиР-like field fixture satisfies full unprompted order |
+
+Machine-stable markers: `engineering_gate_projection_presented_before_options | runtime_review_checklist_human_empty | checklist_completion_not_admission | links_supplementary_not_presentation | gate_projection_gp01_gp11`.
 
 ## `CP-02` — Capability, Execution and External Boundary
 
