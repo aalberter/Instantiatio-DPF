@@ -564,4 +564,4 @@ Machine-stable markers: `engineering_gate_projection_presented_before_options | 
 
 ## Acceptance summary
 
-The carrier is structurally complete when exactly `43` unique `R36-*` scenario headings exist: `6` `IRV`, `15` `CEE`, `10` `BAR`, `7` `SRR`, `2` `DRC` and `3` `VW`. A scenario passes only through an execution record satisfying the common contract and its observable oracle. `L03` may claim focused `CP-01…CP-04` evidence only; integrated, release and package claims remain deferred to their admitted Loops and Human Gates.
+The carrier is structurally complete when exactly `53` unique `R36-*` scenario headings exist: `16` `IRV`, `15` `CEE`, `10` `BAR`, `7` `SRR`, `2` `DRC` and `3` `VW`. A scenario passes only through an execution record satisfying the common contract and its observable oracle. `L03` may claim focused `CP-01…CP-04` evidence only; integrated, release and package claims remain deferred to their admitted Loops and Human Gates.

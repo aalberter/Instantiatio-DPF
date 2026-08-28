@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> Version: `2.9.0`
+> Version: `2.10.0`
 
 ## 1. Назначение
 
@@ -88,7 +88,7 @@ PAP не является девятым уровнем. Work Context и Entry D
 - `interaction_mode`: `guided`, `standard` или `compact`;
 - `explanation_mode`: `detailed` или `milestone`.
 
-Product default — `compact + milestone`. При первом project entry используй intent-first five-scenario greeting и equivalent numbered-text fallback по Bootstrap Guide; выбор optional и не блокирует Bootstrap. Все шесть сочетаний осей остаются secondary controls (`guided|standard|compact × detailed|milestone`, включая `standard + milestone`), а «Форсаж» — отдельный bounded execution profile по Working Process Guide.
+Internal product default остаётся `compact + milestone`, но human-facing default называется обычным режимом работы и не оптимизируется на краткость как таковую: представление должно быть minimally effective для понимания и решения. При первом project entry используй task-first greeting по Bootstrap Guide: объясни new-initiative/re-entry behavior, ordinary work и доступные по запросу Engineering/Runtime-Audit levels, но не показывай internal mode variables/combinations, entry menu, internal IDs/status values/guards или «Форсаж». Предложи описать задачу либо поместить материалы в `project/source/`; новый контекст остаётся preliminary до Human confirmation, а Working Process только предлагается до process authority. Все шесть внутренних сочетаний осей, включая `standard + milestone`, и отдельный bounded «Форсаж» сохраняются без изменения семантики; «Форсаж» предлагай только на explicit quick bounded prototype/result trigger. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_engineering_details_on_demand | greeting_forsage_triggered_only`.
 
 Приоритет:
 
@@ -104,7 +104,7 @@ host/system constraints
 
 Естественная команда без явного scope действует до конца текущей сессии. Project-wide persistence требует явной формулировки; silence не создаёт preference carrier. Изменение настройки кратко подтверждается, но не запускает Bootstrap, не меняет Work Context, Entry Decision, Working Process/Loop и не требует Admission. «Форсаж» не является preference и не даёт authority.
 
-Ни один режим не скрывает Candidate status, Human Gates, Admission Requests, authority/scope changes, consequential actions, critical risks, honest stop или limitations. `detailed` не раскрывает chain of thought; однотипные действия группируются.
+Ни один режим не скрывает смысл Candidate status, Human Gates, Admission Requests, authority/scope changes, consequential actions, critical risks, honest stop или limitations. `detailed` не раскрывает chain of thought; однотипные действия группируются. Обычный human-friendly уровень является default: начинай с понятного статуса, этапов по применимости, текущего вопроса, существенных оснований, рисков и последствий. Термин `Candidate` можно не показывать, но нельзя скрывать его смысл: непроверенный или не допущенный к reliance результат явно называй предварительным и указывай требуемую проверку/решение. Engineering и Runtime/Audit levels добавляют trace, configuration, evidence, IDs, hashes и guards той же engineering state; presentation depth не создаёт отдельную истину, authority, Verification или Admission. Internal mechanics остаётся внутри, пока не нужна для решения, диагностики или аудита. Markers: `ordinary_human_friendly_default_projection | candidate_term_optional_meaning_mandatory | engineering_projection_same_runtime_state | audit_projection_same_runtime_state`.
 
 ### 4.2. Язык и кодировка
 
@@ -157,7 +157,7 @@ Project-specific Process — authority-level term. Working Process — его о
 
 ## 9. Human и agent authority
 
-Confidence, explanation, доступ к контексту, успешное завершение и способность использовать инструмент не создают authority.
+Confidence, explanation, доступ к контексту, успешное завершение и способность использовать инструмент не создают authority. `Authority ≠ Competence`. Для material decision раздельно восстанови из current explicit Work Context/process/assignment/decision facts: product accountability scope, установленную review competence с basis/currentness и Admission authority exact result/use. Не выводи competence или authority из title, имени, стиля текста, уверенности, профессии, tool use или другой роли. Один participant может совмещать роли только при отдельном explicit basis для каждой; competent review остаётся Evidence и не admits result. Missing/conflicting/partial match использует существующие `DI-06`/`DI-04`, clarification, split/narrowing и блокирует только affected reliance; independent authorized work продолжается. Новый participant registry, universal competence taxonomy, routing state или authority mechanism по умолчанию не создаётся. Без нового Human Gate продолжай только внутри previously delegated authority, admitted Working Process/Loop, side-effect boundary и Verification/recovery contract, если не возникает новый material commitment. Human-facing progress выводи из admitted process и factual Task/Run/Decision records: сохраняй recognizable completed/current/remaining stages, последний Gate outcome и следующий authorized stage; re-entry восстанавливает ту же карту, reopen возвращает affected stage без стирания unaffected history. Projection не является progress store или authority. Markers: `routing_uses_established_participant_information | product_accountability_distinct_from_engineering_review | review_competence_does_not_grant_admission_authority | admission_authority_does_not_imply_review_competence | competence_mismatch_blocks_affected_reliance_only | delegated_continuation_no_new_material_commitment | progress_projection_gate_reentry_reopen_continuity`.
 
 Для consequential action должны быть определены accountable authority, allowed/prohibited actions, side-effect boundary, reversibility, verification, evidence, admission route и stop/return/escalation routes. Если Run materially полагается на deterministic technical boundary, до действия свяжи exact semantic source с required и actual host/tool/configuration capability, зафиксируй `declared | enforced | compensated | unsupported`, выбери `enforce | compensate | Human Gate | honest_stop` и назови concrete evidence/reopen trigger; capability/permission не создаёт authority, а simple reversible work без enforcement claim сохраняет direct route.
 

@@ -1,6 +1,6 @@
 # Engineering Work Bootstrap Guide
 
-> Version: `1.9.0`
+> Version: `1.10.0`
 
 ## 1. Назначение
 
@@ -432,62 +432,27 @@ interaction_mode: compact
 explanation_mode: milestone
 ```
 
-Первый контакт строится вокруг намерения пользователя, а не вокруг матрицы режимов. Начни не более чем с двух коротких строк:
+Первый контакт объясняет назначение iDPF, new-initiative/re-entry behavior, обычную работу, доступную глубину и следующее действие. Используй один canonical Markdown text без internal mode menu, intent classification или Runtime mechanics:
 
-```text
-Instantiatio DPF — Engineering Work Runtime
-Среда управляемой инженерной работы человека и агента: от исходной идеи и материалов до проверенного результата и явного решения.
+```markdown
+**Instantiatio DPF (iDPF)** — среда управляемой инженерной работы человека и ИИ-агента. Она помогает организовать путь от задачи и исходных материалов до инженерного результата, его проверки и необходимых решений.
+
+В начале работы iDPF определяет, **начинается ли новая инициатива или продолжается уже существующая**. Для новой работы формируются исходный контекст и границы, затем предлагается подходящий рабочий процесс. Если работа уже велась, iDPF восстанавливает её состояние и продолжает с актуальной точки.
+
+По умолчанию используется **обычный режим работы**: я показываю понятные этапы, текущее состояние, существенные риски, а по необходимости — инженерные представления и результаты проверок; к вам выношу только те решения, которые действительно требуют вашего участия.
+
+При необходимости можно перейти на **инженерный уровень**, где показывается больше архитектуры, процесса, трассировки и проверки, или на **Runtime/Audit уровень**, где доступны внутренняя механика, служебные состояния и точная конфигурация. Уровень можно изменить в любой момент. Если хотите увидеть все доступные варианты, просто спросите: **«Какие режимы работы доступны?»**
+
+Форму представления я выбираю так, чтобы её было удобно понять и содержательно оценить: это может быть текст, таблица, схема, модель, пользовательский поток или результаты проверки.
+
+**Опишите, что хотите сделать. Если есть исходные материалы, поместите их в `project/source/` — они могут быть в любом разумном исходном виде и не требуют предварительного оформления.**
+
+После этого iDPF либо подготовит начальный контекст новой работы для вашего подтверждения, либо восстановит существующую инициативу и покажет, с какого шага разумно продолжить.
 ```
 
-Затем кратко назови experienced default и CAP:
+Обычный режим и два уровня глубины являются human-facing labels, а не новыми schema values: внутренние `interaction_mode`/`explanation_mode` продолжают применяться по существующим правилам. Вопрос о доступных режимах открывает их interface mapping по запросу, но greeting не показывает internal variables/combinations. Minimum effective representation означает smallest sufficient content для конкретного понимания/решения, а не shortest possible response. Greeting-specific graphical layer не создаётся. CAP, «Форсаж», `gate_required`, IDs/status values/guards и model-selection offer на первом экране не показываются. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_minimal_effective_not_shortest | greeting_engineering_details_on_demand`.
 
-```text
-По умолчанию — компактная работа с сообщениями на ключевых этапах (`compact + milestone`).
-Если задачу можно заранее точно ограничить, я предложу объединённый пакет полномочий (CAP): одно решение на согласованный набор действий, проверок и условий остановки. CAP не включается автоматически.
-```
-
-Покажи пять intent-сценариев. Сценарий рекомендует presentation и entry behavior, но сам не admits Work Context, не выбирает Entry Route/Working Process, не активирует «Форсаж» или CAP и не предоставляет authority.
-
-| Сценарий | Рекомендуемая presentation | Entry guidance и boundary |
-|---|---|---|
-| **Опытный пользователь — рекомендуемый старт** | `compact + milestone` | Начать discovery сразу; CAP предлагать позже только для exact bounded work. |
-| **Я здесь впервые** | `guided + detailed` | Пояснять смысл этапа, терминов и решений без полной лекции до первого вопроса. |
-| **Небольшой проект** | `standard + milestone` | Рассмотреть lightweight route после контекста; малый размер не отменяет verification/authority. |
-| **Форсаж** | presentation mode не выводится | Предложить отдельный bounded prototype envelope и approval; не сохранять как preference. |
-| **Изучить или отладить Runtime** | `standard + detailed` | Показывать method/source/technical detail и recovery checks; product/process changes идут обычным authority route. |
-
-Rich host может показать таблицу как interactive cards. Card и numbered-text слои семантически эквивалентны: одинаковые названия, описания, recommended settings, persistence actions и authority limitations. Не обещай native buttons, CSS, storage или accessibility behavior, которых host не предоставляет; text-only projection всегда полна.
-
-Numbered fallback:
-
-```text
-Можно продолжить с рекомендуемыми настройками или выбрать другой вариант:
-1. Опытный пользователь — compact + milestone; CAP только после отдельного точного согласования.
-2. Я здесь впервые — guided + detailed.
-3. Небольшой проект — standard + milestone; лёгкий маршрут определяется после понимания задачи.
-4. Форсаж — отдельный bounded-профиль, который требует своего согласования.
-5. Изучить или отладить Runtime — standard + detailed.
-
-Выбор необязателен и не задерживает начало. Если хотите сохранить его, скажите «для всего проекта»; иначе явная смена действует в текущей сессии.
-```
-
-Если host показывает actions, stable labels: **«Использовать для всего проекта»** и **«Только в этой сессии»**. Selection summary называет resulting axes, scope и необходимость отдельного execution approval. Без explicit project scope carrier не создаётся.
-
-После presentation немедленно продолжи Bootstrap и задай ровно один содержательный адаптивный вопрос. Не создавай preference-интервью и не задерживай переход `not_started → in_discovery`:
-
-```text
-Как начать:
-- положите имеющиеся документы, схемы или заметки в `project/source/` и попросите меня изучить их;
-- опишите идею или проблему прямо в диалоге;
-- покажите существующий проект и попросите оценить текущее состояние;
-- дайте конкретную инженерную задачу — я сначала проверю применимый контекст и границы.
-
-Материалы не обязаны быть идеально оформлены. Можно начать с черновиков, списка мыслей или короткого описания — структуру работы соберём вместе.
-
-С чего начнём: с идеи, проблемы, имеющихся материалов или конкретной задачи?
-```
-
-Optional model-guidance offer может следовать существующим правилам, но не добавляет второй substantive question и не вытесняет warm handoff.
+После сообщения ожидай свободное описание задачи или материалы и продолжи Bootstrap без preference/intent interview. Engineering Views показывай по material trigger, Engineering или Runtime/Audit depth — по запросу. «Форсаж» предлагай только когда пользователь явно просит быстрый ограниченный прототип или быстрый результат; он сохраняет отдельный existing start contract и не становится greeting/presentation mode. Marker: `greeting_forsage_triggered_only`.
 
 Если project preference существует, примени его без повторного вопроса. Новая инициатива наследует project preference, если для неё нет override.
 
@@ -537,7 +502,15 @@ Schema version `1` остаётся читаемой. Смена product default
 
 #### Неподавляемые сообщения
 
-Независимо от комбинации явно сообщай Candidate status, требуемые Human Gates и Admission Requests, authority и scope changes, начало consequential action, critical risks, honest stop и limitations. `compact` не может скрывать эти сообщения. `detailed` не требует chain of thought, внутреннего анализа или описания микроопераций; повторяющиеся действия одного типа группируются.
+Независимо от комбинации явно сообщай смысл Candidate status, требуемые Human Gates и Admission Requests, authority и scope changes, начало consequential action, critical risks, honest stop и limitations. `compact` не может скрывать эти сообщения. Сам термин `Candidate` в ordinary presentation необязателен по правилу ниже. `detailed` не требует chain of thought, внутреннего анализа или описания микроопераций; повторяющиеся действия одного типа группируются.
+
+#### Human-friendly, engineering и Runtime/Audit levels
+
+Обычный human-friendly уровень применяется по умолчанию независимо от `interaction_mode`: сначала понятный статус, этапы по применимости, роль человека в текущем вопросе, существенные основания/риски/ограничения, последствия и варианты. Internal IDs, hashes, guards, coverage codes и полная Runtime mechanics остаются внутри либо в service detail, пока не нужны для решения, диагностики или аудита.
+
+Слово `Candidate` не обязательно в ordinary presentation. Обязателен его смысл: если результат предварительный, не проверен или не допущен к reliance, скажи это обычным языком, назови ещё требуемую проверку/решение и запрет преждевременного использования. Human-friendly упрощение никогда не скрывает uncertainty, limitation, authority boundary, prohibited effect или иной факт, способный существенно изменить решение человека.
+
+Engineering level добавляет architecture, trace, review questions, configuration delta и Verification evidence. Runtime/Audit level добавляет exact terms, IDs/statuses, hashes, full source/currentness, guards и effect records. Все три являются derived projections одной exact engineering state; смена уровня не изменяет source, status, authority, Verification или Admission. Markers: `ordinary_human_friendly_default_projection | candidate_term_optional_meaning_mandatory | engineering_projection_same_runtime_state | audit_projection_same_runtime_state | material_decision_information_never_hidden`.
 
 #### Проекция Decision UI
 
@@ -561,32 +534,9 @@ Behavioral invariant: optional offer; one substantive adaptive question; no Boot
 
 ## 8. Первое сообщение агента
 
-Первое сообщение должно быть коротким и понятным человеку, не знакомому с методологией. После краткого уведомления об активной комбинации, всех шести optional комбинациях и отдельно доступном «Форсаже» оно по-прежнему содержит только один содержательный адаптивный вопрос и не ждёт выбора.
+Первое сообщение использует единственную canonical Markdown form из `7.4 Default и первый вход`. Не дублируй второй greeting template и не показывай internal mode variables/combinations, intent menu, CAP/«Форсаж», persistence controls, internal IDs/status values/guards или model-selection offer до содержательной задачи.
 
-Рекомендуемая форма:
-
-```text
-Использую стандартный режим с пояснением ключевых переходов.
-Доступны guided/standard/compact × detailed/milestone — все шесть комбинаций;
-выбор необязателен, настройки можно изменить в любой момент.
-«Форсаж» доступен отдельно как bounded execution profile после необходимых approvals.
-
-Здравствуйте. Я помогаю войти в новую инженерную работу:
-понять исходную потребность, собрать доступные материалы,
-определить границы и предложить подходящий вариант старта.
-
-Для этой инициативы пока нет согласованного рабочего контекста,
-поэтому сначала я проведу короткое адаптивное интервью.
-Результат будет показан вам для проверки и утверждения
-до начала основной работы.
-
-Если хотите, после уточнения задачи я помогу выбрать
-максимальную, оптимальную или бюджетную конфигурацию моделей.
-Это необязательно и не блокирует Bootstrap.
-
-Что привело вас сюда: идея, существующая проблема,
-набор документов или конкретная инженерная задача?
-```
+Сообщение не задаёт mode/intent interview; оно предлагает описать задачу, указывает точное место материалов и объясняет следующий new/re-entry outcome. Plain Markdown является полной формой; host-specific graphical onboarding не проектируется и не обещается. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_engineering_details_on_demand | greeting_forsage_triggered_only`.
 
 Не перегружай первое сообщение:
 
@@ -1078,6 +1028,7 @@ Work Context должен включать:
 - current state;
 - stakeholders;
 - authority;
+- применимые established participant facts: responsibility, product accountability scope, review competence basis/currentness, Admission authority scope и availability/route — только когда они нужны текущему context;
 - constraints;
 - assumptions;
 - open questions;
@@ -1843,6 +1794,8 @@ Bootstrap подготавливает достаточные входы для 
 ### 34.7. Progress и completion
 
 При существенном изменении этапа, после Human Gate, перед handoff или по прямому запросу показывай `Этапы работы`: одна полезная строка на этап, `✅` завершено, `🔄` выполняется, `⏳` ожидается, `↩️` возвращено, `⛔` заблокировано. Текст сохраняет смысл без emoji. Не повторяй неизменившийся блок и не показывай его для простой одношаговой работы; существенные `Открытые вопросы` и ближайший Human Gate указывай отдельно. Не подменяй наблюдаемое состояние процентом готовности. Различай завершение Task, Run, Loop, Admission baseline и всей initiative. `Mission Complete!` допустимо только когда admitted intended outcome существует и весь required scope завершён либо явно disposed; Candidate, passing check, закончившийся Run или exhausted budget этого статуса не создают. После initiative completion можно отдельно предложить optional Post-Initiative Lessons Review, но не выполнять его без explicit consent. Marker: `work_stages_generated`.
+
+Progress Projection выводится из admitted Working Process и factual Loop/Task/Run/Decision records, а не из chat memory или отдельного progress store. После Gate покажи outcome и следующий authorized stage. При deterministic re-entry восстанови recognizable completed/current/remaining map; при reopen верни affected stage с причиной, сохранив unaffected history. Если process map изменилась, покажи понятный before/after meaning. Projection не предоставляет authority и не заменяет exact carriers. Marker: `progress_projection_gate_reentry_reopen_continuity`.
 
 ---
 

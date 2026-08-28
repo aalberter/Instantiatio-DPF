@@ -186,6 +186,7 @@ $requiredFiles = @(
     'examples/CODEX_REFERENCE_CAPABILITY_PROFILE.yaml',
     'tests/behavioral/BOOTSTRAP_SCENARIOS.md',
     'tests/behavioral/RUNTIME_3_6_OPERATIONAL_SCENARIOS.md',
+    'tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md',
     'tests/conformance/RUNTIME_BOUNDARY_CONFORMANCE_PROTOCOL.md',
     'templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml',
     'AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
@@ -285,6 +286,11 @@ $releaseNotes360Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_6_0.md
 $releaseNotes360Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes360Path
 $releaseNotes361Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_6_1.md'
 $releaseNotes361Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes361Path
+$releaseNotes370Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_7_0.md'
+$releaseNotes370Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes370Path
+$runtime37ScenarioPath = Join-Path $repoRoot 'tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md'
+$runtime37ScenarioText = if (Test-Path -LiteralPath $runtime37ScenarioPath -PathType Leaf) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtime37ScenarioPath } else { '' }
+$engineeringViewsText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'catalog/engineering_views/README.md')
 
 # Public wrapper identity, license and provenance contract
 $licensePath = Join-Path $repoRoot 'LICENSE'
@@ -301,8 +307,9 @@ $emDash = [char]0x2014
 $middleDot = [char]0x00B7
 $decodeUtf8Marker = { param([string]$value) [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($value)) }
 $candidateIdentity = "Instantiatio DPF 3.4.0 $emDash Engineering Work Runtime $middleDot Beta"
-$releaseIdentity = "Instantiatio DPF 3.6.1 $emDash Engineering Work Runtime $middleDot Beta"
-$readmeIdentity = "Instantiatio DPF (iDPF) 3.6.1 $emDash Engineering Work Runtime $middleDot Beta"
+$release361Identity = "Instantiatio DPF 3.6.1 $emDash Engineering Work Runtime $middleDot Beta"
+$releaseIdentity = "Instantiatio DPF 3.7.0 $emDash Engineering Work Runtime $middleDot Beta"
+$readmeIdentity = "Instantiatio DPF (iDPF) 3.7.0 $emDash Engineering Work Runtime $middleDot Beta"
 if (-not $readmeText.StartsWith("# $readmeIdentity`n")) {
     Add-Failure 'README release-level identity is missing'
 }
@@ -310,19 +317,19 @@ if (-not $manifestText.StartsWith("# $releaseIdentity $emDash Package Manifest`n
     Add-Failure 'Manifest release-level identity is missing'
 }
 foreach ($releaseConfigurationMarker in @(
-    '| Runtime version | `3.6.1` |',
-    '| Assembly date | `2026-08-26` |',
-    '| Archive identity | `Instantiatio-DPF-3.6.1-Beta.zip` |',
-    '| Archive top-level directory | `Instantiatio-DPF-3.6.1-Beta` |'
+    '| Runtime version | `3.7.0` |',
+    '| Assembly date | `2026-08-28` |',
+    '| Archive identity | `Instantiatio-DPF-3.7.0-Beta.zip` |',
+    '| Archive top-level directory | `Instantiatio-DPF-3.7.0-Beta` |'
 )) {
     if (-not $manifestText.Contains($releaseConfigurationMarker)) {
-        Add-Failure "Manifest 3.6.1 configuration marker missing: $releaseConfigurationMarker"
+        Add-Failure "Manifest 3.7.0 configuration marker missing: $releaseConfigurationMarker"
     }
 }
 foreach ($publicIdentityContract in @(
     @{ Name = 'README copyright'; Text = $readmeText; Marker = 'Copyright (c) 2026 Instantiatio DPF contributors' },
     @{ Name = 'README MIT link'; Text = $readmeText; Marker = '[MIT License](LICENSE)' },
-    @{ Name = 'README canonical repository'; Text = $readmeText; Marker = 'https://github.com/aalberter/Instantiatio-DPF' },
+    @{ Name = 'README canonical repository'; Text = $readmeText; Marker = 'https://github.com/instantiatio/iDPF' },
     @{ Name = 'README FPF source'; Text = $readmeText; Marker = 'https://github.com/ailev/FPF' },
     @{ Name = 'README portable Runtime identity'; Text = $readmeText; Marker = (& $decodeUtf8Marker 'KippRFBGIOKAlCDQv9C10YDQtdC90L7RgdC40LzQsNGPINGB0YDQtdC00LAg0L7RgNCz0LDQvdC40LfQsNGG0LjQuCDQuNC90LbQtdC90LXRgNC90L7QuSDRgNCw0LHQvtGC0Ysg0YfQtdC70L7QstC10LrQsCDQuCBBSS3QsNCz0LXQvdGC0L7Qsi4qKg==') },
     @{ Name = 'README non-official boundary'; Text = $readmeText; Marker = (& $decodeUtf8Marker '0L3QtSDRj9Cy0LvRj9C10YLRgdGPINC+0YTQuNGG0LjQsNC70YzQvdC+0Lkg0LTQuNGB0YLRgNC40LHRg9GG0LjQtdC5IEZQRg==') },
@@ -375,6 +382,24 @@ foreach ($contract in $versionContracts) {
         Add-Failure "Roadmap component version drift: $($contract.Component) $componentVersion"
     }
 }
+foreach ($engineeringViewsVersionContract in @(
+    @{ Name = 'Engineering Views carrier'; Text = $engineeringViewsText; Marker = '> Version: `0.3.0-candidate`' },
+    @{ Name = 'Engineering Views manifest'; Text = $manifestText; Marker = '| Engineering Review Views | `0.3.0-candidate` | derived review capability |' },
+    @{ Name = 'Engineering Views README table'; Text = $readmeText; Marker = '| Engineering Views review contract | `0.3.0-candidate` | candidate module |' }
+)) {
+    if (-not $engineeringViewsVersionContract.Text.Contains($engineeringViewsVersionContract.Marker)) {
+        Add-Failure "Engineering Views version drift: $($engineeringViewsVersionContract.Name)"
+    }
+}
+foreach ($runtime37ReleaseContract in @(
+    '> Version: `0.1.0`',
+    '> Status: `behavior_oracle` for released Runtime `3.7.0`.',
+    'r37_product_review_admission_separated'
+)) {
+    if (-not $runtime37ScenarioText.Contains($runtime37ReleaseContract)) {
+        Add-Failure "Runtime 3.7 released behavior carrier marker missing: $runtime37ReleaseContract"
+    }
+}
 
 $dpfText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AI_SDLC_DPF/framework/AI_SDLC_DPF.md')
 if ($manifestText -notmatch '\| AI SDLC DPF \| \x60([^\x60]+)\x60 \| controlled working \|') {
@@ -410,9 +435,9 @@ if ($manifestText -notmatch '\| Product maturity \| \x60Beta\x60 \|') {
     Add-Failure 'Manifest product maturity must be Beta'
 }
 foreach ($packageStatusContract in @(
-    @{ Name = 'README'; Text = $readmeText; Marker = (& $decodeUtf8Marker 'PiDQktC10YDRgdC40Y8gaURQRiBSdW50aW1lOiBgMy42LjFgOyDQstGB0YLRgNC+0LXQvdC90YvQuSDRgdGC0LDRgtGD0YEg0LLRi9C/0YPRgdC60LA6IGByZWxlYXNlZGA7INC30YDQtdC70L7RgdGC0Ywg0L/RgNC+0LTRg9C60YLQsDogYEJldGFgOyDQstGL0L/Rg9GJ0LXQvdC90YvQuSDQv9GA0LXQtNGI0LXRgdGC0LLQtdC90L3QuNC6OiBgMy42LjBgOyDQstC60LvRjtGH0ZHQvdC90YvQuSBBSSBTRExDIERQRjog0L3QtdC40LfQvNC10L3RkdC90L3Ri9C5IGAxLjAuMWAu') },
-    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.6.1` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
-    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.6.1` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
+    @{ Name = 'README'; Text = $readmeText; Marker = 'iDPF Runtime: `3.7.0`' },
+    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.7.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.7.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
 )) {
     if (-not $packageStatusContract.Text.Contains($packageStatusContract.Marker)) {
         Add-Failure "Package status contract mismatch: $($packageStatusContract.Name)"
@@ -423,7 +448,7 @@ foreach ($requiredReleasePhrase in @(
     'ISO/IEC/IEEE DIS 29148 Ed.3',
     'stage `40.00`',
     'accepted_non_blocking',
-    'reopened_assessed_nonblocking_for_3_6_1',
+    'reopened_assessed_nonblocking_for_3_7_0',
     'no external currentness refresh',
     'no successor-status/compliance claim',
     'DPF unchanged'
@@ -456,7 +481,7 @@ if ((Get-FileHash -Algorithm SHA256 -LiteralPath $releaseNotes361Path).Hash -ne 
     Add-Failure 'Admitted Release Notes 3.6.1 hash mismatch'
 }
 foreach ($requiredReleaseNotes361Marker in @(
-    ("# $releaseIdentity"),
+    ("# $release361Identity"),
     '> Release status: `released`',
     '> Release date: `2026-08-26`',
     '> Released predecessor: `3.6.0`',
@@ -478,6 +503,39 @@ foreach ($staleReleaseNotes361Marker in @(
 )) {
     if ($releaseNotes361Text.Contains($staleReleaseNotes361Marker)) {
         Add-Failure "Release Notes 3.6.1 stale assembly marker: $staleReleaseNotes361Marker"
+    }
+}
+
+foreach ($requiredReleaseNotes370Marker in @(
+    ("# $releaseIdentity"),
+    '> Release status: `released`',
+    '> Release date: `2026-08-28`',
+    '> Released predecessor: `3.6.1`',
+    '> Included AI SDLC DPF: unchanged `1.0.1`',
+    'Instantiatio-DPF-3.7.0-Beta.zip',
+    'Authority',
+    'Competence',
+    'minimal effective representation',
+    'S-204',
+    'Runtime 3.6 regression carrier: `53` scenarios',
+    'Runtime 3.7 integration carrier: `10` scenarios',
+    'reopened_assessed_nonblocking_for_3_7_0; no external currentness refresh; no successor-status/compliance claim; DPF unchanged',
+    'https://github.com/instantiatio/iDPF'
+)) {
+    if (-not $releaseNotes370Text.Contains($requiredReleaseNotes370Marker)) {
+        Add-Failure "Release Notes 3.7.0 contract marker missing: $requiredReleaseNotes370Marker"
+    }
+}
+foreach ($forbiddenCurrentReleaseMarker in @(
+    'https://github.com/aalberter/Instantiatio-DPF',
+    'candidate_pending_admission',
+    'Final assembly date: pending',
+    'Planned ZIP',
+    'package closure remains deferred',
+    'final ZIP do not exist'
+)) {
+    if ($releaseNotes370Text.Contains($forbiddenCurrentReleaseMarker)) {
+        Add-Failure "Release Notes 3.7.0 stale or forbidden marker: $forbiddenCurrentReleaseMarker"
     }
 }
 
@@ -720,9 +778,9 @@ if (($governanceStandalone -join "`n") -cne ($governanceCombined -join "`n")) {
 $scenarioPath = Join-Path $repoRoot 'tests/behavioral/BOOTSTRAP_SCENARIOS.md'
 $scenarioText = Get-Content -Raw -Encoding utf8 -LiteralPath $scenarioPath
 $scenarioHeadings = @([regex]::Matches($scenarioText, '(?m)^## S-([0-9]+) '))
-if ($scenarioHeadings.Count -ne 188) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 188" }
+if ($scenarioHeadings.Count -ne 204) { Add-Failure "Behavioral scenario count is $($scenarioHeadings.Count), expected 204" }
 $scenarioNumbers = @($scenarioHeadings | ForEach-Object { [int]$_.Groups[1].Value })
-foreach ($number in 1..188) {
+foreach ($number in 1..204) {
     $occurrences = @($scenarioNumbers | Where-Object { $_ -eq $number }).Count
     if ($occurrences -eq 0) { Add-Failure "Behavioral scenario missing: S-$number" }
     elseif ($occurrences -gt 1) { Add-Failure "Behavioral scenario duplicated: S-$number" }
@@ -802,7 +860,7 @@ foreach ($requiredScenarioPhrase in @(
     'work_stages_on_material_transition'
     'recommended_option_restates_exact_effect'
     'failed_verification_no_generic_approval'
-    'all one hundred eighty-eight scenarios pass'
+    'all two hundred four scenarios pass'
 )) {
     if (-not $scenarioText.Contains($requiredScenarioPhrase)) {
         Add-Failure "Behavioral contract gap: $requiredScenarioPhrase"
@@ -886,6 +944,22 @@ foreach ($scenarioContract in @(
     @{ Id = 'S-186'; Marker = 'decision_presentation_is_local_derived_view' },
     @{ Id = 'S-187'; Marker = 'no_material_decision_no_approval_ceremony' },
     @{ Id = 'S-188'; Marker = 'planned_human_validation_remains_evidence' }
+    @{ Id = 'S-189'; Marker = 'ordinary_human_friendly_default_projection' }
+    @{ Id = 'S-190'; Marker = 'candidate_term_optional_meaning_mandatory' }
+    @{ Id = 'S-191'; Marker = 'engineering_projection_same_runtime_state' }
+    @{ Id = 'S-192'; Marker = 'audit_projection_same_runtime_state' }
+    @{ Id = 'S-193'; Marker = 'routing_uses_established_participant_information' }
+    @{ Id = 'S-194'; Marker = 'product_accountability_distinct_from_engineering_review' }
+    @{ Id = 'S-195'; Marker = 'product_authority_does_not_imply_review_competence' }
+    @{ Id = 'S-196'; Marker = 'review_competence_does_not_grant_admission_authority' }
+    @{ Id = 'S-197'; Marker = 'admission_authority_does_not_imply_review_competence' }
+    @{ Id = 'S-198'; Marker = 'same_actor_roles_require_explicit_bases' }
+    @{ Id = 'S-199'; Marker = 'unknown_participant_information_bounded_clarification' }
+    @{ Id = 'S-200'; Marker = 'competence_mismatch_blocks_affected_reliance_only' }
+    @{ Id = 'S-201'; Marker = 'delegated_continuation_no_new_material_commitment' }
+    @{ Id = 'S-202'; Marker = 'progress_projection_gate_reentry_reopen_continuity' }
+    @{ Id = 'S-203'; Marker = 'minimal_effective_representation_by_decision_need' }
+    @{ Id = 'S-204'; Marker = 'large_mermaid_vertical_or_split' }
 )) {
     $pattern = '(?ms)^## ' + [regex]::Escape($scenarioContract.Id) + ' .*?(?=^## S-|^## Acceptance summary)'
     $section = [regex]::Match($scenarioText, $pattern).Value
@@ -1118,6 +1192,49 @@ foreach ($requiredIrv01Phrase in @(
     }
 }
 
+# Runtime 3.7 human-interaction contracts are bounded structural evidence only.
+# Executed semantic replay and retained Runtime 3.6 regression remain required.
+$r36ScenarioHeadings = @([regex]::Matches($runtimeScenarioText, '(?m)^### `R36-([A-Z]+)-([0-9]{2})` '))
+$r36Groups = @($r36ScenarioHeadings | ForEach-Object { $_.Groups[1].Value })
+if ($r36ScenarioHeadings.Count -ne 53) { Add-Failure "Runtime 3.6 scenario count is $($r36ScenarioHeadings.Count), expected 53" }
+foreach ($groupCount in @(
+    @{ Group = 'IRV'; Count = 16 }, @{ Group = 'CEE'; Count = 15 }, @{ Group = 'BAR'; Count = 10 },
+    @{ Group = 'SRR'; Count = 7 }, @{ Group = 'DRC'; Count = 2 }, @{ Group = 'VW'; Count = 3 }
+)) {
+    $actualGroupCount = @($r36Groups | Where-Object { $_ -eq $groupCount.Group }).Count
+    if ($actualGroupCount -ne $groupCount.Count) { Add-Failure "Runtime 3.6 $($groupCount.Group) count is $actualGroupCount, expected $($groupCount.Count)" }
+}
+foreach ($r36SummaryMarker in @('exactly `53` unique `R36-*`', '`16` `IRV`')) {
+    if (-not $runtimeScenarioText.Contains($r36SummaryMarker)) { Add-Failure "Runtime 3.6 acceptance summary gap: $r36SummaryMarker" }
+}
+
+$r37ScenarioHeadings = @([regex]::Matches($runtime37ScenarioText, '(?m)^## `R37-HIR-([0-9]{2})` '))
+$r37ScenarioIds = @($r37ScenarioHeadings | ForEach-Object { $_.Groups[1].Value })
+$expectedR37ScenarioIds = @(1..10 | ForEach-Object { '{0:D2}' -f $_ })
+if ($r37ScenarioIds.Count -ne 10 -or (@($r37ScenarioIds | Select-Object -Unique).Count -ne 10) -or (($r37ScenarioIds -join ',') -ne ($expectedR37ScenarioIds -join ','))) {
+    Add-Failure "Runtime 3.7 scenario sequence is invalid: $($r37ScenarioIds -join ',')"
+}
+foreach ($r37Marker in @(
+    'r37_product_review_admission_separated', 'r37_same_actor_explicit_role_combination',
+    'r37_unknown_partial_mismatch_affected_only', 'r37_delegated_continuation_boundary',
+    'r37_projection_levels_one_state', 'r37_material_information_never_hidden',
+    'r37_minimal_effective_view_selection', 'r37_mermaid_readability',
+    'r37_progress_gate_reentry_continuity', 'r37_progress_reopen_process_change'
+)) {
+    if (-not $runtime37ScenarioText.Contains($r37Marker)) { Add-Failure "Runtime 3.7 scenario marker gap: $r37Marker" }
+}
+
+foreach ($humanInteractionContract in @(
+    @{ Name = 'AGENTS'; Text = $agentsText; Markers = @('ordinary_human_friendly_default_projection','routing_uses_established_participant_information','competence_mismatch_blocks_affected_reliance_only','progress_projection_gate_reentry_reopen_continuity') },
+    @{ Name = 'Bootstrap Guide'; Text = $bootstrapText; Markers = @('candidate_term_optional_meaning_mandatory','engineering_projection_same_runtime_state','material_decision_information_never_hidden','progress_projection_gate_reentry_reopen_continuity') },
+    @{ Name = 'Working Process Guide'; Text = $workingGuideText; Markers = @('product_accountability_distinct_from_engineering_review','review_competence_does_not_grant_admission_authority','admission_authority_does_not_imply_review_competence','delegated_continuation_no_new_material_commitment') },
+    @{ Name = 'Engineering Views'; Text = $engineeringViewsText; Markers = @('minimal_effective_representation_by_decision_need','large_mermaid_vertical_or_split','text-complete fallback') }
+)) {
+    foreach ($marker in $humanInteractionContract.Markers) {
+        if (-not $humanInteractionContract.Text.Contains($marker)) { Add-Failure "Human interaction contract gap: $($humanInteractionContract.Name) -> $marker" }
+    }
+}
+
 # Interaction-clarity markers are bounded structural regression evidence only.
 # They do not prove comprehension, usability, Admission or release readiness.
 foreach ($clarityContract in @(
@@ -1194,6 +1311,67 @@ foreach ($requiredPreferencePhrase in @(
 }
 if ($bootstrapText -notmatch '(?m)^interaction_mode: compact\r?\nexplanation_mode: milestone$') {
     Add-Failure 'Bootstrap preference defaults are missing or reordered'
+}
+$bootstrapFirstEntrySection = [regex]::Match(
+    $bootstrapText,
+    '(?ms)^#### Default .*?(?=^#### Scope)'
+).Value
+foreach ($greetingContractMarker in @(
+    'ordinary_task_first_greeting',
+    'greeting_internal_variables_hidden',
+    'greeting_minimal_effective_not_shortest',
+    'greeting_engineering_details_on_demand',
+    'greeting_forsage_triggered_only'
+)) {
+    if (-not $bootstrapFirstEntrySection.Contains($greetingContractMarker)) {
+        Add-Failure "Ordinary greeting contract marker is missing: $greetingContractMarker"
+    }
+}
+$canonicalGreeting = [regex]::Match(
+    $bootstrapFirstEntrySection,
+    '(?ms)```markdown\r?\n(\*\*Instantiatio DPF \(iDPF\)\*\*.*?)\r?\n```'
+).Groups[1].Value
+if (-not $canonicalGreeting) {
+    Add-Failure 'Canonical ordinary greeting block is missing'
+}
+$greetingParagraphs = @($canonicalGreeting -split '(?:\r?\n){2,}' | Where-Object { $_.Trim().Length -gt 0 })
+if ($greetingParagraphs.Count -ne 7) {
+    Add-Failure "Canonical greeting paragraph count is $($greetingParagraphs.Count), expected 7"
+}
+if ([regex]::IsMatch($canonicalGreeting, '(?m)^\s*[0-9]+\.\s')) {
+    Add-Failure 'Canonical greeting must not contain an intent or mode menu'
+}
+$requiredGreetingInstruction = & $decodeUtf8Marker '0J7Qv9C40YjQuNGC0LUsINGH0YLQviDRhdC+0YLQuNGC0LUg0YHQtNC10LvQsNGC0YwuINCV0YHQu9C4INC10YHRgtGMINC40YHRhdC+0LTQvdGL0LUg0LzQsNGC0LXRgNC40LDQu9GLLCDQv9C+0LzQtdGB0YLQuNGC0LUg0LjRhSDQsiBgcHJvamVjdC9zb3VyY2UvYCDigJQg0L7QvdC4INC80L7Qs9GD0YIg0LHRi9GC0Ywg0LIg0LvRjtCx0L7QvCDRgNCw0LfRg9C80L3QvtC8INC40YHRhdC+0LTQvdC+0Lwg0LLQuNC00LUg0Lgg0L3QtSDRgtGA0LXQsdGD0Y7RgiDQv9GA0LXQtNCy0LDRgNC40YLQtdC70YzQvdC+0LPQviDQvtGE0L7RgNC80LvQtdC90LjRjy4='
+if (-not $canonicalGreeting.Contains($requiredGreetingInstruction)) {
+    Add-Failure 'Canonical greeting material/task instruction is missing or changed'
+}
+foreach ($hiddenGreetingMechanic in @(
+    'compact', 'milestone', 'gate_required', 'interaction_mode', 'explanation_mode', 'CAP'
+)) {
+    if ($canonicalGreeting.Contains($hiddenGreetingMechanic)) {
+        Add-Failure "Internal mechanic appears in canonical greeting: $hiddenGreetingMechanic"
+    }
+}
+$forsageGreetingTerm = & $decodeUtf8Marker '0KTQvtGA0YHQsNC2'
+if ($canonicalGreeting.Contains($forsageGreetingTerm)) {
+    Add-Failure 'Forsage appears in canonical greeting without an explicit quick-result trigger'
+}
+foreach ($removedGreetingGuiPhrase in @(
+    'interactive cards',
+    'Numbered fallback',
+    'native buttons',
+    'stable labels',
+    'card click'
+)) {
+    if ($bootstrapFirstEntrySection.Contains($removedGreetingGuiPhrase) -or $scenarioText.Contains($removedGreetingGuiPhrase)) {
+        Add-Failure "Removed greeting GUI contract remains: $removedGreetingGuiPhrase"
+    }
+}
+$firstMessageSection = [regex]::Match($bootstrapText, '(?ms)^## 8\. .*?(?=^## 9\.)').Value
+foreach ($firstMessageMarker in @('ordinary_task_first_greeting','greeting_internal_variables_hidden','greeting_engineering_details_on_demand','greeting_forsage_triggered_only')) {
+    if (-not $firstMessageSection.Contains($firstMessageMarker)) {
+        Add-Failure "First-message section contract gap: $firstMessageMarker"
+    }
 }
 if ($workingGuideText -notmatch 'Working Process, Loop contract, Task scope') {
     Add-Failure 'Working Process preference boundary is missing'
@@ -1328,7 +1506,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
-    if ($manifestHashRowCount -ne 50) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 50" }
+    if ($manifestHashRowCount -ne 52) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 52" }
 
     $actualInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($file in (Get-ChildItem -LiteralPath $repoRoot -Recurse -Force -File)) {

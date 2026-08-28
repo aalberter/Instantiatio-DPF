@@ -1,6 +1,6 @@
 # Working Process and Loops Guide
 
-> Version: `1.11.0`
+> Version: `1.12.0`
 
 ## 1. Назначение
 
@@ -525,6 +525,40 @@ Candidate Result:
 - не получает authority только из-за уверенности модели;
 - не должен автоматически передаваться следующему Loop;
 - должен сопровождаться сведениями о происхождении, ограничениях и проверках.
+
+#### 3.5.1. Human interaction и decision routing
+
+Human-facing presentation является derived projection существующей engineering state, а не новым source, carrier, lifecycle или authority layer. Ordinary human-friendly level по умолчанию показывает понятный статус, process stages по применимости, текущий вопрос/роль человека, существенные основания, risks/limitations/consequences и options. Термин `Candidate` можно скрыть, но preliminary, unverified или not-admitted meaning скрывать нельзя. Engineering level добавляет architecture/trace/review question/configuration delta/evidence; Runtime/Audit level — exact IDs, hashes, guards, full source/currentness и effects. Levels сохраняют одну exact state. Markers: `ordinary_human_friendly_default_projection | candidate_term_optional_meaning_mandatory | engineering_projection_same_runtime_state | audit_projection_same_runtime_state | material_decision_information_never_hidden`.
+
+Для material routing Runtime восстанавливает минимальную decision demand:
+
+1. exact decision/result и bounded intended/first relying use;
+2. material product consequence и product accountability, если применимо;
+3. engineering review question и required competence обычным инженерным языком;
+4. required review evidence/disposition;
+5. Admission authority exact result/use;
+6. material View/projection и information-preservation obligations;
+7. blocked dependent effect, safe continuing work и return/escalation route.
+
+Participant information берётся только из explicit current Work Context, Working Process/Loop, assignment, admitted record или decision evidence: understandable participant reference, responsibility, product accountability scope, established review competence и basis/currentness, Admission authority scope, availability/route, а также явно сообщённые language/format/accessibility needs. Title, confidence, profession, writing style, tool access/use и прошлый успех не доказывают competence или authority. Mandatory standalone Participant Profile, registry, universal competence taxonomy или persistent match state не создаются; applicable facts размещаются в существующих carriers. Marker: `routing_uses_established_participant_information`.
+
+`Authority ≠ Competence`. Product accountability определяет product intent/consequence/trade-off; competent engineering review создаёт Evidence по конкретному review question; Admission authority решает, можно ли полагаться на exact engineering result для bounded use. Одна роль не наследует другую. Один actor может выполнить несколько acts только при отдельно установленном scope/basis каждого, а combined presentation сохраняет distinct meanings/outcomes. Review record сохраняет participant/basis, question, configuration, disposition, evidence, limitations, unresolved findings и currentness, но сам не admits result. Markers: `product_accountability_distinct_from_engineering_review | product_authority_does_not_imply_review_competence | review_competence_does_not_grant_admission_authority | admission_authority_does_not_imply_review_competence | same_actor_roles_require_explicit_bases`.
+
+Routing является derived decision-local operation над существующими contracts:
+
+- direct route при отсутствии material trigger;
+- ordinary clarification для недостающего non-material context;
+- `DI-06 Missing input` для material missing participant/source/review input;
+- `DI-04 Conflict` для conflicting participant/authority facts;
+- competent contribution сохраняется как Evidence, не Admission;
+- partial match разделяет/сужает decision и блокирует только unresolved dependent reliance;
+- independent work продолжается внутри previously delegated authority, admitted Working Process/Loop, side-effect и Verification/recovery boundaries;
+- новый Human Gate требуется при material commitment, scope/authority change или ином existing trigger;
+- whole Run/initiative получает `blocked` только когда affected work нельзя безопасно разделить, сузить, вернуть или эскалировать и нет разрешённого meaningful continuation.
+
+Unknown/partial mismatch не расширяет competence scope, не снижает review demand и не создаёт global block автоматически. Markers: `unknown_participant_information_bounded_clarification | competence_mismatch_blocks_affected_reliance_only | delegated_continuation_no_new_material_commitment`.
+
+Human-facing Progress Projection выводится из admitted Working Process и factual Loop/Task/Run/Decision records. Она сохраняет recognizable ordered stages, completed/current/remaining, returned/blocked только для affected stages, последний Gate outcome и следующий authorized stage. Re-entry восстанавливает ту же карту из carriers; reopen возвращает affected stage и сохраняет unaffected history/evidence; process-map change показывает before/after meaning. Не создавай progress store, percentage oracle или authority state. Marker: `progress_projection_gate_reentry_reopen_continuity`.
 
 ### 3.6. Verification
 

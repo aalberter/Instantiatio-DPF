@@ -12,7 +12,7 @@
 
 Этот документ фиксирует направления развития `Instantiatio DPF — Engineering Work Runtime`. Название `Engineering Work Kit 3.1.0` ниже сохраняется там, где обозначает exact released baseline и историю продукта.
 
-Текущая release configuration — `Instantiatio DPF 3.6.1 — Engineering Work Runtime · Beta`, embedded publication status `released`; её состав и ограничения зафиксированы в [Release Notes 3.6.1](releases/RELEASE_NOTES_3_6_1.md). Released predecessor — `3.6.0`. Embedded status, independent-review evidence, final package Admission и внешняя публикация остаются раздельными состояниями/решениями.
+Текущая release configuration — `Instantiatio DPF 3.7.0 — Engineering Work Runtime · Beta`, embedded publication status `released`; её состав и ограничения зафиксированы в [Release Notes 3.7.0](releases/RELEASE_NOTES_3_7_0.md). Released predecessor — `3.6.1`. Embedded status, independent-review evidence, final package Admission и внешняя публикация остаются раздельными состояниями/решениями.
 
 Текущий Runtime уже включает:
 
@@ -36,7 +36,7 @@ Project-specific Work
 
 На текущем этапе комплект считается достаточным для end-to-end пилотного применения.
 
-Released Work Kit `2.2.0` устранил process-composition gap; `2.3.0` добавил model-selection guidance; `2.4.0` исправил operational projection gap; `2.5.2` завершил Decision UI specializations. Admitted `3.0.0` добавил release-level identity, Released Work Kit `3.1.0` — progress/completion grammar и optional state projection, а Runtime `3.5.0` — раннее планирование material Human decisions. Released Runtime `3.6.0` добавил Engineering Review View в том же Gate, host-neutral capability/substrate boundary, proportional CAP/reviewer guards, deterministic re-entry и согласованную release documentation. Corrective Runtime `3.6.1` замыкает operational behavior: Runtime автоматически предъявляет фактическую text-complete проекцию применимых Engineering Views в том же Gate и формирует exact-configuration review-checklist с изначально пустыми human fields; controlled DPF `1.0.1` при этом не изменяется. Reference Architecture, Reference Process, Application Guide и PAP также не изменяются.
+Released Work Kit `2.2.0` устранил process-composition gap; `2.3.0` добавил model-selection guidance; `2.4.0` исправил operational projection gap; `2.5.2` завершил Decision UI specializations. Admitted `3.0.0` добавил release-level identity, Released Work Kit `3.1.0` — progress/completion grammar и optional state projection, а Runtime `3.5.0` — раннее планирование material Human decisions. Released Runtime `3.6.0` добавил Engineering Review View в том же Gate, host-neutral capability/substrate boundary, proportional CAP/reviewer guards, deterministic re-entry и согласованную release documentation. Corrective Runtime `3.6.1` замкнул фактическое предъявление Engineering Views и human-empty review-checklist. Runtime `3.7.0` добавляет ordinary human-friendly entry, routing по установленным сведениям об участниках, разделение product accountability/review/Admission, affected-only stop, progress continuity и minimal effective representation; controlled DPF `1.0.1` при этом не изменяется. Reference Architecture, Reference Process, Application Guide и PAP также не изменяются.
 
 Следующее развитие должно основываться прежде всего на:
 
@@ -118,7 +118,7 @@ Released Work Kit `3.1.0` делает состояние инициативы �
 
 ## 4. Накопленная программа стабилизации
 
-Разделы `4.1…4.5` сохраняют исторические и повторно используемые направления проверки. Они не обозначают текущую версию продукта и не заменяют release configuration `3.6.1` и её дальнейший field-evidence route.
+Разделы `4.1…4.5` сохраняют исторические и повторно используемые направления проверки. Они не обозначают текущую версию продукта и не заменяют release configuration `3.7.0` и её дальнейший field-evidence route.
 
 ### 4.1. Integrity Review
 
@@ -398,15 +398,15 @@ Work Context version
 
 ### 9.1. Минимальная таблица версий
 
-В released package фактические версии, publication status, authoritative loci и SHA-256 components хранятся в [`PACKAGE_MANIFEST.md`](../PACKAGE_MANIFEST.md). Для `3.6.1` manifest закрывает exact distributed inventory; README не дублирует изменяемые hashes.
+В released package фактические версии, publication status, authoritative loci и SHA-256 components хранятся в [`PACKAGE_MANIFEST.md`](../PACKAGE_MANIFEST.md). Для `3.7.0` manifest закрывает exact distributed inventory; README не дублирует изменяемые hashes.
 
 | Component | Version | Status |
 |---|---:|---|
-| Engineering Work Runtime | `3.6.1` | released · Beta |
+| Engineering Work Runtime | `3.7.0` | released · Beta |
 | AI SDLC DPF | `1.0.1` | controlled working |
-| Bootstrap Guide | `1.9.0` | operational |
-| Working Process Guide | `1.11.0` | operational |
-| AGENTS dispatcher | `2.9.0` | operational |
+| Bootstrap Guide | `1.10.0` | operational |
+| Working Process Guide | `1.12.0` | operational |
+| AGENTS dispatcher | `2.10.0` | operational |
 | Model Selection Recommendations | `1.1.0` | admitted informative guidance |
 
 ### 9.2. Migration Rules
@@ -587,7 +587,7 @@ source revision and Candidate Lesson
 ## 14. Предлагаемая последовательность развития
 
 ```text
-3.6.1 released package
+3.7.0 released package
 → exact local bundle Admission and controlled external-project handoff
 → representative host/substrate and multi-project pilots
 → reusable Loop candidates

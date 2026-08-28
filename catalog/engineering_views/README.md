@@ -1,6 +1,6 @@
 # Модуль инженерных представлений
 
-> Version: `0.2.0-candidate`
+> Version: `0.3.0-candidate`
 
 ## 1. Назначение и authority boundary
 
@@ -49,6 +49,18 @@ Loop может создать bounded local delta к admitted profile, но н�
 | `situational` | Не предлагать без конкретного trigger. | не создавать ради полноты |
 
 Код уровня остаётся служебной информацией и не заменяет понятное объяснение.
+
+### 4.1. Minimal effective representation
+
+Выбирай форму по decision question и material relations, а не по доступности renderer или желанию сделать результат визуальнее:
+
+- concise text — для линейного смысла, небольшого набора claims и последовательного explanation;
+- table — для exact repeated fields, mappings, comparisons, ownership, coverage или alternatives;
+- diagram — когда topology, hierarchy, interaction, sequence или state relations с тремя и более зависимыми элементами существенно труднее понять линейно.
+
+Используй smallest sufficient form или небольшой набор форм. Диаграмма не обязательна, если текст/таблица дают человеку достаточную основу решения; таблица не нужна для single fact. Любая rich representation сохраняет text-complete fallback, material limitations/non-coverage и сведения, способные изменить решение. Marker: `minimal_effective_representation_by_decision_need`.
+
+Для Mermaid `LR` допустим только для короткого linear flow, читаемого без уменьшения. Если branching, длинные labels или число узлов создают excessive width, используй `TB`/`TD`. Если vertical layout всё ещё смешивает independent concerns/system levels либо остаётся перегруженным, раздели схему по decision question/level и сохрани связи в тексте. Не уменьшай крупную схему до плохо читаемого масштаба. Marker: `large_mermaid_vertical_or_split`.
 
 ## 5. Minimum contract material view
 
