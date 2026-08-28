@@ -1,6 +1,6 @@
 # Engineering Work Bootstrap Guide
 
-> Version: `1.10.0`
+> Version: `1.10.1`
 
 ## 1. Назначение
 
@@ -508,13 +508,15 @@ Schema version `1` остаётся читаемой. Смена product default
 
 Обычный human-friendly уровень применяется по умолчанию независимо от `interaction_mode`: сначала понятный статус, этапы по применимости, роль человека в текущем вопросе, существенные основания/риски/ограничения, последствия и варианты. Internal IDs, hashes, guards, coverage codes и полная Runtime mechanics остаются внутри либо в service detail, пока не нужны для решения, диагностики или аудита.
 
+Полная engineering basis остаётся в точных carriers. В ordinary-проекции требование полноты выполняется сгруппированным decision-relevant смыслом, а не перечислением каждой внутренней строки: пользователь должен увидеть предварительный статус, authority boundary, существенные риски/ограничения, последствия, разрешённые и запрещённые действия и требуемое решение. Item-level IDs, coverage/result codes, hashes и checklist rows показывай только когда отдельный элемент требует самостоятельного disposition, пользователь запросил trace либо выбран Engineering/Runtime-Audit level. Сохраняй recoverable mapping от каждой смысловой группы к внутренней basis. Markers: `ordinary_grouped_semantic_coverage | basis_completeness_not_item_visibility | item_visibility_requires_independent_disposition`.
+
 Слово `Candidate` не обязательно в ordinary presentation. Обязателен его смысл: если результат предварительный, не проверен или не допущен к reliance, скажи это обычным языком, назови ещё требуемую проверку/решение и запрет преждевременного использования. Human-friendly упрощение никогда не скрывает uncertainty, limitation, authority boundary, prohibited effect или иной факт, способный существенно изменить решение человека.
 
 Engineering level добавляет architecture, trace, review questions, configuration delta и Verification evidence. Runtime/Audit level добавляет exact terms, IDs/statuses, hashes, full source/currentness, guards и effect records. Все три являются derived projections одной exact engineering state; смена уровня не изменяет source, status, authority, Verification или Admission. Markers: `ordinary_human_friendly_default_projection | candidate_term_optional_meaning_mandatory | engineering_projection_same_runtime_state | audit_projection_same_runtime_state | material_decision_information_never_hidden`.
 
 #### Проекция Decision UI
 
-Существенное Bootstrap-решение представляется прежде всего в чате по `WPC-06` из `WORKING_PROCESS_AND_LOOPS_GUIDE.md`: выбери применимый `DI-01`—`DI-08`, используй понятный заголовок ситуации, одну exact Candidate configuration, русскоязычную `Рекомендация`, основания/риски/ограничения, видимые разрешённые и запрещённые последствия и единый блок `Варианты решения`. Первый пункт `Принять рекомендованный вариант` повторяет точное действие и последствие; применимые альтернативы остаются равноправно видимыми. При первой существенной ссылке назови carrier/result понятным названием вместе с exact ID и полезной ссылкой; в подтверждении решения и handoff повтори то же название вместе с exact ID, а не только ID или filename. Optional adjacent `.md` хранит подробные основания той же configuration, когда они нужны для review или восстановления. Для `DI-05 Risk` сохраняй accountable risk owner и reopen trigger; clarification является cross-class response state, а не девятой interaction. После решения подтверди outcome/configuration, вновь разрешённые и по-прежнему запрещённые effects, actor/date when available, ссылку на decision record, условия и следующий/reopen route. Текст сохраняет смысл без цвета или rich UI, а двусмысленный ответ не создаёт authority. Markers: `applicable_decision_options | recommended_option_exact_effect | decision_confirmation_effects`.
+Существенное Bootstrap-решение представляется прежде всего в чате по `WPC-06` из `WORKING_PROCESS_AND_LOOPS_GUIDE.md`: выбери применимый `DI-01`—`DI-08`, используй понятный заголовок ситуации, одну exact Candidate configuration, русскоязычную `Рекомендация`, основания/риски/ограничения, видимые разрешённые и запрещённые последствия и единый блок `Варианты решения`. Первый пункт `Принять рекомендованный вариант` повторяет точное действие и последствие; применимые альтернативы остаются равноправно видимыми. Exact configuration/ID всегда сохраняются во внутреннем mapping; ordinary presentation называет carrier/result понятным названием и полезной ссылкой, а exact ID показывает только при самостоятельной decision need, запросе или Engineering/Runtime-Audit уровне. Optional adjacent `.md` хранит подробные основания той же configuration, когда они нужны для review или восстановления. Для `DI-05 Risk` сохраняй accountable risk owner и reopen trigger; clarification является cross-class response state, а не девятой interaction. После решения подтверди outcome/configuration, вновь разрешённые и по-прежнему запрещённые effects, actor/date when available, ссылку на decision record, условия и следующий/reopen route. Текст сохраняет смысл без цвета или rich UI, а двусмысленный ответ не создаёт authority. Markers: `applicable_decision_options | recommended_option_exact_effect | decision_confirmation_effects`.
 
 ### 7.5. Optional model-guidance offer
 
@@ -1490,7 +1492,7 @@ Bootstrap передаёт known concerns, `FC-13` inputs и triggers, но не
 
 1. используй `WORKING_PROCESS_AND_LOOPS_GUIDE.md`;
 2. передай downstream concern/result handover, decision-relevant `FC-13` inputs и known guard triggers;
-3. потребуй применения `WPC-01`–`WPC-09`: DPF-first selection, расширение project-relevant coverage до сокращений и явное представление решений;
+3. потребуй применения `WPC-01`–`WPC-09`: DPF-first selection, расширение project-relevant coverage до сокращений и явное представление решений; в ordinary-режиме полная внутренняя basis предъявляется сгруппированным decision-relevant смыслом, а item-level trace остаётся доступным по запросу или на Engineering/Runtime-Audit уровне;
 4. передай Working Process authority проектирование lifecycle, result map, reference composition и Loop map;
 5. получи явное решение пользователя по Candidate Working Process и предлагаемым сокращениям;
 6. только после этого создавай процессные файлы.
@@ -1766,7 +1768,7 @@ Preference notice и optional model-guidance offer не являются доп�
 
 ### 34.4. Перед Admission
 
-Агент показывает Candidate Work Context или Entry Decision как структурированный документ: подписывает смысловые блоки, отделяет основания, риски, ограничения и последствия, затем показывает `Рекомендация` и единый блок `Варианты решения` с точными действиями и последствиями (`WPC-06`). Первая и повторная relying reference сохраняют одно понятное название вместе с exact ID; filename/path остаётся служебной деталью.
+Агент показывает Candidate Work Context или Entry Decision как структурированный документ: подписывает смысловые блоки, отделяет основания, риски, ограничения и последствия, затем показывает `Рекомендация` и единый блок `Варианты решения` с точными действиями и последствиями (`WPC-06`). Первая и повторная relying reference сохраняют одно понятное название и recoverable exact mapping; ordinary presentation добавляет exact ID только при самостоятельной decision need, запросе или Engineering/Runtime-Audit уровне. Filename/path остаётся служебной деталью.
 
 Пользовательские заголовки и поясняющий текст формулируются прежде всего по-русски (`WPC-07`). Точные системные термины, идентификаторы, статусы, пути и цитаты сохраняются, когда перевод меняет системный смысл; обычный пояснительный English переводится по смыслу. Marker: `interaction_clarity_russian_first`.
 

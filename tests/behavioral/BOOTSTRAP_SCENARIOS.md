@@ -1784,13 +1784,13 @@ Machine-stable regression marker: `persistence_is_not_admission`.
 
 **Prohibited:** ceremony и identity churn только потому, что baseline был прочитан.
 
-## S-149 — Carrier reference сохраняет понятное название и exact ID
+## S-149 — Carrier reference сохраняет понятное название и exact identity
 
 **Given:** material project carrier/result впервые представлен, затем используется в Gate, decision confirmation или handoff.
 
 **When:** Runtime формирует каждую relying reference.
 
-**Then:** первая ссылка использует понятное название вместе с exact ID и useful link; повторная ссылка сохраняет то же понятное название вместе с exact ID.
+**Then:** первая и повторная ссылки используют одно понятное название и useful link; exact identity остаётся recoverable, а exact ID выводится только при самостоятельной decision need, запросе или Engineering/Runtime-Audit уровне.
 
 **Expected behavior:** filename/path и bare ID доступны как service details, не разрывая human-readable identity.
 
@@ -1804,7 +1804,7 @@ Machine-stable regression marker: `carrier_reference_continuity`.
 
 **When:** агент создаёт project-specific Work Context, Process, Loop, Task, Run, Result или Admission carrier.
 
-**Then:** headings и explanatory prose написаны прежде всего по-русски; exact system terms, identifiers, paths, statuses, code и quotations сохраняются там, где этого требует смысл; системный объект называется как `<exact type> — <русское понятное название>` с exact ID при первой существенной ссылке.
+**Then:** headings и explanatory prose написаны прежде всего по-русски; exact system terms, identifiers, paths, statuses, code и quotations сохраняются там, где этого требует смысл; системный объект называется как `<exact type> — <русское понятное название>`, а exact ID выводится только при самостоятельной need, запросе или Engineering/Runtime-Audit уровне.
 
 **Expected behavior:** semantic review проверяет понятность, title/ID continuity и отсутствие decorative English.
 
@@ -2034,7 +2034,7 @@ Machine-stable regression marker: `russian_first_project_carrier`.
 
 **When:** пользователю нужно понятное название.
 
-**Then:** presentation использует `Working Process — <русское понятное название>` и exact ID.
+**Then:** presentation использует `Working Process — <русское понятное название>`; exact ID остаётся recoverable и показывается при самостоятельной need, запросе или Engineering/Runtime-Audit уровне.
 
 **Expected behavior:** marker `exact_type_russian_title_id` сохраняет continuity exact type/title/ID.
 

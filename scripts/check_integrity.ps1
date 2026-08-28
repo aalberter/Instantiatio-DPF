@@ -120,7 +120,9 @@ foreach ($file in $textFiles) {
 }
 
 # Local Markdown links and fragments
-$markdownFiles = Get-ChildItem -LiteralPath $repoRoot -Recurse -File -Filter '*.md'
+$markdownFiles = Get-ChildItem -LiteralPath $repoRoot -Recurse -File -Filter '*.md' | Where-Object {
+    -not (Get-RelativePath $_.FullName).Replace('\', '/').StartsWith('project/source/')
+}
 $anchorCache = @{}
 foreach ($file in $markdownFiles) {
     $content = Get-Content -Raw -Encoding utf8 -LiteralPath $file.FullName
@@ -183,6 +185,8 @@ $requiredFiles = @(
     'docs/releases/RELEASE_NOTES_3_5_0.md',
     'docs/releases/RELEASE_NOTES_3_6_0.md',
     'docs/releases/RELEASE_NOTES_3_6_1.md',
+    'docs/releases/RELEASE_NOTES_3_7_0.md',
+    'docs/releases/RELEASE_NOTES_3_7_1.md',
     'examples/CODEX_REFERENCE_CAPABILITY_PROFILE.yaml',
     'tests/behavioral/BOOTSTRAP_SCENARIOS.md',
     'tests/behavioral/RUNTIME_3_6_OPERATIONAL_SCENARIOS.md',
@@ -288,6 +292,8 @@ $releaseNotes361Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_6_1.md
 $releaseNotes361Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes361Path
 $releaseNotes370Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_7_0.md'
 $releaseNotes370Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes370Path
+$releaseNotes371Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_7_1.md'
+$releaseNotes371Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes371Path
 $runtime37ScenarioPath = Join-Path $repoRoot 'tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md'
 $runtime37ScenarioText = if (Test-Path -LiteralPath $runtime37ScenarioPath -PathType Leaf) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtime37ScenarioPath } else { '' }
 $engineeringViewsText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'catalog/engineering_views/README.md')
@@ -308,8 +314,9 @@ $middleDot = [char]0x00B7
 $decodeUtf8Marker = { param([string]$value) [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($value)) }
 $candidateIdentity = "Instantiatio DPF 3.4.0 $emDash Engineering Work Runtime $middleDot Beta"
 $release361Identity = "Instantiatio DPF 3.6.1 $emDash Engineering Work Runtime $middleDot Beta"
-$releaseIdentity = "Instantiatio DPF 3.7.0 $emDash Engineering Work Runtime $middleDot Beta"
-$readmeIdentity = "Instantiatio DPF (iDPF) 3.7.0 $emDash Engineering Work Runtime $middleDot Beta"
+$release370Identity = "Instantiatio DPF 3.7.0 $emDash Engineering Work Runtime $middleDot Beta"
+$releaseIdentity = "Instantiatio DPF 3.7.1 $emDash Engineering Work Runtime $middleDot Beta"
+$readmeIdentity = "Instantiatio DPF (iDPF) 3.7.1 $emDash Engineering Work Runtime $middleDot Beta"
 if (-not $readmeText.StartsWith("# $readmeIdentity`n")) {
     Add-Failure 'README release-level identity is missing'
 }
@@ -317,13 +324,13 @@ if (-not $manifestText.StartsWith("# $releaseIdentity $emDash Package Manifest`n
     Add-Failure 'Manifest release-level identity is missing'
 }
 foreach ($releaseConfigurationMarker in @(
-    '| Runtime version | `3.7.0` |',
+    '| Runtime version | `3.7.1` |',
     '| Assembly date | `2026-08-28` |',
-    '| Archive identity | `Instantiatio-DPF-3.7.0-Beta.zip` |',
-    '| Archive top-level directory | `Instantiatio-DPF-3.7.0-Beta` |'
+    '| Archive identity | `Instantiatio-DPF-3.7.1-Beta.zip` |',
+    '| Archive top-level directory | `Instantiatio-DPF-3.7.1-Beta` |'
 )) {
     if (-not $manifestText.Contains($releaseConfigurationMarker)) {
-        Add-Failure "Manifest 3.7.0 configuration marker missing: $releaseConfigurationMarker"
+        Add-Failure "Manifest 3.7.1 configuration marker missing: $releaseConfigurationMarker"
     }
 }
 foreach ($publicIdentityContract in @(
@@ -392,8 +399,8 @@ foreach ($engineeringViewsVersionContract in @(
     }
 }
 foreach ($runtime37ReleaseContract in @(
-    '> Version: `0.1.0`',
-    '> Status: `behavior_oracle` for released Runtime `3.7.0`.',
+    '> Version: `0.2.0`',
+    '> Status: `behavior_oracle` for released Runtime `3.7.1`, including the admitted field-regression extension.',
     'r37_product_review_admission_separated'
 )) {
     if (-not $runtime37ScenarioText.Contains($runtime37ReleaseContract)) {
@@ -435,9 +442,9 @@ if ($manifestText -notmatch '\| Product maturity \| \x60Beta\x60 \|') {
     Add-Failure 'Manifest product maturity must be Beta'
 }
 foreach ($packageStatusContract in @(
-    @{ Name = 'README'; Text = $readmeText; Marker = 'iDPF Runtime: `3.7.0`' },
-    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.7.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
-    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.7.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
+    @{ Name = 'README'; Text = $readmeText; Marker = 'iDPF Runtime: `3.7.1`' },
+    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.7.1` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.7.1` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
 )) {
     if (-not $packageStatusContract.Text.Contains($packageStatusContract.Marker)) {
         Add-Failure "Package status contract mismatch: $($packageStatusContract.Name)"
@@ -448,7 +455,7 @@ foreach ($requiredReleasePhrase in @(
     'ISO/IEC/IEEE DIS 29148 Ed.3',
     'stage `40.00`',
     'accepted_non_blocking',
-    'reopened_assessed_nonblocking_for_3_7_0',
+    'reopened_assessed_nonblocking_for_3_7_1',
     'no external currentness refresh',
     'no successor-status/compliance claim',
     'DPF unchanged'
@@ -506,8 +513,11 @@ foreach ($staleReleaseNotes361Marker in @(
     }
 }
 
+if ((Get-FileHash -Algorithm SHA256 -LiteralPath $releaseNotes370Path).Hash -ne '096C82E7F3849F45CF30BD7CADE63D18775A0FDA554793BB14D58CD4B52E38A2') {
+    Add-Failure 'Admitted Release Notes 3.7.0 hash mismatch'
+}
 foreach ($requiredReleaseNotes370Marker in @(
-    ("# $releaseIdentity"),
+    ("# $release370Identity"),
     '> Release status: `released`',
     '> Release date: `2026-08-28`',
     '> Released predecessor: `3.6.1`',
@@ -536,6 +546,40 @@ foreach ($forbiddenCurrentReleaseMarker in @(
 )) {
     if ($releaseNotes370Text.Contains($forbiddenCurrentReleaseMarker)) {
         Add-Failure "Release Notes 3.7.0 stale or forbidden marker: $forbiddenCurrentReleaseMarker"
+    }
+}
+
+foreach ($requiredReleaseNotes371Marker in @(
+    ("# $releaseIdentity"),
+    '> Release status: `released`',
+    '> Release date: `2026-08-28`',
+    '> Released predecessor: `3.7.0`',
+    '> Included AI SDLC DPF: unchanged `1.0.1`',
+    'Instantiatio-DPF-3.7.1-Beta.zip',
+    'ordinary presentation',
+    'internal IDs',
+    'Engineering/Runtime-Audit',
+    'S-204',
+    'Runtime 3.6 regression carrier: `53` scenarios',
+    'Runtime 3.7 integration carrier: `10` scenarios',
+    'Polish01 field-regression profiles: `2`',
+    'reopened_assessed_nonblocking_for_3_7_1; no external currentness refresh; no successor-status/compliance claim; DPF unchanged',
+    'https://github.com/instantiatio/iDPF'
+)) {
+    if (-not $releaseNotes371Text.Contains($requiredReleaseNotes371Marker)) {
+        Add-Failure "Release Notes 3.7.1 contract marker missing: $requiredReleaseNotes371Marker"
+    }
+}
+foreach ($forbiddenCurrentReleaseMarker in @(
+    'https://github.com/aalberter/Instantiatio-DPF',
+    'candidate_pending_admission',
+    'Final assembly date: pending',
+    'Planned ZIP',
+    'package closure remains deferred',
+    'final ZIP do not exist'
+)) {
+    if ($releaseNotes371Text.Contains($forbiddenCurrentReleaseMarker)) {
+        Add-Failure "Release Notes 3.7.1 stale or forbidden marker: $forbiddenCurrentReleaseMarker"
     }
 }
 
@@ -1219,9 +1263,53 @@ foreach ($r37Marker in @(
     'r37_unknown_partial_mismatch_affected_only', 'r37_delegated_continuation_boundary',
     'r37_projection_levels_one_state', 'r37_material_information_never_hidden',
     'r37_minimal_effective_view_selection', 'r37_mermaid_readability',
-    'r37_progress_gate_reentry_continuity', 'r37_progress_reopen_process_change'
+    'r37_progress_gate_reentry_continuity', 'r37_progress_reopen_process_change',
+    'r37_polish01_ordinary_grouped_budget', 'r37_polish01_engineering_exact_trace_budget'
 )) {
     if (-not $runtime37ScenarioText.Contains($r37Marker)) { Add-Failure "Runtime 3.7 scenario marker gap: $r37Marker" }
+}
+
+$r37Polish01Section = [regex]::Match(
+    $runtime37ScenarioText,
+    '(?ms)^## Candidate successor field regression .*?(?=^## Acceptance summary)'
+).Value
+foreach ($r37Polish01Oracle in @(
+    'ordinary_visible_word_budget: 180',
+    'ordinary_pre_option_bullet_budget: 6',
+    'ordinary_details_link_budget: 1',
+    'ordinary_internal_code_budget: 0',
+    'ordinary_hash_budget: 0',
+    'ordinary_item_level_checklist_budget: 0',
+    'engineering_summary_word_budget: 120',
+    'engineering_result_trace_rows: 26',
+    'engineering_reduction_trace_rows: 10',
+    'engineering_loop_trace_rows: 5',
+    'engineering_checklist_items: 7',
+    'preliminary/not-admitted meaning',
+    'authority boundary',
+    'allowed/prohibited actions',
+    'material limitation/risk',
+    'exact configuration/currentness'
+)) {
+    if (-not $r37Polish01Section.Contains($r37Polish01Oracle)) {
+        Add-Failure "Runtime 3.7 Polish01 volume/content oracle gap: $r37Polish01Oracle"
+    }
+}
+foreach ($projectionContract in @(
+    @{ Name = 'AGENTS ordinary projection'; Text = $agentsText },
+    @{ Name = 'Bootstrap ordinary projection'; Text = $bootstrapText },
+    @{ Name = 'Working Process ordinary projection'; Text = $workingGuideText }
+)) {
+    foreach ($marker in @('ordinary_grouped_semantic_coverage','basis_completeness_not_item_visibility','item_visibility_requires_independent_disposition')) {
+        if (-not $projectionContract.Text.Contains($marker)) {
+            Add-Failure "Successor presentation contract gap: $($projectionContract.Name) -> $marker"
+        }
+    }
+}
+foreach ($workingProcessSuccessorMarker in @('ordinary_checklist_grouped_questions','additional_ceremony_requires_decision_consequence')) {
+    if (-not $workingGuideText.Contains($workingProcessSuccessorMarker)) {
+        Add-Failure "Working Process successor proportionality gap: $workingProcessSuccessorMarker"
+    }
 }
 
 foreach ($humanInteractionContract in @(
@@ -1506,7 +1594,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
-    if ($manifestHashRowCount -ne 52) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 52" }
+    if ($manifestHashRowCount -ne 53) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 53" }
 
     $actualInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($file in (Get-ChildItem -LiteralPath $repoRoot -Recurse -Force -File)) {
