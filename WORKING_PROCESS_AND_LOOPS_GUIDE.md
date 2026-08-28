@@ -1,6 +1,6 @@
 # Working Process and Loops Guide
 
-> Version: `1.12.1`
+> Version: `1.12.2`
 
 ## 1. Назначение
 
@@ -278,6 +278,10 @@ Review-checklist является derived Gate-local interaction contract. Ег�
 
 Checklist generation не требует показа его item-level schema в ordinary-режиме. Runtime предъявляет несколько естественных смысловых вопросов; отдельный required item видим отдельно только при самостоятельном disposition, material delta, limitation, risk или consequence. После Human Response grouped answers recoverably связываются с exact internal items. Engineering level по запросу показывает item-level trace и review questions; Runtime/Audit level дополнительно показывает exact checklist identity/configuration, codes, currentness и effect records. Полнота внутреннего checklist не является основанием для user-visible россыпи. Marker: `ordinary_checklist_grouped_questions`.
 
+Перед отправкой каждого material ordinary Gate Runtime выполняет internal projection guard по observable main presentation: обнаруживает identifiers/configuration tokens/checklist refs по их роли, а не по закрытому перечню prefixes; оставляет отдельным только элемент с самостоятельным disposition; остальные переводит в grouped semantic question и recoverable internal mapping. `Принять рекомендованный вариант` называет человеческое действие и последствие и не требует принять code, range refs или строки checklist. Если необоснованный internal identifier, item-level row, hash либо code-based approval остаётся видимым, `GP-08 Present` не пройден и projection регенерируется до Human Response. Markers: `ordinary_projection_pre_send_guard | internal_identifier_class_semantic_not_prefix | code_based_approval_prohibited`.
+
+Gate-local checklist не создаёт receiving use для отдельного physical Review carrier. Такой carrier допустим только когда exact review basis имеет самостоятельного получателя или повторное material use, которое нельзя recoverably сохранить в основном Candidate/Decision carrier; назови receiving use и decision-changing consequence до создания. При общих authority, timing, outcome и response rule checklist остаётся разделом principal carrier/internal mapping. Marker: `separate_review_carrier_requires_receiving_use`.
+
 Required item создаётся для каждой required View и отдельно лишь для material delta, limitation, risk или consequence, которым нужен самостоятельный disposition. Optional explanatory item Gate не блокирует. Stable Gate-local item содержит ID, plain question, exact subject ref, `required | optional`, allowed dispositions и response rule. Allowed local dispositions: `reviewed_no_objection`, `question`, `change_request`, `condition`, `observation`, `not_reviewed`; они не являются Admission statuses. `question`, `change_request`, `condition`, material `observation` и `not_reviewed` требуют sufficient human text или exact referenced statement. Condition дополнительно называет owner, affected use, Verification and reopen route.
 
 Checklist complete только если все required items имеют valid human dispositions, обязательный supporting text существует, exact configuration/currentness сохранены, accountable actor identifiable и выбран один applicable existing `DI-01…DI-08` outcome/action. Row completion без outcome остаётся partial response. `admitted` недоступен при unresolved question/change/not-reviewed, unaccepted material condition, missing/stale/conflicting required View или failed applicable Verification. Другие compatible outcomes сохраняют существующий смысл: feedback возвращается к exact Candidate/View/element/source, defer сохраняет reason/use/reopen, reject — rationale/prohibited reliance. Completion означает полноту configuration-bound Human Response, а не correctness, Verification, evidence sufficiency или automatic Admission. Marker: `checklist_completion_not_admission`.
@@ -309,7 +313,7 @@ Lower-level carrier может применять и связывать higher-l
 - Product/system work: видимый DPF profile, развёрнутая project-relevant map, отдельные reductions и Human Gate.
 - PAP-strengthened work: отдельная applicability decision, required evidence и independence; PAP не применяется автоматически.
 
-Для low-consequence local/test-data work каждый дополнительный Gate, carrier, Loop и independent-review condition должен иметь названный receiving use и decision-changing consequence для конкретного перехода. File/result count, template completeness, tool/model count или broad `engineering` label trigger не создают. Без такого protected value элемент объединяется, откладывается или получает `not_applicable`; это не отменяет lifecycle, authority, Verification или реально сработавший risk/commitment guard. Marker: `additional_ceremony_requires_decision_consequence`.
+Для low-consequence local/test-data work каждый дополнительный Gate, carrier, Loop, separate Review carrier и independent-review condition должен иметь названный receiving use и decision-changing consequence для конкретного перехода. File/result/checklist count, template completeness, tool/model count или broad `engineering` label trigger не создают. Без такого protected value элемент объединяется с principal carrier/решением, откладывается или получает `not_applicable`; это не отменяет lifecycle, authority, Verification или реально сработавший risk/commitment guard. Markers: `additional_ceremony_requires_decision_consequence | separate_review_carrier_requires_receiving_use`.
 
 Strengthening triggers включают несколько operational scenarios/slices, shared state, external interfaces, system-wide properties, security/authority impact, non-resettable reliance, supplier/operation baseline и высокую цену ошибки.
 
@@ -686,7 +690,7 @@ Working Process применяет presentation preferences, определён�
 
 1. `Статус` — всегда, когда нужен структурированный отчёт: понятная суть результата или ситуации, практическое последствие, существенный риск/блокировка и следующий полезный шаг. Одних IDs или status codes недостаточно.
 2. `Этапы работы` — только при существенном изменении этапа, после Human Gate, перед handoff или по прямому запросу; это generated projection наблюдаемого состояния, а не отдельный источник состояния.
-3. `Рекомендация` и затем `Варианты решения` — только при реальном Human Gate. Рекомендация объясняет предпочтительный route, а единый блок вариантов показывает применимые действия и последствия. Первый вариант `Принять рекомендованный вариант` повторяет точное действие и последствие.
+3. `Рекомендация` и затем `Варианты решения` — только при реальном Human Gate. Рекомендация объясняет предпочтительный route, а единый блок вариантов показывает применимые действия и последствия. Первый вариант `Принять рекомендованный вариант` повторяет точное человеческое действие и последствие без требования перечислить или принять internal refs/checklist codes.
 4. `Служебная информация` — только когда exact IDs, statuses, hashes, paths, predicates или evidence имеют receiving use. В rich UI блок может сворачиваться, но text-only output сохраняет его после вариантов.
 
 Если структурированное сообщение использует эти major service blocks, оформляй их как Markdown headings level 2: `## Статус`, `## Этапы работы`, `## Рекомендация`, `## Варианты решения`, `## Служебная информация`. Nested decision/evidence content использует level 3 или ниже. Короткий неструктурированный ответ может опустить headings полностью; weak pseudo-heading или H3 major block не является допустимым fallback. Контракт не требует native UI, CSS или конкретных fonts. Marker: `structured_service_headings_h2`.
@@ -736,7 +740,7 @@ Return/defer/reject и следующий переход
 
 #### Decision UI в чате и optional Markdown
 
-Material Human Gate оформляй как единый Decision UI для одной exact Candidate configuration. Основной слой — сообщение в чате; adjacent `.md` нужен только когда decision basis, evidence или восстанавливаемая configuration не помещаются пропорционально в сообщение. Chat и файл не являются двумя версиями решения: сообщение показывает достаточный decision summary и безопасную ссылку на тот же exact carrier.
+Material Human Gate оформляй как единый Decision UI для одной exact Candidate configuration. Основной слой — сообщение в чате; adjacent `.md` нужен только когда decision basis, evidence или восстанавливаемая configuration не помещаются пропорционально в сообщение и отдельный physical carrier имеет самостоятельный receiving use. Chat и файл не являются двумя версиями решения: сообщение показывает достаточный decision summary и безопасную ссылку на тот же exact carrier. Перед отправкой ordinary Decision UI обязательно выполни `ordinary_projection_pre_send_guard`; новый prefix или неизвестное семейство internal IDs не обходят проверку.
 
 Выбирай одну из восьми admitted Decision Interactions по решению, которое действительно принимает человек:
 
@@ -1199,7 +1203,7 @@ Working Process необходимо инициировать, если:
 - открытые вопросы, assumptions и limitations;
 - `Варианты решения`, exact allowed/prohibited consequences и return route.
 
-Этот перечень задаёт полноту decision basis, но не формат item-by-item показа. В ordinary-режиме пункты с совместимыми authority, use и outcome группируются в понятные темы; exact DPF/result/reduction/checklist rows остаются в связанном carrier. Engineering/Runtime-Audit level или самостоятельный disposition отдельного элемента раскрывают соответствующий trace. Decision-changing information не сокращается.
+Этот перечень задаёт полноту decision basis, но не формат item-by-item показа. В ordinary-режиме пункты с совместимыми authority, use и outcome группируются в понятные темы; exact DPF/result/reduction/checklist rows остаются в связанном carrier. Engineering/Runtime-Audit level или самостоятельный disposition отдельного элемента раскрывают соответствующий trace. Перед presentation process authority применяется `ordinary_projection_pre_send_guard`, включая запрет code-based approval и semantic detection новых internal-ID families. Decision-changing information не сокращается.
 
 Для material Candidate Working Process действует `WPC-06 decision wrapper required`: перечисленное представление должно само содержать WPC-06 basis либо сопровождаться adjacent decision wrapper, связанным с exact Candidate configuration. Короткая однозначная команда пользователя остаётся допустимым ответом, но не заменяет сохраняемую основу решения.
 

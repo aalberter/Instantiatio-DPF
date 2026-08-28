@@ -1,14 +1,14 @@
-# Instantiatio DPF (iDPF) 3.7.1 — Engineering Work Runtime · Beta
+# Instantiatio DPF (iDPF) 3.7.2 — Engineering Work Runtime · Beta
 
-> Версия iDPF Runtime: `3.7.1`; встроенный статус выпуска: `released`; зрелость продукта: `Beta`; выпущенный предшественник: `3.7.0`; включённый AI SDLC DPF: неизменённый `1.0.1`.
+> Версия iDPF Runtime: `3.7.2`; встроенный статус выпуска: `released`; зрелость продукта: `Beta`; выпущенный предшественник: `3.7.1`; включённый AI SDLC DPF: неизменённый `1.0.1`.
 
 **iDPF — переносимая среда организации инженерной работы человека и AI-агентов.** Она помогает превратить намерение, проблему или комплект исходных материалов в проверенный результат, на который разрешено обоснованно опираться в дальнейшей работе.
 
 iDPF работает в агентных средах, поддерживающих корневой `AGENTS.md`. Операционный вход: [`AGENTS.md`](AGENTS.md) → [`ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`](ENGINEERING_WORK_BOOTSTRAP_GUIDE.md). Codex поддерживается как сильная референсная среда исполнения, но не является обязательным host — средой исполнения агента.
 
-Corrective release `3.7.1` уточняет ordinary human-friendly presentation: полная инженерная основа остаётся восстанавливаемой во внутренних carriers, а пользователю предъявляется её сгруппированный decision-relevant смысл. Внутренние IDs, coverage codes, hashes и item-level checklist показываются только когда они самостоятельно нужны для решения, явно запрошены либо выбран Engineering/Runtime-Audit уровень; lifecycle, authority, существенные риски, Verification и Admission при этом не скрываются и не ослабляются.
+Corrective release `3.7.2` усиливает исполнение ordinary human-friendly presentation: перед каждым material Gate действует обязательный pre-send guard, internal IDs выявляются без закрытого списка prefixes, а одобрение формулируется человеческим действием вместо codes/checklist rows. Separate Review carrier требует самостоятельного receiving use. Три Gate проверяются self-contained positive/negative replay; приветствие ведёт к уровням ordinary, Engineering и Runtime/Audit точным вопросом `Какие уровни работы доступны?`.
 
-Этот README входит в пакет iDPF `3.7.1`. Состав изменений и ограничения описаны в [Release Notes 3.7.1](docs/releases/RELEASE_NOTES_3_7_1.md), а точный состав пакета — в [`PACKAGE_MANIFEST.md`](PACKAGE_MANIFEST.md). Встроенный статус `released` не означает, что iDPF сам выполнил внешнюю публикацию: передача, tag, upload и публикация относятся к отдельному проекту и его authority.
+Этот README входит в пакет iDPF `3.7.2`. Состав изменений и ограничения описаны в [Release Notes 3.7.2](docs/releases/RELEASE_NOTES_3_7_2.md), а точный состав пакета — в [`PACKAGE_MANIFEST.md`](PACKAGE_MANIFEST.md). Встроенный статус `released` не означает, что iDPF сам выполнил внешнюю публикацию: передача, tag, upload и публикация относятся к отдельному проекту и его authority.
 
 ## Содержание
 
@@ -276,24 +276,24 @@ Capability qualification относится к наблюдаемым capabiliti
 | [AI SDLC DPF](AI_SDLC_DPF/framework/AI_SDLC_DPF.md) | controlled нормативные patterns и связанная reference documentation |
 | `project/` | исходные материалы, project-specific process state и рабочие результаты конкретной инициативы |
 | [`PACKAGE_MANIFEST.md`](PACKAGE_MANIFEST.md) | точный состав и hashes допущенной release configuration после package closure |
-| [`scripts/check_integrity.ps1`](scripts/check_integrity.ps1) | детерминированные проверки release-level целостности; не заменяют semantic Verification |
+| [`scripts/check_integrity.ps1`](scripts/check_integrity.ps1) | release-level integrity и executable embedded Gate replay; не доказывает универсальную field effectiveness |
 
 Для понимания принципов начните с этого README. Для реальной инициативы следуйте предложению iDPF и открывайте Bootstrap Guide или Working Process Guide только когда требуется подробная механика. Нормативные основания находятся в AI SDLC DPF, а не в tutorial-примерах или исторических документах.
 
-Текущие версии основных компонентов iDPF 3.7.1:
+Текущие версии основных компонентов iDPF 3.7.2:
 
 | Компонент | Версия | Состояние |
 |---|---:|---|
-| iDPF Runtime | `3.7.1` | released · Beta |
+| iDPF Runtime | `3.7.2` | released · Beta |
 | AI SDLC DPF | `1.0.1` | controlled working, unchanged |
-| AGENTS dispatcher | `2.10.1` | operational |
-| Bootstrap Guide | `1.10.1` | operational |
-| Working Process Guide | `1.12.1` | operational |
+| AGENTS dispatcher | `2.10.2` | operational |
+| Bootstrap Guide | `1.10.2` | operational |
+| Working Process Guide | `1.12.2` | operational |
 | Engineering Views review contract | `0.3.0-candidate` | candidate module |
 | Runtime Capability Profile schema | `1.1` | backward-compatible Candidate schema |
 | Model Selection Recommendations | `1.1.0` | admitted informative guidance |
 
-История развития и направления дальнейшей проверки описаны в [Evolution Roadmap](docs/KIT_EVOLUTION_ROADMAP.md). Изменения конкретной версии находятся в [Release Notes 3.7.1](docs/releases/RELEASE_NOTES_3_7_1.md), а выпущенный предшественник — в [Release Notes 3.7.0](docs/releases/RELEASE_NOTES_3_7_0.md).
+История развития и направления дальнейшей проверки описаны в [Evolution Roadmap](docs/KIT_EVOLUTION_ROADMAP.md). Изменения конкретной версии находятся в [Release Notes 3.7.2](docs/releases/RELEASE_NOTES_3_7_2.md), а выпущенный предшественник — в [Release Notes 3.7.1](docs/releases/RELEASE_NOTES_3_7_1.md).
 
 ## Происхождение, версия и лицензия
 
@@ -301,7 +301,7 @@ iDPF возник на пересечении системной инженер�
 
 Концептуальной основой является [First Principles Framework — FPF](https://github.com/ailev/FPF). iDPF использует связанные идеи первых принципов, предметных DPF и локализации методов, но не является официальной дистрибуцией FPF; affiliation или endorsement авторами FPF не заявляются. Внешние FPF-файлы не включаются в пакет и не relicensed.
 
-Публичная identity текущей release configuration — `Instantiatio DPF 3.7.1 — Engineering Work Runtime · Beta`. Выпущенный предшественник — `Instantiatio DPF 3.7.0 — Engineering Work Runtime · Beta`. Исторические обозначения `Engineering Work Kit 3.1.0`, DPF assembly `Released 2.2.0` и более ранние local baselines сохраняются только как provenance и не являются текущей версией Runtime.
+Публичная identity текущей release configuration — `Instantiatio DPF 3.7.2 — Engineering Work Runtime · Beta`. Выпущенный предшественник — `Instantiatio DPF 3.7.1 — Engineering Work Runtime · Beta`. Исторические обозначения `Engineering Work Kit 3.1.0`, DPF assembly `Released 2.2.0` и более ранние local baselines сохраняются только как provenance и не являются текущей версией Runtime.
 
 Release flow разделяет подготовку документации, package assembly и внешнюю публикацию:
 

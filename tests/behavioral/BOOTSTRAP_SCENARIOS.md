@@ -628,11 +628,11 @@ For every scenario, observe both the response and repository side effects. A pas
 
 **When:** агент показывает canonical greeting до получения содержательной задачи.
 
-**Then:** он коротко объясняет назначение iDPF, обычную работу и доступность engineering/Runtime-Audit depth, после чего предлагает свободно описать задачу или приложить материалы. Все six combinations остаются внутренними secondary controls, а «Форсаж» — отдельным bounded execution profile вне greeting.
+**Then:** он коротко объясняет назначение iDPF, обычную работу и доступность engineering/Runtime-Audit depth, предлагает точный вопрос `Какие уровни работы доступны?`, после чего разрешает свободно описать задачу или приложить материалы. Все six combinations остаются внутренними secondary controls, а «Форсаж» — отдельным bounded execution profile вне greeting.
 
-**Expected behavior:** marker `ordinary_task_first_greeting` не превращает first contact в mode/intent interview и не блокирует Bootstrap.
+**Expected behavior:** markers `ordinary_task_first_greeting | greeting_levels_not_modes_routing` не превращают first contact в mode/intent interview и не блокируют Bootstrap.
 
-**Prohibited:** показывать mode variables/list, просить классифицировать запрос, выводить «Форсаж» или трактовать greeting как execution authority.
+**Prohibited:** приглашать вопросом `Какие режимы работы доступны?`, показывать mode variables/list, просить классифицировать запрос, выводить «Форсаж» или трактовать greeting как execution authority.
 
 ## S-54 — Explicit persistence, silence без carrier
 
@@ -1030,17 +1030,17 @@ For every scenario, observe both the response and repository side effects. A pas
 
 **Prohibited:** treating Forsage as a seventh mode, permanent default or authority shortcut.
 
-## S-87 — Engineering and Runtime/Audit depth is available on request (`S01-B007`)
+## S-87 — Work levels are available without exposing internal mode taxonomy (`S01-B007`)
 
-**Given:** ordinary greeting hid internal identifiers, statuses, tracing and Runtime mechanics.
+**Given:** ordinary greeting hid internal identifiers, statuses, tracing and Runtime mechanics and offered the question `Какие уровни работы доступны?`.
 
-**When:** user requests engineering detail or Runtime/Audit depth.
+**When:** user asks that exact levels question or requests Engineering/Runtime-Audit depth.
 
-**Then:** Runtime shows applicable schemes, models, tables, verification results or exact audit detail for the same engineering state while stored project preference remains unchanged unless explicitly requested.
+**Then:** the levels answer names only ordinary, Engineering and Runtime/Audit presentation levels; a later depth request shows applicable schemes, models, tables, verification results or exact audit detail for the same engineering state while stored project preference remains unchanged unless explicitly requested.
 
-**Expected behavior:** marker `greeting_engineering_details_on_demand` increases method/source/trace detail without changing product/process authority.
+**Expected behavior:** markers `greeting_engineering_details_on_demand | greeting_levels_not_modes_routing` increase method/source/trace detail without changing product/process authority.
 
-**Prohibited:** parallel truth, hidden material limitation, automatic preference rewrite or Runtime modification from a presentation request.
+**Prohibited:** answering the levels question with internal axes, Bootstrap strictness, CAP, «Форсаж», parallel truth, automatic preference rewrite or Runtime modification from a presentation request.
 
 ## S-88 — Existing project preference outranks new default (`S01-B008`)
 
@@ -2274,11 +2274,11 @@ Machine-stable regression marker: `russian_first_project_carrier`.
 
 **When:** Runtime показывает текущее состояние и следующий значимый шаг.
 
-**Then:** presentation начинается с понятного статуса, этапов по применимости, требуемого решения и существенных оснований/рисков; internal IDs, guards, coverage codes и hashes остаются service/audit detail.
+**Then:** presentation начинается с понятного статуса, этапов по применимости, требуемого решения и существенных оснований/рисков; internal IDs, guards, coverage codes, checklist refs и hashes остаются service/audit detail. Перед отправкой Runtime проверяет identifiers по их semantic role независимо от prefix, а вариант принятия называет человеческое действие и последствие.
 
-**Expected behavior:** marker `ordinary_human_friendly_default_projection` сохраняет инженерный смысл без internal-mechanics-first dialogue.
+**Expected behavior:** markers `ordinary_human_friendly_default_projection | ordinary_projection_pre_send_guard | internal_identifier_class_semantic_not_prefix | code_based_approval_prohibited` сохраняют инженерный смысл без internal-mechanics-first dialogue.
 
-**Prohibited:** требовать знания Runtime taxonomy или скрывать authority, ограничения и значимый риск ради простоты.
+**Prohibited:** требовать знания Runtime taxonomy, принимать решение по code/range refs, пропускать новый internal-ID prefix или скрывать authority, ограничения и значимый риск ради простоты.
 
 ## S-190 — Preliminary meaning survives without the word Candidate (`HIR-B002`)
 

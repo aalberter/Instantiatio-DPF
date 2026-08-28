@@ -1,7 +1,7 @@
 # Runtime 3.7 Operational Scenarios
 
 > Version: `0.2.0`
-> Status: `behavior_oracle` for released Runtime `3.7.1`, including the admitted field-regression extension.
+> Status: `behavior_oracle` for released Runtime `3.7.2`, including the executable corrective field-regression extension.
 
 ## Назначение и границы
 
@@ -91,32 +91,115 @@
 - **Fail:** entire process silently resets or stale affected evidence remains relied on.
 - **Evidence:** `EV-R37-HIR-10`; marker `r37_progress_reopen_process_change`.
 
-## Candidate successor field regression — `Polish01 / Chat 01`
+## Corrective field regression — self-contained three-Gate replay
 
-Общая fixture для двух профилей: local/test-data product request; internal Candidate basis содержит `26` result items, `10` reductions, `5` Loops, `7` required checklist items, exact configuration/hash и условие independent review. Источник evidence — `project/source/Polish01/Chat 01.md`; source не изменяется. Regression проверяет observable main presentation, а не только наличие обязательных смыслов.
+Общая fixture воспроизводит local/test-data product request и полный маршрут Work Context → Entry Decision → Working Process. Internal basis содержит exact result/reduction/Loop/checklist mappings, но observable ordinary Gate не зависит от внешнего transcript и проверяется как фактический текст. Field sources остаются provenance/evidence вне distributed fixture.
 
 ### Ordinary human-friendly profile
 
-- **Action:** представить process-authority decision без запроса внутренних Runtime details.
-- **Visible volume oracle:** `ordinary_visible_word_budget: 180` слов до `Варианты решения`; `ordinary_pre_option_bullet_budget: 6`; `ordinary_details_link_budget: 1`.
-- **Forbidden visible density:** `ordinary_internal_code_budget: 0` для `R-*`, `E-*`, `ER-*`, `RDX-*`, `HD-*`, `P-*`; `ordinary_hash_budget: 0`; `ordinary_item_level_checklist_budget: 0`.
-- **Required content:** не более четырёх grouped themes покрывают scope/result, этапы/dependencies, Verification/risks и последствия решения; явно видимы preliminary/not-admitted meaning, authority boundary, allowed/prohibited actions, material limitation/risk и applicable options.
-- **Recoverability:** все `26 + 10 + 5 + 7` внутренних элементов остаются в exact carrier и имеют mapping к grouped themes; отсутствие их в main presentation не считается потерей coverage.
-- **Pass:** пользователь может принять содержательное решение без знания Runtime schema; отдельный вопрос выводится только для элемента с independent disposition.
-- **Fail:** code/hash/checklist spill, скрытый decision-changing факт, links-only basis либо утверждение о пропорциональности процесса без evidence.
+- **Action:** последовательно предъявить три material Gate без запроса внутренних Runtime details.
+- **Visible volume oracle:** `ordinary_visible_word_budget: 130` слов до `Варианты решения` в каждом Gate; `ordinary_pre_option_bullet_budget: 5`; `ordinary_details_link_budget: 1`.
+- **Forbidden visible density:** `ordinary_internal_code_budget: 0` для любого identifier, существующего только для internal trace независимо от prefix; `ordinary_hash_budget: 0`; `ordinary_item_level_checklist_budget: 0`; `ordinary_code_based_approval_budget: 0`.
+- **Required content:** grouped themes покрывают scope/result, этапы/dependencies, Verification/risks и последствия решения; явно видимы preliminary/not-admitted meaning, authority boundary, allowed/prohibited actions, material limitation/risk и applicable options.
+- **Recoverability:** exact internal mapping остаётся в Candidate carriers; отсутствие item-level trace в main presentation не считается потерей coverage.
+- **Pass:** пользователь принимает содержательное действие без знания Runtime schema; отдельный вопрос выводится только для элемента с independent disposition.
+- **Fail:** code/hash/checklist spill, code-based approval, скрытый decision-changing факт, links-only basis либо утверждение о пропорциональности процесса без evidence.
 - **Evidence marker:** `r37_polish01_ordinary_grouped_budget`.
+
+#### Work Context Gate — positive fixture
+
+```ordinary-gate
+## Статус
+
+Подготовлен предварительный контекст локальной демонстрации системы бронирования. В работу входят клиентский и административный интерфейсы, сервер, база данных и проверка защиты от конфликтующих броней. Реальные персональные данные и готовность к эксплуатации исключены.
+
+Вы можете утвердить границы проекта. Допуск разрешит только выбрать маршрут дальнейшей работы; требования, архитектура и разработка останутся неутверждёнными. Ограничение: визуальный референс пока проверен не полностью и должен быть повторно рассмотрен до решения по интерфейсу.
+
+## Рекомендация
+
+Допустить описанный контекст как основу для выбора рабочего маршрута, сохранив запрет на разработку.
+
+## Варианты решения
+
+1. **Принять рекомендованный вариант** — допустить контекст для выбора маршрута; разработка останется запрещена.
+2. Вернуть контекст на уточнение и указать необходимое изменение.
+3. Отложить или отклонить инициативу без начала разработки.
+```
+
+#### Entry Decision Gate — positive fixture
+
+```ordinary-gate
+## Статус
+
+Контекст локальной демонстрации допущен. Следующее решение определяет только способ организации работы и того, кто вправе утвердить процесс.
+
+Рекомендуемый маршрут — подготовить специализированный рабочий процесс и первый ограниченный цикл. Это позволит спроектировать требования, проверки и последовательность этапов, но не разрешит код, зависимости, миграции или запуск сервисов. Защита от конфликтующих броней останется системным свойством, которое нельзя доказать одними компонентными тестами.
+
+## Рекомендация
+
+Выбрать специализированный процесс и подтвердить полномочие утверждать его последующую конфигурацию.
+
+## Варианты решения
+
+1. **Принять рекомендованный вариант** — разрешить подготовку предварительного процесса; разработка ещё не начнётся.
+2. Продолжить уточнение контекста или выбрать более узкий маршрут.
+3. Отложить или остановить выбор маршрута.
+```
+
+#### Working Process Gate — positive fixture
+
+```ordinary-gate
+## Статус
+
+Подготовлен предварительный рабочий процесс. Он ведёт от определения продукта и открытых решений через общую инженерную основу и ограниченные срезы к интеграционной проверке и итоговому допуску демонстрации.
+
+Сейчас подробно определён только первый цикл: сценарии, требования, правила бронирования и примеры приёмки. Код и запуск сервисов в нём запрещены. Полная внутренняя карта покрытия сохранена для инженерного просмотра; отдельная независимая проверка пока не требуется, но это решение пересматривается при росте риска или области использования.
+
+## Рекомендация
+
+Допустить процесс и начать только первый цикл определения продукта.
+
+## Варианты решения
+
+1. **Принять рекомендованный вариант** — ввести процесс и разрешить первую задачу по требованиям; разработка приложения останется запрещена.
+2. Вернуть процесс на уточнение с конкретным замечанием.
+3. Отложить или отклонить процесс без дальнейшей работы.
+```
+
+### Negative projection fixtures
+
+Каждый блок ниже обязан быть обнаружен guard как неприемлемый ordinary output. Prefix mutation не должна обходить semantic internal-ID classification.
+
+```ordinary-gate-negative
+1. Принять пункты checklist 1–7 без замечаний.
+2. Допустить `SC-01`–`SC-07` как конфигурацию контекста.
+```
+
+```ordinary-gate-negative
+1. Подтвердить `EDR-01`, `ZETA-904`, `trace_item_42` и checklist `ER-01`–`ER-06`.
+```
+
+```ordinary-gate-negative
+1. **Принять рекомендованный вариант** — допустить `WP-LC-001`, `CR-01`–`CR-30`, `RED-01`–`RED-08` и `PR-01`–`PR-11`.
+```
+
+### Separate Review carrier proportionality
+
+- **Prohibited fixture:** Gate-local checklist состоит из acknowledgements с общими authority, timing, outcome и response rule; separate Review carrier не имеет самостоятельного receiving use и не создаётся.
+- **Allowed fixture:** exact review basis получает независимого получателя или повторное material use, которое нельзя recoverably сохранить в principal carrier; receiving use и decision-changing consequence названы до создания.
+- **Marker:** `separate_review_carrier_requires_receiving_use`.
 
 ### Engineering level on explicit request
 
 - **Action:** после явного запроса показать engineering trace той же exact Candidate configuration.
-- **Visible volume oracle:** `engineering_summary_word_budget: 120` слов до trace; `engineering_result_trace_rows: 26`; `engineering_reduction_trace_rows: 10`; `engineering_loop_trace_rows: 5`; `engineering_checklist_items: 7`.
+- **Visible volume oracle:** `engineering_summary_word_budget: 120` слов до trace; fixture trace восстанавливает result, reduction, Loop и checklist mappings без изменения ordinary decision meaning.
 - **Required content:** exact configuration/currentness, result-to-group mapping, reductions with protected value/risk/reopen, Loop dependencies, Verification/Admission boundaries и rationale/counter-signal для independent-review condition.
 - **Consistency:** preliminary status, authority, allowed/prohibited effects, material risks/limitations и decision outcomes совпадают с ordinary profile; deeper detail не создаёт новый source, status или authority.
-- **Pass:** item-level trace и codes доступны и восстанавливают полную basis без повторения длинного introductory narrative.
-- **Fail:** trace недоступен, row counts не соответствуют fixture, ordinary и Engineering projections расходятся по decision-changing смыслу либо Engineering detail выдаётся без запроса.
+- **Pass:** item-level trace и codes доступны без повторения длинного introductory narrative.
+- **Fail:** trace недоступен, ordinary и Engineering projections расходятся по decision-changing смыслу либо Engineering detail выдаётся без запроса.
 - **Evidence marker:** `r37_polish01_engineering_exact_trace_budget`.
 
-Markers: `ordinary_grouped_semantic_coverage | basis_completeness_not_item_visibility | ordinary_checklist_grouped_questions | additional_ceremony_requires_decision_consequence`.
+Markers: `ordinary_grouped_semantic_coverage | basis_completeness_not_item_visibility | ordinary_checklist_grouped_questions | ordinary_projection_pre_send_guard | internal_identifier_class_semantic_not_prefix | code_based_approval_prohibited | separate_review_carrier_requires_receiving_use | additional_ceremony_requires_decision_consequence`.
 
 ## Acceptance summary
 

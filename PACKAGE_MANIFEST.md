@@ -1,16 +1,16 @@
-# Instantiatio DPF 3.7.1 — Engineering Work Runtime · Beta — Package Manifest
+# Instantiatio DPF 3.7.2 — Engineering Work Runtime · Beta — Package Manifest
 
 ## Publication control
 
 | Field | Value |
 |---|---|
-| Runtime version | `3.7.1` |
+| Runtime version | `3.7.2` |
 | Publication status | `released` |
 | Product maturity | `Beta` |
 | Assembly date | `2026-08-28` |
-| Public identity | `Instantiatio DPF 3.7.1 — Engineering Work Runtime · Beta` |
-| Archive identity | `Instantiatio-DPF-3.7.1-Beta.zip` |
-| Archive top-level directory | `Instantiatio-DPF-3.7.1-Beta` |
+| Public identity | `Instantiatio DPF 3.7.2 — Engineering Work Runtime · Beta` |
+| Archive identity | `Instantiatio-DPF-3.7.2-Beta.zip` |
+| Archive top-level directory | `Instantiatio-DPF-3.7.2-Beta` |
 | Canonical repository | `https://github.com/instantiatio/iDPF` |
 | License | `MIT`; root `LICENSE` |
 | Operational entry | `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` |
@@ -21,15 +21,17 @@
 
 Publication status, semantic version and product maturity are separate. This manifest is the authoritative package-level component index; it does not change the authority of included DPF or project-specific carriers. A publication-status value does not itself mean Release Admission or external publication.
 
+This manifest defines the exact `3.7.2` release configuration. Embedded `released` metadata identifies publication-ready bytes; Package Admission and external publication remain separate decisions and are not implied by this carrier.
+
 ## Component versions and authority
 
 | Component | Version | Status | Authoritative locus |
 |---|---|---|---|
-| Engineering Work Runtime | `3.7.1` | released · Beta | `PACKAGE_MANIFEST.md` and root operational documents |
+| Engineering Work Runtime | `3.7.2` | released · Beta | `PACKAGE_MANIFEST.md` and root operational documents |
 | AI SDLC DPF | `1.0.1` | controlled working | `AI_SDLC_DPF/framework/AI_SDLC_DPF.md` |
-| Bootstrap Guide | `1.10.1` | pilot | `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` |
-| Working Process Guide | `1.12.1` | pilot | `WORKING_PROCESS_AND_LOOPS_GUIDE.md` |
-| AGENTS dispatcher | `2.10.1` | pilot | `AGENTS.md` |
+| Bootstrap Guide | `1.10.2` | pilot | `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` |
+| Working Process Guide | `1.12.2` | pilot | `WORKING_PROCESS_AND_LOOPS_GUIDE.md` |
+| AGENTS dispatcher | `2.10.2` | pilot | `AGENTS.md` |
 | Engineering Review Views | `0.3.0-candidate` | derived review capability | `catalog/engineering_views/` |
 | Runtime Capability Profile schema | `1.1` | optional exact-configuration projection | `templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml` |
 | Model Selection Recommendations | `1.1.0` | admitted informative guidance | `MODEL_SELECTION_RECOMMENDATIONS.md` |
@@ -53,10 +55,10 @@ Publication status, semantic version and product maturity are separate. This man
 - Product Engineering Composition is an optional experimental Reference Process realization. It is not a DPF pattern, universal lifecycle, artifact catalogue or project authority.
 - New Working Processes use `FC-13-first operational entry`, expand project-relevant result coverage before explicit reductions and preserve admitted reduction/decision trace. Optional PEC remains a selected reference screen; module specialization and lightweight routes are preserved.
 - Coverage-first cross-carrier verification remains bounded regression evidence, not semantic proof; material claims retain semantic replay and exact-configuration limitations.
-- Runtime `3.7.0 · Beta` is the released product predecessor identity/configuration. Corrective Runtime `3.7.1 · Beta` preserves the full engineering basis in exact internal carriers while ordinary presentation groups its decision-relevant meaning; internal IDs, coverage/result codes, hashes and item-level checklist are visible only for independent disposition, explicit request or Engineering/Runtime-Audit use. Decision-changing Candidate status, authority boundaries, risks, limitations, consequences, Verification and Admission remain visible. Additional ceremony for low-consequence local/test-data work requires a concrete receiving use and decision-changing consequence; lifecycle and authority are not weakened. Codex remains a reference execution host, not a mandatory dependency.
+- Runtime `3.7.1 · Beta` is the released product predecessor identity/configuration. Corrective Runtime `3.7.2 · Beta` adds a mandatory ordinary pre-send projection guard, prefix-independent internal-ID detection, plain-language approval without codes, a separate-Review-carrier receiving-use guard, self-contained three-Gate positive/negative replay and exact greeting routing through `Какие уровни работы доступны?`. Decision-changing Candidate status, authority boundaries, risks, limitations, consequences, Verification and Admission remain visible. Codex remains a reference execution host, not a mandatory dependency.
 - Existing admitted project Working Processes remain valid for their admitted uses. Re-evaluate strengthened concern/guard readiness on a new initiative, new consequential Loop or material process change; do not mass-create PEC carriers.
 - The manifest is the exact distributed inventory. Unlisted live `project/**` carriers are project state and are excluded from distribution comparison, while manifest-listed scaffold `.gitkeep` files remain distribution components.
-- The package inventory contains exactly `53` hashed files plus this self-unhashed manifest, `54` files total. The current public `3.7.1` Release Notes are fixed at SHA-256 `0E3EA759CBE8F2B621596150AAED0150DE78F6753BE3B974AD18FD50E04B62BE`; predecessor `3.7.0` Notes remain byte-identical at SHA-256 `096C82E7F3849F45CF30BD7CADE63D18775A0FDA554793BB14D58CD4B52E38A2`; historical `3.6.1` Notes remain byte-identical at SHA-256 `305C89EEF6BB9EA0D2D7F856504BB7FB34DC4C1F95CAD0805D6D50CFB1D2ED9D`. Exact archive checksum and external handoff authority are recorded outside the archive; they do not create external publication.
+- The package inventory contains exactly `54` hashed files plus this self-unhashed manifest, `55` files total. The current public `3.7.2` Release Notes are fixed at SHA-256 `B43839107CC51128F1BF51321B3760F5EEF98035F75B7A4BC88929B5EDB5B0F9`; predecessor `3.7.1` Notes remain byte-identical at SHA-256 `0E3EA759CBE8F2B621596150AAED0150DE78F6753BE3B974AD18FD50E04B62BE`; `3.7.0` Notes remain byte-identical at SHA-256 `096C82E7F3849F45CF30BD7CADE63D18775A0FDA554793BB14D58CD4B52E38A2`. Exact archive checksum and external handoff authority are recorded outside the archive; they do not create external publication.
 - `.gitattributes` establishes UTF-8/LF-oriented text handling. Normative DPF, Reference Architecture, PAP and historical Quick Start retain declared byte-preserving exceptions and exact hashes.
 - The included `AI_SDLC_DPF/` payload remains byte-for-byte the `Released 2.2.0` assembly provenance declared by its controlled README; this provenance is distinct from the Released Instantiatio DPF Work Kit `3.1.0` wrapper identity. The admitted `3.0.0` local release baseline and its `2.5.2` predecessor remain preserved history.
 
@@ -64,7 +66,7 @@ Publication status, semantic version and product maturity are separate. This man
 
 At the admitted `3.6.0` release baseline, `AI_SDLC_DPF/reference/AI_SDLC_SOURCES.md` describes the ISO/IEC/IEEE 29148 successor as `CD under development`, while the official public state observed then was ISO/IEC/IEEE DIS 29148 Ed.3, stage `40.00`. The `3.6.0` release authority classified this bounded discrepancy as `accepted_non_blocking`.
 
-Successor publication reopened the issue for `3.7.1`. The exact release-authority disposition is `ISO29148-REL371 = reopened_assessed_nonblocking_for_3_7_1; no external currentness refresh; no successor-status/compliance claim; DPF unchanged; reopen on material applicability/currentness claim, source-maintenance task or next successor publication`. This zero-network release process did not refresh the official state; the controlled local source register is not currentness-qualified for the successor stage. The condition is not a Verification pass and no current successor-status, current-edition superiority, adoption or compliance claim is made.
+Successor publication reopened the issue for `3.7.2`. The exact release-authority disposition is `ISO29148-REL372 = reopened_assessed_nonblocking_for_3_7_2; no external currentness refresh; no successor-status/compliance claim; DPF unchanged; reopen on material applicability/currentness claim, source-maintenance task or next successor publication`. This zero-network release process did not refresh the official state; the controlled local source register is not currentness-qualified for the successor stage. The condition is not a Verification pass and no current successor-status, current-edition superiority, adoption or compliance claim is made.
 
 ## SHA-256 component inventory
 
@@ -73,7 +75,7 @@ Successor publication reopened the issue for `3.7.1`. The exact release-authorit
 | Path | Role | SHA-256 |
 |---|---|---|
 | `.gitattributes` | deterministic text/EOL policy | CA0CABA8A9C922FC3243773CC3A555390AB58962DD48F6143CF1B92BAF231122 |
-| `AGENTS.md` | dispatcher | 397BDB240BAAB2A048CF0AEA4AB4D79ACCA93E3DCB33C8F690DA79365BBF04A7 |
+| `AGENTS.md` | dispatcher | 74EFB82887BED9878F3066E5ABEFB008D941FD82F622DF3C9530765C5FF4E4B6 |
 | `AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md` | generated publication view | 57EBD58D7AAA9D1D63461F70025EEA3BE70F7168A3D4CE4BC09765E2287156F3 |
 | `AI_SDLC_DPF/examples/AI_SDLC_WORKED_EXAMPLES.md` | informative examples | 257F98C6C9EFE3EE77CA3EFB9E686B10CA5EAF878453F088F7FAC45AAE49DB93 |
 | `AI_SDLC_DPF/framework/AI_SDLC_APPLICATION_GUIDE.md` | informative guidance | FE8775074E04ACD080BFC8D029D26F99E1B73ED2E9047DF556E267CDC3FE6C55 |
@@ -97,7 +99,7 @@ Successor publication reopened the issue for `3.7.1`. The exact release-authorit
 | `catalog/working_process_compositions/templates/WORKING_PROCESS_COMPOSITION_RECORD.yaml` | optional composition record | 614F3DC3F33A7C13E0ACCE014F769357247C185C32B3A104BE8AC2DF9F11F8DA |
 | `docs/DPF_FORMATION_METHOD.md` | reference/provenance method | 93E6D1D1F4EB9F13B2F51656DE7E6B3D7D2782324D1103AE2BE43E15C700D744 |
 | `docs/DPF_FORMATION_REFERENCE.md` | formation reference | 723E3D9959265995C69F1271ACF2E0429C369B7C080A09B9B0538D5FA3E31AB2 |
-| `docs/KIT_EVOLUTION_ROADMAP.md` | roadmap | 8F49041C003876848518A222D08B99A957B82ED6C2E802EAB67AC299587584D4 |
+| `docs/KIT_EVOLUTION_ROADMAP.md` | roadmap | A30D8CDD092988A7720542F35F7FA98C1AB045F79B1A9591AA1112F928E8D232 |
 | `docs/releases/RELEASE_NOTES_3_2_0.md` | 3.2.0 release notes | DB8F0F2810B2E7A3EC1BEFE4B852914DA13712B573E9D36DE01F6747840F0D18 |
 | `docs/releases/RELEASE_NOTES_3_3_0.md` | 3.3.0 Beta release notes | 0BCC30AC781AE59F1CDD08FDCD2FCB7FF02F5465D18EB429BC7E8252A7E4C9E2 |
 | `docs/releases/RELEASE_NOTES_3_4_0.md` | 3.4.0 Beta release notes | DEEEDE3E869E08425101B318570E7A8DB4510C1D4EE12C5769DDCD83A6DE91C8 |
@@ -106,7 +108,8 @@ Successor publication reopened the issue for `3.7.1`. The exact release-authorit
 | `docs/releases/RELEASE_NOTES_3_6_1.md` | 3.6.1 Beta release notes | 305C89EEF6BB9EA0D2D7F856504BB7FB34DC4C1F95CAD0805D6D50CFB1D2ED9D |
 | `docs/releases/RELEASE_NOTES_3_7_0.md` | 3.7.0 Beta release notes | 096C82E7F3849F45CF30BD7CADE63D18775A0FDA554793BB14D58CD4B52E38A2 |
 | `docs/releases/RELEASE_NOTES_3_7_1.md` | 3.7.1 Beta release notes | 0E3EA759CBE8F2B621596150AAED0150DE78F6753BE3B974AD18FD50E04B62BE |
-| `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` | Bootstrap method | 4A2E38BFA9F4BB571026655355801B46506DD1BEF95FDC22119E75128C939F65 |
+| `docs/releases/RELEASE_NOTES_3_7_2.md` | 3.7.2 Beta release notes | B43839107CC51128F1BF51321B3760F5EEF98035F75B7A4BC88929B5EDB5B0F9 |
+| `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md` | Bootstrap method | 726758B0DEF62676928B4918AA6BA3B26C57CDB4F593424B6700793F959D46C1 |
 | `examples/CODEX_REFERENCE_CAPABILITY_PROFILE.yaml` | dated Codex reference capability profile | F6965322FD6DEFA84830C0A2B3C58CB0A1E26BBE3E9F8DD6841575A071A5EB29 |
 | `LICENSE` | MIT license | EF4DA070E506CD1018F449FC78BAE57537B96F797264CF56F133E411B5B611EC |
 | `MODEL_SELECTION_RECOMMENDATIONS.md` | admitted informative model guidance | 764B43344ED81983C6725BB7993650915BA8E5287E68F6FC790822C229F95431 |
@@ -114,17 +117,17 @@ Successor publication reopened the issue for `3.7.1`. The exact release-authorit
 | `project/source/.gitkeep` | empty project scaffold | 75A11DA44C802486BC6F65640AA48A730F0F684C5C07A42BA3CD1735EB3FB070 |
 | `project/src/.gitkeep` | empty project scaffold | 7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6 |
 | `project/tests/.gitkeep` | empty project scaffold | 7EB70257593DA06F682A3DDDA54A9D260D4FC514F645237F5CA74B08F8DA61A6 |
-| `README.md` | package entry and navigation | 5834A1781A837888CA82749306B5725CCA9D1058FEDABCA4F142DE427F5F7D1D |
-| `scripts/check_integrity.ps1` | integrity automation | 5615F77380074205832CBF572198415593753F3A924154B44B4DA81CBE41BBCA |
+| `README.md` | package entry and navigation | 6BAB97C3BFC5D5591192DDC6D92B28B3C07543C46DB06F52FCC7093DCA2E1479 |
+| `scripts/check_integrity.ps1` | integrity automation | 16A728AB7E302CA0C67BFE820C8862C93EECAF7591591AF9B1796652C902CF30 |
 | `templates/CONSOLIDATED_AUTHORITY_PACKAGE_TEMPLATE.md` | reusable bounded authority package | DD70C8B81EF02D2029B953D6BFDCEB45E589BB02C11A868D99E3818F28F87058 |
 | `templates/POST_INITIATIVE_LESSONS_REVIEW_TEMPLATE.md` | reusable post-initiative review | 3E84967F5AD4AFA442273CAFB15407EC5B397CA7B54D057096E63BEC4121A8B6 |
 | `templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml` | optional exact-configuration capability projection | 757E997A07DFCBE7CCD5B479CFD1BB48D86E355D9127A19EBB37D1E2CB991BDC |
 | `templates/STATE_INDEX_TEMPLATE.yaml` | optional state projection template | 68473096F407907A08D1B1121EDB2A152F4D68BB590B093A62E4A3D56A75BC76 |
-| `tests/behavioral/BOOTSTRAP_SCENARIOS.md` | behavioral acceptance contract | B5ACE9920CAA7E3B377F6CA1ED2C5DA9F5CB3FA27F8A5A9363B05F31C00C165A |
+| `tests/behavioral/BOOTSTRAP_SCENARIOS.md` | behavioral acceptance contract | E1A12DA68D8C5F6A68943C56A945B1F18C52D8B99770ABF9844D7D57FDF58DAE |
 | `tests/behavioral/RUNTIME_3_6_OPERATIONAL_SCENARIOS.md` | Runtime 3.6 operational acceptance contract | DCEBA99850AC484A7FC5E0F85520B09EAC43A56B194E311C5C078A7247C08BFC |
-| `tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md` | Runtime 3.7 operational acceptance contract | 5034C4BAE272B8D52625F853FF96429EFFB6CB32359A053F5A3956A12FE8D2A4 |
+| `tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md` | Runtime 3.7 operational acceptance contract | BB3E901F42C4C56F5E1A067BD2E334F0B9BA0C287BCC6A9CBF35C3EC0C5CE880 |
 | `tests/conformance/RUNTIME_BOUNDARY_CONFORMANCE_PROTOCOL.md` | exact-configuration conformance protocol | AD355CB8148EDE2D7BDE0F6458E5A5699223CA86E2566E2CCD0EAFD082A5C9BE |
-| `WORKING_PROCESS_AND_LOOPS_GUIDE.md` | process method | 5B2D0253A4FF2D0C9F67B413E66343CB4D75A92C361E057D23848D1603893520 |
+| `WORKING_PROCESS_AND_LOOPS_GUIDE.md` | process method | 966A20AA9AA0053F00089B770225CE4D89EE6E224103E14A5D600800E7EB9C55 |
 
 ## Verification command
 
@@ -134,4 +137,4 @@ On Windows PowerShell:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check_integrity.ps1
 ```
 
-The command verifies UTF-8, declared LF/EOL exceptions, the exact MIT LICENSE, Runtime `3.7.1 · Beta` package identity, current and historical Release Notes identity, FPF/public-boundary markers, one authoritative root AGENTS entry, bounded live Markdown links and anchors, operational placeholders, required files, DPF pattern/sentinel counts, exact continuous `S-1`–`S-204`, Runtime 3.6 and 3.7 operational scenarios, human-interaction/routing/progress markers, Decision UI and Engineering Gate Projection/review-checklist guards, capability-profile/conformance contracts, coverage-first mappings, model-guidance and PEC semantics, standalone/combined-publication parity, DPF assembly provenance, distributed/live-project separation and the exact `53`-row hash inventory. Marker checks remain bounded regression evidence; semantic replay, independent review, final package Admission and external publication remain separate.
+The command verifies UTF-8, declared LF/EOL exceptions, the exact MIT LICENSE, Runtime `3.7.2 · Beta` package identity, current and historical Release Notes identity, FPF/public-boundary markers, one authoritative root AGENTS entry, bounded live Markdown links and anchors, operational placeholders, required files, DPF pattern/sentinel counts, exact continuous `S-1`–`S-204`, Runtime 3.6 and 3.7 operational scenarios, human-interaction/routing/progress markers, Decision UI and Engineering Gate Projection/review-checklist guards, capability-profile/conformance contracts, coverage-first mappings, model-guidance and PEC semantics, standalone/combined-publication parity, DPF assembly provenance, distributed/live-project separation and the exact `54`-row hash inventory. It also executes the self-contained three-Gate ordinary projection fixtures against the word/bullet/link budgets, allowed/prohibited effects, generic internal-ID and SHA-256 detection, plain-language approval and negative prefix mutation. This deterministic replay remains bounded regression evidence; live-model usability, independent review, functional Admission, final package Admission and external publication remain separate.
