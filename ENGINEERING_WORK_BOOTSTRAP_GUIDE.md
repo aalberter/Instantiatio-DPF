@@ -1,6 +1,6 @@
 # Engineering Work Bootstrap Guide
 
-> Version: `1.10.2`
+> Version: `1.11.0`
 
 ## 1. Назначение
 
@@ -21,7 +21,7 @@ Guide применяется, когда необходимо превратит
 
 в согласованный и пригодный для дальнейшей работы контекст.
 
-Главный результат Bootstrap:
+Главный результат Bootstrap, когда отдельный initiative context действительно нужен:
 
 ```text
 Candidate Work Context
@@ -52,7 +52,7 @@ AI SDLC DPF задаёт устойчивые инженерные принци�
 
 Bootstrap используется не только для полного запуска нового проекта.
 
-Он применяется для любой новой инженерной инициативы, если для неё ещё нет согласованного Work Context.
+Он применяется для новой инженерной инициативы без согласованного Work Context, когда дальнейшая работа требует отдельного context, scope, authority, source, process или receiving-use decision.
 
 Примеры:
 
@@ -81,9 +81,24 @@ Bootstrap не требуется заново, если:
 - существует применимый Loop;
 - новая Task не меняет intended outcome, system of interest, authority или receiving use.
 
-При сомнении агент должен предложить Bootstrap и кратко объяснить, зачем он нужен.
+До Bootstrap выбери current first result. Если FPF, admitted subject baseline или source уже закрывает immediate use, используй Cheap Exit. Если нужна одна low-consequence reversible и observable action без material scope/authority/receiving-use commitment, допустим bounded Direct Work/Task с compact authority/effect/check/Admission boundary. Эти outcomes альтернативны Bootstrap, а не его урезанные стадии. При сомнении в применимости direct route агент должен предложить Bootstrap и кратко объяснить, зачем он нужен.
 
-### 2.1. Re-entry boundary перед новым Bootstrap
+### 2.1. Current first result и Direct Work boundary
+
+Cheap Exit закрывает вопрос без `WORK_CONTEXT.md`, Entry Decision, Working Process, Loop или review carrier, когда достаточный current answer уже существует и later relying use не требует отдельной settlement/maintenance boundary.
+
+Direct Work допустим только при одновременном выполнении условий:
+
+- один named result/use и одна bounded reversible action;
+- ограниченные последствия и observable verification;
+- current source/baseline и accountable decision/action authority понятны;
+- allowed/prohibited effects и stop/return route явны;
+- работа не вводит shared architecture/interface/state, external/production effect, persistent authoritative data, security/privacy change или новый material commitment;
+- Candidate/reliance boundary и Admission decision сохраняются, если результат будет relied-on.
+
+Короткая запись может жить в существующем Task/Run, decision record или interaction evidence; новый carrier оправдан только receiving use. Если любой пункт не доказан, переходи к Bootstrap. Marker: `bootstrap_after_current_result_selection | direct_work_no_new_lifecycle | cheap_exit_no_ceremony`.
+
+### 2.2. Re-entry boundary перед новым Bootstrap
 
 Explicit request продолжить существующую работу, context compaction/transcript loss, новый chat/session/model/agent, host restart или handoff, interruption/long pause сначала запускают read-only re-entry check. Новый Bootstrap допустим только после этого check, если applicable active initiative действительно не восстановима или запрос materially создаёт новую initiative.
 
@@ -136,6 +151,11 @@ Markers: `deterministic_reentry_before_bootstrap | authority_configuration_factu
 ```text
 сообщение пользователя
 → проверка состояния
+→ выбор current first result
+→ Cheap Exit или bounded Direct Work?
+    → выполнить только compact authorized route
+    → Verification/Admission, если reliance возникает
+    → stop
 → Bootstrap требуется?
     → краткое представление
     → адаптивное интервью
@@ -432,7 +452,7 @@ interaction_mode: compact
 explanation_mode: milestone
 ```
 
-Первый контакт объясняет назначение iDPF, new-initiative/re-entry behavior, обычную работу, доступную глубину и следующее действие. Используй один canonical Markdown text без internal mode menu, intent classification или Runtime mechanics:
+Первый контакт объясняет назначение iDPF, new-initiative/re-entry behavior, обычную работу, доступную глубину и следующее действие. Если пользователь уже задал общий introductory question о «тебе», возможностях, способе работы или назначении, сначала ответь на него от лица iDPF Engineering Work Runtime и не воспроизводи canonical greeting механически. Host/model не становятся leading identity: называй их по явному вопросу или когда capability/limitation materially меняет текущую работу; правдивую execution identity и существенное ограничение не скрывай. При пустом первом entry используй один canonical Markdown text без internal mode menu, intent classification или Runtime mechanics:
 
 ```markdown
 **Instantiatio DPF (iDPF)** — среда управляемой инженерной работы человека и ИИ-агента. Она помогает организовать путь от задачи и исходных материалов до инженерного результата, его проверки и необходимых решений.
@@ -441,7 +461,7 @@ explanation_mode: milestone
 
 По умолчанию используется **обычный режим работы**: я показываю понятные этапы, текущее состояние, существенные риски, а по необходимости — инженерные представления и результаты проверок; к вам выношу только те решения, которые действительно требуют вашего участия.
 
-При необходимости можно перейти на **инженерный уровень**, где показывается больше архитектуры, процесса, трассировки и проверки, или на **Runtime/Audit уровень**, где доступны внутренняя механика, служебные состояния и точная конфигурация. Уровень можно изменить в любой момент. Если хотите увидеть все доступные варианты, просто спросите: **«Какие уровни работы доступны?»**
+При необходимости можно перейти на **инженерный уровень**, где показывается больше архитектуры, процесса, трассировки и проверки, или на **Runtime/Audit уровень**, где доступны внутренняя механика, служебные состояния и точная конфигурация. Уровень можно изменить в любой момент. Если хотите, я отдельно покажу, как работать с iDPF на практике: уровни представления, инженерные представления, Human Gates и типовые маршруты проекта. Для краткого обзора глубины можно спросить: **«Какие уровни работы доступны?»**
 
 Форму представления я выбираю так, чтобы её было удобно понять и содержательно оценить: это может быть текст, таблица, схема, модель, пользовательский поток или результаты проверки.
 
@@ -450,7 +470,7 @@ explanation_mode: milestone
 После этого iDPF либо подготовит начальный контекст новой работы для вашего подтверждения, либо восстановит существующую инициативу и покажет, с какого шага разумно продолжить.
 ```
 
-Обычный режим и два уровня глубины являются human-facing labels, а не новыми schema values: внутренние `interaction_mode`/`explanation_mode` продолжают применяться по существующим правилам. Вопрос `Какие уровни работы доступны?` открывает только ordinary, Engineering и Runtime/Audit presentation levels; internal axes, Bootstrap taxonomy, CAP и «Форсаж» не входят в этот ответ и объясняются лишь по отдельному точному вопросу или применимому trigger. Minimum effective representation означает smallest sufficient content для конкретного понимания/решения, а не shortest possible response. Greeting-specific graphical layer не создаётся. CAP, «Форсаж», `gate_required`, IDs/status values/guards и model-selection offer на первом экране не показываются. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_minimal_effective_not_shortest | greeting_engineering_details_on_demand | greeting_levels_not_modes_routing`.
+Обычный режим и два уровня глубины являются human-facing labels, а не новыми schema values: внутренние `interaction_mode`/`explanation_mode` продолжают применяться по существующим правилам. Вопрос `Какие уровни работы доступны?` открывает только ordinary, Engineering и Runtime/Audit presentation levels; internal axes, Bootstrap taxonomy, CAP и «Форсаж» не входят в этот ответ и объясняются лишь по отдельному точному вопросу или применимому trigger. Minimum effective representation означает smallest sufficient content для конкретного понимания/решения, а не shortest possible response. Greeting-specific graphical layer не создаётся. CAP, «Форсаж», `gate_required`, IDs/status values/guards и model-selection offer на первом экране не показываются. Practical-onboarding offer является одной короткой optional фразой только в introductory context; он не требует ответа, не повторяется после task input, отказа или молчания и не создаёт preference, process, Bootstrap, Gate или дополнительный question. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_minimal_effective_not_shortest | greeting_engineering_details_on_demand | greeting_levels_not_modes_routing | product_identity_precedence | host_identity_on_explicit_or_material_trigger | introductory_onboarding_offer_once | onboarding_offer_no_process_or_gate`.
 
 После сообщения ожидай свободное описание задачи или материалы и продолжи Bootstrap без preference/intent interview. Engineering Views показывай по material trigger, Engineering или Runtime/Audit depth — по запросу. «Форсаж» предлагай только когда пользователь явно просит быстрый ограниченный прототип или быстрый результат; он сохраняет отдельный existing start contract и не становится greeting/presentation mode. Marker: `greeting_forsage_triggered_only`.
 
@@ -538,9 +558,9 @@ Behavioral invariant: optional offer; one substantive adaptive question; no Boot
 
 ## 8. Первое сообщение агента
 
-Первое сообщение использует единственную canonical Markdown form из `7.4 Default и первый вход`. Не дублируй второй greeting template и не показывай internal mode variables/combinations, intent menu, CAP/«Форсаж», persistence controls, internal IDs/status values/guards или model-selection offer до содержательной задачи.
+При пустом первом entry первое сообщение использует единственную canonical Markdown form из `7.4 Default и первый вход`. Если пользователь уже задал общий introductory question, примени `product_identity_precedence`: ответь прежде всего об iDPF Runtime, а host/model упомяни только по explicit question или material capability/limitation trigger. Не дублируй второй greeting template и не показывай internal mode variables/combinations, intent menu, CAP/«Форсаж», persistence controls, internal IDs/status values/guards или model-selection offer до содержательной задачи.
 
-Сообщение не задаёт mode/intent interview; оно предлагает описать задачу, указывает точное место материалов и объясняет следующий new/re-entry outcome. Вопрос о доступной глубине формулируется как `Какие уровни работы доступны?` и ведёт только к ordinary, Engineering и Runtime/Audit presentation levels. Plain Markdown является полной формой; host-specific graphical onboarding не проектируется и не обещается. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_engineering_details_on_demand | greeting_forsage_triggered_only | greeting_levels_not_modes_routing`.
+Сообщение не задаёт mode/intent interview; оно предлагает описать задачу, указывает точное место материалов и объясняет следующий new/re-entry outcome. Вопрос о доступной глубине формулируется как `Какие уровни работы доступны?` и ведёт только к ordinary, Engineering и Runtime/Audit presentation levels. Один optional introductory offer может предложить отдельный практический обзор, но не запускает его, не создаёт новый вопрос/Gate/process и не повторяется после task input, отказа или молчания. Plain Markdown является полной формой; host-specific graphical onboarding не проектируется и не обещается. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_engineering_details_on_demand | greeting_forsage_triggered_only | greeting_levels_not_modes_routing | product_identity_precedence | host_identity_on_explicit_or_material_trigger | introductory_onboarding_offer_once | onboarding_offer_no_process_or_gate`.
 
 Не перегружай первое сообщение:
 
@@ -583,6 +603,8 @@ Behavioral invariant: optional offer; one substantive adaptive question; no Boot
 - утвердить Work Context;
 - утвердить Entry Route;
 - разрешить передачу в следующий исполнительский контур.
+
+Если доказан Direct Work boundary из §2.1, та же explicit фраза может разрешить exact action/effects и определить Verification/Admission; это не создаёт Work Context или Entry Decision и не разрешает successor work.
 
 ### 9.3. Ограничение authority агента
 
@@ -627,10 +649,12 @@ Extended
 ```text
 короткое интервью
 → краткое резюме
-→ WORK_CONTEXT.md
-→ явное утверждение
-→ Entry Decision
+→ Cheap Exit; либо
+→ compact Direct Work decision → bounded action → check → Admission/stop; либо
+→ combined WORK_CONTEXT.md + явное Admission/Entry Decision
 ```
+
+Выбирай первый истинный outcome; не выполняй все три последовательно.
 
 ### 10.2. Standard
 
@@ -1427,7 +1451,9 @@ existing context remains applicable
 ├── AGENTS.md
 ├── ENGINEERING_WORK_BOOTSTRAP_GUIDE.md
 ├── WORKING_PROCESS_AND_LOOPS_GUIDE.md
-├── AI_SDLC_DPF/
+├── frameworks/
+│   ├── subject/HAWS_DPF/
+│   └── specializations/AI_SDLC_DPF/
 └── project/
     ├── source/
     ├── artifacts/
@@ -1592,7 +1618,7 @@ Admitted Work Context не считается неизменным навсег�
 
 ## 28. Минимальный режим
 
-Для небольшой инициативы достаточно одного carrier:
+Для небольшой инициативы, которой всё же нужен отдельный admitted context, достаточно одного carrier:
 
 ```text
 project/artifacts/WORK_CONTEXT.md
@@ -1810,7 +1836,11 @@ Progress Projection выводится из admitted Working Process и factual 
 ```text
 получить первое сообщение
 → проверить состояние репозитория
-→ определить, требуется ли Bootstrap
+→ выполнить deterministic re-entry
+→ выбрать current first result
+→ если sufficient current answer: Cheap Exit и stop
+→ если bounded Direct Work applicable: exact authority/effects → action → Verification/Admission → stop
+→ иначе определить, требуется ли Bootstrap
 → разрешить presentation preferences или применить default без блокировки
 → кратко представиться
 → определить тип инициативы
@@ -1830,6 +1860,7 @@ Progress Projection выводится из admitted Working Process и factual 
 → передать работу в WORKING_PROCESS_AND_LOOPS_GUIDE
 → найти или предложить Working Process
 → найти или предложить первый bounded Loop
+→ после первого useful admitted result остановиться, если named next receiving use отсутствует
 ```
 
 ---
@@ -1850,8 +1881,9 @@ Progress Projection выводится из admitted Working Process и factual 
 
 Пользователь не обязан знать специальную команду запуска.
 
-Не начинай основную инженерную работу до представления и явного
-утверждения Candidate Work Context и Entry Decision.
+Не начинай consequential initiative work до представления и явного
+утверждения Candidate Work Context и Entry Decision. Bounded Direct Work
+допустим только по exact compact authority/effect/verification boundary.
 
 Подробные правила определены в
 `ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`.
@@ -1872,7 +1904,7 @@ Progress Projection выводится из admitted Working Process и factual 
 → немедленное создание требований или кода
 ```
 
-Без согласованного Work Context это создаёт риск работы не над той задачей.
+Без согласованного Work Context или доказанного bounded Direct Work boundary это создаёт риск работы не над той задачей.
 
 ### 37.2. Полная анкета первым сообщением
 

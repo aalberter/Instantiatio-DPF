@@ -109,6 +109,21 @@ Codex execution occurs only with exact test authority and safe accessible capabi
 - Simple reversible action, напрямую проверяемый человеком и не relying on technical enforcement, не требует profile или этого protocol.
 - Tool permission и возможность выполнить test action не создают project/decision authority.
 
+## Conditional `E.16` autonomous-enactment evidence
+
+Этот профиль выполняется только когда exact Runtime/Method/Service claim относится к Work с unsupervised decision или actuation и consequential Run relies on its technical enforcement. Suggestion-only behavior с human confirmation at every action получает `not applicable` с observable confirmation point; он не требует synthetic autonomy test.
+
+Для applicable claim evidence должно наблюдаемо показать:
+
+1. named/versioned `AutonomyBudgetDecl`; prospective edition не допускает actual Work, а enactment-bound edition resolves performer System, exact A.2.1 assignment, target Work, override-authority System/assignment и current independent authority relation;
+2. каждый autonomy-dependent Method step names exact required local kind и `requiresAutonomyBudget`; missing/mismatched binding blocks the step;
+3. Green-Gate checks scope/window, enactable assignment state, remaining budget, ordinary guards, actual-pair A.2.7 SoD predicate and independent authority; any failure blocks affected enactment;
+4. every admitted budgeted/override Work creates a Work-anchored `AutonomyLedgerEntry` with exact performer, assignment, budget edition, deltas and guard verdicts;
+5. depletion blocks subsequent autonomy-gated steps until admitted `ResumeAutonomy` passes actual-assignment SoD, independent authority and ordinary guards;
+6. if scout/probe/commit is claimed, a successful probe cannot cross the declared commit checkpoint without the required decision and ledger update.
+
+Schema/field presence, CAP budget text, logs not anchored to Work, different role labels, different assignment IDs or a successful dry run do not prove E.16 enactment. Reuse the ordinary Task/Run/CAP and evidence carriers; no universal autonomy service, registry, telemetry service, lifecycle or gate family is introduced.
+
 ## Verdict и scope
 
 Verdict относится только к tested boundary и exact runtime configuration:

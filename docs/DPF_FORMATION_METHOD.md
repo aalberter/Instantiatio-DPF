@@ -1,472 +1,160 @@
-# Как создать DPF на основе FPF
+# Как сформировать или изменить DPF по текущему FPF
 
-> **Status:** Reference / Provenance  
-> Этот документ описывает технологию формирования нового DPF из FPF.
-> Он не участвует в обычной проектной работе и не является инструкцией
-> по автоматическому изменению текущего DPF.
+> Runtime route: FPF 31.08 — `E.4.PFAD`, `E.4.DPF`, `E.4.DPF.DA`, `E.8:11`.
+> Status: operational guidance; не создаёт framework, Work, authority, admission или release.
 
 ## Назначение
 
-**DPF — Domain Principles Framework** — предметный учебник для AI-агента: набор актуальных принципов, различений, паттернов и методов работы в конкретной предметной области.
+Этот Guide помогает выбрать **первый действительно нужный результат** при создании, изменении или использовании Domain Principles Framework — предметного фреймворка (DPF). Он не задаёт универсальный lifecycle и не требует проходить все описанные ниже outcomes.
 
-Связь уровней:
+Для уже Final Admitted HAWS DPF 1.0 этот route используется только для current relied-on application в его admitted scope. Он не переоткрывает formation, evaluation или Final Admission HAWS и не разрешает изменять его publication.
 
-- **FPF** — общие первые принципы и методы мышления;
-- **DPF** — принципы и паттерны конкретной предметной области;
-- **LPF** — локальные правила и регламенты конкретной организации;
-- **рабочий процесс** — порядок применения FPF, DPF и LPF людьми и агентами.
+## 1. Сначала зафиксировать immediate use
 
----
+До authoring назовите:
 
-## 1. Подготовить рабочую среду
+- practitioner/reader и recurring problem;
+- immediate result и его first receiving use;
+- exact current FPF edition и применимые admitted DPF/domain sources;
+- что later author/reviewer действительно должен поддерживать или использовать;
+- consequence, non-use boundary, authority и reopen observation.
 
-1. Скачать актуальную версию FPF.
-2. Положить FPF в папку проекта или подключить к рабочей среде как отдельный файл.
-3. Не вставлять весь FPF в чат через copy-paste.
-4. Убедиться, что агент может находить и читать файл.
-5. Использовать наиболее сильную доступную модель и высокий уровень reasoning.
+Не начинайте с шаблона, списка паттернов, интервью, DRR, assessment или review plan. Сначала выберите outcome, условие которого истинно сейчас.
 
-FPF должен быть внешним источником знаний для агента, а не разовой длинной вставкой в контекст.
+## 2. Выбрать current first result по `E.4.DPF:4.1`
 
----
+### 2.1. Cheap route или stop
 
-## 2. Определить предметную область
+Используйте existing FPF, admitted DPF или source напрямую и остановитесь без `E.4.PFAD` и `E.9` DRR, если immediate use уже закрыт и later use не требует settled:
 
-До генерации DPF зафиксировать:
+- framework edition/dependency;
+- initial pattern placement или material relation;
+- maintained authoring boundary;
+- publication/access boundary.
 
-- название предметной области;
-- классы проблем, которые должен помогать решать DPF;
-- целевую аудиторию;
-- уровень подготовки читателей;
-- рабочий язык и терминологию;
-- основные источники;
-- границы области;
-- то, что явно не входит в область.
+Это полноценный полезный исход, а не предварительная стадия framework formation.
 
-Предметную область можно задать:
+### 2.2. Framework-architecture answer
 
-- названием;
-- описанием типовой проблемной ситуации;
-- набором исходных документов;
-- результатами предварительного разговора с агентом.
+Открывайте `E.4.PFAD` только если решение должно установить хотя бы одну later-used boundary. Один accepted answer выбирает один из пяти outcomes:
 
-### Пример
+1. new/revised framework edition;
+2. contribution to an existing framework;
+3. maintained non-framework product;
+4. thinner publication/access route;
+5. no new maintained product now.
 
-```text
-Предметная область: проектирование агентских процессов разработки ПО.
+Один ordinary `E.9` DRR записывает answer и rationale. `E.4.PFAD` не создаёт отдельный framework result или relation. Cheap Exit и architecture decision — альтернативы, не последовательные этапы.
 
-DPF должен помогать:
+### 2.3. Optional organization-design proposal
 
-- проектировать роли агентов;
-- разделять планирование, исполнение и проверку;
-- определять артефакты и состояния процесса;
-- строить циклы улучшения;
-- предотвращать потерю контекста и скрытые изменения требований.
+Создавайте separate `FrameworkOrganizationDesignProposal` только когда candidate organization claims должны получить собственный review **до** architecture answer. Proposal не является prerequisite, framework edition, DRR или admission.
 
-Целевая аудитория: архитекторы, тимлиды и инженеры, внедряющие AI-native SDLC.
-```
+### 2.4. Architecture-description use
 
----
+Если framework entity и architecture relations уже существуют, а immediate use относится к использованию architecture description, применяйте `C.30.AD`. Не создавайте новый formation result.
 
-## 3. Создать первый черновик DPF
+### 2.5. Authoring-dependency description
 
-### Минимальный промпт
+Создавайте `FrameworkAuthoringDependencyDescription` только когда named next authoring use требует stable account of dependency availability/relevance. Он не является автоматическим следствием PFAD answer.
 
-```text
-Используй FPF.
+Порядок пунктов 2.1–2.5 не является order of work. Каждый result существует только при своём predicate и receiving use.
 
-Создай в отдельном MD-файле DPF по предметной области:
-[название или описание предметной области].
-```
+## 3. Compact PFAD answer
 
-### Рекомендуемый промпт
+Когда architecture question открыт, answer содержит только decision-changing content:
 
-```text
-Используй находящийся в проекте FPF как методологическую основу.
+- practitioner, public field promise, recurring problem и bounded question;
+- selected outcome и direct subjects/relations, если это maintained non-framework product;
+- first use without unpublished authoring context, connected problem families, FPF/admitted-DPF coverage, uncovered value, evidence limits и refresh trigger;
+- selected pattern sets, first patterns, material relations, representative cross-problem application и important omissions;
+- только те Method/Work/subject/description/capability/provider/cultural structures, correspondence которых меняет answer;
+- exact current/intended edition boundary и необходимые edition dependencies;
+- sources-to-revisit по important claims с ролью `supports | suggests | motivates`, limits и publication/access consequence;
+- serious alternatives, accepted losses/costs, first authoring action либо stop и reopen condition.
 
-Создай отдельный файл DPF_[DOMAIN].md — Domain Principles Framework
-по следующей предметной области:
+Используйте `C.32.MWA` только при реальном non-isomorphism нескольких structures. Используйте `E.23.CDI` только когда capability development для named Work family меняет answer. Не создавайте их для полноты формы.
 
-[описание области]
+Decision Work выбирает answer; отдельное authorized acceptance decision accepts, redirects, rejects или reopens exact answer. Продолжение authoring, DRR или carrier identity не означают acceptance. Только accepted answer передаётся далее.
 
-DPF должен помогать решать следующие классы проблем:
+## 4. Authoring нового или revised DPF
 
-[перечень проблем]
+Authoring выполняет только содержание, необходимое accepted answer и declared first use:
 
-Целевая аудитория:
+1. pin exact framework episteme edition, FPF dependency и source basis;
+2. сформулировать domain/local use, reader, first move, non-use и qualification window;
+3. создать bounded pattern set с stable DPF code/PatternID и отделённым publication order;
+4. для каждого pattern сохранить recurring problem, forces, action-guiding Solution, worked case/countercase, consequences, relations, evidence/source limits, stop/reopen;
+5. отделить DPF body от package architecture, relation/edition records, publication units/forms/carriers, access routes, source packs, quality evidence и refresh route;
+6. выполнить claim-specific Verification, требуемую текущим Working Process и declared use;
+7. вернуть Candidate edition в существующий review/Admission route.
 
-[кто будет пользоваться]
+Не добавляйте organization lifecycle, universal state machine, registry, dependency graph, telemetry service или gate family. File layout, manifest, ToC или schema presence не устанавливают semantic membership, relation, quality или admission.
 
-Используй язык и терминологию, привычные для этой аудитории.
-Не копируй без необходимости внутренний сленг FPF.
+## 5. Positive SoTA comparison по `E.8:11`
 
-Основные источники:
+Каждое positive `SoTA` утверждение должно менять exact Solution, boundary, case, check, relation, evidence, stop или reopen locus. Для него представьте один readable comparison:
 
-[книги, стандарты, статьи, внутренние документы, собственный опыт]
+| Position | Required answer |
+|---|---|
+| `practiceQuestion` | exact working question |
+| `bestKnownLine` | selected currently defensible answer, а не самый новый source |
+| `seriousAlternativeOrDefault` | rival/default, который мог изменить выбор |
+| `defectOvercome` | action-changing defect, limit или trade-off |
+| `patternMutation` | exact governed locus changed |
+| `sourceRolesAndLimits` | exact source locator, comparison role и non-claim |
+| `reopenCondition` | smallest new evidence/rival/failure/use change |
 
-Отдельно укажи:
+Материальные moves помечаются `adopt | adapt | reject`. Selected line должна быть не хуже при comparable application effort по защищаемым values и лучше хотя бы по одному, либо trade-off явно принят.
 
-- границы предметной области;
-- основные сущности и различения;
-- ключевые принципы;
-- типовые проблемные ситуации;
-- паттерны решения;
-- анти-паттерны и распространённые ошибки;
-- границы применимости паттернов;
-- последствия и компромиссы;
-- связи между паттернами;
-- вопросы, по которым недостаточно оснований.
+Source roles различаются: best-known-line candidate; serious current rival; failure/counterexample evidence; necessary official/popular comparator; lineage only; identity/currentness only. Freshness, popularity, authority, praise, большая bibliography или факт review не создают SoTA rank. Если adequate comparison отсутствует, верните bounded source gap. `F.1`, `F.0.2` или `G.2` добавляются только по их собственному receiving-use predicate.
 
-Результат запиши в файл, а не в чат.
-```
+## 6. Когда применять `E.4.DPF.DA`
 
-Файл нужен для того, чтобы:
+DPF package adequacy assessment не является обязательной authoring stage. Применяйте её к **одной exact framework episteme edition** и **одному declared package use**, когда named receiving use действительно требует package-adequacy judgment: admission/refresh, assurance, publication, status use или repair decision.
 
-- не ограничивать размер результата объёмом сообщения;
-- редактировать DPF как единый артефакт;
-- повторно запускать генерацию;
-- хранить версии;
-- проводить независимую проверку.
+Ordinary route:
 
----
+1. pin exact edition, declared visible use, effective ReferenceScheme, ClaimScope, reader, intended/non-use, qualification window, evidence basis и floor;
+2. disposition `PFM1`–`PFM12` where applicable;
+3. judge every `D1`–`D12` coordinate с ordinal value, rationale, exact evidence locus и smallest repair/no-proposal;
+4. constitute one aggregate result episteme с protected trade-offs, local `DPFPackageAdequacyStatus` и first repair/no-proposal;
+5. назвать non-use, reopen и любой separate receiving use.
 
-## 4. Проверить черновик как предметный специалист
+Первый полезный result — aggregate episteme/status. Остановитесь с `seedOnly` или `repairBeforeDPFUse`, если evidence/package не достигают declared floor. Favorable value, заполненная таблица или review не запускают E.19, assurance, publication, E.23 repair или release автоматически.
 
-Первый результат считать только черновиком.
+## 7. Verification и review
 
-Проверить:
+Verification проектируется от exact claims и use. Minimum checks обычно включают:
 
-- правильно ли определена граница предметной области;
-- не смешаны ли общие принципы с предметными;
-- соответствует ли терминология профессиональной практике;
-- представлены ли современные методы, а не только популярные;
-- указаны ли источники и основания;
-- представлены ли конкурирующие подходы;
-- описаны ли ограничения и границы применимости;
-- указаны ли последствия и компромиссы;
-- связаны ли паттерны между собой;
-- можно ли по документу принимать рабочие решения;
-- нет ли уверенных формулировок там, где недостаточно оснований.
+- exact FPF/DPF/source identities and currentness;
+- preserved domain boundary и отсутствие shadow Core ontology;
+- first-use usability и action-changing pattern content;
+- full positive SoTA comparisons для positive claims;
+- отделение framework edition, package architecture, relations, publication/access и quality evidence;
+- declared non-use, gaps, stop/reopen;
+- trace from changed content to accepted PFAD answer and named use.
 
-Без участия предметного специалиста DPF может выглядеть убедительно, но оставаться недостоверным.
+Independent review требуется только когда его consequence/assurance/authority trigger установлен Working Process. Reviewer finding является Evidence, а не automatic repair authority. Исправляйте только smallest blocking locus; non-blocking и out-of-scope findings сохраняйте как future candidates без successor loop.
 
----
+## 8. Admission, release и stop
 
-## 5. Исправить понимание предметной области
+Authoring result остаётся Candidate до exact Admission Decision. Admission authority рассматривает exact edition/configuration, Verification evidence, limitations, intended/non-use и first relying use. Возможные outcomes: `admitted | returned_for_refinement | rejected | deferred`.
 
-Если агент неверно определил область, не редактировать отдельные фразы. Пересобрать структуру целиком.
+После достижения заранее согласованных acceptance conditions немедленно остановитесь. Не запускайте автоматически further evaluation, repair, publication, refresh, release, Process Review или next Loop. Новый action требует named receiving use и отдельной authority там, где он меняет relied-on use или effect.
+
+## Главная формула
 
 ```text
-Полученный DPF неверно определяет предметную область.
-
-Ошибки:
-
-[перечень ошибок]
-
-Правильная граница области:
-
-[уточнённое описание]
-
-Пересобери DPF целиком с учётом этих замечаний.
-Не накладывай локальные заплатки на старую структуру.
+immediate use
+→ current first result
+→ Cheap Exit
+  or accepted PFAD answer
+  or optional proposal/description use
+→ only necessary DPF authoring
+→ conditional DPF.DA
+→ Verification
+→ Admission
+→ first useful relied-on result
+→ stop
 ```
-
-При существенных изменениях лучше создавать новую версию файла.
-
----
-
-## 6. Создать DPF на основе источников
-
-В качестве исходных материалов можно использовать:
-
-- книгу;
-- стандарт;
-- набор статей;
-- внутреннюю методологию;
-- проектную документацию;
-- публикации конкретного автора;
-- результаты исследования;
-- накопленный профессиональный опыт.
-
-### Промпт
-
-```text
-Используя FPF, создай DPF по теме [тема]
-на основе приложенных источников.
-
-Не пересказывай источники последовательно.
-
-Извлеки из них:
-
-- проблемные ситуации;
-- устойчивые принципы;
-- методы работы;
-- паттерны;
-- анти-паттерны;
-- ограничения;
-- конкурирующие подходы;
-- противоречия между источниками;
-- изменения state of the art.
-
-Отделяй положения источников от собственных выводов.
-Отмечай вопросы, по которым недостаточно оснований.
-
-Результат запиши в отдельный MD-файл.
-```
-
----
-
-## 7. Создать DPF из разговора с экспертом
-
-Этот способ подходит, когда большая часть знаний находится у специалиста в голове.
-
-### Порядок работы
-
-1. Агент предлагает предварительную модель предметной области.
-2. Эксперт исправляет термины и ошибки.
-3. Агент уточняет сущности, проблемы, методы и исключения.
-4. Эксперт добавляет примеры и контрпримеры.
-5. После нескольких итераций разговор собирается в единый DPF.
-
-### Финальный промпт
-
-```text
-Используй FPF.
-
-Собери идеи, различения, принципы и методы,
-сформулированные в нашем разговоре, в единый DPF.
-
-Устрани противоречия между ранними и поздними формулировками.
-Используй последние согласованные версии терминов и принципов.
-
-Не оформляй текст как хронологию разговора.
-Собери цельную структуру предметной области.
-
-Результат полностью запиши в отдельный MD-файл.
-```
-
----
-
-## 8. Спроектировать структуру DPF
-
-После получения содержательного черновика необходимо обосновать его конструкцию.
-
-```text
-Используя E9 из FPF, подготовь Design Rationale Record для этого DPF.
-
-Обоснуй:
-
-- границы DPF;
-- состав паттернов;
-- способ декомпозиции предметной области;
-- отношения между паттернами;
-- включённые и исключённые темы;
-- выбранные источники;
-- причины выбора этой структуры.
-
-После этого предложи улучшенную структуру DPF.
-```
-
-Результат этого шага — не новый учебник, а обоснование его архитектуры.
-
----
-
-## 9. Нормализовать паттерны по E8
-
-Каждый паттерн должен быть оформлен в единой структуре.
-
-### Промпт
-
-```text
-Проверь все паттерны DPF на соответствие формату E8 из FPF.
-
-Для каждого паттерна должны быть явно различены:
-
-- контекст и проблемная ситуация;
-- проблема;
-- силы и противоречия;
-- принцип решения;
-- метод мышления;
-- рабочие ходы;
-- ожидаемый результат;
-- последствия и компромиссы;
-- ошибки и анти-паттерны;
-- границы применимости;
-- примеры и контрпримеры;
-- связанные паттерны;
-- основания и источники.
-
-Перепиши неполные паттерны.
-Не скрывай отсутствие данных общими формулировками.
-```
-
----
-
-## 10. Провести независимую проверку
-
-Роли автора и проверяющего следует разделять.
-
-### Reviewer
-
-```text
-Выступи как независимый reviewer.
-
-Оцени DPF и каждый его паттерн по шкалам E21 из FPF.
-Не редактируй документ.
-
-Выдай:
-
-- оценки;
-- найденные дефекты;
-- отсутствующие основания;
-- устаревшие решения;
-- слабые границы применимости;
-- противоречия между паттернами;
-- пропущенные альтернативы;
-- конкретные задания исполнителю.
-```
-
-### Executor
-
-```text
-Выступи как author/executor.
-
-Используя отчёт reviewer, улучши DPF.
-
-Требования:
-
-- исправь подтверждённые дефекты;
-- добавь недостающие основания;
-- уточни границы применимости;
-- сохрани альтернативные решения;
-- не скрывай нерешённые проблемы уверенными формулировками;
-- сохрани трассируемость существенных изменений;
-- создай новую версию файла.
-```
-
----
-
-## 11. Запустить цикл улучшения
-
-Рабочий цикл:
-
-```text
-Reviewer
-    ↓
-Отчёт о дефектах
-    ↓
-Executor
-    ↓
-Новая версия DPF
-    ↓
-Повторная проверка
-```
-
-Повторять цикл до достижения требуемого качества.
-
-Условная интерпретация оценок:
-
-- **3** — документом уже можно пользоваться, но он требует постоянной осторожности;
-- **4** — приемлемый рабочий уровень;
-- **5** — устойчивый и хорошо обоснованный DPF.
-
-Для развитого процесса полезно хранить:
-
-- версии DPF;
-- отчёты reviewer;
-- журнал решений;
-- альтернативные структуры;
-- отклонённые паттерны;
-- основания существенных изменений.
-
----
-
-## 12. Отделить DPF от LPF
-
-DPF не должен содержать организационные инструкции, если они не являются общими для всей предметной области.
-
-### Пример
-
-**DPF:**
-
-> Требования должны быть трассируемы от источника потребности до проверки результата.
-
-**LPF:**
-
-> В нашей компании требования хранятся в XWiki, задачи — в Taiga, код — в GitLab. Идентификатор требования включается в задачу и commit message.
-
-DPF отвечает на вопрос:
-
-> Как профессионально работают в этой предметной области?
-
-LPF отвечает на вопрос:
-
-> Как договорились работать именно в нашей организации?
-
----
-
-## 13. Критерии готовности рабочего DPF
-
-DPF можно считать рабочим, если:
-
-- граница предметной области определена;
-- целевая аудитория указана;
-- ключевые термины имеют однозначные определения;
-- основные проблемные ситуации перечислены;
-- для повторяющихся проблем описаны паттерны;
-- у паттернов указаны границы применимости;
-- описаны последствия и компромиссы;
-- присутствуют анти-паттерны и типовые ошибки;
-- отражены конкурирующие подходы;
-- источники и основания различимы;
-- паттерны связаны между собой;
-- документ прошёл независимую проверку;
-- замечания reviewer обработаны;
-- нерешённые вопросы явно обозначены;
-- по документу можно принимать рабочие решения;
-- организационные правила вынесены в LPF.
-
----
-
-## Полный минимальный процесс
-
-```text
-Актуальный FPF
-    ↓
-Определение предметной области
-    ↓
-Сбор источников и экспертного знания
-    ↓
-Черновик DPF в отдельном файле
-    ↓
-Проверка предметным специалистом
-    ↓
-Design Rationale по E9
-    ↓
-Нормализация паттернов по E8
-    ↓
-Независимая оценка по E21
-    ↓
-Цикл Reviewer ↔ Executor
-    ↓
-Рабочий DPF
-    ↓
-Создание LPF для конкретной организации
-```
-
----
-
-## Главный принцип
-
-Одним коротким промптом можно получить полезный черновик DPF.
-
-Рабочий DPF появляется только после:
-
-- предметной проверки;
-- уточнения границ;
-- обоснования структуры;
-- нормализации паттернов;
-- независимого review;
-- нескольких циклов улучшения.
-
-AI-агент может выполнить большую часть анализа и редактирования, но предметное понимание и решение о пригодности результата остаются у специалиста.

@@ -59,7 +59,7 @@ function Get-StandaloneBody([string]$RelativePath, [int]$HeadingShift = 0) {
 }
 
 function Get-CompleteChapterBody([string]$ChapterHeading, [string]$NextHeading) {
-    $completePath = Join-Path $repoRoot 'AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
+    $completePath = Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
     $lines = Get-Content -Encoding utf8 -LiteralPath $completePath
     $start = [Array]::IndexOf($lines, $ChapterHeading)
     $end = [Array]::IndexOf($lines, $NextHeading)
@@ -76,7 +76,7 @@ function Get-CompleteChapterBody([string]$ChapterHeading, [string]$NextHeading) 
 }
 
 function Get-CompleteLastChapterBody([string]$ChapterHeading) {
-    $completePath = Join-Path $repoRoot 'AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
+    $completePath = Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
     $lines = Get-Content -Encoding utf8 -LiteralPath $completePath
     $start = [Array]::IndexOf($lines, $ChapterHeading)
     if ($start -lt 0) {
@@ -92,7 +92,7 @@ function Get-CompleteLastChapterBody([string]$ChapterHeading) {
 }
 
 function Get-CompleteSectionBody([string]$SectionHeading, [string]$EndMarker) {
-    $completePath = Join-Path $repoRoot 'AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
+    $completePath = Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
     $lines = Get-Content -Encoding utf8 -LiteralPath $completePath
     $start = [Array]::IndexOf($lines, $SectionHeading)
     $end = [Array]::IndexOf($lines, $EndMarker)
@@ -147,6 +147,24 @@ foreach ($file in $markdownFiles) {
             Add-Failure "Invalid Markdown target: $(Get-RelativePath $file.FullName) -> $target"
             continue
         }
+        # The controlled AI SDLC payload is byte-identical after relocation. Resolve only its
+        # exact legacy package-root links as path projections; do not rewrite controlled bytes.
+        if (-not (Test-Path -LiteralPath $targetPath -PathType Leaf)) {
+            $sourceRelativeForProjection = (Get-RelativePath $file.FullName).Replace('\', '/')
+            $projectionKey = $sourceRelativeForProjection + '|' + $localPart.Replace('\', '/')
+            $relocatedAiLinkProjections = @{
+                'frameworks/specializations/AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md|../ENGINEERING_WORK_BOOTSTRAP_GUIDE.md' = 'ENGINEERING_WORK_BOOTSTRAP_GUIDE.md'
+                'frameworks/specializations/AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md|../WORKING_PROCESS_AND_LOOPS_GUIDE.md' = 'WORKING_PROCESS_AND_LOOPS_GUIDE.md'
+                'frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md|../ENGINEERING_WORK_BOOTSTRAP_GUIDE.md' = 'ENGINEERING_WORK_BOOTSTRAP_GUIDE.md'
+                'frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md|../WORKING_PROCESS_AND_LOOPS_GUIDE.md' = 'WORKING_PROCESS_AND_LOOPS_GUIDE.md'
+                'frameworks/specializations/AI_SDLC_DPF/README.md|../PACKAGE_MANIFEST.md' = 'PACKAGE_MANIFEST.md'
+                'frameworks/specializations/AI_SDLC_DPF/README.md|../ENGINEERING_WORK_BOOTSTRAP_GUIDE.md' = 'ENGINEERING_WORK_BOOTSTRAP_GUIDE.md'
+                'frameworks/specializations/AI_SDLC_DPF/README.md|../WORKING_PROCESS_AND_LOOPS_GUIDE.md' = 'WORKING_PROCESS_AND_LOOPS_GUIDE.md'
+            }
+            if ($relocatedAiLinkProjections.ContainsKey($projectionKey)) {
+                $targetPath = Join-Path $repoRoot $relocatedAiLinkProjections[$projectionKey]
+            }
+        }
         if (-not (Test-Path -LiteralPath $targetPath -PathType Leaf)) {
             Add-Failure "Missing Markdown target: $(Get-RelativePath $file.FullName) -> $target"
             continue
@@ -161,6 +179,16 @@ foreach ($file in $markdownFiles) {
                 $anchorCache[$targetPath] = $anchors
             }
             if (-not $anchorCache[$targetPath].Contains($parts[1])) {
+                $sourceRelative = (Get-RelativePath $file.FullName).Replace('\', '/')
+                $immutableHawsAnchorException = $sourceRelative -ceq 'frameworks/subject/HAWS_DPF/HAWS_DPF_1_0.md' -and
+                    $targetPath -ceq $file.FullName -and
+                    $parts[1] -cin @(
+                        'fc-03-human-authority-boundary',
+                        'fc-04-candidate-result-admission',
+                        'fc-06-current-source-and-configuration-impact',
+                        'fc-11-verification-co-design-with-dependency-challenge'
+                    )
+                if ($immutableHawsAnchorException) { continue }
                 Add-Failure "Missing Markdown anchor: $(Get-RelativePath $file.FullName) -> $target"
             }
         }
@@ -188,14 +216,19 @@ $requiredFiles = @(
     'docs/releases/RELEASE_NOTES_3_7_0.md',
     'docs/releases/RELEASE_NOTES_3_7_1.md',
     'docs/releases/RELEASE_NOTES_3_7_2.md',
+    'docs/releases/RELEASE_NOTES_4_0_0.md',
     'examples/CODEX_REFERENCE_CAPABILITY_PROFILE.yaml',
     'tests/behavioral/BOOTSTRAP_SCENARIOS.md',
     'tests/behavioral/RUNTIME_3_6_OPERATIONAL_SCENARIOS.md',
     'tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md',
+    'tests/behavioral/RUNTIME_4_0_OPERATIONAL_SCENARIOS.md',
     'tests/conformance/RUNTIME_BOUNDARY_CONFORMANCE_PROTOCOL.md',
     'templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml',
-    'AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
-    'AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md'
+    'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
+    'frameworks/specializations/AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md',
+    'frameworks/subject/HAWS_DPF/HAWS_DPF_1_0.md',
+    'frameworks/subject/HAWS_DPF/authority/FINAL_ADMISSION.md',
+    'frameworks/subject/HAWS_DPF/authority/CURRENTNESS_DECISION.md'
 )
 foreach ($relativePath in $requiredFiles) {
     if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $relativePath) -PathType Leaf)) {
@@ -203,13 +236,31 @@ foreach ($relativePath in $requiredFiles) {
     }
 }
 
+# Exact framework package architecture; directory placement is classification, not authority order.
+$aiSpecializationRoot = Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF'
+$hawsSubjectRoot = Join-Path $repoRoot 'frameworks/subject/HAWS_DPF'
+if (Test-Path -LiteralPath (Join-Path $repoRoot 'AI_SDLC_DPF')) {
+    Add-Failure 'Legacy top-level AI_SDLC_DPF locus must not remain'
+}
+if (Test-Path -LiteralPath (Join-Path $repoRoot 'runtime')) {
+    Add-Failure 'Legacy runtime baseline locus must not remain'
+}
+$aiSpecializationFileCount = @(Get-ChildItem -LiteralPath $aiSpecializationRoot -Recurse -File).Count
+if ($aiSpecializationFileCount -ne 14) {
+    Add-Failure "AI SDLC DPF specialization inventory is $aiSpecializationFileCount files, expected 14"
+}
+$hawsSubjectFileCount = @(Get-ChildItem -LiteralPath $hawsSubjectRoot -Recurse -File).Count
+if ($hawsSubjectFileCount -ne 3) {
+    Add-Failure "HAWS DPF subject inventory is $hawsSubjectFileCount files, expected 3"
+}
+
 # Declared line-ending policy and byte-preserved exceptions
 $attributesPath = Join-Path $repoRoot '.gitattributes'
 $protectedTextExceptions = @(
-    'AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
-    'AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_ARCHITECTURE.md',
-    'AI_SDLC_DPF/framework/AI_SDLC_PRIMARY_APPLICATION_PROFILE.md',
-    'AI_SDLC_DPF/QUICKSTART.md'
+    'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
+    'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_ARCHITECTURE.md',
+    'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_PRIMARY_APPLICATION_PROFILE.md',
+    'frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md'
 )
 if (Test-Path -LiteralPath $attributesPath -PathType Leaf) {
     $attributesText = Get-Content -Raw -Encoding utf8 -LiteralPath $attributesPath
@@ -247,7 +298,7 @@ foreach ($forbidden in @('AI_SDLC_DPF_SOURCES.md', '[[DPF_FORMATION_METHOD]]', '
 if ($operationalText -match 'Included DPF release:\s*<') { Add-Failure 'Unresolved included-DPF version placeholder remains' }
 
 # Historical Quick Start boundary
-$quickStartPath = Join-Path $repoRoot 'AI_SDLC_DPF/QUICKSTART.md'
+$quickStartPath = Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md'
 if (Test-Path -LiteralPath $quickStartPath -PathType Leaf) {
     $quickStartText = Get-Content -Raw -Encoding utf8 -LiteralPath $quickStartPath
     foreach ($requiredPhrase in @(
@@ -262,8 +313,8 @@ if (Test-Path -LiteralPath $quickStartPath -PathType Leaf) {
 }
 
 $activeEntryPaths = @(
-    'AI_SDLC_DPF/README.md',
-    'AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md',
+    'frameworks/specializations/AI_SDLC_DPF/README.md',
+    'frameworks/specializations/AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md',
     'README.md',
     'AGENTS.md',
     'WORKING_PROCESS_AND_LOOPS_GUIDE.md'
@@ -297,8 +348,12 @@ $releaseNotes371Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_7_1.md
 $releaseNotes371Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes371Path
 $releaseNotes372Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_7_2.md'
 $releaseNotes372Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes372Path
+$releaseNotes400Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_4_0_0.md'
+$releaseNotes400Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes400Path
 $runtime37ScenarioPath = Join-Path $repoRoot 'tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md'
 $runtime37ScenarioText = if (Test-Path -LiteralPath $runtime37ScenarioPath -PathType Leaf) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtime37ScenarioPath } else { '' }
+$runtime40ScenarioPath = Join-Path $repoRoot 'tests/behavioral/RUNTIME_4_0_OPERATIONAL_SCENARIOS.md'
+$runtime40ScenarioText = if (Test-Path -LiteralPath $runtime40ScenarioPath -PathType Leaf) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtime40ScenarioPath } else { '' }
 $engineeringViewsText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'catalog/engineering_views/README.md')
 
 # Public wrapper identity, license and provenance contract
@@ -319,8 +374,9 @@ $candidateIdentity = "Instantiatio DPF 3.4.0 $emDash Engineering Work Runtime $m
 $release361Identity = "Instantiatio DPF 3.6.1 $emDash Engineering Work Runtime $middleDot Beta"
 $release370Identity = "Instantiatio DPF 3.7.0 $emDash Engineering Work Runtime $middleDot Beta"
 $release371Identity = "Instantiatio DPF 3.7.1 $emDash Engineering Work Runtime $middleDot Beta"
-$releaseIdentity = "Instantiatio DPF 3.7.2 $emDash Engineering Work Runtime $middleDot Beta"
-$readmeIdentity = "Instantiatio DPF (iDPF) 3.7.2 $emDash Engineering Work Runtime $middleDot Beta"
+$release372Identity = "Instantiatio DPF 3.7.2 $emDash Engineering Work Runtime $middleDot Beta"
+$releaseIdentity = "Instantiatio DPF 4.0.0 $emDash Engineering Work Runtime $middleDot Beta"
+$readmeIdentity = "Instantiatio DPF (iDPF) 4.0.0 $emDash Engineering Work Runtime $middleDot Beta"
 if (-not $readmeText.StartsWith("# $readmeIdentity`n")) {
     Add-Failure 'README release-level identity is missing'
 }
@@ -328,13 +384,14 @@ if (-not $manifestText.StartsWith("# $releaseIdentity $emDash Package Manifest`n
     Add-Failure 'Manifest release-level identity is missing'
 }
 foreach ($releaseConfigurationMarker in @(
-    '| Runtime version | `3.7.2` |',
-    '| Assembly date | `2026-08-28` |',
-    '| Archive identity | `Instantiatio-DPF-3.7.2-Beta.zip` |',
-    '| Archive top-level directory | `Instantiatio-DPF-3.7.2-Beta` |'
+    '| Runtime version | `4.0.0` |',
+    '| Publication status | `released` |',
+    '| Assembly date | `2026-09-01` |',
+    '| Archive identity | `Instantiatio-DPF-4.0.0-Beta.zip` |',
+    '| Archive top-level directory | `Instantiatio-DPF-4.0.0-Beta` |'
 )) {
     if (-not $manifestText.Contains($releaseConfigurationMarker)) {
-        Add-Failure "Manifest 3.7.2 configuration marker missing: $releaseConfigurationMarker"
+        Add-Failure "Manifest 4.0.0 configuration marker missing: $releaseConfigurationMarker"
     }
 }
 foreach ($publicIdentityContract in @(
@@ -346,7 +403,7 @@ foreach ($publicIdentityContract in @(
     @{ Name = 'README non-official boundary'; Text = $readmeText; Marker = (& $decodeUtf8Marker '0L3QtSDRj9Cy0LvRj9C10YLRgdGPINC+0YTQuNGG0LjQsNC70YzQvdC+0Lkg0LTQuNGB0YLRgNC40LHRg9GG0LjQtdC5IEZQRg==') },
     @{ Name = 'README non-affiliation boundary'; Text = $readmeText; Marker = (& $decodeUtf8Marker 'YWZmaWxpYXRpb24g0LjQu9C4IGVuZG9yc2VtZW50INCw0LLRgtC+0YDQsNC80LggRlBGINC90LUg0LfQsNGP0LLQu9GP0Y7RgtGB0Y8=') },
     @{ Name = 'README no-redistribution boundary'; Text = $readmeText; Marker = (& $decodeUtf8Marker '0JLQvdC10YjQvdC40LUgRlBGLdGE0LDQudC70Ysg0L3QtSDQstC60LvRjtGH0LDRjtGC0YHRjyDQsiDQv9Cw0LrQtdGCINC4INC90LUgcmVsaWNlbnNlZA==') },
-    @{ Name = 'README protected identity'; Text = $readmeText; Marker = (& $decodeUtf8Marker 'YEFJX1NETENfRFBGLyoqYCDRj9Cy0LvRj9C10YLRgdGPIHByb3RlY3RlZCByZWFkLW9ubHkgbG9jdXM=') }
+    @{ Name = 'README protected identity'; Text = $readmeText; Marker = '`frameworks/specializations/AI_SDLC_DPF/**` является protected read-only locus' }
 )) {
     if (-not $publicIdentityContract.Text.Contains($publicIdentityContract.Marker)) {
         Add-Failure "$($publicIdentityContract.Name) missing"
@@ -412,7 +469,58 @@ foreach ($runtime37ReleaseContract in @(
     }
 }
 
-$dpfText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AI_SDLC_DPF/framework/AI_SDLC_DPF.md')
+$runtime40ScenarioTitle = '# Runtime 4.0 Operational Scenarios ' + $emDash + ' Released'
+foreach ($runtime40ReleaseContract in @(
+    $runtime40ScenarioTitle,
+    'R40-F01', 'R40-H01', 'R40-H03', 'R40-R01', 'R40-R02', 'R40-R03', 'R40-A02', 'R40-E16-04', 'R40-S01', 'R40-I01', 'R40-I02',
+    'depends | mentions only | unresolved',
+    "Passing this file's text/integrity checks alone is not behavioral evidence"
+)) {
+    if (-not $runtime40ScenarioText.Contains($runtime40ReleaseContract)) {
+        Add-Failure "Runtime 4.0 released behavior marker missing: $runtime40ReleaseContract"
+    }
+}
+
+foreach ($runtime40SemanticContract in @(
+    @{ Name = 'dispatcher current first result'; Text = $agentsText; Marker = 'current_first_result_selected' },
+    @{ Name = 'dispatcher HAWS baseline'; Text = $agentsText; Marker = 'haws_dpf_1_0_current_subject_baseline' },
+    @{ Name = 'HAWS primary subject scope'; Text = $agentsText; Marker = 'haws_primary_subject_scope' },
+    @{ Name = 'AI SDLC direct software route'; Text = $agentsText; Marker = 'ai_sdlc_software_direct_route' },
+    @{ Name = 'framework directory not authority order'; Text = $agentsText; Marker = 'framework_directory_not_authority_order' },
+    @{ Name = 'HAWS not mandatory AI SDLC wrapper'; Text = $agentsText; Marker = 'no_mandatory_haws_wrapper_for_ai_sdlc' },
+    @{ Name = 'dispatcher packaged baseline boundary'; Text = $agentsText; Marker = 'packaged_baseline_not_project_history' },
+    @{ Name = 'dispatcher empty project boundary'; Text = $agentsText; Marker = 'empty_project_means_no_user_initiative' },
+    @{ Name = 'formation PFAD'; Text = (Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/DPF_FORMATION_METHOD.md')); Marker = 'E.4.PFAD' },
+    @{ Name = 'formation DPF.DA'; Text = (Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/DPF_FORMATION_METHOD.md')); Marker = 'D1`–`D12' },
+    @{ Name = 'formation E.8:11'; Text = (Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'docs/DPF_FORMATION_METHOD.md')); Marker = 'seriousAlternativeOrDefault' },
+    @{ Name = 'A.10.1 bounded discovery'; Text = $workingGuideText; Marker = 'a10_1_two_direction_discovery' },
+    @{ Name = 'E.16 true autonomy'; Text = $workingGuideText; Marker = 'e16_unsupervised_claim_trigger' },
+    @{ Name = 'first useful result stop'; Text = $workingGuideText; Marker = 'first_useful_result_stop' },
+    @{ Name = 'product identity precedence'; Text = $agentsText; Marker = 'product_identity_precedence' },
+    @{ Name = 'material host identity exception'; Text = $agentsText; Marker = 'host_identity_on_explicit_or_material_trigger' },
+    @{ Name = 'introductory onboarding once'; Text = $bootstrapText; Marker = 'introductory_onboarding_offer_once' },
+    @{ Name = 'onboarding creates no process gate'; Text = $bootstrapText; Marker = 'onboarding_offer_no_process_or_gate' },
+    @{ Name = 'README product identity precedence'; Text = $readmeText; Marker = '**Product identity precedence.**' },
+    @{ Name = 'README optional onboarding offer'; Text = $readmeText; Marker = '**Optional onboarding offer.**' },
+    @{ Name = 'Release Notes product identity precedence'; Text = $releaseNotes400Text; Marker = 'Product identity precedence:' },
+    @{ Name = 'Release Notes optional onboarding offer'; Text = $releaseNotes400Text; Marker = 'Optional onboarding offer:' }
+)) {
+    if (-not $runtime40SemanticContract.Text.Contains($runtime40SemanticContract.Marker)) {
+        Add-Failure "Runtime 4.0 semantic contract gap: $($runtime40SemanticContract.Name)"
+    }
+}
+foreach ($forbiddenRuntime40Machinery in @(
+    'HAWS DPF 1.1',
+    'universal autonomy service is required',
+    'automatic successor Loop is required',
+    'universal dependency graph is required'
+)) {
+    if (($agentsText + "`n" + $workingGuideText + "`n" + $runtime40ScenarioText).Contains($forbiddenRuntime40Machinery)) {
+        Add-Failure "Runtime 4.0 forbidden machinery claim: $forbiddenRuntime40Machinery"
+    }
+}
+
+$dpfText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_DPF.md')
 if ($manifestText -notmatch '\| AI SDLC DPF \| \x60([^\x60]+)\x60 \| controlled working \|') {
     Add-Failure 'Manifest DPF semantic version is missing'
 }
@@ -422,8 +530,8 @@ else {
     if ($dpfText -notmatch $dpfVersionPattern) {
         Add-Failure "DPF semantic version does not match manifest: $dpfVersion"
     }
-    $dpfReadmeText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AI_SDLC_DPF/README.md')
-    $completeText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md')
+    $dpfReadmeText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/README.md')
+    $completeText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/AI_SDLC_DPF_COMPLETE.md')
     if (-not $dpfReadmeText.Contains("AI SDLC DPF $dpfVersion")) { Add-Failure 'DPF README version drift' }
     if (-not $completeText.Contains("AI SDLC DPF $dpfVersion Working Release")) { Add-Failure 'Combined DPF version drift' }
     if ($manifestText -notmatch '\| Included DPF assembly provenance \| \x60([^\x60]+)\x60 \|') {
@@ -431,6 +539,37 @@ else {
     }
     elseif (-not $dpfReadmeText.Contains("Work Kit/reference-package assembly: **$($matches[1])**")) {
         Add-Failure 'DPF README assembly provenance drift'
+    }
+}
+
+# Unchanged HAWS DPF 1.0 subject-baseline binding.
+$hawsBaselinePath = Join-Path $repoRoot 'frameworks/subject/HAWS_DPF/HAWS_DPF_1_0.md'
+$hawsFinalAdmissionPath = Join-Path $repoRoot 'frameworks/subject/HAWS_DPF/authority/FINAL_ADMISSION.md'
+$hawsCurrentnessDecisionPath = Join-Path $repoRoot 'frameworks/subject/HAWS_DPF/authority/CURRENTNESS_DECISION.md'
+foreach ($hawsBinding in @(
+    @{ Name = 'HAWS DPF 1.0'; Path = $hawsBaselinePath; Hash = 'EBA875188F2B5DD60EE334D90C0F7EC5B74AA6EE83ADA9BC1DC7A2E74191A032'; Marker = '**Status:** Admitted as the current relied-on HAWS DPF 1.0 edition for the bounded AUTH/RELY/CURR/VER use' },
+    @{ Name = 'HAWS Final Admission'; Path = $hawsFinalAdmissionPath; Hash = '033DA899A18E736C0DB194F5DE36A6F16B48F1E8BEC8A33D348768CFC4980413'; Marker = '- Admission status: `admitted`.' },
+    @{ Name = 'HAWS currentness decision'; Path = $hawsCurrentnessDecisionPath; Hash = 'FEA91882215CD9245ACEE563C8B40F9955D54BB267F7C34EBF1A5810F613E336'; Marker = 'HAWS DPF 1.0 сохранить как current relied-on baseline для bounded AUTH/RELY/CURR/VER use' }
+)) {
+    if (-not (Test-Path -LiteralPath $hawsBinding.Path -PathType Leaf)) {
+        Add-Failure "$($hawsBinding.Name) carrier missing"
+        continue
+    }
+    if ((Get-FileHash -Algorithm SHA256 -LiteralPath $hawsBinding.Path).Hash -ne $hawsBinding.Hash) {
+        Add-Failure "$($hawsBinding.Name) hash mismatch"
+    }
+    $hawsBindingText = Get-Content -Raw -Encoding utf8 -LiteralPath $hawsBinding.Path
+    if (-not $hawsBindingText.Contains($hawsBinding.Marker)) {
+        Add-Failure "$($hawsBinding.Name) status/currentness marker missing"
+    }
+}
+foreach ($hawsRuntimeMarker in @(
+    'haws_dpf_1_0_current_subject_baseline',
+    'FC-03/04/06/11',
+    'не изменяй и не переоткрывай'
+)) {
+    if (-not $agentsText.Contains($hawsRuntimeMarker)) {
+        Add-Failure "HAWS Runtime integration marker missing: $hawsRuntimeMarker"
     }
 }
 
@@ -446,9 +585,9 @@ if ($manifestText -notmatch '\| Product maturity \| \x60Beta\x60 \|') {
     Add-Failure 'Manifest product maturity must be Beta'
 }
 foreach ($packageStatusContract in @(
-    @{ Name = 'README'; Text = $readmeText; Marker = 'iDPF Runtime: `3.7.2`' },
-    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `3.7.2` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
-    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `3.7.2` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
+    @{ Name = 'README'; Text = $readmeText; Marker = 'iDPF Runtime: `4.0.0`' },
+    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `4.0.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `4.0.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
 )) {
     if (-not $packageStatusContract.Text.Contains($packageStatusContract.Marker)) {
         Add-Failure "Package status contract mismatch: $($packageStatusContract.Name)"
@@ -591,7 +730,7 @@ foreach ($forbiddenCurrentReleaseMarker in @(
 }
 
 foreach ($requiredReleaseNotes372Marker in @(
-    ("# $releaseIdentity"),
+    ("# $release372Identity"),
     '> Release status: `released`',
     '> Release date: `2026-08-28`',
     '> Released predecessor: `3.7.1`',
@@ -610,6 +749,38 @@ foreach ($requiredReleaseNotes372Marker in @(
 )) {
     if (-not $releaseNotes372Text.Contains($requiredReleaseNotes372Marker)) {
         Add-Failure "Release Notes 3.7.2 contract marker missing: $requiredReleaseNotes372Marker"
+    }
+}
+
+foreach ($requiredReleaseNotes400Marker in @(
+    ("# $releaseIdentity"),
+    '> Release status: `released`',
+    '> Release assembly date: `2026-09-01`',
+    '> Released predecessor: `3.7.2`',
+    '> External publication: `not authorized / not performed`',
+    '## HAWS DPF 1.0 integration',
+    '## FPF 31.08 Runtime alignment',
+    '## Изменённое observable behavior',
+    '## Упрощённая или удалённая process machinery',
+    '## Compatibility и migration implications',
+    '## Deferred items и reopen conditions',
+    'E.22', 'E.23', 'G.11',
+    'https://github.com/instantiatio/iDPF'
+)) {
+    if (-not $releaseNotes400Text.Contains($requiredReleaseNotes400Marker)) {
+        Add-Failure "Release Notes 4.0.0 contract marker missing: $requiredReleaseNotes400Marker"
+    }
+}
+
+foreach ($forbiddenRelease400Marker in @(
+    '> Release status: `candidate`',
+    '> Candidate assembly date:',
+    'externally published',
+    'HAWS DPF 1.1',
+    'automatic successor Loop'
+)) {
+    if ($releaseNotes400Text.Contains($forbiddenRelease400Marker)) {
+        Add-Failure "Release Notes 4.0.0 forbidden marker: $forbiddenRelease400Marker"
     }
 }
 foreach ($forbiddenCurrentReleaseMarker in @(
@@ -778,8 +949,8 @@ foreach ($requiredPhrase in @(
 }
 
 # Product Engineering Composition semantic contract
-$referenceProcessText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_PROCESS.md')
-$applicationGuideText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AI_SDLC_DPF/framework/AI_SDLC_APPLICATION_GUIDE.md')
+$referenceProcessText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_PROCESS.md')
+$applicationGuideText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_APPLICATION_GUIDE.md')
 $pecContractText = @($referenceProcessText, $applicationGuideText, $workingGuideText, $bootstrapText, $agentsText) -join "`n"
 foreach ($requiredPecPhrase in @(
     'Product Engineering Composition',
@@ -818,7 +989,7 @@ foreach ($mapping in @(
 }
 
 # DPF pattern corpus
-$dpfLines = Get-Content -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'AI_SDLC_DPF/framework/AI_SDLC_DPF.md')
+$dpfLines = Get-Content -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_DPF.md')
 $patternHeadings = @($dpfLines | Select-String '^## FC-[0-9]{2} - ')
 $endSentinels = @($dpfLines | Select-String '^### FC-[0-9]{2}:End$')
 if ($patternHeadings.Count -ne 10) { Add-Failure "DPF pattern heading count is $($patternHeadings.Count), expected 10" }
@@ -826,13 +997,13 @@ if ($endSentinels.Count -ne 10) { Add-Failure "DPF end-sentinel count is $($endS
 
 # Standalone versus combined publication parity
 $publicationPairs = @(
-    @{ Path = 'AI_SDLC_DPF/framework/AI_SDLC_DPF.md'; Chapter = '# 4. AI SDLC DPF'; Next = '# 5. Reference Architecture' },
-    @{ Path = 'AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_ARCHITECTURE.md'; Chapter = '# 5. Reference Architecture'; Next = '# 6. Reference Process' },
-    @{ Path = 'AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_PROCESS.md'; Chapter = '# 6. Reference Process'; Next = '# 7. Primary Application Profile' },
-    @{ Path = 'AI_SDLC_DPF/framework/AI_SDLC_PRIMARY_APPLICATION_PROFILE.md'; Chapter = '# 7. Primary Application Profile'; Next = '# 8. Application Guide' },
-    @{ Path = 'AI_SDLC_DPF/framework/AI_SDLC_APPLICATION_GUIDE.md'; Chapter = '# 8. Application Guide'; Next = '# 9. Glossary' },
-    @{ Path = 'AI_SDLC_DPF/reference/AI_SDLC_GLOSSARY.md'; Chapter = '# 9. Glossary'; Next = '# 10. Worked Examples' },
-    @{ Path = 'AI_SDLC_DPF/examples/AI_SDLC_WORKED_EXAMPLES.md'; Chapter = '# 10. Worked Examples'; Next = '# 11. Sources and maintenance' }
+    @{ Path = 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_DPF.md'; Chapter = '# 4. AI SDLC DPF'; Next = '# 5. Reference Architecture' },
+    @{ Path = 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_ARCHITECTURE.md'; Chapter = '# 5. Reference Architecture'; Next = '# 6. Reference Process' },
+    @{ Path = 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_PROCESS.md'; Chapter = '# 6. Reference Process'; Next = '# 7. Primary Application Profile' },
+    @{ Path = 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_PRIMARY_APPLICATION_PROFILE.md'; Chapter = '# 7. Primary Application Profile'; Next = '# 8. Application Guide' },
+    @{ Path = 'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_APPLICATION_GUIDE.md'; Chapter = '# 8. Application Guide'; Next = '# 9. Glossary' },
+    @{ Path = 'frameworks/specializations/AI_SDLC_DPF/reference/AI_SDLC_GLOSSARY.md'; Chapter = '# 9. Glossary'; Next = '# 10. Worked Examples' },
+    @{ Path = 'frameworks/specializations/AI_SDLC_DPF/examples/AI_SDLC_WORKED_EXAMPLES.md'; Chapter = '# 10. Worked Examples'; Next = '# 11. Sources and maintenance' }
 )
 foreach ($pair in $publicationPairs) {
     $standalone = Get-StandaloneBody $pair.Path
@@ -842,22 +1013,22 @@ foreach ($pair in $publicationPairs) {
     }
 }
 
-$openQuestionsStandalone = Get-StandaloneBody 'AI_SDLC_DPF/reference/AI_SDLC_OPEN_QUESTIONS.md'
+$openQuestionsStandalone = Get-StandaloneBody 'frameworks/specializations/AI_SDLC_DPF/reference/AI_SDLC_OPEN_QUESTIONS.md'
 $openQuestionsCombined = Get-CompleteLastChapterBody '# 12. Open Questions'
 if (($openQuestionsStandalone -join "`n") -cne ($openQuestionsCombined -join "`n")) {
-    Add-Failure 'Combined publication drift: AI_SDLC_DPF/reference/AI_SDLC_OPEN_QUESTIONS.md'
+    Add-Failure 'Combined publication drift: frameworks/specializations/AI_SDLC_DPF/reference/AI_SDLC_OPEN_QUESTIONS.md'
 }
 
-$sourcesStandalone = Get-StandaloneBody 'AI_SDLC_DPF/reference/AI_SDLC_SOURCES.md' 1
+$sourcesStandalone = Get-StandaloneBody 'frameworks/specializations/AI_SDLC_DPF/reference/AI_SDLC_SOURCES.md' 1
 $sourcesCombined = Get-CompleteSectionBody '## Source register' '<a id="chapter-11-maintenance-governance"></a>'
 if (($sourcesStandalone -join "`n") -cne ($sourcesCombined -join "`n")) {
-    Add-Failure 'Combined publication drift: AI_SDLC_DPF/reference/AI_SDLC_SOURCES.md'
+    Add-Failure 'Combined publication drift: frameworks/specializations/AI_SDLC_DPF/reference/AI_SDLC_SOURCES.md'
 }
 
-$governanceStandalone = Get-StandaloneBody 'AI_SDLC_DPF/reference/AI_SDLC_GOVERNANCE.md' 1
+$governanceStandalone = Get-StandaloneBody 'frameworks/specializations/AI_SDLC_DPF/reference/AI_SDLC_GOVERNANCE.md' 1
 $governanceCombined = Get-CompleteSectionBody '## Maintenance governance' '<a id="chapter-12"></a>'
 if (($governanceStandalone -join "`n") -cne ($governanceCombined -join "`n")) {
-    Add-Failure 'Combined publication drift: AI_SDLC_DPF/reference/AI_SDLC_GOVERNANCE.md'
+    Add-Failure 'Combined publication drift: frameworks/specializations/AI_SDLC_DPF/reference/AI_SDLC_GOVERNANCE.md'
 }
 
 # Behavioral contract coverage
@@ -1559,7 +1730,11 @@ foreach ($greetingContractMarker in @(
     'greeting_minimal_effective_not_shortest',
     'greeting_engineering_details_on_demand',
     'greeting_forsage_triggered_only',
-    'greeting_levels_not_modes_routing'
+    'greeting_levels_not_modes_routing',
+    'product_identity_precedence',
+    'host_identity_on_explicit_or_material_trigger',
+    'introductory_onboarding_offer_once',
+    'onboarding_offer_no_process_or_gate'
 )) {
     if (-not $bootstrapFirstEntrySection.Contains($greetingContractMarker)) {
         Add-Failure "Ordinary greeting contract marker is missing: $greetingContractMarker"
@@ -1614,7 +1789,7 @@ foreach ($removedGreetingGuiPhrase in @(
     }
 }
 $firstMessageSection = [regex]::Match($bootstrapText, '(?ms)^## 8\. .*?(?=^## 9\.)').Value
-foreach ($firstMessageMarker in @('ordinary_task_first_greeting','greeting_internal_variables_hidden','greeting_engineering_details_on_demand','greeting_forsage_triggered_only','greeting_levels_not_modes_routing')) {
+foreach ($firstMessageMarker in @('ordinary_task_first_greeting','greeting_internal_variables_hidden','greeting_engineering_details_on_demand','greeting_forsage_triggered_only','greeting_levels_not_modes_routing','product_identity_precedence','host_identity_on_explicit_or_material_trigger','introductory_onboarding_offer_once','onboarding_offer_no_process_or_gate')) {
     if (-not $firstMessageSection.Contains($firstMessageMarker)) {
         Add-Failure "First-message section contract gap: $firstMessageMarker"
     }
@@ -1752,7 +1927,31 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
-    if ($manifestHashRowCount -ne 54) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 54" }
+    if ($manifestHashRowCount -ne 59) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 59" }
+
+    # A clean distribution carries only the empty user-project skeleton under project/.
+    # Package baselines/evidence must stay outside that namespace; later user-created
+    # project files remain allowed because they are not part of the release manifest.
+    $expectedProjectSkeleton = @(
+        'project/artifacts/.gitkeep',
+        'project/source/.gitkeep',
+        'project/src/.gitkeep',
+        'project/tests/.gitkeep'
+    )
+    $manifestProjectPaths = @($manifestInventory | Where-Object { $_.StartsWith('project/', [StringComparison]::OrdinalIgnoreCase) })
+    if ($manifestProjectPaths.Count -ne $expectedProjectSkeleton.Count) {
+        Add-Failure "Distributed project inventory count is $($manifestProjectPaths.Count), expected empty skeleton count $($expectedProjectSkeleton.Count)"
+    }
+    foreach ($expectedProjectPath in $expectedProjectSkeleton) {
+        if (-not $manifestInventory.Contains($expectedProjectPath)) {
+            Add-Failure "Distributed project skeleton entry missing: $expectedProjectPath"
+        }
+    }
+    foreach ($manifestProjectPath in $manifestProjectPaths) {
+        if ($manifestProjectPath -notin $expectedProjectSkeleton) {
+            Add-Failure "Package-owned or historical carrier leaked into user project state: $manifestProjectPath"
+        }
+    }
 
     $actualInventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     foreach ($file in (Get-ChildItem -LiteralPath $repoRoot -Recurse -Force -File)) {

@@ -78,16 +78,17 @@ IDs, dispositions, sources/currentness, dependencies, hashes и reopen triggers.
 
 Карточка метода хранит source basis, существенную edition/version, дату review, ограниченную currentness claim и reopen trigger. Обычный выбор использует уже проверенную карточку без обязательного web-доступа.
 
-Перед affected reliance требуется обновить source/applicability review, если:
+Перед affected reliance сначала выполните claim-sized comparison. Если material claim change, способный изменить receiving action/result, не установлен, используйте Cheap Exit. Если several partly unknown receivers действительно возможны, примените bounded `A.10.1` route:
 
-- источник устарел, конфликтует или существенно изменился;
-- контракт, regulation или named standard требует точной редакции;
-- утверждение будет consequential или внешне relied-on;
-- method semantics либо заявленная применимость выходят за проверенные границы.
+- зафиксируйте present question, included/excluded receiving families, surfaces, conditions, owners и gaps;
+- используйте source-outward и receiver-oriented discovery;
+- после inspection классифицируйте каждый candidate как `depends | mentions only | unresolved`;
+- follow only exact action-changing `depends` relations и примените direct subject guidance;
+- завершите resolved branches локально с coverage limits, next receiver и reopen observation.
 
-Новая редакция источника или полевое наблюдение создаёт Candidate review, а не автоматическое изменение общей карточки или project process. Новая common entry требует самостоятельной receiving-use ценности, признанного/primary source basis и хотя бы одного counter-signal. Поверхностный вариант остаётся alias, техникой внутри карточки или deferred proposal.
+Search hit, citation, trace или graph reach не доказывают dependence. Не создавайте universal dependency graph, registry или new status vocabulary. Новая редакция источника или полевое наблюдение создаёт Candidate review, а не автоматическое изменение общей карточки или project process. Новая common entry требует самостоятельной receiving-use ценности, признанного/primary source basis и хотя бы одного counter-signal. Поверхностный вариант остаётся alias, техникой внутри карточки или deferred proposal.
 
-Ярлык `SOTA`, известность или популярность метода не являются evidence без exact source/currentness/applicability и названного receiving use.
+Positive `SoTA` use требует одного полного `E.8:11` comparison: exact practice question, selected best-known line, serious rival/default, defect overcome, exact pattern/process mutation, source roles/limits и reopen condition. Ярлык `SOTA`, известность, officiality, freshness или популярность метода не создают rank без этого comparison и named receiving use.
 
 ## Не подошёл ни один вариант
 

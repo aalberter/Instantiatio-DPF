@@ -5,7 +5,7 @@
 *.yml text eol=lf
 
 # Controlled read-only carriers keep their admitted bytes and manifest hashes.
-AI_SDLC_DPF/framework/AI_SDLC_DPF.md -text
-AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_ARCHITECTURE.md -text
-AI_SDLC_DPF/framework/AI_SDLC_PRIMARY_APPLICATION_PROFILE.md -text
-AI_SDLC_DPF/QUICKSTART.md -text
+frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_DPF.md -text
+frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_REFERENCE_ARCHITECTURE.md -text
+frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_PRIMARY_APPLICATION_PROFILE.md -text
+frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md -text

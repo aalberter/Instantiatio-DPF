@@ -11,7 +11,7 @@
 - не делает её обязательной без применимого trigger/receiving use;
 - не изменяет Work Context, Entry Decision, Working Process, Task, Run или Admission;
 - не разрешает создание файлов, внешний эффект или reliance;
-- не изменяет controlled `AI_SDLC_DPF/**`.
+- не изменяет controlled `frameworks/specializations/AI_SDLC_DPF/**`.
 
 Core Runtime обнаруживает material trigger и сохраняет authority/Human Gate invariants. Подробная selection/content mechanics находится в соответствующем модуле.
 

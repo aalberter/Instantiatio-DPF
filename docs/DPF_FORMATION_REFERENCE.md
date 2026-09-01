@@ -4,7 +4,7 @@
 
 **Status:** historical/reference carrier. This document is informative and does not create DPF, organization or project authority.
 
-It records the declared formation approach and publication boundary of the AI SDLC DPF distributed with the Engineering Work Kit. The operational method for creating a new DPF is documented separately in [DPF Formation Method](DPF_FORMATION_METHOD.md).
+It records the declared formation approach and publication boundary of the AI SDLC DPF distributed with the Engineering Work Kit. The current operational route for a new/revised DPF or cheaper non-framework outcome is documented separately in [DPF Formation Method](DPF_FORMATION_METHOD.md).
 
 ## Governing basis
 
@@ -29,7 +29,7 @@ The declared approach was an LLM-assisted, evidence-grounded, multi-pass framewo
 
 This description is historical context, not evidence that every future DPF change has completed the same process. A new controlled change must follow the current governance and preserve its own evidence.
 
-## Compact formation path
+## Historical formation path
 
 ```text
 governing FPF
@@ -44,9 +44,11 @@ governing FPF
 → release decision
 ```
 
+This sequence describes the historical AI SDLC DPF formation only. It is not the current universal entry route, and it does not make E.21 evaluation, independent review or repair mandatory for every future DPF use/change. Current work first selects its applicable result through `E.4.DPF`; `E.4.PFAD`, `E.4.DPF.DA` and any further review/repair apply only when their own predicate and receiving use are present.
+
 ## Distributed-kit boundary
 
-The current `AI_SDLC_DPF/` directory distributes:
+The current `frameworks/specializations/AI_SDLC_DPF/` directory distributes:
 
 - the normative DPF pattern language;
 - Reference Architecture;
@@ -67,7 +69,6 @@ Historical formation material cannot:
 - make reference content normative;
 - assign organization or project authority;
 - prove regulatory compliance or product assurance;
-- authorize automatic modification of `AI_SDLC_DPF/`.
+- authorize automatic modification of `frameworks/specializations/AI_SDLC_DPF/`.
 
 A controlled DPF change remains a separate formal task requiring impact review, verification and an authorized release decision.
-

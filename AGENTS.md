@@ -1,35 +1,31 @@
 # AGENTS.md
 
-> Version: `2.10.2`
+> Version: `2.11.0`
 
 ## 1. Назначение
 
 Этот файл является компактным dispatcher `Instantiatio DPF — Engineering Work Runtime`: среды управляемой инженерной работы человека и агента. Он выбирает применимый исполнительский locus, сохраняет authority boundaries и не дублирует подробную механику Guides.
 
 ```text
-Engineering Work Bootstrap
-→ Admitted Work Context
-→ Entry Decision
-→ Project-specific Working Process
-→ Loop
-→ Task
-→ Run
+deterministic re-entry + current-first-result selection
+→ Cheap Exit / bounded Direct Work; or
+→ Bootstrap → Work Context → Entry → Working Process → Loop → Task → Run
 → Candidate Result
-→ Verification
-→ Admission Decision
+→ Verification → Admission Decision
 → Relied-on Result
+→ stop at the first useful admitted result
 ```
 Агент организует вход и выполнение, но не присваивает себе authority.
 
 ## 2. Authoritative loci
 
-Каталог `AI_SDLC_DPF/` является controlled read-only методической базой.
+Package-каталог `frameworks/` разделяет предметные DPF и специализации, не создавая нового уровня authority.
 
-- `AI_SDLC_DPF/framework/AI_SDLC_DPF.md` — нормативные patterns при их выборе;
-- Reference Architecture и Reference Process — bounded reference realizations;
-- Primary Application Profile — bounded specialization profile;
+- `frameworks/subject/HAWS_DPF/` — current primary HAWS subject baseline для его exact admitted bounded Human–AI Work scope и неизменённые authority decisions;
+- `frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_DPF.md` — controlled edition-qualified software-specialization patterns при их выборе;
+- Reference Architecture и Reference Process — bounded reference realizations; Primary Application Profile — bounded specialization profile;
 - Application Guide — informative guidance;
-- `AI_SDLC_DPF/QUICKSTART.md` — historical, non-operational artifact.
+- `frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md` — historical, non-operational artifact.
 
 Исполнительские loci:
 
@@ -44,40 +40,40 @@ Engineering Work Bootstrap
 
 ```text
 1. FPF
-2. AI SDLC DPF
-3. Reference Architecture
-4. Reference Process
-5. Application Guide
+2. Applicable current DPF route: HAWS DPF 1.0 for its exact admitted bounded Human–AI Work scope; or edition-qualified AI SDLC DPF for a sufficient software-specific direct use
+3. Applicable Reference Architecture
+4. Applicable Reference Process
+5. Applicable Application Guide
 6. Organization LPF
 7. Project-specific Process
 8. Performed Work
 ```
-PAP не является девятым уровнем. Work Context и Entry Decision также не создают новые уровни authority. Lower-level carrier не может молча переопределять higher-level authority.
+PAP не является девятым уровнем. Work Context и Entry Decision также не создают новые уровни authority. Lower-level carrier не может молча переопределять higher-level authority. Размещение в `frameworks/subject/` или `frameworks/specializations/` классифицирует package content, но не задаёт authority precedence. Для software-specific receiving use, которое уже достаточно закрывает exact AI SDLC DPF edition, выбирай прямой AI SDLC route без обязательной HAWS wrapper; для mixed use выбирай smallest decision-changing route и не подключай оба DPF автоматически.
 
 ## 4. Обязательный dispatcher check
 
-При первом сообщении и перед новой существенной работой установи ближайшее применимое состояние:
+При первом сообщении и перед новой существенной работой сначала выполни deterministic re-entry, затем выбери первый результат, условие которого истинно сейчас:
 
 ```text
-нет применимого admitted Work Context
+FPF, admitted subject baseline или source уже закрывает immediate use
+→ Cheap Exit и stop без нового process apparatus
+одна low-consequence reversible/observable action без material commitment
+→ bounded Direct Work/Task
+→ authority/effects + observable check + Candidate/Admission boundary → stop
+новая initiative требует отдельного context/authority/scope/source/process/use decision
 → ENGINEERING_WORK_BOOTSTRAP_GUIDE.md
-
 есть незавершённый Candidate/draft Work Context
 → восстановить ближайшее unresolved Bootstrap state
-
 есть admitted Work Context, но нет Entry Decision
 → завершить Entry Decision по Bootstrap Guide
-
 есть Work Context и Entry Decision, но нет утверждённого Working Process/Loop
-→ WORKING_PROCESS_AND_LOOPS_GUIDE.md
-→ представить Candidate process/Loop
-→ получить explicit process authority decision
-
+→ WORKING_PROCESS_AND_LOOPS_GUIDE.md → Candidate process/Loop → explicit decision
 есть применимые Work Context, Entry Decision, Working Process и Loop
 → создать bounded Task и выполнить Run
 ```
+Cheap Exit и Direct Work являются альтернативными entry outcomes, а не предварительными стадиями полного Bootstrap. Direct route не отменяет authority, allowed/prohibited effects, Verification, Candidate status и Admission там, где reliance действительно возникает; для короткой обратимой работы они могут быть объединены в существующем Task/Run или одном решении без новых carriers. Если условие direct route не доказано, используй Bootstrap. Markers: `current_first_result_selected | cheap_exit_without_process_apparatus | bounded_direct_work_preserves_authority | first_useful_result_stop`.
 
-При explicit continuation, context compaction/transcript loss, новом chat/session/model/agent, host restart/handoff, interruption или long pause сначала выполняй deterministic re-entry до решения о новом Bootstrap. Раздельно восстанови: authority из exact admitted Work Context/Entry Decision/Working Process/Loop/Admission decisions; relied configuration из exact source/baseline/carrier refs и hashes; factual execution state из Task/Run, actual durable effects, Candidate/Gate и unresolved routes. Optional `STATE_INDEX` — только navigation projection: stale/invalid/contradictory index сообщается и игнорируется для authority. Если подходит ровно одна non-closed initiative, продолжай её; несколько plausible initiatives требуют Human Gate selection без guess по filename/mtime/chat memory. Broken ref/hash, carrier/effect conflict или pending Admission блокирует только affected continuation/dependent bypass; separately authorized reversible preparation может продолжаться. Не создавай новый Bootstrap, когда active initiative recoverable. Marker: `deterministic_reentry_before_bootstrap | authority_configuration_factual_state_separated | stale_state_index_ignored | ambiguous_initiative_requires_selection`.
+При explicit continuation, context compaction/transcript loss, новом chat/session/model/agent, host restart/handoff, interruption или long pause сначала выполняй deterministic re-entry до решения о новом Bootstrap. Раздельно восстанови: authority из exact admitted Work Context/Entry Decision/Working Process/Loop/Admission decisions; relied configuration из exact source/baseline/carrier refs и hashes; factual execution state из Task/Run, actual durable effects, Candidate/Gate и unresolved routes. Packaged frameworks, baselines и их authority evidence под `frameworks/` принадлежат release configuration и не являются историей пользовательского проекта; пустой `project/` scaffold означает отсутствие пользовательских инициатив. Optional `STATE_INDEX` — только navigation projection: stale/invalid/contradictory index сообщается и игнорируется для authority. Если подходит ровно одна non-closed user initiative, продолжай её; несколько plausible user initiatives требуют Human Gate selection без guess по filename/mtime/chat memory. Broken ref/hash, carrier/effect conflict или pending Admission блокирует только affected continuation/dependent bypass; separately authorized reversible preparation может продолжаться. Не создавай новый Bootstrap, когда active user initiative recoverable. Marker: `deterministic_reentry_before_bootstrap | authority_configuration_factual_state_separated | packaged_baseline_not_project_history | empty_project_means_no_user_initiative | stale_state_index_ignored | ambiguous_initiative_requires_selection`.
 
 Подробные state, interview, source, admission и handover rules не воспроизводи здесь: используй соответствующий Guide.
 
@@ -88,7 +84,7 @@ PAP не является девятым уровнем. Work Context и Entry D
 - `interaction_mode`: `guided`, `standard` или `compact`;
 - `explanation_mode`: `detailed` или `milestone`.
 
-Internal product default остаётся `compact + milestone`, но human-facing default называется обычным режимом работы и не оптимизируется на краткость как таковую: представление должно быть minimally effective для понимания и решения. При первом project entry используй task-first greeting по Bootstrap Guide: объясни new-initiative/re-entry behavior, ordinary work и доступные по запросу Engineering/Runtime-Audit levels, но не показывай internal mode variables/combinations, entry menu, internal IDs/status values/guards или «Форсаж». Предложи описать задачу либо поместить материалы в `project/source/`; новый контекст остаётся preliminary до Human confirmation, а Working Process только предлагается до process authority. Все шесть внутренних сочетаний осей, включая `standard + milestone`, и отдельный bounded «Форсаж» сохраняются без изменения семантики; «Форсаж» предлагай только на explicit quick bounded prototype/result trigger. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_engineering_details_on_demand | greeting_forsage_triggered_only`.
+Internal product default остаётся `compact + milestone`, но human-facing default называется обычным режимом работы и не оптимизируется на краткость как таковую: представление должно быть minimally effective для понимания и решения. В iDPF workspace общий introductory question о «тебе», возможностях, способе работы или назначении по умолчанию трактуй как вопрос об iDPF Engineering Work Runtime: отвечай product-first, не начинай с Codex/OpenAI/model/generic agent; host/model называй по явному вопросу либо когда их capability/limitation materially влияет на текущую работу, не скрывая правдивую execution identity. При первом project entry используй task-first greeting по Bootstrap Guide: объясни new-initiative/re-entry behavior, ordinary work и доступные по запросу Engineering/Runtime-Audit levels, но не показывай internal mode variables/combinations, entry menu, internal IDs/status values/guards или «Форсаж». Один короткий optional practical-onboarding offer допустим только в уместном introductory context; после task input, отказа или молчания не повторяй его, не превращай в вопрос/interview, preference, process trigger или Gate. Предложи описать задачу либо поместить материалы в `project/source/`; новый контекст остаётся preliminary до Human confirmation, а Working Process только предлагается до process authority. Все шесть внутренних сочетаний осей, включая `standard + milestone`, и отдельный bounded «Форсаж» сохраняются без изменения семантики; «Форсаж» предлагай только на explicit quick bounded prototype/result trigger. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_engineering_details_on_demand | greeting_forsage_triggered_only | product_identity_precedence | host_identity_on_explicit_or_material_trigger | introductory_onboarding_offer_once | onboarding_offer_no_process_or_gate`.
 
 Приоритет:
 
@@ -119,13 +115,17 @@ host/system constraints
 Не выбирай композицию до понимания scope, риска, privacy, бюджета и host capabilities. Сначала назови категорию, краткий rationale, trade-off и escalation trigger; exact models/details — по запросу или material assignment need. Candidate Model Assignment фиксирует roles, effort, availability, privacy, independence, fallback и verification; он не создаёт authority и не отменяет gates/Admission. Host constraints приоритетны.
 CAP/external-method invariant: optional `CAP` применим только как exact approved configuration с inputs/loci/phases/predicates/budgets/Verification/recovery/final Admission и не создаёт authority; deviation прекращает CAP как `terminated_on_deviation` с сообщением «CAP прекращён: обнаружено отклонение от согласованных условий», evidence и ordinary stepwise return, тот же CAP не resume, successor лишь один раз предлагается после понятных cause/new bounds и никогда не создаётся/активируется автоматически. External skill не заменяет admitted lifecycle/plan/state/source/Verification/Admission: не сканируй skills по умолчанию; actual/requested process-bearing use классифицируй `capability_only | process_bearing_mappable | process_incompatible`, map useful parts в Task/Run либо отклони с fallback, сохраняя host/system/safety/privacy и applicable law/contract/domain authority. Details и template — в Working Process Guide.
 
+### 4.4. Current subject baseline и FPF 31.08 routes
+
+Для AUTH/RELY/CURR/VER current subject baseline — exact **HAWS DPF 1.0 Final Admitted** в `frameworks/subject/HAWS_DPF/HAWS_DPF_1_0.md` с неизменёнными Final Admission/currentness decisions под `frameworks/subject/HAWS_DPF/authority/`; используй applicable `FC-03/04/06/11`, ordinary non-use возвращай к FPF/domain/organization или edition-qualified AI SDLC DPF, HAWS не копируй, не изменяй и не переоткрывай. Если software-specific receiving use уже достаточно закрывает exact AI SDLC DPF edition, применяй `frameworks/specializations/AI_SDLC_DPF/` как direct route: HAWS не является mandatory wrapper, а directory placement не является authority order. Для mixed use выбирай smallest decision-changing route и не комбинируй DPF автоматически. DPF formation route: `docs/DPF_FORMATION_METHOD.md` (`E.4.PFAD/DPF/DPF.DA`, full `E.8:11`). Changed several-use source: bounded `A.10.1` claim comparison, Cheap Exit, two-direction discovery, `depends | mentions only | unresolved`, direct subject result/local stop, без universal graph/registry. `E.16` включай только для claimed unsupervised decision/actuation: enactment-bound budget/actuals/guards/ledger/override/SoD/depletion; suggestion-only remains supervised. Marker: `haws_dpf_1_0_current_subject_baseline | haws_primary_subject_scope | ai_sdlc_software_direct_route | framework_directory_not_authority_order | no_mandatory_haws_wrapper_for_ai_sdlc | fpf_3108_current_routes | a10_1_bounded_revalidation | e16_true_autonomy_only`.
+
 ## 5. Новая инициатива
 
-Если admitted Work Context отсутствует, кратко объясни Bootstrap, сообщи о будущем Candidate Work Context и задай один содержательный адаптивный вопрос.
+Если direct/cheap outcome не применим и admitted Work Context отсутствует, кратко объясни Bootstrap, сообщи о будущем Candidate Work Context и задай один содержательный адаптивный вопрос.
 
 Если запрос может выходить за scope действующей инициативы, не расширяй её молча. Сообщи о возможной новой инициативе и запроси явное согласие на отдельный Bootstrap.
 
-Consequential work нельзя начинать до Admission Work Context и Entry Decision. Отсутствие возражений не является утверждением.
+Consequential initiative work нельзя начинать до Admission Work Context и Entry Decision. Исключение не создаётся для Direct Work: он допустим только когда его compact authority/action/effect/verification/admission boundary уже явно установлена. Отсутствие возражений не является утверждением.
 
 Для полного project-specific процесса используй Entry Route `create_specialized_working_process`. Недоступный или неинтегрированный внешний процесс не может быть выбран как Entry Route.
 
@@ -141,7 +141,7 @@ Entry Decision не утверждает новый Working Process или Loop.
 4. явно представь рекомендуемые объединения, сокращения, omissions и lightweight route с рисками (`WPC-09`), затем получи решение process authority;
 5. только после approval оптимизированного Working Process и первого bounded Loop создавай process files или выполняй Run.
 
-Минимальная process map является navigation view, а не coverage proof. Broad Loop name, vertical slice или `start_bounded_pilot_loop` не заменяют полного disposition и process approval.
+Минимальная process map является navigation view, а не coverage proof. Broad Loop name, vertical slice или `start_bounded_pilot_loop` не заменяют полного disposition и process approval. После Admission без named next receiving use немедленно остановись; Process Review, successor Loop/Run, proof apparatus или quality improvement требуют material trigger, admitted obligation либо Human Decision. Marker: `decision_relevant_machinery_only | no_automatic_successor | stop_after_acceptance`.
 
 ## 7. Source и project boundaries
 
@@ -167,7 +167,7 @@ Confidence, explanation, доступ к контексту, успешное з
 
 Сохраняй существующие пользовательские изменения. Перед созданием carrier найди существующий authoritative locus и избегай дублирования.
 
-Не изменяй controlled `AI_SDLC_DPF/` из-за локального tool/model/prompt/project change. Изменение DPF publication выполняется только как отдельная formal task с impact review, verification и authorized release decision.
+Не изменяй controlled `frameworks/specializations/AI_SDLC_DPF/` из-за локального tool/model/prompt/project change. Не изменяй packaged HAWS body/authority под `frameworks/subject/HAWS_DPF/`. Изменение DPF publication выполняется только как отдельная formal task с impact review, verification и authorized release decision.
 
 Не создавай пустые carriers ради заполнения структуры. Если пользователь указал иной project root, используй его.
 

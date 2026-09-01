@@ -1,6 +1,6 @@
 # Working Process and Loops Guide
 
-> Version: `1.12.2`
+> Version: `1.13.0`
 
 ## 1. Назначение
 
@@ -36,6 +36,8 @@ AI SDLC DPF задаёт устойчивые инженерные принци�
 ## 2. Основной принцип
 
 Основа работы — получение конкретного инженерного результата, который после предусмотренной проверки и admission может безопасно использоваться дальше.
+
+Выбирай первый результат, условие которого истинно сейчас, и останавливайся на первом полезном admitted результате для named receiving use. Следующий Loop, Process Review, repair или дополнительный proof apparatus не являются default continuation: они требуют собственного material trigger, admitted obligation или Human Decision. Marker: `first_useful_result_stop | cheap_exit | decision_relevant_machinery_only`.
 
 Loop является основной повторяемой операционной единицей такой работы.
 
@@ -316,6 +318,40 @@ Lower-level carrier может применять и связывать higher-l
 Для low-consequence local/test-data work каждый дополнительный Gate, carrier, Loop, separate Review carrier и independent-review condition должен иметь названный receiving use и decision-changing consequence для конкретного перехода. File/result/checklist count, template completeness, tool/model count или broad `engineering` label trigger не создают. Без такого protected value элемент объединяется с principal carrier/решением, откладывается или получает `not_applicable`; это не отменяет lifecycle, authority, Verification или реально сработавший risk/commitment guard. Markers: `additional_ceremony_requires_decision_consequence | separate_review_carrier_requires_receiving_use`.
 
 Strengthening triggers включают несколько operational scenarios/slices, shared state, external interfaces, system-wide properties, security/authority impact, non-resettable reliance, supplier/operation baseline и высокую цену ошибки.
+
+##### Current subject baseline selection
+
+До process composition выбери exact предметный baseline для named use. Для authority, reliance, currentness и verification-dependency challenge текущим relied-on baseline является HAWS DPF 1.0 Final Admitted (`frameworks/subject/HAWS_DPF/HAWS_DPF_1_0.md` плюс exact Final Admission/currentness decisions в соседнем `authority/`); применимы только `FC-03`, `FC-04`, `FC-06`, `FC-11`. Эти packaged carriers принадлежат release configuration, а не user-project history. Для ordinary non-use продолжай от current FPF, domain/organization source или edition-qualified AI SDLC DPF. Для software-specific receiving use, которое уже достаточно закрывает exact edition под `frameworks/specializations/AI_SDLC_DPF/`, применяй direct AI SDLC route без обязательной HAWS wrapper; package-каталоги классифицируют framework content, но не задают authority precedence. Для mixed use выбирай smallest decision-changing route и не подключай оба DPF автоматически. Integration означает use/pinning, а не копирование HAWS content, переоценку formation или повторную Final Admission. Changed source обрабатывается следующим bounded route. Markers: `haws_primary_subject_scope | ai_sdlc_software_direct_route | framework_directory_not_authority_order | no_mandatory_haws_wrapper_for_ai_sdlc`.
+
+##### Bounded `A.10.1` affected-use revalidation
+
+Применяй этот route только когда changed relied-on source может затронуть несколько partly unknown receiving uses:
+
+1. назови predecessor/later source epistemes и claim-sized possible change; wording/carrier diff является locator, а не verdict;
+2. если material claim change, способный изменить receiving action/result, не установлен — Cheap Exit;
+3. зафиксируй present question, included receiving families/surfaces/conditions/owners и explicit exclusions;
+4. выполни source-outward и receiver-oriented discovery либо докажи, что один current index покрывает обе стороны; каждый unsearched/inaccessible/stale/ambiguous surface сохрани как gap;
+5. инспектируй receiving content и классифицируй каждый найденный candidate как `depends | mentions only | unresolved`; search hit/trace/graph reach alone не доказывает reliance;
+6. следуй только по exact direct `depends` relations, пока receiving action может измениться; применяй прямой subject pattern и получай его independently governed result;
+7. заверши local account после subject results: coverage/gaps, candidate dispositions, smallest action-changing reach, local summaries, next receiver и reopen observation.
+
+Не создавай dedicated affected-use record kind, universal dependency graph, registry, transitive closure service или global status. Resolved branches завершаются независимо; gap блокирует только affected surface. `G.11` добавляется лишь когда named currentness/refresh receiving use действительно требует его. Marker: `a10_1_claim_sized_change | a10_1_two_direction_discovery | a10_1_direct_depends_only | a10_1_local_stop`.
+
+##### `E.16` applicability и enactment для действительно автономной работы
+
+Applicability true только когда wording о local system-role kind, Method или Service claims Work involving unsupervised decision or actuation. Suggestion-only tool, где человек подтверждает каждое действие в точке исполнения, false; обычные Task/Run authority и checks сохраняются без autonomy apparatus.
+
+При true applicability:
+
+- autonomy claim ссылается на named/versioned `AutonomyBudgetDecl` и `bindingState: prospective | enactment-bound`;
+- prospective edition не изобретает performer, assignment, Work или authority occurrence; before actual Work Admission enactment-bound edition называет performer System, exact assignment, budgeted Work, override-authority System/assignment и current independent authority relation;
+- каждый autonomy-dependent Method step называет exact required local system-role kind и `requiresAutonomyBudget`;
+- Green-Gate разрешает actual performer/assignment/Work, scope/window, enactable assignment state, remaining budget, guards, override actuals, exact A.2.7 SoD predicate и independent authority; failure blocks affected enactment;
+- каждый admitted budgeted Work и override Work получает Work-anchored `AutonomyLedgerEntry` с performer, assignment, budget edition, deltas и guard verdicts;
+- override protocol сохраняет `PauseAutonomy | ResumeAutonomy | NarrowAutonomy | Escalate`; depletion блокирует autonomy-gated steps до admitted Resume с actual-assignment SoD, independent authority и ordinary guards;
+- если method использует scout/probe/commit, их бюджеты и commit checkpoint различимы; successful probe не authorizes commit.
+
+Используй existing Work/Task/Run/CAP carriers и evidence loci; не создавай universal autonomy service, registry, telemetry service, state machine или gate family. `AutonomyLedgerEntry` является E.16-required evidence only for applicable autonomous Work. Marker: `e16_unsupervised_claim_trigger | e16_enactment_bound_actuals | e16_depletion_blocks | e16_no_universal_service`.
 
 #### 3.1.9. Специализация HSI/UI по применимости
 
@@ -916,6 +952,8 @@ Exploratory, unbounded, high-uncertainty или high-consequence work не по�
 
 Directory wildcard допустим только тогда, когда bounded instances и file-count rule восстанавливаемы. Schema presence недостаточно: значения должны позволять observable enforcement. Reusable template находится в `templates/CONSOLIDATED_AUTHORITY_PACKAGE_TEMPLATE.md`.
 
+Если CAP claims truly autonomous Work, до activation он также удовлетворяет applicable E.16 contract выше. CAP predicates/budgets сами по себе не являются `AutonomyBudgetDecl`, Green-Gate, actual assignment/authority/SoD evidence или Work-anchored ledger. Suggestion-only и supervised CAP не добавляют E.16 fields.
+
 #### States and transitions
 
 ```text
@@ -1037,7 +1075,9 @@ CAP не разрешает process-bearing external method только пот�
 /
 ├── AGENTS.md
 ├── WORKING_PROCESS_AND_LOOPS_GUIDE.md
-├── AI_SDLC_DPF/
+├── frameworks/
+│   ├── subject/HAWS_DPF/
+│   └── specializations/AI_SDLC_DPF/
 └── project/
     └── process/
         ├── WORKING_PROCESS.md
@@ -1167,7 +1207,7 @@ Working Process необходимо инициировать, если:
 
 Если Working Process отсутствует:
 
-1. получи admitted project context и downstream handover; historical `AI_SDLC_DPF/QUICKSTART.md` не используй как operational method;
+1. получи admitted project context и downstream handover; historical `frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md` не используй как operational method;
 2. определи систему интереса, level of consideration, intended use, consequence, reversibility и first relying use;
 3. через `FC-13` выбери применимые DPF patterns и reference components; не копируй PEC/PAP как default;
 4. разверни project-relevant engineering results по `WPC-02` и проверь optional PEC/project-specific concerns;
@@ -1787,9 +1827,9 @@ Entry Route `start_bounded_pilot_loop` не разрешает Loop вне Worki
 → получить Candidate Result
 → выполнить Verification
 → принять Admission Decision
-→ передать Relied-on Result следующему Loop
-→ провести Process Review
-→ уточнить Working Process и Loop
+→ передать Relied-on Result named receiving use
+→ stop at first useful result, если следующего admitted receiving use нет
+→ только при material trigger/explicit decision: следующий Loop или Process Review
 ```
 
 ---

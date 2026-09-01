@@ -4,7 +4,7 @@
 
 These are behavioral acceptance scenarios for the Engineering Work Runtime dispatcher and Guides. They do not replace a project Work Context or prove agent behavior in every environment.
 
-For every scenario, observe both the response and repository side effects. A pass requires the expected transition and absence of prohibited behavior. `AI_SDLC_DPF/QUICKSTART.md` is historical and must not be used as an execution route.
+For every scenario, observe both the response and repository side effects. A pass requires the expected transition and absence of prohibited behavior. `frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md` is historical and must not be used as an execution route.
 
 ## S-01 — First message `привет` in an empty project
 

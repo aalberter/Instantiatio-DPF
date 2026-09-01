@@ -100,7 +100,23 @@ Only a full predicate pass permits automatic transition. Ordinary reversible wor
 
 An available method is not authorized merely because the CAP exists. Undeclared material process-bearing use invokes the applicable return or termination predicate.
 
-## 8. Verification and evidence
+## 8. Conditional `E.16` autonomous-enactment profile
+
+- Applicability: `not_applicable_supervised_or_suggestion_only | applicable_unsupervised_decision_or_actuation`.
+- Exact autonomy claim and local system-role kind/Method/Service: `...`.
+- Named/versioned `AutonomyBudgetDecl` and binding state: `... | prospective | enactment-bound`.
+- `requiresAutonomyBudget` Method steps: `...`.
+- Enactment-bound actuals: performer System, exact assignment, budgeted Work, override-authority System/assignment, current independent authority relation: `...`.
+- Exact A.2.7 separation-of-duties relation/predicate and actual-pair check: `...`.
+- Green-Gate budget/guard/currentness evidence: `...`.
+- Work-anchored `AutonomyLedgerEntry` locus for budgeted and override Work: `...`.
+- Override protocol `PauseAutonomy | ResumeAutonomy | NarrowAutonomy | Escalate`: `...`.
+- Depletion block and admitted Resume conditions: `...`.
+- Scout/probe/commit partition, if actually used: `not applicable | ...`.
+
+For `not_applicable_supervised_or_suggestion_only`, state the exact human confirmation point and keep this section otherwise empty. CAP phases, predicates and budgets are not substitutes for an applicable E.16 declaration, actual bindings, authority/SoD checks or ledger. Do not create an autonomy service/registry/state machine/telemetry service merely to fill this template.
+
+## 9. Verification and evidence
 
 | Claim/transition | Check | Evidence | Pass/fail rule | Failure return |
 |---|---|---|---|---|
@@ -115,7 +131,7 @@ An available method is not authorized merely because the CAP exists. Undeclared 
 
 Passing a check does not admit the result.
 
-## 9. Human Gate triggers
+## 10. Human Gate triggers
 
 Return to the named authority on:
 
@@ -127,10 +143,11 @@ Return to the named authority on:
 - material unresolved source/authority conflict;
 - failed/inconclusive mandatory verification after allowed repair;
 - request to rely on intermediate/Candidate output.
+- applicable autonomous Work missing an enactment-bound budget, actual binding, passing guard/SoD/authority check, remaining budget or Work-anchored ledger route.
 
 Add project-specific triggers: `...`.
 
-## 10. Deviation termination and ordinary fallback
+## 11. Deviation termination and ordinary fallback
 
 Mandatory execution state: `terminated_on_deviation`.
 
@@ -157,7 +174,7 @@ When cause and new exact bounds are understood, offer once for this termination 
 
 Do not create or activate a successor automatically. If cause remains unclear or work unbounded, do not offer a CAP yet.
 
-## 11. Completion and final Admission
+## 12. Completion and final Admission
 
 - Normal CAP completion state: `completed_candidate_pending_admission`.
 - Expected Candidate result/configuration: `...`.
@@ -169,7 +186,7 @@ Do not create or activate a successor automatically. If cause remains unclear or
 
 CAP completion does not admit the result or authorize the next Loop.
 
-## 12. Required process authority decision
+## 13. Required process authority decision
 
 Candidate configuration/hash: `...`.
 
