@@ -158,29 +158,38 @@ Human Gate — точка решения человека — в iDPF являе
 
 ```text
 FPF 31.08
-→ current universal principles и conditional operational routes
+→ актуальные универсальные принципы и условно применимые способы их практической реализации
 
 frameworks/subject/HAWS_DPF
 → HAWS DPF 1.0 Final Admitted:
-  current primary subject baseline для его exact AUTH/RELY/CURR/VER scope
+  основная предметная база для Human–AI Work Systems
+  в пределах областей полномочий, доверия к результату,
+  актуальности источников и верификации
 
 frameworks/specializations/AI_SDLC_DPF
 → AI SDLC DPF 1.0.1:
-  edition-qualified direct software route, controlled read-only
+  специализированный маршрут для задач разработки программного обеспечения,
+  применяемый напрямую при соответствующей предметной задаче;
+  включён в поставку как контролируемый неизменяемый источник
 
 iDPF Runtime
-→ state dispatch, conditional Bootstrap, process design,
-  Human Gates, Verification и recovery contracts
+→ определение текущего состояния работы и маршрута выполнения,
+  условный запуск Bootstrap, формирование рабочего процесса,
+  точки решений человека, верификация и правила возврата/восстановления
 
 Project-specific Working Process
-→ конкретные результаты, Loops, Tasks, Runs,
+→ конкретная организация работы проекта:
+  результаты, рабочие циклы, задачи и запуски,
   полномочия, ограничения и проверки
 
 Execution host и инструменты
-→ фактическое чтение, вычисление и изменение среды
+→ фактическое выполнение действий:
+  чтение, поиск, вычисления, создание и изменение файлов и среды
 
 Project state и work products
-→ источники, carriers, результаты, Evidence и история решений
+→ текущее состояние инженерной работы:
+  исходные материалы, рабочие записи, результаты,
+  свидетельства проверок и история принятых решений
 ```
 
 | Архитектурный слой | Ответственность |
