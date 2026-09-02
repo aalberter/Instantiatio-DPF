@@ -12,6 +12,7 @@ AI при этом остаётся исполнительной частью и
 
 **Текущая версия:** iDPF Runtime `4.0.1` · `Beta` · release state `released`.  
 Включённые HAWS DPF `1.0` Final Admitted и AI SDLC DPF `1.0.1` в этом выпуске не изменялись. 
+
 Подробности — в [Release Notes 4.0.1](docs/releases/RELEASE_NOTES_4_0_1.md), точная конфигурация выпуска — в [`PACKAGE_MANIFEST.md`](PACKAGE_MANIFEST.md).
 
 ## Содержание
