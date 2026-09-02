@@ -1,10 +1,10 @@
 # Working Process and Loops Guide
 
-> Version: `1.13.0`
+> Version: `1.13.1`
 
 ## 1. Назначение
 
-Этот документ устанавливает общую исполнительскую методику применения AI SDLC DPF для проектирования, создания, выполнения и совершенствования:
+Этот документ устанавливает общую исполнительскую механику формирования, выполнения и изменения project-specific инженерной работы из Runtime mechanics, applicable DPF route и project context/sources. Он охватывает по фактической необходимости:
 
 - project-specific Working Process;
 - loops;
@@ -15,42 +15,47 @@
 - admission decisions;
 - relied-on results.
 
-Документ является companion guide к AI SDLC DPF и применяется во всех проектах, использующих данный репозиторий.
+Документ применяется во всех проектах, использующих данный Runtime. Он не является companion одного DPF и не расширяет subject scope ни одного framework.
 
 Он не является Working Process конкретного проекта и не содержит конкретных проектных Loops.
 
 Project-specific реализации этой методики размещаются в `project/process/`.
 
-Он не изменяет и не заменяет:
-
-- AI SDLC DPF;
-- Reference Architecture;
-- Reference Process;
-- Primary Application Profile;
-- Application Guide.
-
-AI SDLC DPF задаёт устойчивые инженерные принципы. Этот Guide определяет общую исполнительскую механику, по которой в конкретном проекте создаются и применяются Working Process и Loops.
+Он не изменяет и не заменяет FPF, applicable current DPF, выбранные bounded reference components или project/domain authority. HAWS DPF применяется situation-driven только к actual AUTH/RELY/CURR/VER situations в своём admitted scope. Edition-qualified AI SDLC DPF является direct specialization route только для достаточного software-specific receiving use; он не поставляет universal process mechanics для non-software work.
 
 ---
 
 ## 2. Основной принцип
 
-Основа работы — получение конкретного инженерного результата, который после предусмотренной проверки и admission может безопасно использоваться дальше.
+Основа работы — первый практически полезный результат и его receiving use. До проектирования нового Working Process выбери первый истинный outcome:
+
+```text
+current source / admitted result уже достаточен
+→ Cheap Exit и stop
+
+нужна одна bounded reversible/observable action
+→ Direct Work → check → applicable Candidate/Admission boundary → stop
+
+существует applicable admitted context/process/Loop
+→ reuse и продолжение с ближайшего unresolved state
+
+только если предыдущего недостаточно
+→ сформировать Candidate Working Process с минимально достаточной Loop / Task / Run decomposition
+```
 
 Выбирай первый результат, условие которого истинно сейчас, и останавливайся на первом полезном admitted результате для named receiving use. Следующий Loop, Process Review, repair или дополнительный proof apparatus не являются default continuation: они требуют собственного material trigger, admitted obligation или Human Decision. Marker: `first_useful_result_stop | cheap_exit | decision_relevant_machinery_only`.
 
-Loop является основной повторяемой операционной единицей такой работы.
+Loop не является обязательной оболочкой любой работы. Он оправдан только для повторяемого способа получения самостоятельного результата с собственными receiving use, Verification и return route. Отдельный concern, HAWS pattern, verification activity или release concern сам по себе Loop не создаёт.
 
 ```
-требуемый инженерный результат
-→ Working Process
-→ Loop
-→ Task
-→ Run
+требуемый инженерный результат и receiving use
+→ applicable route: Cheap Exit / Direct Work / reuse / new Working Process
+→ минимально достаточные Loop / Task / Run, если нужны
 → Candidate Result
 → Verification
 → Admission Decision
 → Relied-on Result
+→ stop
 ```
 
 Не начинай проектирование исполнительской системы со списка агентов.
@@ -59,7 +64,7 @@ Loop является основной повторяемой операцион
 
 1. какой инженерный результат требуется;
 2. для чего и кем он будет использован;
-3. какой повторяемый процесс должен его получать;
+3. нужна ли повторяемость и какой минимальный process unit действительно требуется;
 4. как результат будет проверяться;
 5. кто имеет authority принять его;
 6. какой агент или человек может выполнить работу внутри этого процесса.
@@ -72,8 +77,9 @@ Loop является основной повторяемой операцион
 
 ```
 Project / System of Interest
-└── Project-specific Working Process
-    └── Loop
+└── Project-specific Working Process, если он нужен
+    ├── Direct Work / reuse, где это достаточно
+    └── Loop, только если оправдан repeatable result contract
         └── Task
             └── Run
                 ├── Candidate Result
@@ -91,7 +97,7 @@ Project / System of Interest
 Working Process определяет общую карту инженерной работы проекта:
 
 - необходимые инженерные результаты;
-- loops, которые их создают, проверяют и принимают;
+- Loop/Task/Run decomposition либо явный Direct Work/reuse route;
 - связи и зависимости между loops;
 - порядок или условия их запуска;
 - источники и входные состояния;
@@ -108,11 +114,12 @@ Working Process не обязан заранее подробно описыва
 
 ```
 контекст проекта
-→ первый требуемый результат
-→ первый bounded loop
-→ verification
-→ admission
-→ следующий loop
+→ первый требуемый результат и receiving use
+→ минимально достаточная Loop / Task / Run decomposition либо Direct Work/reuse
+→ Candidate Result
+→ Verification
+→ Admission
+→ stop, если следующего receiving use нет
 ```
 
 #### 3.1.1. Non-lossy concern/result contract
@@ -138,20 +145,24 @@ Broad Loop name, первый slice или список файлов не явл
 
 Для product/system work используй optional Product Engineering Composition из Reference Process как reusable screen, а не как обязательный lifecycle. Не сокращай составные concern families до broad labels: отдельно рассмотри operational concept/ConOps, operational scenarios и observable behavior; requirements, MVP boundary и User Stories where useful; domain, data, state, identity, invariants и persistence; component, integration и system verification. Неприменимые concerns маркируй явно и пропорционально; не создавай пустые artifacts.
 
-#### 3.1.2. `WPC-01` — DPF-first composition
+#### 3.1.2. `WPC-01` — composition по applicable DPF route
 
-Working Process строится из admitted project context, а не копируется из PEC или иного reference package.
+Working Process строится из Runtime mechanics, admitted project context/sources и только действительно applicable DPF route, а не копируется из PEC, AI SDLC или иного reference package.
 
 ```text
 admitted Work Context и Entry Decision
-→ FC-13 selection of applicable DPF patterns and reference components
+→ actual subject/situation + named receiving use
+→ smallest applicable DPF route либо justified non-use
+→ Runtime mechanics + project sources/context
 → project-relevant result expansion
-→ optional PEC completeness screen
+→ optional applicable reference screen
 → project-specific concerns
 → Candidate Working Process
 ```
 
-Сначала назови Engineered System of Interest, Agentic Process EoC, intended use, consequence, reversibility и first relying use. Затем через `FC-13` выбери, усили, замени, не используй или отложи DPF patterns и RA/RP/PAP options с rationale и reopen route. PEC остаётся optional Reference Process component; PAP применяется только после applicability decision.
+Сначала назови Engineered System of Interest, Agentic Process EoC, intended use, consequence, reversibility и first relying use. Затем выбери route по actual subject и situation: HAWS DPF только для возникших AUTH/RELY/CURR/VER situations; direct AI SDLC route только для software-specific receiving use, где exact edition меняет решение; иначе current FPF/domain/organization source. Для mixed work применяй smallest decision-changing route к соответствующему bounded receiving use и не подключай оба DPF автоматически. `FC-13` выбирает patterns/RA/RP/PAP только внутри уже обоснованного AI SDLC route и не является universal Working Process entry.
+
+Если Runtime mechanics, applicable DPF и project sources/context недостаточны, назови exact operational gap. Bounded search for a process-bearing reference допустим только когда ответ изменит Working Process или named receiving use; заранее зафиксируй question, допустимые source classes, effort/time bound и stop rule. Reference не получает authority автоматически и используется только выбранным fragment. Не найденный material gap явно блокирует лишь affected consequential transition/reliance; повторяемый gap может стать Candidate improvement отдельной будущей инициативы, но не открывает её автоматически. Marker: `working_process_runtime_applicable_dpf_context | bounded_reference_search_by_operational_gap | reference_does_not_inherit_authority | unresolved_gap_blocks_affected_transition_only`.
 
 Не требуй одинаково подробную profile table для любой работы. Для Direct Work допустима короткая запись material selection/non-use; для product/system work профиль и reference selection должны быть видимы до process approval.
 
@@ -296,7 +307,7 @@ Aggregate option вроде `1` допустим только после фак�
 
 ##### Triggered «Варианты организации инженерной работы»
 
-После admitted context, `FC-13` и развёрнутой project-relevant concern/result map Working Process design может обратиться к [`catalog/working_process_compositions/`](catalog/working_process_compositions/README.md). Модуль различает контекстную композицию, инженерный метод и reusable concern module; эти типы не являются взаимозаменяемыми lifecycle options. Для малого обратимого Direct Work/Task сохраняется явный no-catalogue route.
+После admitted context, applicable-DPF selection и развёрнутой project-relevant concern/result map Working Process design может обратиться к [`catalog/working_process_compositions/`](catalog/working_process_compositions/README.md). Модуль различает контекстную композицию, инженерный метод и reusable concern module; эти типы не являются взаимозаменяемыми lifecycle options. Для малого обратимого Direct Work/Task сохраняется явный no-catalogue route.
 
 Runtime рекомендует максимум одну контекстную композицию и обычно один–три метода по наблюдаемой applicability evidence. Keyword, популярность, число артефактов или numeric fit не являются основанием выбора. До process approval видимы существенные counter-signals, невыбранные альтернативы, adaptations, omissions/reductions, residual gaps и project/domain additions. По запросу или при material uncertainty Runtime предлагает подробное сравнение, обоснование, пример и ожидаемые результаты/усилия без молчаливой смены interaction preferences.
 
@@ -312,7 +323,7 @@ Lower-level carrier может применять и связывать higher-l
 
 - Direct Work: одна reversible action, observable check, rollback и короткая запись material non-use; полная product map не создаётся.
 - Script/driver: compact DPF screen и explicit/combined behavior, interface, state, failure и test results; product concerns могут быть `not_applicable`.
-- Product/system work: видимый DPF profile, развёрнутая project-relevant map, отдельные reductions и Human Gate.
+- Product/system work: видимый applicable-DPF disposition, развёрнутая project-relevant map, отдельные reductions и Human Gate.
 - PAP-strengthened work: отдельная applicability decision, required evidence и independence; PAP не применяется автоматически.
 
 Для low-consequence local/test-data work каждый дополнительный Gate, carrier, Loop, separate Review carrier и independent-review condition должен иметь названный receiving use и decision-changing consequence для конкретного перехода. File/result/checklist count, template completeness, tool/model count или broad `engineering` label trigger не создают. Без такого protected value элемент объединяется с principal carrier/решением, откладывается или получает `not_applicable`; это не отменяет lifecycle, authority, Verification или реально сработавший risk/commitment guard. Markers: `additional_ceremony_requires_decision_consequence | separate_review_carrier_requires_receiving_use`.
@@ -1103,7 +1114,7 @@ CAP не разрешает process-bearing external method только пот�
 - authority;
 - integration routes;
 - verification and admission;
-- DPF profile и selected/non-selected reference components в пропорциональной форме;
+- applicable-DPF disposition и selected/non-selected reference components в пропорциональной форме;
 - expanded project-relevant coverage basis до сокращений;
 - `admitted reduction trace`: approved reductions, accepted risks/protected value и reopen routes;
 - disposition material concerns/results и their first relying uses;
@@ -1113,7 +1124,7 @@ CAP не разрешает process-bearing external method только пот�
 - process-authority decision и exact admitted Candidate configuration либо ссылка на сохраняющий их evidence carrier;
 - open process decisions.
 
-`WORKING_PROCESS.md` не обязан дублировать весь Candidate decision package, но admitted optimized map должна возвращаться к DPF profile, expanded coverage basis, approved reductions и authority decision по exact configuration. Ссылка без recoverable meaning или на изменяемый неидентифицированный chat context недостаточна.
+`WORKING_PROCESS.md` не обязан дублировать весь Candidate decision package, но admitted optimized map должна возвращаться к applicable-DPF disposition, expanded coverage basis, approved reductions и authority decision по exact configuration. Ссылка без recoverable meaning или на изменяемый неидентифицированный chat context недостаточна.
 
 ### 5.2. `LOOP_REGISTER.md`
 
@@ -1190,7 +1201,7 @@ admissions/
 
 ## 6. Инициация Working Process
 
-Перед выполнением существенной или повторяемой инженерной работы проверь, существует ли актуальный Working Process.
+Перед выполнением существенной или повторяемой инженерной работы сначала выполни current-first selection из §2. Новый Working Process рассматривай только когда Cheap Exit, bounded Direct Work и reuse применимого admitted процесса недостаточны.
 
 Working Process необходимо инициировать, если:
 
@@ -1209,13 +1220,13 @@ Working Process необходимо инициировать, если:
 
 1. получи admitted project context и downstream handover; historical `frameworks/specializations/AI_SDLC_DPF/QUICKSTART.md` не используй как operational method;
 2. определи систему интереса, level of consideration, intended use, consequence, reversibility и first relying use;
-3. через `FC-13` выбери применимые DPF patterns и reference components; не копируй PEC/PAP как default;
+3. выбери smallest applicable DPF route по subject/situation/receiving use; применяй `FC-13` только внутри selected AI SDLC route и не копируй PEC/PAP как default;
 4. разверни project-relevant engineering results по `WPC-02` и проверь optional PEC/project-specific concerns;
 5. disposition results, dependencies, first relying uses и applicable Commitment Guards; затем выполни conditional material-human-decision screen по `WPC-02` без нового carrier при no-trigger;
 6. представь развёрнутую Candidate map;
 7. отдельно предложи reductions по `WPC-03` и recommended optimized map;
-8. выдели предполагаемые Loops и связи между ними;
-9. предложи первый bounded Loop;
+8. предложи минимально достаточную Loop / Task / Run decomposition, включая явный no-Loop/Direct Work/reuse outcome, если он достаточен;
+9. для каждого proposed Loop докажи repeatable result, самостоятельный receiving use, Verification и return route;
 10. представь ясные `Рекомендация` и `Варианты решения` по `WPC-05/WPC-06/WPC-07`;
 11. получи explicit process authority decision;
 12. только после этого создавай process files или выполняй Run.
@@ -1229,16 +1240,16 @@ Working Process необходимо инициировать, если:
 До введения Working Process в действие агент обязан представить пользователю:
 
 - систему интереса и уровень рассмотрения;
-- DPF profile и выбранные/невыбранные reference components в пропорциональной форме;
+- applicable-DPF disposition и выбранные/невыбранные reference components в пропорциональной форме;
 - развёрнутые project-relevant инженерные результаты;
 - Candidate reductions с protected value, risk и reopen;
 - recommended optimized map Working Process;
-- перечень предполагаемых Loops;
-- связи и зависимости между Loops;
+- proposed минимально достаточную Loop / Task / Run decomposition и явные reductions/omissions;
+- связи и зависимости только для действительно необходимых process units;
 - explicit concern/result dispositions и причины material non-use/defer;
 - triggered guards, data/baseline reliance и integration responsibility, если применимо;
 - applicable material human decision obligations с required authority act, required-before transition и blocked effect либо bounded no-trigger statement, когда review material process coverage этого требует;
-- первый предлагаемый bounded Loop;
+- первый предлагаемый bounded process unit либо обоснованный no-Loop route;
 - verification и admission для ключевых результатов;
 - открытые вопросы, assumptions и limitations;
 - `Варианты решения`, exact allowed/prohibited consequences и return route.
@@ -1279,6 +1290,7 @@ Working Process вводится в действие только после я�
 - используется другой инструмент;
 - одна Task оказалась сложной;
 - возник единичный вспомогательный шаг;
+- существует отдельный HAWS pattern, verification activity, Human Gate или release concern;
 - изменилась структура каталогов.
 
 ---
@@ -1815,12 +1827,14 @@ Entry Route `start_bounded_pilot_loop` не разрешает Loop вне Worki
 Если иной порядок не определён:
 
 ```
-изучить проект
+выполнить deterministic re-entry и выбрать current first result
+→ Cheap Exit / Direct Work / reuse, если соответствующий predicate истиннен
+→ иначе изучить admitted project context
 → определить систему интереса
 → определить необходимые результаты
-→ предложить Candidate minimal Working Process и карту Loops
+→ предложить Candidate minimal Working Process и Loop / Task / Run decomposition
 → disposition material concerns/results и проверить guard triggers
-→ утвердить Working Process и первый bounded Loop
+→ утвердить Working Process и первый bounded process unit, если он нужен
 → создать только утверждённые process carriers
 → создать Task
 → выполнить Run
@@ -1839,15 +1853,15 @@ Entry Route `start_bounded_pilot_loop` не разрешает Loop вне Worki
 Working Process готов к началу пилота, когда:
 
 - определена система интереса;
-- применимые DPF patterns и reference components выбраны через `FC-13`;
+- applicable DPF route выбран по subject/situation/receiving use; `FC-13` использован только при selected AI SDLC route;
 - определены развёрнутые project-relevant инженерные результаты;
 - proposed reductions отделены от coverage basis и явно рассмотрены process authority;
 - указаны receiving uses;
-- выделены необходимые Loops;
+- предложена минимально достаточная Loop / Task / Run decomposition, включая justified no-Loop route;
 - определены основные зависимости;
 - material concerns/results получили explicit disposition с first relying use и reopen route;
 - triggered architecture/data/integration/transition commitments имеют minimum evidence или явный return;
-- выбран первый bounded Loop;
+- выбран первый bounded process unit, если он действительно нужен;
 - определены verification и admission;
 - назначена authority;
 - имеются stop и return routes;

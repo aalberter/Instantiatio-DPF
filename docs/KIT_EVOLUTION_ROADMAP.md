@@ -12,7 +12,7 @@
 
 Этот документ фиксирует направления развития `Instantiatio DPF — Engineering Work Runtime`. Название `Engineering Work Kit 3.1.0` ниже сохраняется там, где обозначает exact released baseline и историю продукта.
 
-Текущая released configuration — `Instantiatio DPF 4.0.0 — Engineering Work Runtime · Beta`, embedded publication status `released`; её состав и ограничения зафиксированы в [Release Notes 4.0.0](releases/RELEASE_NOTES_4_0_0.md). Released predecessor — `3.7.2`. Exact Human package Admission завершён; embedded status, Verification evidence и внешняя публикация остаются раздельными состояниями/решениями.
+Текущая released configuration — `Instantiatio DPF 4.0.1 — Engineering Work Runtime · Beta`; product maturity — `Beta`, external publication — `not performed`. Её delta и ограничения зафиксированы в [Release Notes 4.0.1](releases/RELEASE_NOTES_4_0_1.md). Published predecessor — `4.0.0`. Exact Human package Admission ещё не завершён; release state, Verification evidence, Admission и внешняя публикация остаются раздельными состояниями/решениями.
 
 Текущий Runtime уже включает:
 
@@ -39,7 +39,7 @@ Project-specific Work
 
 На текущем этапе комплект считается достаточным для end-to-end пилотного применения.
 
-Released Work Kit `2.2.0` устранил process-composition gap; `2.3.0` добавил model-selection guidance; `2.4.0` исправил operational projection gap; `2.5.2` завершил Decision UI specializations. Admitted `3.0.0` добавил release-level identity, Released Work Kit `3.1.0` — progress/completion grammar и optional state projection, а Runtime `3.5.0` — раннее планирование material Human decisions. Released Runtime `3.6.0` добавил Engineering Review View в том же Gate, host-neutral capability/substrate boundary, proportional CAP/reviewer guards, deterministic re-entry и согласованную release documentation. Corrective Runtime `3.6.1` замкнул фактическое предъявление Engineering Views и human-empty review-checklist. Runtime `3.7.0` добавил ordinary human-friendly entry, decision-local authority routing, affected-only stop и progress continuity. Corrective `3.7.1` отделил полноту basis от обязательной видимости каждого internal element; `3.7.2` усилил pre-send guard, plain-language approval и Gate replay. Released `4.0.0` добавляет HAWS DPF 1.0 subject-baseline selection, FPF 31.08 current DPF formation, bounded A.10.1 affected-use route, conditional E.16 enactment и observable current-first-result/stop semantics. FPF, HAWS DPF и controlled DPF `1.0.1` не изменяются.
+Released Work Kit `2.2.0` устранил process-composition gap; `2.3.0` добавил model-selection guidance; `2.4.0` исправил operational projection gap; `2.5.2` завершил Decision UI specializations. Admitted `3.0.0` добавил release-level identity, Released Work Kit `3.1.0` — progress/completion grammar и optional state projection, а Runtime `3.5.0` — раннее планирование material Human decisions. Released Runtime `3.6.0` добавил Engineering Review View в том же Gate, host-neutral capability/substrate boundary, proportional CAP/reviewer guards, deterministic re-entry и согласованную release documentation. Corrective Runtime `3.6.1` замкнул фактическое предъявление Engineering Views и human-empty review-checklist. Runtime `3.7.0` добавил ordinary human-friendly entry, decision-local authority routing, affected-only stop и progress continuity. Corrective `3.7.1` отделил полноту basis от обязательной видимости каждого internal element; `3.7.2` усилил pre-send guard, plain-language approval и Gate replay. Released `4.0.0` добавил HAWS DPF 1.0 subject-baseline selection, FPF 31.08 current DPF formation, bounded A.10.1 affected-use route, conditional E.16 enactment и observable current-first-result/stop semantics. Released `4.0.1` устраняет universal AI-SDLC/FC-13 routing, делает Working Process formation situation-driven и упрощает first-entry/capabilities interface. FPF, HAWS DPF и controlled DPF `1.0.1` не изменяются.
 
 Следующее развитие должно основываться прежде всего на:
 
@@ -121,7 +121,7 @@ Released Work Kit `3.1.0` делает состояние инициативы �
 
 ## 4. Накопленная программа стабилизации
 
-Разделы `4.1…4.5` сохраняют исторические и повторно используемые направления проверки. Они не обозначают текущую версию продукта и не заменяют released configuration `4.0.0` и её дальнейший field-evidence route.
+Разделы `4.1…4.5` сохраняют исторические и повторно используемые направления проверки. Они не обозначают текущую версию продукта и не заменяют released configuration `4.0.1`, её exact package review и Human Admission route.
 
 ### 4.1. Integrity Review
 
@@ -213,7 +213,7 @@ Candidate `2.2.0` реализует admitted bounded repair:
 
 Released `2.4.0` переносит этот принцип в исполнительскую обвязку:
 
-1. `FC-13` и DPF applicability предшествуют optional PEC screen;
+1. admitted context, smallest applicable DPF route и project-relevant results предшествуют optional PEC screen; `FC-13` используется только внутри уже выбранного AI SDLC route;
 2. project-relevant results разворачиваются до объединений и сокращений;
 3. combined results сохраняют identity, trace и smallest-responsible-result return;
 4. Direct Work, scripts и drivers сохраняют proportional lightweight routes;
@@ -401,15 +401,15 @@ Work Context version
 
 ### 9.1. Минимальная таблица версий
 
-В Candidate/released package фактические версии, publication status, authoritative loci и SHA-256 components хранятся в [`PACKAGE_MANIFEST.md`](../PACKAGE_MANIFEST.md). Для `4.0.0` manifest закрывает exact distributed inventory; README не дублирует изменяемые hashes.
+В Candidate/released package фактические версии, release state, external publication, authoritative loci и SHA-256 components хранятся в [`PACKAGE_MANIFEST.md`](../PACKAGE_MANIFEST.md). Для `4.0.1` manifest закрывает exact distributed inventory; README не дублирует изменяемые hashes.
 
 | Component | Version | Status |
 |---|---:|---|
-| Engineering Work Runtime | `4.0.0` | released · Beta |
+| Engineering Work Runtime | `4.0.1` | released · Beta |
 | AI SDLC DPF | `1.0.1` | controlled working |
-| Bootstrap Guide | `1.11.0` | operational |
-| Working Process Guide | `1.13.0` | operational |
-| AGENTS dispatcher | `2.11.0` | operational |
+| Bootstrap Guide | `1.11.1` | operational |
+| Working Process Guide | `1.13.1` | operational |
+| AGENTS dispatcher | `2.11.1` | operational |
 | Model Selection Recommendations | `1.1.0` | admitted informative guidance |
 
 ### 9.2. Migration Rules
@@ -424,7 +424,7 @@ Work Context version
 - когда мигрируется Working Process;
 - как сохраняется provenance.
 
-До появления реальных migration cases достаточно централизованных component versions и publication statuses в `PACKAGE_MANIFEST.md`.
+До появления реальных migration cases достаточно централизованных component versions, release states и external-publication states в `PACKAGE_MANIFEST.md`.
 
 ---
 
@@ -590,9 +590,9 @@ source revision and Candidate Lesson
 ## 14. Предлагаемая последовательность развития
 
 ```text
-4.0.0 release package
+4.0.1 released package configuration; external publication not performed
 → exact Human package Admission
-→ controlled external-project handoff
+→ separate publication initiative / controlled external-project handoff
 → representative host/substrate and multi-project pilots
 → reusable Loop candidates
 → first application profile

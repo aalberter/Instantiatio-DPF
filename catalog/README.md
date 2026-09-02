@@ -20,7 +20,7 @@ Core Runtime обнаруживает material trigger и сохраняет aut
 | Модуль | Когда обращаться | Статус |
 |---|---|---|
 | [Инженерные представления](engineering_views/README.md) | material engineering object, аудитория/решение или повторное receiving use требуют понятной и проверяемой проекции | Candidate module |
-| [Варианты организации инженерной работы](working_process_compositions/README.md) | после context/`FC-13`/expanded coverage нужен осмысленный выбор контекстной композиции, инженерных методов или reusable concern modules | Candidate module |
+| [Варианты организации инженерной работы](working_process_compositions/README.md) | после admitted context, smallest applicable DPF selection и project-relevant concerns/results нужен осмысленный выбор контекстной композиции, инженерных методов или reusable concern modules; `FC-13` применяется только внутри уже выбранного AI SDLC route | Candidate module |
 
 ## Маршрут выбора
 

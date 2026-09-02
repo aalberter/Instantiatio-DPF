@@ -1,35 +1,18 @@
-# Instantiatio DPF (iDPF) 4.0.0 — Engineering Work Runtime · Beta
+# Instantiatio DPF (iDPF) 4.0.1 — Engineering Work Runtime · Beta
 
-Текущая версия Runtime — `4.0.0`, статус выпуска — `released`, зрелость продукта — `Beta`. Предыдущая выпущенная версия — `3.7.2`.
+> Версия iDPF Runtime: `4.0.1`; release state: `released`; product maturity: `Beta`; external publication: `not performed`; опубликованный предшественник: `4.0.0 Beta`. Включённые AI SDLC DPF `1.0.1` и HAWS DPF `1.0` Final Admitted не изменены.
 
-В поставку входят:
+**iDPF — переносимая среда организации инженерной работы человека и AI-агентов.** Она помогает получать проверяемые результаты, сохраняя решения и ответственность за человеком. Результатом может быть код, требования, архитектура, исследование, документация или ограниченное изменение процесса.
 
-- **HAWS DPF 1.0** — основной предметный DPF для работы с Human–AI Work Systems в пределах допущенной области применения; версия `Final Admitted`, без содержательных изменений;
-- **AI SDLC DPF 1.0.1** — специализированный DPF для задач разработки программного обеспечения; включён без содержательных изменений.
+Начать просто:
 
-**iDPF — переносимая среда организации инженерной работы человека и AI-агентов.** Она помогает превратить намерение, проблему или набор исходных материалов в организованную рабочую систему, выполнить необходимую работу, проверить результат и получить результат, на который можно обоснованно опираться дальше.
+1. Откройте папку iDPF в агентной среде с поддержкой корневого [`AGENTS.md`](AGENTS.md).
+2. Если есть исходные материалы, положите их в `project/source/`.
+3. Опишите задачу обычным языком.
 
-iDPF предназначен для агентных сред, поддерживающих корневой файл [`AGENTS.md`](https://github.com/instantiatio/iDPF/blob/main/AGENTS.md). Основной вход в Runtime:
+iDPF сначала проверит, не существует ли уже достаточного результата или короткого обратимого действия. Новый рабочий процесс формируется только когда без него нельзя безопасно получить нужный результат. Пользователь получает понятное представление результата, его проверок, ограничений и следующего допустимого использования; отдельное решение требуется только на существенной границе полномочий, последствий или доверия к результату.
 
-[`AGENTS.md`](https://github.com/instantiatio/iDPF/blob/main/AGENTS.md) → [`ENGINEERING_WORK_BOOTSTRAP_GUIDE.md`](https://github.com/instantiatio/iDPF/blob/main/ENGINEERING_WORK_BOOTSTRAP_GUIDE.md)
-
-Codex используется как основная референсная среда исполнения, но iDPF не привязан к нему и может работать в других совместимых агентных средах.
-
-### Что изменилось в 4.0.0
-
-Версия `4.0.0` существенно меняет способ выбора рабочего маршрута.
-
-Runtime сначала определяет **первый действительно нужный результат**, а затем выбирает минимально достаточный способ его получить:
-
-- если достаточен уже имеющийся ответ — работа завершается через **Cheap Exit**;
-- если требуется небольшое обратимое действие — допускается **bounded Direct Work** без обязательного полного Bootstrap;
-- полный рабочий процесс формируется только тогда, когда сложность и последствия задачи действительно этого требуют.
-
-Для общей Human–AI инженерной работы основным предметным маршрутом является **HAWS DPF 1.0** в пределах его допущенной области применения. Если возникает самостоятельная задача разработки программного обеспечения, может напрямую применяться специализированный **AI SDLC DPF 1.0.1**. Эти два DPF не подключаются автоматически и не являются конкурирующими общими основаниями.
-
-В `4.0.0` также актуализированы механизмы формирования DPF, повторной проверки при изменении источников, ограничения автономности агентов и остановки работы после получения первого полезного допущенного результата. Дополнительная работа не разворачивается без явно названного следующего использования результата.
-
-README относится к выпуску iDPF `4.0.0 Beta`. Состав изменений и известные ограничения приведены в [Release Notes 4.0.0](https://github.com/instantiatio/iDPF/blob/main/docs/releases/RELEASE_NOTES_4_0_0.md), а точный состав поставки — в [`PACKAGE_MANIFEST.md`](https://github.com/instantiatio/iDPF/blob/main/PACKAGE_MANIFEST.md).
+Операционный вход Runtime — только [`AGENTS.md`](AGENTS.md). [Bootstrap Guide](ENGINEERING_WORK_BOOTSTRAP_GUIDE.md) подключается условно для новой инициативы, когда Cheap Exit, Direct Work и reuse недостаточны. Изменения `4.0.1` описаны в [Release Notes 4.0.1](docs/releases/RELEASE_NOTES_4_0_1.md); точная released configuration фиксируется в [`PACKAGE_MANIFEST.md`](PACKAGE_MANIFEST.md). Human final Admission exact package остаётся отдельным решением, а внешняя публикация не выполнялась и требует отдельной инициативы.
 
 ## Содержание
 
@@ -110,7 +93,7 @@ iDPF добавляет к этому переходу контролируем�
 
 **Product identity precedence.** Внутри iDPF workspace общие introductory-вопросы о «тебе», возможностях, назначении или способе работы по умолчанию относятся к iDPF Engineering Work Runtime. Execution host или model не подменяют этот ответ и называются по явному вопросу либо когда их capability/limitation существенно влияет на текущую работу.
 
-**Optional onboarding offer.** В уместном introductory context iDPF может одной короткой фразой предложить отдельный практический обзор уровней представления, инженерных представлений, Human Gates и типовых маршрутов. Предложение можно проигнорировать: оно не повторяется после task input, отказа или молчания и не создаёт обязательный onboarding, preference, process или Gate.
+В уместном первом контакте iDPF может один раз предложить: **«Могу подробно рассказать о возможностях iDPF.»** Предложение можно проигнорировать: оно не повторяется после содержательной задачи, отказа или молчания и не создаёт обязательный onboarding, preference, process или Gate.
 
 Для небольшого обратимого изменения iDPF может использовать прямой облегчённый маршрут. Для сложной или существенной по последствиям работы он сначала сделает видимыми границы, риски, ожидаемые результаты, проверки и точки решения человека (Human Gates). Строгость выбирается по характеру задачи, а не по количеству файлов или желанию формализовать всё заранее.
 
@@ -185,7 +168,7 @@ frameworks/specializations/AI_SDLC_DPF
   edition-qualified direct software route, controlled read-only
 
 iDPF Runtime
-→ Bootstrap, state dispatch, process design,
+→ state dispatch, conditional Bootstrap, process design,
   Human Gates, Verification и recovery contracts
 
 Project-specific Working Process
@@ -219,7 +202,7 @@ Project-specific материалы размещаются внутри `project
 
 ### Процесс проектируется под задачу
 
-Универсального оптимального процесса инженерной работы не существует. iDPF сначала устанавливает контекст, риск и intended use, затем выбирает или проектирует Working Process. Устойчивыми остаются инженерные обязательства; порядок, глубина и форма работы адаптируются к инициативе.
+Универсального оптимального процесса инженерной работы не существует. iDPF сначала проверяет достаточный current result, Direct Work и reuse; только затем при необходимости устанавливает новый контекст, риск и intended use и предлагает Working Process. Устойчивыми остаются инженерные обязательства; порядок, глубина и форма работы адаптируются к инициативе.
 
 ### Главный объект — надёжный результат, а не завершённое выполнение
 
@@ -233,9 +216,11 @@ Project-specific материалы размещаются внутри `project
 
 Доступ к файлу, shell, сети или внешней системе показывает техническую возможность, но не разрешение. Полномочия определяются человеком и точными carriers. Успешная проверка, уверенность модели и рекомендация reviewer также не создают Admission.
 
-### Engineering state первичен, представления вторичны
+### Инженерные представления — человеческий интерфейс
 
-Авторитетное состояние работы должно переживать отдельный разговор. Чат, dashboard, таблица или State Index являются представлениями этого состояния и могут устареть. При расхождении iDPF возвращается к точным Work Context, решениям, Runs, effects и relied-on configuration.
+Пользователь не обязан искать внутренние carriers или знать названия диаграмм. Runtime сам показывает нужное представление перед существенным решением либо строит его по естественному запросу: «Покажи текущее понимание задачи», «Какая сейчас архитектура?», «Как проверялся вывод?», «На какие источники опирается решение?» или «Какие ограничения остаются?».
+
+Текст, таблица, схема или другой Engineering View строятся из текущего инженерного состояния и остаются проверяемой проекцией: они не создают отдельный source of truth, authority или Admission. При расхождении iDPF возвращается к точным Work Context, решениям, Runs, effects и relied-on configuration; представление можно восстановить из этой basis без ручной навигации пользователя по файлам.
 
 ### Строгость должна быть пропорциональна последствиям
 
@@ -253,7 +238,7 @@ iDPF собирает field evidence, Patterns, Antipatterns и внешнее �
 
 | Возможность | Практический смысл |
 |---|---|
-| Управляемый вход | Bootstrap принимает идею, проблему, существующий проект или источники и формирует проверяемый Work Context |
+| Управляемый вход | Dispatcher сначала выбирает достаточный current result, Direct Work или reuse и только при необходимости запускает Bootstrap |
 | Current first result | Cheap Exit и bounded Direct Work закрывают immediate low-consequence use без обязательной полной process ceremony |
 | Адаптивный Working Process | состав инженерных результатов и порядок работы проектируются под конкретную инициативу |
 | Bounded execution | Loop, Task и Run ограничивают цель, разрешённые эффекты, ресурсы, stop conditions и route продолжения |
@@ -325,20 +310,20 @@ Capability qualification относится к наблюдаемым capabiliti
 
 Для понимания принципов начните с этого README. Для реальной инициативы следуйте предложению iDPF и открывайте Bootstrap Guide или Working Process Guide только когда требуется подробная механика. Нормативная архитектура идёт от current FPF к smallest applicable route: current HAWS DPF subject baseline для его admitted scope либо edition-qualified AI SDLC DPF для достаточного software-specific direct use; tutorial-примеры, исторические документы и directory nesting authority не создают.
 
-Текущие версии основных компонентов iDPF 4.0.0:
+Текущие версии основных компонентов iDPF 4.0.1:
 
 | Компонент | Версия | Состояние |
 |---|---:|---|
-| iDPF Runtime | `4.0.0` | released · Beta |
+| iDPF Runtime | `4.0.1` | released · Beta |
 | AI SDLC DPF | `1.0.1` | controlled working, unchanged |
-| AGENTS dispatcher | `2.11.0` | operational |
-| Bootstrap Guide | `1.11.0` | operational |
-| Working Process Guide | `1.13.0` | operational |
+| AGENTS dispatcher | `2.11.1` | operational |
+| Bootstrap Guide | `1.11.1` | operational |
+| Working Process Guide | `1.13.1` | operational |
 | Engineering Views review contract | `0.3.0-candidate` | candidate module |
 | Runtime Capability Profile schema | `1.1` | backward-compatible Candidate schema |
 | Model Selection Recommendations | `1.1.0` | admitted informative guidance |
 
-История развития и направления дальнейшей проверки описаны в [Evolution Roadmap](docs/KIT_EVOLUTION_ROADMAP.md). Изменения release находятся в [Release Notes 4.0.0](docs/releases/RELEASE_NOTES_4_0_0.md), а выпущенный предшественник — в [Release Notes 3.7.2](docs/releases/RELEASE_NOTES_3_7_2.md).
+История развития и направления дальнейшей проверки описаны в [Evolution Roadmap](docs/KIT_EVOLUTION_ROADMAP.md). Release delta находится в [Release Notes 4.0.1](docs/releases/RELEASE_NOTES_4_0_1.md); опубликованный predecessor snapshot сохранён в [Release Notes 4.0.0](docs/releases/RELEASE_NOTES_4_0_0.md).
 
 ## Происхождение, версия и лицензия
 
@@ -346,7 +331,7 @@ iDPF возник на пересечении системной инженер�
 
 Концептуальной основой является [First Principles Framework — FPF](https://github.com/ailev/FPF). iDPF использует связанные идеи первых принципов, предметных DPF и локализации методов, но не является официальной дистрибуцией FPF; affiliation или endorsement авторами FPF не заявляются. Внешние FPF-файлы не включаются в пакет и не relicensed.
 
-Release identity текущей configuration — `Instantiatio DPF 4.0.0 — Engineering Work Runtime · Beta`. Выпущенный предшественник — `Instantiatio DPF 3.7.2 — Engineering Work Runtime · Beta`. Исторические обозначения `Engineering Work Kit 3.1.0`, DPF assembly `Released 2.2.0` и более ранние local baselines сохраняются только как provenance и не являются текущей версией Runtime.
+Release identity текущей released configuration — `Instantiatio DPF 4.0.1 — Engineering Work Runtime · Beta`; external publication для неё не выполнялась. Опубликованный предшественник — `Instantiatio DPF 4.0.0 — Engineering Work Runtime · Beta`. Исторические обозначения `Engineering Work Kit 3.1.0`, DPF assembly `Released 2.2.0` и более ранние local baselines сохраняются только как provenance и не являются текущей версией Runtime.
 
 Release flow разделяет dependent publication closure, package assembly/Verification, Human Admission точного package и внешнюю публикацию:
 
@@ -356,6 +341,8 @@ Verified Runtime Candidate
   без отдельного development stream или Gate
 → manifest, checker, final metadata и ZIP
 → clean-extraction Verification
+→ local release-state closure: released · Beta
+  external publication: not performed
 → Human Admission точного package
 → отдельно разрешённые tag, upload и внешняя публикация
 ```

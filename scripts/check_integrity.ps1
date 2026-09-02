@@ -1,6 +1,7 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param()
 
+# Keep this executable carrier as UTF-8 with BOM so Windows PowerShell 5.1 decodes non-ASCII literals correctly.
 $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $failures = [System.Collections.Generic.List[string]]::new()
@@ -217,11 +218,13 @@ $requiredFiles = @(
     'docs/releases/RELEASE_NOTES_3_7_1.md',
     'docs/releases/RELEASE_NOTES_3_7_2.md',
     'docs/releases/RELEASE_NOTES_4_0_0.md',
+    'docs/releases/RELEASE_NOTES_4_0_1.md',
     'examples/CODEX_REFERENCE_CAPABILITY_PROFILE.yaml',
     'tests/behavioral/BOOTSTRAP_SCENARIOS.md',
     'tests/behavioral/RUNTIME_3_6_OPERATIONAL_SCENARIOS.md',
     'tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md',
     'tests/behavioral/RUNTIME_4_0_OPERATIONAL_SCENARIOS.md',
+    'tests/behavioral/RUNTIME_4_0_1_OPERATIONAL_SCENARIOS.md',
     'tests/conformance/RUNTIME_BOUNDARY_CONFORMANCE_PROTOCOL.md',
     'templates/RUNTIME_CAPABILITY_PROFILE_TEMPLATE.yaml',
     'frameworks/specializations/AI_SDLC_DPF/framework/AI_SDLC_DPF.md',
@@ -350,11 +353,18 @@ $releaseNotes372Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_3_7_2.md
 $releaseNotes372Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes372Path
 $releaseNotes400Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_4_0_0.md'
 $releaseNotes400Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes400Path
+$releaseNotes401Path = Join-Path $repoRoot 'docs/releases/RELEASE_NOTES_4_0_1.md'
+$releaseNotes401Text = Get-Content -Raw -Encoding utf8 -LiteralPath $releaseNotes401Path
 $runtime37ScenarioPath = Join-Path $repoRoot 'tests/behavioral/RUNTIME_3_7_OPERATIONAL_SCENARIOS.md'
 $runtime37ScenarioText = if (Test-Path -LiteralPath $runtime37ScenarioPath -PathType Leaf) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtime37ScenarioPath } else { '' }
 $runtime40ScenarioPath = Join-Path $repoRoot 'tests/behavioral/RUNTIME_4_0_OPERATIONAL_SCENARIOS.md'
 $runtime40ScenarioText = if (Test-Path -LiteralPath $runtime40ScenarioPath -PathType Leaf) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtime40ScenarioPath } else { '' }
+$runtime401ScenarioPath = Join-Path $repoRoot 'tests/behavioral/RUNTIME_4_0_1_OPERATIONAL_SCENARIOS.md'
+$runtime401ScenarioText = if (Test-Path -LiteralPath $runtime401ScenarioPath -PathType Leaf) { Get-Content -Raw -Encoding utf8 -LiteralPath $runtime401ScenarioPath } else { '' }
 $engineeringViewsText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'catalog/engineering_views/README.md')
+$catalogReadmeText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'catalog/README.md')
+$workingProcessCompositionText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'catalog/working_process_compositions/README.md')
+$bootstrapScenarioCurrentText = Get-Content -Raw -Encoding utf8 -LiteralPath (Join-Path $repoRoot 'tests/behavioral/BOOTSTRAP_SCENARIOS.md')
 
 # Public wrapper identity, license and provenance contract
 $licensePath = Join-Path $repoRoot 'LICENSE'
@@ -375,8 +385,9 @@ $release361Identity = "Instantiatio DPF 3.6.1 $emDash Engineering Work Runtime $
 $release370Identity = "Instantiatio DPF 3.7.0 $emDash Engineering Work Runtime $middleDot Beta"
 $release371Identity = "Instantiatio DPF 3.7.1 $emDash Engineering Work Runtime $middleDot Beta"
 $release372Identity = "Instantiatio DPF 3.7.2 $emDash Engineering Work Runtime $middleDot Beta"
-$releaseIdentity = "Instantiatio DPF 4.0.0 $emDash Engineering Work Runtime $middleDot Beta"
-$readmeIdentity = "Instantiatio DPF (iDPF) 4.0.0 $emDash Engineering Work Runtime $middleDot Beta"
+$release400Identity = "Instantiatio DPF 4.0.0 $emDash Engineering Work Runtime $middleDot Beta"
+$releaseIdentity = "Instantiatio DPF 4.0.1 $emDash Engineering Work Runtime $middleDot Beta"
+$readmeIdentity = "Instantiatio DPF (iDPF) 4.0.1 $emDash Engineering Work Runtime $middleDot Beta"
 if (-not $readmeText.StartsWith("# $readmeIdentity`n")) {
     Add-Failure 'README release-level identity is missing'
 }
@@ -384,14 +395,17 @@ if (-not $manifestText.StartsWith("# $releaseIdentity $emDash Package Manifest`n
     Add-Failure 'Manifest release-level identity is missing'
 }
 foreach ($releaseConfigurationMarker in @(
-    '| Runtime version | `4.0.0` |',
-    '| Publication status | `released` |',
-    '| Assembly date | `2026-09-01` |',
-    '| Archive identity | `Instantiatio-DPF-4.0.0-Beta.zip` |',
-    '| Archive top-level directory | `Instantiatio-DPF-4.0.0-Beta` |'
+    '| Runtime version | `4.0.1` |',
+    '| Release state | `released` |',
+    '| Product maturity | `Beta` |',
+    '| External publication | `not performed` |',
+    '| Assembly date | `2026-09-02` |',
+    '| Archive identity | `Instantiatio-DPF-4.0.1-Beta.zip` |',
+    '| Archive top-level directory | `Instantiatio-DPF-4.0.1-Beta` |',
+    '| Operational entry | `AGENTS.md` |'
 )) {
     if (-not $manifestText.Contains($releaseConfigurationMarker)) {
-        Add-Failure "Manifest 4.0.0 configuration marker missing: $releaseConfigurationMarker"
+        Add-Failure "Manifest 4.0.1 configuration marker missing: $releaseConfigurationMarker"
     }
 }
 foreach ($publicIdentityContract in @(
@@ -481,6 +495,23 @@ foreach ($runtime40ReleaseContract in @(
     }
 }
 
+$runtime401ScenarioTitle = '# Runtime 4.0.1 Operational Scenarios ' + $emDash + ' Released'
+foreach ($runtime401Contract in @(
+    $runtime401ScenarioTitle,
+    'R401-01', 'R401-02', 'R401-03', 'R401-04', 'R401-05', 'R401-06', 'R401-07',
+    'R401-08', 'R401-09', 'R401-10', 'R401-11', 'R401-12', 'R401-13',
+    'AI SDLC DPF имеет disposition `not applicable to current receiving use`',
+    'AI SDLC/`FC-13` как governing profile',
+    'released state is not external publication',
+    'external publication remains `not performed`',
+    'Могу подробно рассказать о возможностях iDPF.',
+    'Lexical marker presence alone is insufficient behavioral evidence'
+)) {
+    if (-not $runtime401ScenarioText.Contains($runtime401Contract)) {
+        Add-Failure "Runtime 4.0.1 behavior marker missing: $runtime401Contract"
+    }
+}
+
 foreach ($runtime40SemanticContract in @(
     @{ Name = 'dispatcher current first result'; Text = $agentsText; Marker = 'current_first_result_selected' },
     @{ Name = 'dispatcher HAWS baseline'; Text = $agentsText; Marker = 'haws_dpf_1_0_current_subject_baseline' },
@@ -496,17 +527,36 @@ foreach ($runtime40SemanticContract in @(
     @{ Name = 'A.10.1 bounded discovery'; Text = $workingGuideText; Marker = 'a10_1_two_direction_discovery' },
     @{ Name = 'E.16 true autonomy'; Text = $workingGuideText; Marker = 'e16_unsupervised_claim_trigger' },
     @{ Name = 'first useful result stop'; Text = $workingGuideText; Marker = 'first_useful_result_stop' },
+    @{ Name = 'route-neutral Working Process formation'; Text = $workingGuideText; Marker = 'working_process_runtime_applicable_dpf_context' },
+    @{ Name = 'bounded reference search'; Text = $workingGuideText; Marker = 'bounded_reference_search_by_operational_gap' },
     @{ Name = 'product identity precedence'; Text = $agentsText; Marker = 'product_identity_precedence' },
     @{ Name = 'material host identity exception'; Text = $agentsText; Marker = 'host_identity_on_explicit_or_material_trigger' },
     @{ Name = 'introductory onboarding once'; Text = $bootstrapText; Marker = 'introductory_onboarding_offer_once' },
     @{ Name = 'onboarding creates no process gate'; Text = $bootstrapText; Marker = 'onboarding_offer_no_process_or_gate' },
     @{ Name = 'README product identity precedence'; Text = $readmeText; Marker = '**Product identity precedence.**' },
-    @{ Name = 'README optional onboarding offer'; Text = $readmeText; Marker = '**Optional onboarding offer.**' },
+    @{ Name = 'README exact capabilities offer'; Text = $readmeText; Marker = '**«Могу подробно рассказать о возможностях iDPF.»**' },
+    @{ Name = 'normal empty-project no notice'; Text = $bootstrapText; Marker = 'normal_empty_project_no_notice' },
+    @{ Name = 'capabilities guide on request'; Text = $bootstrapText; Marker = 'capabilities_guide_on_request' },
     @{ Name = 'Release Notes product identity precedence'; Text = $releaseNotes400Text; Marker = 'Product identity precedence:' },
-    @{ Name = 'Release Notes optional onboarding offer'; Text = $releaseNotes400Text; Marker = 'Optional onboarding offer:' }
+    @{ Name = 'Release Notes optional onboarding offer'; Text = $releaseNotes400Text; Marker = 'Optional onboarding offer:' },
+    @{ Name = 'Release Notes 4.0.1 route correction'; Text = $releaseNotes401Text; Marker = '`FC-13` больше не является universal entry' },
+    @{ Name = 'composition catalog applicable-DPF entry'; Text = $workingProcessCompositionText; Marker = '`admitted context → smallest applicable DPF selection → project-relevant concerns/results`' },
+    @{ Name = 'catalog route order'; Text = $catalogReadmeText; Marker = 'после admitted context, smallest applicable DPF selection и project-relevant concerns/results' },
+    @{ Name = 'roadmap route order'; Text = $roadmapText; Marker = 'admitted context, smallest applicable DPF route и project-relevant results предшествуют optional PEC screen' },
+    @{ Name = 'conditional S-151 FC-13'; Text = $bootstrapScenarioCurrentText; Marker = 'has already selected the AI SDLC route and Runtime performs bounded `FC-13`' }
 )) {
     if (-not $runtime40SemanticContract.Text.Contains($runtime40SemanticContract.Marker)) {
         Add-Failure "Runtime 4.0 semantic contract gap: $($runtime40SemanticContract.Name)"
+    }
+}
+foreach ($staleUniversalFc13Contract in @(
+    @{ Name = 'composition catalog'; Text = $workingProcessCompositionText; Marker = 'после понимания контекста, `FC-13`' },
+    @{ Name = 'catalog index'; Text = $catalogReadmeText; Marker = 'после context/`FC-13`/expanded coverage' },
+    @{ Name = 'roadmap'; Text = $roadmapText; Marker = '`FC-13` и DPF applicability предшествуют optional PEC screen' },
+    @{ Name = 'S-151'; Text = $bootstrapScenarioCurrentText; Marker = '**When:** Runtime performs FC-13 Working Process composition.' }
+)) {
+    if ($staleUniversalFc13Contract.Text.Contains($staleUniversalFc13Contract.Marker)) {
+        Add-Failure "Stale universal FC-13 framing remains in $($staleUniversalFc13Contract.Name)"
     }
 }
 foreach ($forbiddenRuntime40Machinery in @(
@@ -515,7 +565,7 @@ foreach ($forbiddenRuntime40Machinery in @(
     'automatic successor Loop is required',
     'universal dependency graph is required'
 )) {
-    if (($agentsText + "`n" + $workingGuideText + "`n" + $runtime40ScenarioText).Contains($forbiddenRuntime40Machinery)) {
+    if (($agentsText + "`n" + $workingGuideText + "`n" + $runtime40ScenarioText + "`n" + $runtime401ScenarioText).Contains($forbiddenRuntime40Machinery)) {
         Add-Failure "Runtime 4.0 forbidden machinery claim: $forbiddenRuntime40Machinery"
     }
 }
@@ -573,21 +623,22 @@ foreach ($hawsRuntimeMarker in @(
     }
 }
 
-# Package status, maturity and accepted limitation visibility
-$publicationStatus = $null
-if ($manifestText -notmatch '\| Publication status \| \x60(candidate|released)\x60 \|') {
-    Add-Failure 'Manifest publication status must be candidate or released'
-}
-else {
-    $publicationStatus = $matches[1]
+# Package release state, maturity, publication and accepted limitation visibility
+$releaseState = 'released'
+if (-not $manifestText.Contains('| Release state | `released` |')) {
+    Add-Failure 'Manifest release state must be released'
 }
 if ($manifestText -notmatch '\| Product maturity \| \x60Beta\x60 \|') {
     Add-Failure 'Manifest product maturity must be Beta'
 }
+if (-not $manifestText.Contains('| External publication | `not performed` |')) {
+    Add-Failure 'Manifest external publication must be not performed'
+}
 foreach ($packageStatusContract in @(
-    @{ Name = 'README'; Text = $readmeText; Marker = 'iDPF Runtime: `4.0.0`' },
-    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `4.0.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') },
-    @{ Name = 'Roadmap'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `4.0.0` | ' + $publicationStatus + ' ' + $middleDot + ' Beta |') }
+    @{ Name = 'README identity'; Text = $readmeText; Marker = 'Версия iDPF Runtime: `4.0.1`; release state: `released`; product maturity: `Beta`; external publication: `not performed`' },
+    @{ Name = 'Manifest component'; Text = $manifestText; Marker = ('| Engineering Work Runtime | `4.0.1` | ' + $releaseState + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Roadmap component'; Text = $roadmapText; Marker = ('| Engineering Work Runtime | `4.0.1` | ' + $releaseState + ' ' + $middleDot + ' Beta |') },
+    @{ Name = 'Roadmap publication'; Text = $roadmapText; Marker = 'external publication — `not performed`' }
 )) {
     if (-not $packageStatusContract.Text.Contains($packageStatusContract.Marker)) {
         Add-Failure "Package status contract mismatch: $($packageStatusContract.Name)"
@@ -753,7 +804,7 @@ foreach ($requiredReleaseNotes372Marker in @(
 }
 
 foreach ($requiredReleaseNotes400Marker in @(
-    ("# $releaseIdentity"),
+    ("# $release400Identity"),
     '> Release status: `released`',
     '> Release assembly date: `2026-09-01`',
     '> Released predecessor: `3.7.2`',
@@ -769,6 +820,43 @@ foreach ($requiredReleaseNotes400Marker in @(
 )) {
     if (-not $releaseNotes400Text.Contains($requiredReleaseNotes400Marker)) {
         Add-Failure "Release Notes 4.0.0 contract marker missing: $requiredReleaseNotes400Marker"
+    }
+}
+
+foreach ($requiredReleaseNotes401Marker in @(
+    ("# $releaseIdentity"),
+    '> Release status: `released`',
+    '> Product maturity: `Beta`',
+    '> Published predecessor: `4.0.0 Beta`',
+    '> External publication: `not performed`',
+    '## Что теперь работает иначе',
+    '## Что изменилось для пользователя',
+    '## Проверяемое поведение',
+    '## Известные ограничения и deferred findings',
+    '## Admission boundary',
+    'Могу подробно рассказать о возможностях iDPF.',
+    'Семь унаследованных relative links',
+    'Четыре self-links'
+)) {
+    if (-not $releaseNotes401Text.Contains($requiredReleaseNotes401Marker)) {
+        Add-Failure "Release Notes 4.0.1 contract marker missing: $requiredReleaseNotes401Marker"
+    }
+}
+foreach ($staleCurrent401StatusContract in @(
+    @{ Name = 'README'; Text = $readmeText; Marker = 'статус этой конфигурации: `candidate`' },
+    @{ Name = 'README'; Text = $readmeText; Marker = 'текущей Candidate configuration' },
+    @{ Name = 'manifest'; Text = $manifestText; Marker = '| Publication status | `candidate` |' },
+    @{ Name = 'manifest'; Text = $manifestText; Marker = 'pending Task C' },
+    @{ Name = 'roadmap'; Text = $roadmapText; Marker = 'Текущая Candidate configuration' },
+    @{ Name = 'roadmap'; Text = $roadmapText; Marker = 'Candidate `4.0.1` устраняет' },
+    @{ Name = 'roadmap'; Text = $roadmapText; Marker = 'Candidate configuration `4.0.1`' },
+    @{ Name = 'roadmap'; Text = $roadmapText; Marker = '4.0.1 Candidate package' },
+    @{ Name = 'Release Notes 4.0.1'; Text = $releaseNotes401Text; Marker = '> Release status: `candidate' },
+    @{ Name = 'Release Notes 4.0.1'; Text = $releaseNotes401Text; Marker = '> Candidate assembly date:' },
+    @{ Name = 'Runtime 4.0.1 scenarios'; Text = $runtime401ScenarioText; Marker = '# Runtime 4.0.1 Operational Scenarios ' + $emDash + ' Candidate' }
+)) {
+    if ($staleCurrent401StatusContract.Text.Contains($staleCurrent401StatusContract.Marker)) {
+        Add-Failure "Stale current 4.0.1 status remains in $($staleCurrent401StatusContract.Name): $($staleCurrent401StatusContract.Marker)"
     }
 }
 
@@ -1071,7 +1159,7 @@ foreach ($requiredScenarioPhrase in @(
     'Declined or unanswered model-guidance offer'
     'Host limitation or unavailable model'
     'Model choice cannot grant authority'
-    'DPF-first composition'
+    'applicable-DPF composition'
     'ConOps'
     'User Stories'
     'project-relevant result set'
@@ -1310,7 +1398,7 @@ if (-not $s59Section.Contains('route')) {
 }
 # These exact markers guard repaired projections; semantic replay remains required.
 foreach ($repairedScenarioContract in @(
-    @{ Id = 'S-36'; Marker = 'FC-13-first operational entry' },
+    @{ Id = 'S-36'; Marker = '`FC-13` как universal Working Process entry' },
     @{ Id = 'S-39'; Marker = 'admitted reduction trace' },
     @{ Id = 'S-43'; Marker = 'adjacent WPC-06 decision wrapper' }
 )) {
@@ -1748,20 +1836,19 @@ if (-not $canonicalGreeting) {
     Add-Failure 'Canonical ordinary greeting block is missing'
 }
 $greetingParagraphs = @($canonicalGreeting -split '(?:\r?\n){2,}' | Where-Object { $_.Trim().Length -gt 0 })
-if ($greetingParagraphs.Count -ne 7) {
-    Add-Failure "Canonical greeting paragraph count is $($greetingParagraphs.Count), expected 7"
+if ($greetingParagraphs.Count -ne 3) {
+    Add-Failure "Canonical greeting paragraph count is $($greetingParagraphs.Count), expected 3"
 }
 if ([regex]::IsMatch($canonicalGreeting, '(?m)^\s*[0-9]+\.\s')) {
     Add-Failure 'Canonical greeting must not contain an intent or mode menu'
 }
-$requiredGreetingInstruction = & $decodeUtf8Marker '0J7Qv9C40YjQuNGC0LUsINGH0YLQviDRhdC+0YLQuNGC0LUg0YHQtNC10LvQsNGC0YwuINCV0YHQu9C4INC10YHRgtGMINC40YHRhdC+0LTQvdGL0LUg0LzQsNGC0LXRgNC40LDQu9GLLCDQv9C+0LzQtdGB0YLQuNGC0LUg0LjRhSDQsiBgcHJvamVjdC9zb3VyY2UvYCDigJQg0L7QvdC4INC80L7Qs9GD0YIg0LHRi9GC0Ywg0LIg0LvRjtCx0L7QvCDRgNCw0LfRg9C80L3QvtC8INC40YHRhdC+0LTQvdC+0Lwg0LLQuNC00LUg0Lgg0L3QtSDRgtGA0LXQsdGD0Y7RgiDQv9GA0LXQtNCy0LDRgNC40YLQtdC70YzQvdC+0LPQviDQvtGE0L7RgNC80LvQtdC90LjRjy4='
-if (-not $canonicalGreeting.Contains($requiredGreetingInstruction)) {
+$requiredGreetingInstruction = 'Опишите, что хотите сделать.'
+if (-not $canonicalGreeting.Contains($requiredGreetingInstruction) -or -not $canonicalGreeting.Contains('`project/source/`')) {
     Add-Failure 'Canonical greeting material/task instruction is missing or changed'
 }
-$levelsQuestion = & $decodeUtf8Marker '0JrQsNC60LjQtSDRg9GA0L7QstC90Lgg0YDQsNCx0L7RgtGLINC00L7RgdGC0YPQv9C90Ys/'
 $modesQuestion = & $decodeUtf8Marker '0JrQsNC60LjQtSDRgNC10LbQuNC80Ysg0YDQsNCx0L7RgtGLINC00L7RgdGC0YPQv9C90Ys/'
-if (-not $canonicalGreeting.Contains($levelsQuestion)) {
-    Add-Failure 'Canonical greeting does not use the exact levels question'
+if (-not $canonicalGreeting.Contains('**Могу подробно рассказать о возможностях iDPF.**')) {
+    Add-Failure 'Canonical greeting does not use the exact capabilities offer'
 }
 if ($canonicalGreeting.Contains($modesQuestion)) {
     Add-Failure 'Canonical greeting still routes the user through the ambiguous modes question'
@@ -1927,7 +2014,7 @@ if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
             Add-Failure "Manifest hash mismatch: $relativePath"
         }
     }
-    if ($manifestHashRowCount -ne 59) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 59" }
+    if ($manifestHashRowCount -ne 61) { Add-Failure "Manifest hash row count is $manifestHashRowCount, expected 61" }
 
     # A clean distribution carries only the empty user-project skeleton under project/.
     # Package baselines/evidence must stay outside that namespace; later user-created

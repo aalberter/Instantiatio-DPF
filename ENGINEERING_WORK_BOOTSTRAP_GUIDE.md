@@ -1,6 +1,6 @@
 # Engineering Work Bootstrap Guide
 
-> Version: `1.11.0`
+> Version: `1.11.1`
 
 ## 1. Назначение
 
@@ -31,18 +31,9 @@ Candidate Work Context
 → Entry Decision
 ```
 
-Bootstrap не заменяет:
+Bootstrap не заменяет применимый current DPF route, его bounded reference components, `WORKING_PROCESS_AND_LOOPS_GUIDE.md`, project-specific Working Process или конкретные Loops.
 
-- AI SDLC DPF;
-- Reference Architecture;
-- Reference Process;
-- Primary Application Profile;
-- Application Guide;
-- `WORKING_PROCESS_AND_LOOPS_GUIDE.md`;
-- project-specific Working Process;
-- конкретные Loops.
-
-AI SDLC DPF задаёт устойчивые инженерные принципы.
+Applicable route определяется предметом и named receiving use. HAWS DPF применяется только к фактически возникшим AUTH/RELY/CURR/VER situations в пределах admitted scope; edition-qualified AI SDLC DPF является прямой специализацией для достаточного software-specific use, а не общей основой любой инженерной работы. Возможная будущая software-задача не делает текущую non-software initiative software-specific.
 
 Этот Guide определяет, как начать инженерную работу, сформировать общий контекст человека и агента, определить возможные маршруты входа и передать согласованный результат в исполнительский контур проекта.
 
@@ -119,7 +110,7 @@ Resolution rules:
 3. missing/broken Admission ref, relied hash или carrier/effect contradiction блокирует только affected continuation и называет exact repair/return owner;
 4. pending Admission блокирует dependent/bypass Task, но не уже authorized independent reversible preparation;
 5. compact recovered presentation называет initiative, baseline/configuration, current Loop/Task/Run, Candidate/Gate, allowed next action, blocked actions и unresolved/reopen route;
-6. если active initiative отсутствует, обычный Bootstrap начинается без recovery ceremony или обязательного index carrier.
+6. если active initiative отсутствует, это normal empty-project state: обычный entry продолжается без recovery ceremony, отдельного сообщения об отсутствии или обязательного index carrier; отсутствие называй только когда оно меняет действие либо требует решения.
 
 Markers: `deterministic_reentry_before_bootstrap | authority_configuration_factual_state_separated | stale_state_index_ignored | ambiguous_initiative_requires_selection | pending_admission_blocks_dependent_bypass_only`.
 
@@ -129,7 +120,7 @@ Markers: `deterministic_reentry_before_bootstrap | authority_configuration_factu
 
 Пользователь не обязан знать:
 
-- терминологию AI SDLC DPF;
+- терминологию DPF и внутренних process carriers;
 - структуру Working Process;
 - название Loop;
 - специальные команды запуска;
@@ -258,11 +249,11 @@ Work Context, проверенный и явно принятый уполном
 ## 5. Место Bootstrap в общей архитектуре
 
 ```text
-AI SDLC DPF
-→ устойчивые инженерные принципы
+AGENTS.md
+→ operational dispatcher: current result / Cheap Exit / Direct Work / reuse / Bootstrap
 
 ENGINEERING_WORK_BOOTSTRAP_GUIDE.md
-→ вход в новую инженерную работу
+→ conditional вход для инициативы, которой нужен отдельный context/authority/scope/source/process/use decision
 
 Admitted Work Context
 → согласованный контекст инициативы
@@ -273,8 +264,8 @@ WORKING_PROCESS_AND_LOOPS_GUIDE.md
 Project-specific Working Process
 → карта работы
 
-Loop
-→ повторяемый bounded process
+Loop, если он действительно нужен
+→ повторяемый bounded process с самостоятельным receiving use
 
 Task
 → конкретное поручение
@@ -452,27 +443,23 @@ interaction_mode: compact
 explanation_mode: milestone
 ```
 
-Первый контакт объясняет назначение iDPF, new-initiative/re-entry behavior, обычную работу, доступную глубину и следующее действие. Если пользователь уже задал общий introductory question о «тебе», возможностях, способе работы или назначении, сначала ответь на него от лица iDPF Engineering Work Runtime и не воспроизводи canonical greeting механически. Host/model не становятся leading identity: называй их по явному вопросу или когда capability/limitation materially меняет текущую работу; правдивую execution identity и существенное ограничение не скрывай. При пустом первом entry используй один canonical Markdown text без internal mode menu, intent classification или Runtime mechanics:
+Первый контакт объясняет назначение iDPF и следующее действие без служебного отчёта о normal empty-project state. Если пользователь уже задал общий introductory question о «тебе», возможностях, способе работы или назначении, сначала ответь на него от лица iDPF Engineering Work Runtime и не воспроизводи canonical greeting механически. Host/model не становятся leading identity: называй их по явному вопросу или когда capability/limitation materially меняет текущую работу; правдивую execution identity и существенное ограничение не скрывай. При пустом первом entry используй один canonical Markdown text без internal mode menu, intent classification или Runtime mechanics:
 
 ```markdown
-**Instantiatio DPF (iDPF)** — среда управляемой инженерной работы человека и ИИ-агента. Она помогает организовать путь от задачи и исходных материалов до инженерного результата, его проверки и необходимых решений.
+**Instantiatio DPF (iDPF)** помогает организовать инженерную работу человека и ИИ-агента: от задачи и исходных материалов до проверенного результата и необходимых решений.
 
-В начале работы iDPF определяет, **начинается ли новая инициатива или продолжается уже существующая**. Для новой работы формируются исходный контекст и границы, затем предлагается подходящий рабочий процесс. Если работа уже велась, iDPF восстанавливает её состояние и продолжает с актуальной точки.
+Опишите, что хотите сделать. Если есть исходные материалы, поместите их в `project/source/` — предварительно оформлять их не нужно. Я восстановлю применимое состояние, если работа уже велась, либо предложу минимально достаточный путь для новой задачи. К вам будут вынесены только решения, которые действительно требуют человеческих полномочий.
 
-По умолчанию используется **обычный режим работы**: я показываю понятные этапы, текущее состояние, существенные риски, а по необходимости — инженерные представления и результаты проверок; к вам выношу только те решения, которые действительно требуют вашего участия.
-
-При необходимости можно перейти на **инженерный уровень**, где показывается больше архитектуры, процесса, трассировки и проверки, или на **Runtime/Audit уровень**, где доступны внутренняя механика, служебные состояния и точная конфигурация. Уровень можно изменить в любой момент. Если хотите, я отдельно покажу, как работать с iDPF на практике: уровни представления, инженерные представления, Human Gates и типовые маршруты проекта. Для краткого обзора глубины можно спросить: **«Какие уровни работы доступны?»**
-
-Форму представления я выбираю так, чтобы её было удобно понять и содержательно оценить: это может быть текст, таблица, схема, модель, пользовательский поток или результаты проверки.
-
-**Опишите, что хотите сделать. Если есть исходные материалы, поместите их в `project/source/` — они могут быть в любом разумном исходном виде и не требуют предварительного оформления.**
-
-После этого iDPF либо подготовит начальный контекст новой работы для вашего подтверждения, либо восстановит существующую инициативу и покажет, с какого шага разумно продолжить.
+**Могу подробно рассказать о возможностях iDPF.**
 ```
 
-Обычный режим и два уровня глубины являются human-facing labels, а не новыми schema values: внутренние `interaction_mode`/`explanation_mode` продолжают применяться по существующим правилам. Вопрос `Какие уровни работы доступны?` открывает только ordinary, Engineering и Runtime/Audit presentation levels; internal axes, Bootstrap taxonomy, CAP и «Форсаж» не входят в этот ответ и объясняются лишь по отдельному точному вопросу или применимому trigger. Minimum effective representation означает smallest sufficient content для конкретного понимания/решения, а не shortest possible response. Greeting-specific graphical layer не создаётся. CAP, «Форсаж», `gate_required`, IDs/status values/guards и model-selection offer на первом экране не показываются. Practical-onboarding offer является одной короткой optional фразой только в introductory context; он не требует ответа, не повторяется после task input, отказа или молчания и не создаёт preference, process, Bootstrap, Gate или дополнительный question. Markers: `ordinary_task_first_greeting | greeting_internal_variables_hidden | greeting_minimal_effective_not_shortest | greeting_engineering_details_on_demand | greeting_levels_not_modes_routing | product_identity_precedence | host_identity_on_explicit_or_material_trigger | introductory_onboarding_offer_once | onboarding_offer_no_process_or_gate`.
+Обычный режим и два уровня глубины являются human-facing labels, а не новыми schema values: внутренние `interaction_mode`/`explanation_mode` продолжают применяться по существующим правилам. Вопрос `Какие уровни работы доступны?` открывает только ordinary, Engineering и Runtime/Audit presentation levels; internal axes, Bootstrap taxonomy, CAP и «Форсаж» не входят в этот ответ и объясняются лишь по отдельному точному вопросу или применимому trigger. Minimum effective representation означает smallest sufficient content для конкретного понимания/решения, а не shortest possible response. Greeting-specific graphical layer не создаётся. CAP, «Форсаж», `gate_required`, IDs/status values/guards и model-selection offer на первом экране не показываются. Exact capabilities offer является одной короткой optional фразой только в introductory context; он не требует ответа, не повторяется после task input, отказа или молчания и не создаёт preference, process, Bootstrap, Gate или дополнительный question. Markers: `ordinary_task_first_greeting | normal_empty_project_no_notice | exact_capabilities_offer | greeting_internal_variables_hidden | greeting_minimal_effective_not_shortest | greeting_engineering_details_on_demand | greeting_levels_not_modes_routing | product_identity_precedence | host_identity_on_explicit_or_material_trigger | introductory_onboarding_offer_once | onboarding_offer_no_process_or_gate`.
 
-После сообщения ожидай свободное описание задачи или материалы и продолжи Bootstrap без preference/intent interview. Engineering Views показывай по material trigger, Engineering или Runtime/Audit depth — по запросу. «Форсаж» предлагай только когда пользователь явно просит быстрый ограниченный прототип или быстрый результат; он сохраняет отдельный existing start contract и не становится greeting/presentation mode. Marker: `greeting_forsage_triggered_only`.
+После сообщения ожидай свободное описание задачи или материалы и продолжи применимый current-first route без preference/intent interview. Engineering Views показывай по material trigger либо формируй по естественному запросу пользователя. «Форсаж» предлагай только когда пользователь явно просит быстрый ограниченный прототип или быстрый результат; он сохраняет отдельный existing start contract и не становится greeting/presentation mode. Marker: `greeting_forsage_triggered_only`.
+
+#### Подробный рассказ о возможностях по запросу
+
+Если пользователь принимает exact offer либо естественно просит рассказать о возможностях, дай структурированное human-facing руководство на обычном русском языке. Покрой: назначение и основные возможности iDPF; начало работы и обработку материалов из `project/source/`; Cheap Exit и Direct Work; Working Process/Loops в пользовательском смысле; Human–AI работу; Verification и Admission; границы автономности; что Runtime делает сам и когда требуется решение человека; настройки взаимодействия; Engineering Views и примеры естественных запросов; ограничения продукта и portability/host assumptions; типовые запросы. Не превращай ответ в пересказ Guides, список internal IDs или обязательный onboarding. Сам запрос не запускает Bootstrap, process или Gate. Marker: `capabilities_guide_on_request`.
 
 Если project preference существует, примени его без повторного вопроса. Новая инициатива наследует project preference, если для неё нет override.
 
@@ -1322,7 +1309,7 @@ Entry Decision должен содержать:
 - первый ожидаемый инженерный результат;
 - первый proposed bounded scope;
 - expected downstream concern/result coverage и independently relied-on results;
-- decision-relevant inputs для последующего `FC-13`: последствия ошибки, обратимость, применимые system/lifecycle/source constraints и first relying use;
+- decision-relevant inputs для последующего выбора smallest applicable DPF route: предмет/receiving use, последствия ошибки, обратимость, применимые system/lifecycle/source constraints и first relying use; `FC-13` является только conditional AI SDLC input;
 - возможные reference components либо явный non-use как вход для Working Process, но не как окончательный профиль выбора;
 - known architecture/data/state/integration/transition commitment triggers;
 - current data/baseline reliance state, если применимо;
@@ -1371,7 +1358,7 @@ Entry Decision должен содержать:
 
 - Material concerns/results expected for the declared scope:
 - Independently relied-on results and first relying uses:
-- DPF profile inputs: consequence, reversibility, system/lifecycle/source applicability:
+- Applicable DPF route inputs: subject/receiving use, consequence, reversibility, system/lifecycle/source applicability; conditional `FC-13` only for an AI SDLC route:
 - Known dependencies/shared assumptions:
 - Candidate composition inputs, optional reference options or explicit non-use (not a final selection):
 - Potential Commitment Guard triggers:
@@ -1494,13 +1481,13 @@ existing context remains applicable
 - conditions of admission;
 - proposed first result;
 - material concerns/results expected downstream и their first relying uses;
-- decision-relevant inputs для `FC-13`: последствия ошибки, обратимость и применимость system/lifecycle/source concerns;
+- decision-relevant inputs для выбора applicable DPF route: subject/receiving use, последствия ошибки, обратимость и применимость system/lifecycle/source concerns;
 - known shared assumptions/dependencies;
 - candidate composition inputs, optional reference options or explicit non-use без подмены последующего выбора;
 - potential architecture/data/integration/transition guard triggers;
 - current data/baseline reliance state and reopen conditions.
 
-Bootstrap передаёт known concerns, `FC-13` inputs и triggers, но не проектирует lifecycle, полный project-specific result map, PEC topology или Loop map вместо Working Process authority.
+Bootstrap передаёт known concerns, DPF applicability inputs и triggers, но не выбирает unrelated DPF для общей process mechanics и не проектирует lifecycle, полный project-specific result map, PEC topology или Loop map вместо Working Process authority.
 
 ### 24.2. Передача в существующий Working Process
 
@@ -1519,8 +1506,8 @@ Bootstrap передаёт known concerns, `FC-13` inputs и triggers, но не
 Если существующего процесса недостаточно:
 
 1. используй `WORKING_PROCESS_AND_LOOPS_GUIDE.md`;
-2. передай downstream concern/result handover, decision-relevant `FC-13` inputs и known guard triggers;
-3. потребуй применения `WPC-01`–`WPC-09`: DPF-first selection, расширение project-relevant coverage до сокращений и явное представление решений; в ordinary-режиме полная внутренняя basis предъявляется сгруппированным decision-relevant смыслом, а item-level trace остаётся доступным по запросу или на Engineering/Runtime-Audit уровне;
+2. передай downstream concern/result handover, decision-relevant DPF applicability inputs и known guard triggers;
+3. потребуй применения `WPC-01`–`WPC-09`: smallest applicable route selection, расширение project-relevant coverage до сокращений и явное представление решений; в ordinary-режиме полная внутренняя basis предъявляется сгруппированным decision-relevant смыслом, а item-level trace остаётся доступным по запросу или на Engineering/Runtime-Audit уровне;
 4. передай Working Process authority проектирование lifecycle, result map, reference composition и Loop map;
 5. получи явное решение пользователя по Candidate Working Process и предлагаемым сокращениям;
 6. только после этого создавай процессные файлы.
@@ -1800,7 +1787,7 @@ Preference notice и optional model-guidance offer не являются доп�
 
 Пользовательские заголовки и поясняющий текст формулируются прежде всего по-русски (`WPC-07`). Точные системные термины, идентификаторы, статусы, пути и цитаты сохраняются, когда перевод меняет системный смысл; обычный пояснительный English переводится по смыслу. Marker: `interaction_clarity_russian_first`.
 
-Bootstrap подготавливает достаточные входы для последующей DPF-first composition (`WPC-01`), но не выбирает Working Process вместо его process authority.
+Bootstrap подготавливает достаточные входы для последующей applicable-DPF composition (`WPC-01`), но не выбирает Working Process вместо его process authority.
 
 ### 34.5. После Admission
 
@@ -1859,7 +1846,7 @@ Progress Projection выводится из admitted Working Process и factual 
 → сформировать handover package
 → передать работу в WORKING_PROCESS_AND_LOOPS_GUIDE
 → найти или предложить Working Process
-→ найти или предложить первый bounded Loop
+→ найти или предложить минимально достаточную Loop / Task / Run decomposition либо no-Loop route
 → после первого useful admitted result остановиться, если named next receiving use отсутствует
 ```
 
